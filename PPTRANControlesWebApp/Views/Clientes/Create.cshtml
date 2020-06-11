@@ -1,0 +1,297 @@
+﻿@model Models.Clientes
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*
+    <h1>Create</h1>
+
+        <h4>clientes</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="create">
+                <div asp-validation-summary="modelonly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="id" class="control-label"></label>
+                    <input asp-for="id" class="form-control" />
+                    <span asp-validation-for="id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="numrenach" class="control-label"></label>
+                    <input asp-for="numrenach" class="form-control" />
+                    <span asp-validation-for="numrenach" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="perfilpsicologico" class="control-label"></label>
+                    <input asp-for="perfilpsicologico" class="form-control" />
+                    <span asp-validation-for="perfilpsicologico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="categoria" class="control-label"></label>
+                    <input asp-for="categoria" class="form-control" />
+                    <span asp-validation-for="categoria" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="numlaudo" class="control-label"></label>
+                    <input asp-for="numlaudo" class="form-control" />
+                    <span asp-validation-for="numlaudo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="rg" class="control-label"></label>
+                    <input asp-for="rg" class="form-control" />
+                    <span asp-validation-for="rg" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cpf" class="control-label"></label>
+                    <input asp-for="cpf" class="form-control" />
+                    <span asp-validation-for="cpf" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="telefone" class="control-label"></label>
+                    <input asp-for="telefone" class="form-control" />
+                    <span asp-validation-for="telefone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cnh" class="control-label"></label>
+                    <input asp-for="cnh" class="form-control" />
+                    <span asp-validation-for="cnh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="dthabhum" class="control-label"></label>
+                    <input asp-for="dthabhum" class="form-control" />
+                    <span asp-validation-for="dthabhum" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="nome" class="control-label"></label>
+                    <input asp-for="nome" class="form-control" />
+                    <span asp-validation-for="nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="pai" class="control-label"></label>
+                    <input asp-for="pai" class="form-control" />
+                    <span asp-validation-for="pai" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="mae" class="control-label"></label>
+                    <input asp-for="mae" class="form-control" />
+                    <span asp-validation-for="mae" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="endereco" class="control-label"></label>
+                    <input asp-for="endereco" class="form-control" />
+                    <span asp-validation-for="endereco" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="nacionalidade" class="control-label"></label>
+                    <input asp-for="nacionalidade" class="form-control" />
+                    <span asp-validation-for="nacionalidade" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="naturalidade" class="control-label"></label>
+                    <input asp-for="naturalidade" class="form-control" />
+                    <span asp-validation-for="naturalidade" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="estadocivil" class="control-label"></label>
+                    <input asp-for="estadocivil" class="form-control" />
+                    <span asp-validation-for="estadocivil" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="dtnascimento" class="control-label"></label>
+                    <input asp-for="dtnascimento" class="form-control" />
+                    <span asp-validation-for="dtnascimento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="profissao" class="control-label"></label>
+                    <input asp-for="profissao" class="form-control" />
+                    <span asp-validation-for="profissao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="escolaridade" class="control-label"></label>
+                    <input asp-for="escolaridade" class="form-control" />
+                    <span asp-validation-for="escolaridade" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="index">back to list</a>
+    </div>*@
+
+
+<!-- page content -->
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="row">
+        <!-- Forma design 1 inicio-->
+        <div class="col-md-6 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Form Design yo<small>different form elements</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form class="form-label-left input_mask">
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control" id="inputSuccess5" placeholder="Phone">
+                            <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" placeholder="Default Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Disabled Input </label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Read-Only Input</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">
+                                Date Of Birth <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="date-picker form-control" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-3">
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Forma design 1 fim -->
+        <!-- Forma design 1 inicio-->
+        <div class="col-md-6 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Form Design yo<small>different form elements</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form class="form-label-left input_mask">
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control" id="inputSuccess3" placeholder="Last Name">
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-6  form-group has-feedback">
+                            <input type="text" class="form-control" id="inputSuccess5" placeholder="Phone">
+                            <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Default Input</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" placeholder="Default Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Disabled Input </label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" disabled="disabled" placeholder="Disabled Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Read-Only Input</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control" readonly="readonly" placeholder="Read-Only Input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-3 col-sm-3 ">
+                                Date Of Birth <span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input class="date-picker form-control" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-sm-9  offset-md-3">
+                                <button type="button" class="btn btn-primary">Cancel</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Forma design 1 fim -->        
+    </div>        
+</div>
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

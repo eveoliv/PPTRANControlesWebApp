@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Models.Clientes>
+
+    @{
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <p> Listar funcionarios com as opões Delete / Edit/ Details </p>
+    @*
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumRenach)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PerfilPsicologico)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Categoria)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumLaudo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RG)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CPF)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CNH)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DtHabHum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Pai)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Mae)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Endereco)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nacionalidade)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Naturalidade)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstadoCivil)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DtNascimento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Profissao)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Escolaridade)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumRenach)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PerfilPsicologico)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Categoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumLaudo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RG)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CPF)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CNH)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DtHabHum)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mae)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Endereco)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nacionalidade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Naturalidade)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EstadoCivil)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DtNascimento)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profissao)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Escolaridade)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
+                }
+        </tbody>
+        </table>*@
+
