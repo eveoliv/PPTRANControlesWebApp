@@ -1,0 +1,88 @@
+﻿@model Models.Colaborador
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<h1>Deletar</h1>
+
+<h3>Em construção</h3>
+
+<div>
+    @*<h4>Colaborador</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RG)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CPF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CPF)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CRP)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CRP)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CRM)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CRM)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Funcao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Funcao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Clinica)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Clinica)
+        </dd>
+    </dl>
+    *@
+
+    <form asp-action="Delete">
+        @*<input type="submit" value="Delete" class="btn btn-danger" /> |*@
+        <a asp-action="Index">Retornar</a>
+    </form>
+</div>

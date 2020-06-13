@@ -1,14 +1,16 @@
 ﻿@model Models.Cliente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Delete</h1>
+
+<h3>Em construção</h3>
 
 <div>
-    <h4>Cliente</h4>
+    @*<h4>Cliente</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -131,9 +133,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Escolaridade)
         </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="glyphicon glyphicon-edit"></a> |
-    <a asp-action="Index">Retornar</a>
+    </dl>*@
+    
+    <form asp-action="Delete">
+        @*<input type="submit" value="Delete" class="btn btn-danger" /> |*@
+        <a asp-action="Index">Retornar</a>
+    </form>
+
+
 </div>

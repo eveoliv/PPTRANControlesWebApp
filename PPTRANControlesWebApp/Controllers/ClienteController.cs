@@ -8,7 +8,7 @@ using Models;
 
 namespace PPTRANControlesWebApp.Controllers
 {
-    public class ClientesController : Controller
+    public class ClienteController : Controller
     {
         private static IList<Cliente> clientes = new List<Cliente>()
         {

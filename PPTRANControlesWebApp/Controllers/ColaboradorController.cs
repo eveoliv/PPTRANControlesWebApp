@@ -4,15 +4,60 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace PPTRANControlesWebApp.Controllers
 {
-    public class ColaboradoresController : Controller
+    public class ColaboradorController : Controller
     {
+
+        public static IList<Colaborador> colaboradores = new List<Colaborador>()
+        {
+            new Colaborador()
+            {
+                Id = 1,
+                Nome = "Bruno Nash",
+                CPF = "65465465465",
+                Funcao = "Software Engineer"
+            },
+            new Colaborador()
+            {
+                Id = 2,
+                Nome = "Caesar Vance",
+                CPF = "65465465465",
+                Funcao = "Pre-Sales Support"
+
+            },
+            new Colaborador()
+            {
+                Id = 3,
+                Nome = "Cara Stevens",
+                CPF = "65465465465",
+                Funcao = "Sales Assistant"
+
+            },
+            new Colaborador()
+            {
+                Id = 4,
+                Nome = "Gavin Joyce",
+                CPF = "65465465465",
+                Funcao = "Accountant"
+
+            },
+            new Colaborador()
+            {
+                Id = 5,
+                Nome = "Donna Snider",
+                CPF = "65465465465",
+                Funcao = "Customer Support"
+
+            }
+        };
+
         // GET: Colaboradores
         public ActionResult Index()
         {
-            return View();
+            return View(colaboradores);
         }
 
         // GET: Colaboradores/Details/5
