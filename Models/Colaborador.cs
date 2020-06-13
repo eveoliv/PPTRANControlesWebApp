@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Models
 {
-    public class Colaboradores
+    public class Colaborador
     {
         public long? Id { get; set; }
         public string Nome { get; set; }

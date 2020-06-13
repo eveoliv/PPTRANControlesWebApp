@@ -5,6 +5,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.js" />
+    <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.min.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

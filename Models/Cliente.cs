@@ -2,7 +2,7 @@
 
 namespace Models
 {
-    public class Clientes
+    public class Cliente
     {
         public long? Id { get; set; }
         public string NumRenach { get; set; }

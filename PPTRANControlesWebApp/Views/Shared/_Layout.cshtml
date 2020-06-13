@@ -21,10 +21,10 @@
 
     <!-- Custom Theme Style -->
     <link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+    @RenderSection("Styles", required: false)
 </head>
 
 <body class="nav-md">
-
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
@@ -63,7 +63,7 @@
                                 <li>
                                     <a><i class="fa fa-dollar"></i> Caixa <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-area="" asp-controller="Caixa" asp-action="Index">Lançamentos</a></li>                                        
+                                        <li><a asp-area="" asp-controller="Caixa" asp-action="Index">Lançamentos</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -95,9 +95,9 @@
                                     <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="chartjs.html">Chart JS</a></li>
-                                        <li><a href="chartjs2.html">Chart JS2</a></li>                                        
+                                        <li><a href="chartjs2.html">Chart JS2</a></li>
                                     </ul>
-                                </li>                                
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -199,5 +199,7 @@
 
     <!-- Custom Theme Scripts -->
     <script src="~/Content/build/js/custom.min.js"></script>
+
+    @RenderSection("ScriptPage", required: false)
 </body>
 </html>
