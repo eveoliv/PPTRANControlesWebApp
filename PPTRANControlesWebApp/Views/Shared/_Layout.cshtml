@@ -12,22 +12,19 @@
 
     <!-- Bootstrap -->
     <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Font Awesome -->
     <link href="~/Content/vendors/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-
     <!-- NProgress -->
     <link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="~/Content/build/css/custom.min.css" rel="stylesheet">
     @RenderSection("Styles", required: false)
 </head>
 
-<body class="nav-md">
+<body class="nav-md footer_fixed">
     <div class="container body">
         <div class="main_container">
-            <div class="col-md-3 left_col">
+            <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
                         <p href="" class="site_title"><i class="fa fa-automobile"></i><span> PPTRControles</span></p>
@@ -45,7 +42,6 @@
                             <h2>Everton Oliveira</h2>
                         </div>
                     </div>
-                    <!-- /menu profile quick info -->
 
                     <br />
 
@@ -95,15 +91,12 @@
                                     <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         @*<li><a href="chartjs.html">Chart JS</a></li>
-                                        <li><a href="chartjs2.html">Chart JS2</a></li>*@
+                                            <li><a href="chartjs2.html">Chart JS2</a></li>*@
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
             <!-- top navigation -->
@@ -116,15 +109,9 @@
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    @*<img src="images/img.jpg" alt="">John Doe*@
+
                                 </a>
-                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:;">Help</a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                                    
                                     <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>
@@ -156,47 +143,17 @@
 
     <!-- jQuery -->
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
-
     <!-- Bootstrap -->
     <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- NProgress -->
-    <script src="~/Content/vendors/nprogress/nprogress.js"></script>
-
     <!-- FastClick -->
     <script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
-
-
-    @*<!-- Chart.js -->
-        <script src="~/Content/vendors/Chart.js/dist/Chart.min.js"></script>
-        <!-- gauge.js -->
-        <script src="~/Content/vendors/gauge.js/dist/gauge.min.js"></script>
-        <!-- bootstrap-progressbar -->
-        <script src="~/Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-        <!-- iCheck -->
-        <script src="~/Content/vendors/iCheck/icheck.min.js"></script>
-        <!-- Skycons -->
-        <script src="~/Content/vendors/skycons/skycons.js"></script>
-        <!-- Flot -->
-        <script src="~/Content/vendors/Flot/jquery.flot.js"></script>
-        <script src="~/Content/vendors/Flot/jquery.flot.pie.js"></script>
-        <script src="~/Content/vendors/Flot/jquery.flot.time.js"></script>
-        <script src="~/Content/vendors/Flot/jquery.flot.stack.js"></script>
-        <script src="~/Content/vendors/Flot/jquery.flot.resize.js"></script>
-        <!-- Flot plugins -->
-        <script src="~/Content/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-        <script src="~/Content/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-        <script src="~/Content/vendors/flot.curvedlines/curvedLines.js"></script>
-        <!-- DateJS -->
-        <script src="~/Content/vendors/DateJS/build/date.js"></script>
-        <!-- JQVMap -->
-        <script src="~/Content/vendors/jqvmap/dist/jquery.vmap.js"></script>
-        <script src="~/Content/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-        <script src="~/Content/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-        <!-- bootstrap-daterangepicker -->
-        <script src="~/Content/vendors/moment/min/moment.min.js"></script>
-        <script src="~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>*@
-
+    <!-- NProgress -->
+    <script src="~/Content/vendors/nprogress/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <!--        
+        <script src="../vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    -->
+  
     <!-- Custom Theme Scripts -->
     <script src="~/Content/build/js/custom.min.js"></script>
 
