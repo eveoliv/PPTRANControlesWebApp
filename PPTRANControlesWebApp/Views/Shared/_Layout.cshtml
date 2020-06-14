@@ -12,6 +12,8 @@
 
     <!-- Bootstrap -->
     <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="~/Content/vendors/dateTime/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="~/Content/vendors/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -111,7 +113,7 @@
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
 
                                 </a>
-                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">                                    
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>
@@ -145,18 +147,21 @@
     <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/Content/vendors/dateTime/js/bootstrap-datetimepicker.min.js"></script>
+
     <!-- FastClick -->
     <script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="~/Content/vendors/nprogress/nprogress.js"></script>
     <!-- jQuery custom content scroller -->
-    <!--        
+    <!--
         <script src="../vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     -->
-  
     <!-- Custom Theme Scripts -->
     <script src="~/Content/build/js/custom.min.js"></script>
 
     @RenderSection("ScriptPage", required: false)
 </body>
 </html>
+

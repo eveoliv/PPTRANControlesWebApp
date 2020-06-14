@@ -12,43 +12,12 @@ namespace PPTRANControlesWebApp.Controllers
     {
         private static IList<Cliente> clientes = new List<Cliente>()
         {
-            new Cliente()
-            {
-                Id = 1,
-                Nome = "Tiger Nixon",
-                CNH = "123456789",
-                CPF = "98765432199"
-            },
-            new Cliente()
-            {
-                Id = 2,
-                Nome = "Garrett Winters",
-                CNH = "111222333",
-                CPF = "22223333444"
-            },
-            new Cliente()
-            {
-                Id = 3,
-                Nome = "Ashton Cox",
-                CNH = "1112228883",
-                CPF = "22223666644"
-            },
-            new Cliente()
-            {
-                Id = 4,
-                Nome = "Cedric Kelly",
-                CNH = "1112228883",
-                CPF = "22223666644"
-            },
-            new Cliente()
-            {
-                Id = 5,
-                Nome = "Airi Satou",
-                CNH = "1112228883",
-                CPF = "22223666644"
-            }
+            new Cliente() { Id = 1, Nome = "Tiger Nixon", CNH = "123456789", CPF = "98765432199" },
+            new Cliente() { Id = 2, Nome = "Garrett Winters", CNH = "111222333", CPF = "22223333444" },
+            new Cliente() { Id = 3, Nome = "Ashton Cox",CNH = "1112228883", CPF = "22223666644" },
+            new Cliente() { Id = 4, Nome = "Cedric Kelly", CNH = "1112228883", CPF = "22223666644" },
+            new Cliente() { Id = 5, Nome = "Airi Satou", CNH = "1112228883", CPF = "22223666644" }
         };
-
 
         // GET: Clientes
         public ActionResult Index()
@@ -57,9 +26,9 @@ namespace PPTRANControlesWebApp.Controllers
         }
 
         // GET: Clientes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(long id)
         {
-            return View();
+            return View(clientes.Where(c => c.Id == id).First());
         }
 
         // GET: Clientes/Create
@@ -71,56 +40,44 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Cliente cliente)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            clientes.Add(cliente);
+            cliente.Id = clientes.Select(c => c.Id).Max() + 1;
+        
+            return RedirectToAction("Index");
         }
 
         // GET: Clientes/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(long id)
         {
-            return View();
+            return View(clientes.Where(c => c.Id == id).First());
         }
 
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(long id)
+        public ActionResult Edit(Cliente cliente)
         {
-
-            return View(clientes.Where(c => c.Id == id).First());
+            clientes.Remove(clientes.Where(c => c.Id == cliente.Id).First());
+            clientes.Add(cliente);
+            return RedirectToAction("Index");
         }
 
         // GET: Clientes/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(long id)
         {
-            return View();
+            return View(clientes.Where(c => c.Id == id).First());
         }
 
         // POST: Clientes/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Cliente cliente)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            clientes.Remove(clientes.Where(c => c.Id == cliente.Id).First());
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }
