@@ -34,5 +34,11 @@ namespace Models
             Cheque,
             Dinheiro
         };
+
+        public enum Categoria
+        {
+            A = 1,
+            B, C, D, E, AB, AC, AD, AE
+        };
     }
 }

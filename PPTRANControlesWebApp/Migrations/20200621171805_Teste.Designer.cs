@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200620221151_First")]
-    partial class First
+    [Migration("20200621171805_Teste")]
+    partial class Teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("CPF");
 
-                    b.Property<string>("Categoria");
+                    b.Property<int>("Categoria");
 
                     b.Property<DateTime>("DtHabHum");
 

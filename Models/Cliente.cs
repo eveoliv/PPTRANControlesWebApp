@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -23,7 +24,7 @@ namespace Models
         public string CNH { get; set; }
 
         [DisplayName("Categoria")]
-        public string Categoria { get; set; }
+        public EnumHelper.Categoria Categoria { get; set; }
 
         [DisplayName("Numero do Renach")]
         public string NumRenach { get; set; }
@@ -38,6 +39,8 @@ namespace Models
         public string NumLaudo { get; set; }
 
         [DisplayName("Data 1ª Habilitacao")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime DtHabHum { get; set; }
 
         [DisplayName("Nome do Pai")]
@@ -56,6 +59,8 @@ namespace Models
         public string EstadoCivil { get; set; }
 
         [DisplayName("Data de Nascimento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime DtNascimento { get; set; }
 
         [DisplayName("Profissão")]

@@ -50,8 +50,10 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.PerfilPsicologico" type="text" placeholder="Perfil Psicologico" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Categoria" type="text" placeholder="Categoria" class="form-control">
+                            <div class="col-md-3 col-sm-12  form-group">                                
+                                <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
+                                    <option selected="selected" value="">Categoria</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">

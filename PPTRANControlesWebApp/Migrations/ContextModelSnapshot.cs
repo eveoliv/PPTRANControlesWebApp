@@ -26,7 +26,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("CPF");
 
-                    b.Property<string>("Categoria");
+                    b.Property<int>("Categoria");
 
                     b.Property<DateTime>("DtHabHum");
 
