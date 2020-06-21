@@ -4,35 +4,40 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Models;
+using PPTRANControlesWebApp.Data;
+using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Controllers
 {
     public class ClienteController : Controller
     {
-        private static IList<Cliente> clientes = new List<Cliente>()
+        private readonly Context _context;
+        private readonly ClienteDAL clienteDAL;
+
+        public ClienteController(Context context)
         {
-            new Cliente() { Id = 1, Nome = "Tiger Nixon", CNH = "123456789", CPF = "98765432199" },
-            new Cliente() { Id = 2, Nome = "Garrett Winters", CNH = "111222333", CPF = "22223333444" },
-            new Cliente() { Id = 3, Nome = "Ashton Cox",CNH = "1112228883", CPF = "22223666644" },
-            new Cliente() { Id = 4, Nome = "Cedric Kelly", CNH = "1112228883", CPF = "22223666644" },
-            new Cliente() { Id = 5, Nome = "Airi Satou", CNH = "1112228883", CPF = "22223666644" }
-        };
+            _context = context;
+            clienteDAL = new ClienteDAL(context);
+        }
 
         // GET: Clientes
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var clientes = await clienteDAL.ObterClientesPorNome().ToListAsync();
             return View(clientes);
         }
 
         // GET: Clientes/Details/5
-        public ActionResult Details(long id)
+        public async Task<IActionResult> Details(long? id)
         {
-            return View(clientes.Where(c => c.Id == id).First());
+            return await ObterVisaoClientePorId(id);
         }
 
         // GET: Clientes/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -40,18 +45,39 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cliente cliente)
-        {
-            clientes.Add(cliente);
-            cliente.Id = clientes.Select(c => c.Id).Max() + 1;
-        
-            return RedirectToAction("Index");
-        }
+        public async Task<IActionResult> Create(ClienteViewModel model)
+        {           
+            try
+            {
+                if (model.Cliente.Nome != null)
+                {
+                    _context.Add(model.Cliente);
+                    await _context.SaveChangesAsync();
 
+                    _context.Add(model.Endereco);
+                    await _context.SaveChangesAsync();
+
+                    var enderecoCliente = (from p in _context.Clientes where p.CPF == model.Cliente.CPF select p).Single();
+                    enderecoCliente.EnderecoId = _context.Enderecos.Select(e => e.EnderecoId).Max();
+
+                    _context.Update(model.Cliente);
+                    await _context.SaveChangesAsync();
+
+
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
+            }
+            return View(model.Cliente);
+        }
+      
         // GET: Clientes/Edit/5
         public ActionResult Edit(long id)
         {
-            return View(clientes.Where(c => c.Id == id).First());
+            return View();
         }
 
         // POST: Clientes/Edit/5
@@ -59,15 +85,14 @@ namespace PPTRANControlesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Cliente cliente)
         {
-            clientes.Remove(clientes.Where(c => c.Id == cliente.Id).First());
-            clientes.Add(cliente);
+           
             return RedirectToAction("Index");
         }
 
         // GET: Clientes/Delete/5
         public ActionResult Delete(long id)
         {
-            return View(clientes.Where(c => c.Id == id).First());
+            return View();
         }
 
         // POST: Clientes/Delete/5
@@ -75,9 +100,26 @@ namespace PPTRANControlesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Cliente cliente)
         {
-            clientes.Remove(clientes.Where(c => c.Id == cliente.Id).First());
+           
 
             return RedirectToAction("Index");
+        }
+
+
+        private async Task<IActionResult> ObterVisaoClientePorId(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound(); 
+            }
+
+            var cliente = await clienteDAL.ObterClientePorId((long)id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return View(cliente);
         }
     }
 }

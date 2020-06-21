@@ -6,7 +6,7 @@ namespace Models
 {
     public class Colaborador
     {
-        public long? Id { get; set; }
+        public long? ColaboradorId { get; set; }
         public string Nome { get; set; }
         public string RG { get; set; }
         public string CPF { get; set; }

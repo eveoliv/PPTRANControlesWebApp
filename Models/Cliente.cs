@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Models
 {
     public class Cliente
     {       
-        public long? Id { get; set; }
+        [DisplayName("ID")]
+        public long? ClienteId { get; set; }
 
         [DisplayName("Nome")]
         public string Nome { get; set; }
@@ -41,10 +44,7 @@ namespace Models
         public string Pai { get; set; }
 
         [DisplayName("Nome da Mãe")]
-        public string Mae { get; set; }
-
-        [DisplayName("Endereco")]
-        public string Endereco { get; set; }
+        public string Mae { get; set; }     
 
         [DisplayName("Nacionalidade")]
         public string Nacionalidade { get; set; }
@@ -67,7 +67,8 @@ namespace Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [DisplayName("CEP")]
-        public string Cep { get; set; }
+        public long? EnderecoId { get; set; }
+        public Endereco Endereco { get; set; }
+
     }
 }

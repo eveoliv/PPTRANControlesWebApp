@@ -1,0 +1,22 @@
+﻿Criar projeto .net core 2.0 com autenticação no app
+
+Criar pasta Areas e depois add as areas
+
+Copiar e colar a rota do arquivo ScaffoldingReadMe.txt para a area de rota do Program.cs
+*** adicionar a rota, não substituir
+
+No controller da area:
+    [Area("Paciente")] --anotar area e seu respectivo nome
+    [Authorize]		   --solicitar autorização	
+    [AllowAnonymous]   --ou permitir acesso anonimo
+
+2.Add-Migration [NomeDaMigracao] (no meu caso InitialCreate);
+3.Update-Database -Verbose (Cria as tabale no banco de dados);
+4.excluir __EFMigrationsHistory (desfazer migracao); 
+5.Excluir a pasta Migrations;
+
+Para obter lista de outros comandos disponiveis no Entity, segue comando abaixo:
+Get-Help EntityFramework (Comandos disponiveis do Entity)e Database para criar as tabelas do identity no App    
+
+[Bind("Nome,CPF,RG,CNH,Categoria,NumRenach,Telefone,PerfilPsicologico,NumLaudo,DtHabHum,Pai," +
+            "Mae,Nacionalidade,Naturalidade,EstadoCivil,DtNascimento,Profissao,Escolaridade,Email")]

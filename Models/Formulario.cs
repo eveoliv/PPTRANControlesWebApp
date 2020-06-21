@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Models
 {
-    class Formulario
+    public class Formulario
     {
+        public long? FormularioId { get; set; }
+
         public EnumHelper.OptForm Tabagismo { get; set; }
         public string TabagismoObs { get; set; }  
         public EnumHelper.OptForm Cafe { get; set; }        

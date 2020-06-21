@@ -6,10 +6,10 @@ namespace Models
 {
     public class Agenda
     {
-        public long? Agenda_Id { get; set; }
+        public long? AgendaId { get; set; }
         public DateTime Data { get; set; }
-        public long? Cliente_id { get; set; }
-        public long? Psicologo_Id { get; set; }
-        public long? Medico_Id { get; set; }
+        //public long? Clienteid { get; set; }
+        //public long? PsicologoId { get; set; }
+        //public long? MedicoId { get; set; }
     }
 }

@@ -13,10 +13,11 @@ namespace PPTRANControlesWebApp.Data
         public Context(DbContextOptions<Context> options) : base(options) { }
 
         //Mapeamento do modelo relacional
-        public DbSet<Agenda> Agenda { get; set; }
-        public DbSet<Caixa> Caixa { get; set; }
-        public DbSet<Cliente> Cliente { get; set; }
-        public DbSet<Colaborador> Colaborador { get; set; }
+        //public DbSet<Agenda> Agenda { get; set; }
+        //public DbSet<Caixa> Caixa { get; set; }
+        //public DbSet<Colaborador> Colaborador { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
 
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)

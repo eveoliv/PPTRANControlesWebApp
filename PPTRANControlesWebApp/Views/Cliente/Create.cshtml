@@ -1,4 +1,4 @@
-﻿@model Models.Cliente
+﻿@model PPTRANControlesWebApp.Models.ClienteViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -17,129 +17,112 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Grupo info 1</h2>
+                    <h2>Informações Gerais</h2>
                     <div class="clearfix"></div>
                 </div>
 
                 <div class="x_content">
                     <form asp-action="create" class="form-label-left input_mask">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="Cliente.ClienteId" />
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input asp-for="Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome">
+                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                                <input asp-for="Cliente.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
 
-
-                            <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                                <input asp-for="Cliente.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
                                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                             </div>
 
-                            <div class="col-md-3 col-sm-2  form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
+                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                                <input asp-for="Cliente.Telefone" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
                                 <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-                            <div class="col-md-3 col-sm-2  form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Cep" data-inputmask="'mask': '99999-999'">
-                                <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-                            <div class="col-md-6 col-sm-8  form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Endereço">
-                                <span class="fa fa-thumb-tack form-control-feedback left" aria-hidden="true"></span>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="RENACH" class="form-control">
+                                <input asp-for="Cliente.NumRenach" type="text" placeholder="RENACH" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="Perfil Psicologico" class="form-control">
+                                <input asp-for="Cliente.PerfilPsicologico" type="text" placeholder="Perfil Psicologico" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="Categoria" class="form-control">
+                                <input asp-for="Cliente.Categoria" type="text" placeholder="Categoria" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="Número Laudo" class="form-control">
-                            </div>
-
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
+                                <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'">
+                                <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="CNH" type="text" placeholder="CHN" class="form-control">
+                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                                <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
                             </div>
-
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                            </div>
                             <div class="col-md-2 col-sm-12  form-group">
-                                <input type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                                <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
                             </div>
                             <div class="col-md-5 col-sm-12  form-group">
-                                <input type="text" placeholder="Nome do Pai" class="form-control">
+                                <input asp-for="Cliente.Pai" type="text" placeholder="Nome do Pai" class="form-control">
                             </div>
                             <div class="col-md-5 col-sm-12  form-group">
-                                <input type="text" placeholder="Nome da Mãe" class="form-control">
+                                <input asp-for="Cliente.Mae" type="text" placeholder="Nome da Mãe" class="form-control">
                             </div>
-
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input type="text" placeholder="Nacionalidade" class="form-control">
+                                <input asp-for="Cliente.Nacionalidade" type="text" placeholder="Nacionalidade" class="form-control">
                             </div>
-
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input type="text" placeholder="Naturalidade" class="form-control">
+                                <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" class="form-control">
                             </div>
-
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input type="text" placeholder="Estado Civil" class="form-control">
+                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" class="form-control">
                             </div>
-
                             <div class="col-md-6 col-sm-12  form-group">
-                                <input type="text" placeholder="Escolaridade" class="form-control">
+                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" class="form-control">
                             </div>
-
                             <div class="col-md-6 col-sm-12  form-group">
-                                <input type="text" placeholder="Profissão" class="form-control">
+                                <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" class="form-control">
                             </div>
                         </div>
 
-
-
-                        <!--************ G1 **************************-->
                         <div class="x_title">
-                            <h2>Grupo Endereço</h2>
+                            <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
+                        <input type="hidden" asp-for="Endereco.EnderecoId" />
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
                                 Cep <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input name="cep" type="text" id="cep" value="" data-inputmask="'mask': '99999-999'" class="form-control" />
+                                <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />                               
                             </div>
                         </div>
+
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
                                 Rua <span class="required"></span>
                             </label>
-                            <div class="col-md-6 col-sm-6 ">                                
-                                <input name="rua" type="text" id="rua"  class="form-control" />
+                            <div class="col-md-6 col-sm-6 ">
+                                <input asp-for="Endereco.Rua" type="text" class="form-control" id="rua" />                                
                             </div>
                         </div>
                         <div class="item form-group">
                             <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">
                                 Bairro
                             </label>
-                            <div class="col-md-6 col-sm-6 ">                                
-                                <input name="bairro" type="text" id="bairro" class="form-control" />
+                            <div class="col-md-6 col-sm-6 ">
+                                <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control"/>
                             </div>
                         </div>
 
@@ -148,7 +131,7 @@
                                 Cidade <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input name="cidade" type="text" id="cidade" class="form-control" />                                
+                                <input asp-for="Endereco.Cidade" type="text" id="cidade" class="form-control" />
                             </div>
                         </div>
 
@@ -157,96 +140,36 @@
                                 Estado <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input name="uf" type="text" id="uf" class="form-control" />                                
-                            </div>
-                        </div>                       
-
-
-                        <!--************ G2 **************************-->
-                        <div class="x_title">
-                            <h2>Grupo 3</h2>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
-                                First Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input type="text" id="first-name" required="required" class="form-control ">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
-                                Last Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input type="text" id="last-name" name="last-name" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Middle Name / Initial</label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input id="middle-name" class="form-control" type="text" name="middle-name">
+                                <input asp-for="Endereco.Estado" type="text" id="uf" class="form-control" />
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Date Of Birth <span class="required">*</span>
+                                Número <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input id="birthday" class="date-picker form-control" required="required" type="text">
-                            </div>
-                        </div>
-
-
-                        <!--************ G3 **************************-->
-                        <div class="x_title">
-                            <h2>Grupo info 3</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
-                                First Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input type="text" id="first-name" required="required" class="form-control ">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
-                                Last Name <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input type="text" id="last-name" name="last-name" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="item form-group">
-                            <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Middle Name / Initial</label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input id="middle-name" class="form-control" type="text" name="middle-name">
+                                <input asp-for="Endereco.Numero" type="text" id="uf" class="form-control" />
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Date Of Birth <span class="required">*</span>
+                                Complemento <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input id="birthday" class="date-picker form-control" required="required" type="text">
+                                <input asp-for="Endereco.Complto" type="text" id="uf" class="form-control" />
                             </div>
                         </div>
 
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-primary" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button class="btn btn-success" type="submit">Enviar</button>
+                                <button class="btn btn-primary" type="button">Cancelar</button>
+                                <button class="btn btn-primary" type="reset">Limpar</button>
                             </div>
                         </div>
-
 
                     </form>
                 </div>
