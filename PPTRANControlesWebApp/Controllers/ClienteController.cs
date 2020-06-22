@@ -16,11 +16,13 @@ namespace PPTRANControlesWebApp.Controllers
     {
         private readonly Context _context;
         private readonly ClienteDAL clienteDAL;
+        private readonly EnderecoDAL enderecoDAL;
 
         public ClienteController(Context context)
         {
             _context = context;
             clienteDAL = new ClienteDAL(context);
+            enderecoDAL = new EnderecoDAL(context);
         }
 
         // GET: Clientes
@@ -49,21 +51,19 @@ namespace PPTRANControlesWebApp.Controllers
         {           
             try
             {
-                if (model.Cliente.Nome != null)
+                if (model.Cliente.Nome != null && model.Cliente.CPF != null)
                 {
-                    _context.Add(model.Cliente);
-                    await _context.SaveChangesAsync();
+                    var cpf = model.Cliente.CPF;
 
-                    _context.Add(model.Endereco);
-                    await _context.SaveChangesAsync();
+                    model.Endereco.CPF = cpf;
+                    await enderecoDAL.GravarEndereco(model.Endereco);
+                  
+                    var idEndereco =
+                        (from e in _context.Enderecos where e.CPF == cpf select e).Single();
 
-                    var enderecoCliente = (from p in _context.Clientes where p.CPF == model.Cliente.CPF select p).Single();
-                    enderecoCliente.EnderecoId = _context.Enderecos.Select(e => e.EnderecoId).Max();
-
-                    _context.Update(model.Cliente);
-                    await _context.SaveChangesAsync();
-
-
+                    model.Cliente.EnderecoId = idEndereco.EnderecoId;
+                    await clienteDAL.GravarCliente(model.Cliente);
+                                   
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -75,9 +75,9 @@ namespace PPTRANControlesWebApp.Controllers
         }
       
         // GET: Clientes/Edit/5
-        public ActionResult Edit(long id)
+        public async Task<IActionResult> Edit(long id)
         {
-            return View();
+            return await ObterVisaoClientePorId(id);
         }
 
         // POST: Clientes/Edit/5
@@ -90,18 +90,16 @@ namespace PPTRANControlesWebApp.Controllers
         }
 
         // GET: Clientes/Delete/5
-        public ActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            return View();
+            return await ObterVisaoClientePorId(id);
         }
 
         // POST: Clientes/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Cliente cliente)
-        {
-           
-
+        {           
             return RedirectToAction("Index");
         }
 

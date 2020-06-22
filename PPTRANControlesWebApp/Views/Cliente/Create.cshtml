@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 @section styles {
     <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
@@ -25,6 +24,7 @@
                     <form asp-action="create" class="form-label-left input_mask">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="Cliente.ClienteId" />
+                        <input type="hidden" asp-for="Cliente.Status" />
 
                         <div class="row">
                             <div class="col-md-4 col-sm-4  form-group has-feedback">
@@ -50,7 +50,7 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.PerfilPsicologico" type="text" placeholder="Perfil Psicologico" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">                                
+                            <div class="col-md-3 col-sm-12  form-group">
                                 <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
                                     <option selected="selected" value="">Categoria</option>
                                 </select>
@@ -100,14 +100,14 @@
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
-                        <input type="hidden" asp-for="Endereco.EnderecoId" />
+                        <input type="hidden" asp-for="Endereco.EnderecoId" />                        
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
                                 Cep <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />                               
+                                <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
                                 Rua <span class="required"></span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Rua" type="text" class="form-control" id="rua" />                                
+                                <input asp-for="Endereco.Rua" type="text" class="form-control" id="rua" />
                             </div>
                         </div>
                         <div class="item form-group">
@@ -124,7 +124,7 @@
                                 Bairro
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control"/>
+                                <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control" />
                             </div>
                         </div>
 

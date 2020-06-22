@@ -52,6 +52,7 @@ namespace PPTRANControlesWebApp.Migrations
                     Profissao = table.Column<string>(nullable: true),
                     Escolaridade = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     EnderecoId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>

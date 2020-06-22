@@ -19,5 +19,29 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return null;
         }
+
+        public async Task<Endereco> GravarEndereco(Endereco endereco)
+        {
+            if (endereco.EnderecoId == null)
+            {
+                _context.Add(endereco);
+            }
+            else
+            {
+                _context.Update(endereco);
+            }
+
+            await _context.SaveChangesAsync();
+            return endereco;
+        }
+
+        public string BuscaEnderecoId(string cpf)
+        {
+            var idEndereco =
+                       (from e in _context.Enderecos where e.CPF == cpf select e).Single();
+
+
+            return null;
+        }
     }
 }

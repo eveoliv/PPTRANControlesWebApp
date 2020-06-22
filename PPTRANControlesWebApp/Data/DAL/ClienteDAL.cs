@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
+using PPTRANControlesWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,20 @@ namespace PPTRANControlesWebApp.Data.DAL
                 SingleOrDefaultAsync(c => c.ClienteId == id);
         }
 
+        public async Task<Cliente> GravarCliente(Cliente cliente)
+        {
+            if (cliente.ClienteId == null)
+            {
+                cliente.Status = 0;
+                _context.Clientes.Add(cliente);
+            }
+            else
+            {
+                _context.Update(cliente);
+            }
 
-
+            await _context.SaveChangesAsync();
+            return cliente;
+        }        
     }
 }

@@ -40,5 +40,11 @@ namespace Models
             A = 1,
             B, C, D, E, AB, AC, AD, AE
         };
+
+        public enum Status
+        {
+            Ativo,
+            Inativo    
+        };
     }
 }

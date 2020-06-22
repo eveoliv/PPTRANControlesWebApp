@@ -8,8 +8,11 @@ namespace Models
     public class Endereco
     {
         //pk
-        public long EnderecoId { get; set; }
-    
+        [DisplayName("EndereçoId")]
+        public long? EnderecoId { get; set; }
+
+        public string CPF { get; set; }  
+
         [DisplayName("CEP")]
         public string Cep { get; set; }
 
@@ -32,7 +35,7 @@ namespace Models
         public string Complto { get; set; }
 
         //fk
-        public virtual IEnumerable<Cliente> Clientes { get; set; }
+        public virtual Cliente Clientes { get; set; }
 
     }
 }

@@ -25,8 +25,12 @@ namespace PPTRANControlesWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<Context>(options => 
-                options.UseMySql(Configuration.GetConnectionString("AppContextConn")));
+                options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
+
+            //services.AddDbContext<Context>(options =>
+            //   options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
 
             //services.AddDbContext<Context>(options =>
             //   options.UseMySql(Configuration.GetConnectionString("AppIdentityConn")));

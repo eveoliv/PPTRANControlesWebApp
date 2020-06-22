@@ -72,6 +72,8 @@ namespace Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
+        public EnumHelper.Status Status { get; set; }
+
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 

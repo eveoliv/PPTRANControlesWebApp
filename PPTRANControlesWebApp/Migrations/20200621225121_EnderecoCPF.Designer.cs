@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200621171805_Teste")]
-    partial class Teste
+    [Migration("20200621225121_EnderecoCPF")]
+    partial class EnderecoCPF
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("RG");
 
+                    b.Property<int>("Status");
+
                     b.Property<string>("Telefone");
 
                     b.HasKey("ClienteId");
@@ -73,10 +75,12 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Endereco", b =>
                 {
-                    b.Property<long>("EnderecoId")
+                    b.Property<long?>("EnderecoId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Bairro");
+
+                    b.Property<string>("CPF");
 
                     b.Property<string>("Cep");
 
