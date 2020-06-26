@@ -104,6 +104,14 @@ namespace PPTRANControlesWebApp.Controllers
         }
 
 
+
+
+
+
+
+      /*
+       *********************************************************************** 
+       */
         private async Task<IActionResult> ObterVisaoClientePorId(long? id)
         {
             if (id == null)

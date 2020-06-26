@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Formulario
+    public class Entrevista
     {
-        public long? FormularioId { get; set; }
+        public long? EntrevistaId { get; set; }
 
         public EnumHelper.OptForm Tabagismo { get; set; }
         public string TabagismoObs { get; set; }  
