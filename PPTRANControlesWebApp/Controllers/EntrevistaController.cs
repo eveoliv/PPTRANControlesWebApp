@@ -15,11 +15,13 @@ namespace PPTRANControlesWebApp.Controllers
     {
         private readonly Context _context;
         private readonly EntrevistaDAL entrevistaDAL;
+        private readonly ClienteDAL clienteDAL;
 
         public EntrevistaController(Context context)
         {
             _context = context;
             entrevistaDAL = new EntrevistaDAL(context);
+            clienteDAL = new ClienteDAL(context);
         }
 
         // GET: Formulario
@@ -28,10 +30,10 @@ namespace PPTRANControlesWebApp.Controllers
             return View();
         }
 
-        // GET: Formulario/Details/5
-        public ActionResult Details(int id)
+        // GET: Formulario/Details/5-> carrega formulario anamnese
+        public async Task <IActionResult> Details(long? id)
         {
-            return View();
+            return await ObterVisaoEntrevistaPorId(id);
         }
 
         // GET: Formulario/Create
@@ -128,6 +130,22 @@ namespace PPTRANControlesWebApp.Controllers
             }
 
             return View(entrevista);
+        }
+
+        private async Task<IActionResult> ObterVisaoClientePorId(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cliente = await clienteDAL.ObterClientePorId((long)id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return View(cliente);
         }
     }
 }

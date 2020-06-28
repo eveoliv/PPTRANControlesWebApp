@@ -236,6 +236,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("PcdObs");
 
+                    b.Property<string>("ProcMedicoObs");
+
                     b.Property<int>("ProcMedido");
 
                     b.Property<long?>("PsicologoId");

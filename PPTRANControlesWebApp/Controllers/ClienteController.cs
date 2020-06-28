@@ -40,6 +40,12 @@ namespace PPTRANControlesWebApp.Controllers
             return await ObterVisaoClientePorId(id);
         }
 
+        // GET: Cliente/Entrevista->Details
+        public async Task<IActionResult> Entrevista(long? id)
+        {
+            return await ObterVisaoClientePorId(id);
+        }
+
         // GET: Clientes/Create
         public IActionResult Create()
         {

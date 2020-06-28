@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200627210103_Completa")]
-    partial class Completa
+    [Migration("20200628164541_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,6 +237,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<int>("Pcd");
 
                     b.Property<string>("PcdObs");
+
+                    b.Property<string>("ProcMedicoObs");
 
                     b.Property<int>("ProcMedido");
 
