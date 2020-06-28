@@ -35,7 +35,7 @@ namespace Models
         public string Complto { get; set; }
 
         //fk
-        public virtual Cliente Clientes { get; set; }
+        public virtual Cliente Cliente { get; set; }
 
     }
 }

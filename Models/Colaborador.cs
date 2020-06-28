@@ -15,7 +15,10 @@ namespace Models
         public string Endereco { get; set; }
         public string Telefone { get; set; }
         public string Funcao { get; set; }
-        public EnumHelper.Clinica Clinica { get; set; }
+        //public EnumHelper.Clinica Clinica { get; set; }
+
+        public long? ClinicaId { get; set; }
+        public Clinica Clinica { get; set; }
 
     }
 }

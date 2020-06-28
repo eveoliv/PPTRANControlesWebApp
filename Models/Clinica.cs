@@ -4,11 +4,13 @@ using System.Text;
 
 namespace Models
 {
-    class Clinica
+    public class Clinica
     {
         public long? ClinicaId { get; set; }
         public string Nome { get; set; }
         public string Endereco { get; set; }
 
+        public virtual ICollection<Cliente> Cliente { get; set; }
+        public virtual ICollection<Colaborador> Colaborador { get; set; }
     }
 }

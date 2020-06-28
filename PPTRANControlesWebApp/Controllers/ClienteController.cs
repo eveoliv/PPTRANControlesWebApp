@@ -17,12 +17,14 @@ namespace PPTRANControlesWebApp.Controllers
         private readonly Context _context;
         private readonly ClienteDAL clienteDAL;
         private readonly EnderecoDAL enderecoDAL;
+        private readonly EntrevistaDAL entrevistaDAL;
 
         public ClienteController(Context context)
         {
             _context = context;
             clienteDAL = new ClienteDAL(context);
             enderecoDAL = new EnderecoDAL(context);
+            entrevistaDAL = new EntrevistaDAL(context);
         }
 
         // GET: Clientes
@@ -48,7 +50,7 @@ namespace PPTRANControlesWebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
-        {           
+        {
             try
             {
                 if (model.Cliente.Nome != null && model.Cliente.CPF != null)
@@ -57,13 +59,17 @@ namespace PPTRANControlesWebApp.Controllers
 
                     model.Endereco.CPF = cpf;
                     await enderecoDAL.GravarEndereco(model.Endereco);
-                  
-                    var idEndereco =
-                        (from e in _context.Enderecos where e.CPF == cpf select e).Single();
+                    var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).Single();
+
+                    model.Entrevista.CPF = cpf;
+                    await entrevistaDAL.GravaEntrevista(model.Entrevista);
+                    var idEntrevista = (from e in _context.Entrevistas where e.CPF == cpf select e).Single();
+
 
                     model.Cliente.EnderecoId = idEndereco.EnderecoId;
+                    model.Cliente.EntrevistaId = idEntrevista.EntrevistaId;
                     await clienteDAL.GravarCliente(model.Cliente);
-                                   
+
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -73,7 +79,7 @@ namespace PPTRANControlesWebApp.Controllers
             }
             return View(model.Cliente);
         }
-      
+
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(long id)
         {
@@ -85,7 +91,7 @@ namespace PPTRANControlesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Cliente cliente)
         {
-           
+
             return RedirectToAction("Index");
         }
 
@@ -99,24 +105,16 @@ namespace PPTRANControlesWebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Cliente cliente)
-        {           
+        {
             return RedirectToAction("Index");
         }
 
-
-
-
-
-
-
-      /*
-       *********************************************************************** 
-       */
+/*************************************************************************/
         private async Task<IActionResult> ObterVisaoClientePorId(long? id)
         {
             if (id == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             var cliente = await clienteDAL.ObterClientePorId((long)id);

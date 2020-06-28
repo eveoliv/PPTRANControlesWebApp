@@ -74,8 +74,14 @@ namespace Models
 
         public EnumHelper.Status Status { get; set; }
 
+        public long? ClinicaId { get; set; }
+        public Clinica Clinica { get; set; }
+
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
+
+        public long? EntrevistaId { get; set; }
+        public Entrevista Entrevista { get; set; }
 
     }
 }

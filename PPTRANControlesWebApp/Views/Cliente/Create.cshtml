@@ -63,6 +63,7 @@
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'">
+                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
@@ -100,7 +101,9 @@
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
-                        <input type="hidden" asp-for="Endereco.EnderecoId" />                        
+                        <input type="hidden" asp-for="Endereco.EnderecoId" />
+                        <input type="hidden" asp-for="Entrevista.EntrevistaId" />
+                        <input type="hidden" asp-for="Clinica.ClinicaId" />
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">

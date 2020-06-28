@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
-using PPTRANControlesWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
-    public class ClienteDAL
+    public class EntrevistaDAL
     {
-        private Context _context;
+        private readonly Context _context;
 
-        public ClienteDAL(Context context)
+        public EntrevistaDAL(Context context)
         {
             _context = context;
         }
-    
-        public IQueryable<Cliente> ObterClientesPorNome()
-        {       
-            return _context.Clientes.OrderBy(c => c.Nome);
+        
+        public async Task<Entrevista> ObterEntrevistaPorId(long id)
+        {
+            return await _context.Entrevistas.Include(c => c.Cliente)
+                .SingleOrDefaultAsync(e => e.EntrevistaId == id);
         }
 
         public async Task<Cliente> ObterClientePorId(long id)
@@ -28,21 +28,19 @@ namespace PPTRANControlesWebApp.Data.DAL
                 SingleOrDefaultAsync(c => c.ClienteId == id);
         }
 
-        public async Task<Cliente> GravarCliente(Cliente cliente)
+        public async Task<Entrevista> GravaEntrevista(Entrevista entrevista)
         {
-            if (cliente.ClienteId == null)
+            if (entrevista.EntrevistaId == null)
             {
-                //status 0 = ativo
-                cliente.Status = 0;
-                _context.Clientes.Add(cliente);
+                _context.Add(entrevista);
             }
             else
             {
-                _context.Update(cliente);
+                _context.Update(entrevista);               
             }
 
             await _context.SaveChangesAsync();
-            return cliente;
-        }        
+            return entrevista;
+        }
     }
 }
