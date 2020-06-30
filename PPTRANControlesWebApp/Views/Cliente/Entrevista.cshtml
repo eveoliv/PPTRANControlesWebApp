@@ -18,8 +18,13 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Nome do Candidato: @Html.DisplayFor(model => model.Nome)</h2>
-                    <ul class="nav navbar-right panel_toolbox">                        
-                        <a asp-action="Index">Retornar</a>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Index">Retornar</a>&nbsp;|&nbsp;
+                        <a asp-action="" onClick="window.print()">Imprimir</a>
+
+                        @*<form>
+            <input type="button" value="Imprimir" onClick="window.print()" />
+        </form>*@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -203,11 +208,11 @@
 
                         <div class="ln_solid"></div>
                         <p>Parecer da entrevista: _______________________________________________________________________________________________________________.</p>
-                        
+
                         <p>Data: ____/____/________.</p>
                         <div class="text-center">
-                            <p>___________________________________________________</p>
-                            <p>Carimbo e Assinatura do Psicólogo</p>
+                            <p>_________________________________&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  ________________________________</p>
+                            <p> Carimbo e Assinatura do Psicólogo &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Carimbo e Assinatura do Médico</p>
                         </div>
                     </div>
 
@@ -217,4 +222,8 @@
     </div>
 </div>
 
+
 <!-- /page content -->
+@section ScriptPage {
+
+}
