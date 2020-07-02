@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class NovasTbls : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,20 +41,6 @@ namespace PPTRANControlesWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clinicas",
-                columns: table => new
-                {
-                    ClinicaId = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Endereco = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clinicas", x => x.ClinicaId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
                 {
@@ -75,7 +61,7 @@ namespace PPTRANControlesWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Entrevistas",
+                name: "Entrevista",
                 columns: table => new
                 {
                     EntrevistaId = table.Column<long>(nullable: false)
@@ -113,33 +99,32 @@ namespace PPTRANControlesWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Entrevistas", x => x.EntrevistaId);
+                    table.PrimaryKey("PK_Entrevista", x => x.EntrevistaId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Colaboradores",
+                name: "Clinicas",
                 columns: table => new
                 {
-                    ColaboradorId = table.Column<long>(nullable: false)
+                    ClinicaId = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: true),
-                    RG = table.Column<string>(nullable: true),
-                    CPF = table.Column<string>(nullable: true),
-                    CRP = table.Column<string>(nullable: true),
-                    CRM = table.Column<string>(nullable: true),
-                    Endereco = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
-                    Funcao = table.Column<string>(nullable: true),
-                    ClinicaId = table.Column<long>(nullable: true)
+                    CNPJ = table.Column<string>(nullable: true),
+                    Alias = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Tel1 = table.Column<string>(nullable: true),
+                    Tel2 = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    EnderecoId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Colaboradores", x => x.ColaboradorId);
+                    table.PrimaryKey("PK_Clinicas", x => x.ClinicaId);
                     table.ForeignKey(
-                        name: "FK_Colaboradores_Clinicas_ClinicaId",
-                        column: x => x.ClinicaId,
-                        principalTable: "Clinicas",
-                        principalColumn: "ClinicaId",
+                        name: "FK_Clinicas_Enderecos_EnderecoId",
+                        column: x => x.EnderecoId,
+                        principalTable: "Enderecos",
+                        principalColumn: "EnderecoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -149,6 +134,7 @@ namespace PPTRANControlesWebApp.Migrations
                 {
                     ClienteId = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DtCadastro = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
                     CPF = table.Column<string>(nullable: true),
                     RG = table.Column<string>(nullable: true),
@@ -189,10 +175,45 @@ namespace PPTRANControlesWebApp.Migrations
                         principalColumn: "EnderecoId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Clientes_Entrevistas_EntrevistaId",
+                        name: "FK_Clientes_Entrevista_EntrevistaId",
                         column: x => x.EntrevistaId,
-                        principalTable: "Entrevistas",
+                        principalTable: "Entrevista",
                         principalColumn: "EntrevistaId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Colaboradores",
+                columns: table => new
+                {
+                    ColaboradorId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DtCadastro = table.Column<DateTime>(nullable: false),
+                    Nome = table.Column<string>(nullable: true),
+                    RG = table.Column<string>(nullable: true),
+                    CPF = table.Column<string>(nullable: true),
+                    CRP = table.Column<string>(nullable: true),
+                    CRM = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Funcao = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    ClinicaId = table.Column<long>(nullable: true),
+                    EnderecoId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colaboradores", x => x.ColaboradorId);
+                    table.ForeignKey(
+                        name: "FK_Colaboradores_Clinicas_ClinicaId",
+                        column: x => x.ClinicaId,
+                        principalTable: "Clinicas",
+                        principalColumn: "ClinicaId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Colaboradores_Enderecos_EnderecoId",
+                        column: x => x.EnderecoId,
+                        principalTable: "Enderecos",
+                        principalColumn: "EnderecoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -214,9 +235,20 @@ namespace PPTRANControlesWebApp.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clinicas_EnderecoId",
+                table: "Clinicas",
+                column: "EnderecoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Colaboradores_ClinicaId",
                 table: "Colaboradores",
                 column: "ClinicaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Colaboradores_EnderecoId",
+                table: "Colaboradores",
+                column: "EnderecoId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -234,13 +266,13 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "Colaboradores");
 
             migrationBuilder.DropTable(
-                name: "Enderecos");
-
-            migrationBuilder.DropTable(
-                name: "Entrevistas");
+                name: "Entrevista");
 
             migrationBuilder.DropTable(
                 name: "Clinicas");
+
+            migrationBuilder.DropTable(
+                name: "Enderecos");
         }
     }
 }

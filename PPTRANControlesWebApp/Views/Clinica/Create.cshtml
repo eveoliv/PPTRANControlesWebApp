@@ -1,4 +1,4 @@
-﻿@model PPTRANControlesWebApp.Models.ClienteViewModel
+﻿@model PPTRANControlesWebApp.Models.ClinicaViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -21,93 +21,52 @@
                         <a asp-action="Index">Retornar</a>
                     </ul>
                     <div class="clearfix"></div>
-                </div>                
+                </div>
 
                 <div class="x_content">
                     <form asp-action="create" class="form-label-left input_mask">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="Cliente.ClienteId" />
-                        <input type="hidden" asp-for="Cliente.Status" />
+                        <input type="hidden" asp-for="Clinica.ClinicaId" />
+                        <input type="hidden" asp-for="Clinica.Status" />
 
                         <div class="row">
                             <div class="col-md-4 col-sm-4  form-group has-feedback">
-                                <input asp-for="Cliente.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
+                                <input asp-for="Clinica.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+                                <span asp-validation-for="Clinica.Nome" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-4 col-sm-4  form-group has-feedback">
-                                <input asp-for="Cliente.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+                                <input asp-for="Clinica.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
                                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                             </div>
 
-                            <div class="col-md-4 col-sm-4  form-group has-feedback">
-                                <input asp-for="Cliente.Telefone" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
-                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                            <div class="col-md-4 col-sm-4  form-group">
+                                <input asp-for="Clinica.CNPJ" type="text" placeholder="CNPJ" class="form-control" data-inputmask="'mask' : '99.999.999/9999-99'">
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.NumRenach" type="text" placeholder="RENACH" class="form-control">
+                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                                <input asp-for="Clinica.Tel1" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.PerfilPsicologico" type="text" placeholder="Perfil Psicologico" class="form-control">
+
+                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                                <input asp-for="Clinica.Tel2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
-                                    <option selected="selected" value="">Categoria</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" required="required" data-inputmask="'mask': '999.999.999-99'">
-                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
-                            </div>
-                            <div class="col-md-2 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
-                            </div>
-                            <div class="col-md-5 col-sm-12  form-group">
-                                <input asp-for="Cliente.Pai" type="text" placeholder="Nome do Pai" class="form-control">
-                            </div>
-                            <div class="col-md-5 col-sm-12  form-group">
-                                <input asp-for="Cliente.Mae" type="text" placeholder="Nome da Mãe" class="form-control">
-                            </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Nacionalidade" type="text" placeholder="Nacionalidade" class="form-control">
-                            </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" class="form-control">
-                            </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" class="form-control">
-                            </div>
-                            <div class="col-md-6 col-sm-12  form-group">
-                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" class="form-control">
-                            </div>
-                            <div class="col-md-6 col-sm-12  form-group">
-                                <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" class="form-control">
-                            </div>
+                           
+                            <div class="col-md-4 col-sm-4  form-group">
+                                <input asp-for="Clinica.Alias" type="text" placeholder="Apelido" class="form-control">
+                            </div>                           
                         </div>
 
                         <div class="x_title">
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
-                        <input type="hidden" asp-for="Endereco.EnderecoId" />
-                        <input type="hidden" asp-for="Entrevista.EntrevistaId" />
-                        <input type="hidden" asp-for="Clinica.ClinicaId" />
+                        <input type="hidden" asp-for="Endereco.EnderecoId" />                                               
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
@@ -174,7 +133,7 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Enviar</button>                                
+                                <button class="btn btn-success" type="submit">Enviar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
                             </div>
                         </div>
@@ -185,6 +144,7 @@
         </div>
     </div>
 </div>
+
 
 @section ScriptPage {
     <script type="text/javascript">

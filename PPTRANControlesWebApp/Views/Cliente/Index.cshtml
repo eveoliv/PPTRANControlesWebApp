@@ -17,6 +17,9 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Lista de Clientes Clinica ABCD</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Create">Novo</a>
+                    </ul>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -28,6 +31,9 @@
                                         <tr>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.ClienteId)
+                                            </th>                                            
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DtCadastro)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Nome)
@@ -56,36 +62,39 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ClienteId)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Nome)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NumRenach)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CNH)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CPF)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Categoria)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Telefone)
-                                                </td>                                                
-                                                <td>
-                                                    <a asp-action="Details" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-zoom-in"></a> |
-                                                    <a asp-action="Edit" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-edit"></a> |
-                                                    <a asp-action="Delete" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-trash"></a>
-                                                    <a asp-action="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>
-                                                    @*<a asp-action="Edit" asp-controller="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>*@
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ClienteId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DtCadastro)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nome)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NumRenach)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CNH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CPF)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Categoria)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Telefone)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-zoom-in"></a> |
+                                                <a asp-action="Edit" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-edit"></a> |
+                                                <a asp-action="Delete" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-trash"></a>
+                                                <a asp-action="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>
+                                                @*<a asp-action="Edit" asp-controller="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>*@
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

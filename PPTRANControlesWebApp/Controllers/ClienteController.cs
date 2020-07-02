@@ -17,14 +17,12 @@ namespace PPTRANControlesWebApp.Controllers
         private readonly Context _context;
         private readonly ClienteDAL clienteDAL;
         private readonly EnderecoDAL enderecoDAL;
-        private readonly EntrevistaDAL entrevistaDAL;
 
         public ClienteController(Context context)
         {
             _context = context;
             clienteDAL = new ClienteDAL(context);
             enderecoDAL = new EnderecoDAL(context);
-            entrevistaDAL = new EntrevistaDAL(context);
         }
 
         // GET: Clientes
@@ -67,13 +65,8 @@ namespace PPTRANControlesWebApp.Controllers
                     await enderecoDAL.GravarEndereco(model.Endereco);
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).Single();
 
-                    model.Entrevista.CPF = cpf;
-                    await entrevistaDAL.GravaEntrevista(model.Entrevista);
-                    var idEntrevista = (from e in _context.Entrevistas where e.CPF == cpf select e).Single();
-
-
+                    model.Cliente.DtCadastro = DateTime.Today;
                     model.Cliente.EnderecoId = idEndereco.EnderecoId;
-                    model.Cliente.EntrevistaId = idEntrevista.EntrevistaId;
                     await clienteDAL.GravarCliente(model.Cliente);
 
                     return RedirectToAction(nameof(Index));
@@ -95,10 +88,27 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Cliente cliente)
+        public async Task<IActionResult> Edit(long? id, ClienteViewModel model)
         {
+            if (id != model.Cliente.ClienteId)
+            {
+                return NotFound();
+            }
 
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+                try
+                {
+                    await clienteDAL.GravarCliente(model.Cliente);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(model.Cliente);
         }
 
         // GET: Clientes/Delete/5
@@ -108,14 +118,18 @@ namespace PPTRANControlesWebApp.Controllers
         }
 
         // POST: Clientes/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Cliente cliente)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            return RedirectToAction("Index");
+            var cliente = await clienteDAL.ObterClientePorId(id);
+
+            cliente.Status = EnumHelper.Status.Inativo;
+            await clienteDAL.GravarCliente(cliente);
+            return RedirectToAction(nameof(Index));
         }
 
-/*************************************************************************/
+        /*************************************************************************/
         private async Task<IActionResult> ObterVisaoClientePorId(long? id)
         {
             if (id == null)

@@ -19,21 +19,25 @@ namespace PPTRANControlesWebApp.Data.DAL
     
         public IQueryable<Cliente> ObterClientesPorNome()
         {       
-            return _context.Clientes.OrderBy(c => c.Nome);
+            return _context.Clientes
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .OrderBy(c => c.Nome);
         }
 
         public async Task<Cliente> ObterClientePorId(long id)
-        {
-            return await _context.Clientes.Include(e => e.Endereco).
-                SingleOrDefaultAsync(c => c.ClienteId == id);
+        {           
+
+            return await _context.Clientes                
+                .Include(e => e.Endereco)
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(c => c.ClienteId == id);
         }
 
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {
             if (cliente.ClienteId == null)
-            {
-                //status 0 = ativo
-                cliente.Status = 0;
+            {                
+                cliente.Status = EnumHelper.Status.Ativo;
                 _context.Clientes.Add(cliente);
             }
             else

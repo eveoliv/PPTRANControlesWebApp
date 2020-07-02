@@ -11,6 +11,7 @@ namespace Models
         [DisplayName("EndereçoId")]
         public long? EnderecoId { get; set; }
 
+        [DisplayName("CPF")]
         public string CPF { get; set; }  
 
         [DisplayName("CEP")]
@@ -36,6 +37,7 @@ namespace Models
 
         //fk
         public virtual Cliente Cliente { get; set; }
+        public virtual Colaborador Colaborador { get; set; }
 
     }
 }

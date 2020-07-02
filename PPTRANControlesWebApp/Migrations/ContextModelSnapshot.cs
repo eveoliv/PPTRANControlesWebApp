@@ -66,6 +66,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
+                    b.Property<DateTime>("DtCadastro");
+
                     b.Property<DateTime>("DtHabHum");
 
                     b.Property<DateTime>("DtNascimento");
@@ -122,11 +124,25 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<long?>("ClinicaId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Endereco");
+                    b.Property<string>("Alias");
+
+                    b.Property<string>("CNPJ");
+
+                    b.Property<string>("Email");
+
+                    b.Property<long?>("EnderecoId");
 
                     b.Property<string>("Nome");
 
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Tel1");
+
+                    b.Property<string>("Tel2");
+
                     b.HasKey("ClinicaId");
+
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("Clinicas");
                 });
@@ -144,7 +160,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
-                    b.Property<string>("Endereco");
+                    b.Property<DateTime>("DtCadastro");
+
+                    b.Property<long?>("EnderecoId");
 
                     b.Property<string>("Funcao");
 
@@ -152,11 +170,16 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("RG");
 
+                    b.Property<int>("Status");
+
                     b.Property<string>("Telefone");
 
                     b.HasKey("ColaboradorId");
 
                     b.HasIndex("ClinicaId");
+
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
 
                     b.ToTable("Colaboradores");
                 });
@@ -254,7 +277,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.HasKey("EntrevistaId");
 
-                    b.ToTable("Entrevistas");
+                    b.ToTable("Entrevista");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>
@@ -272,11 +295,22 @@ namespace PPTRANControlesWebApp.Migrations
                         .HasForeignKey("Models.Cliente", "EntrevistaId");
                 });
 
+            modelBuilder.Entity("Models.Clinica", b =>
+                {
+                    b.HasOne("Models.Endereco", "Endereco")
+                        .WithMany()
+                        .HasForeignKey("EnderecoId");
+                });
+
             modelBuilder.Entity("Models.Colaborador", b =>
                 {
                     b.HasOne("Models.Clinica", "Clinica")
                         .WithMany("Colaborador")
                         .HasForeignKey("ClinicaId");
+
+                    b.HasOne("Models.Endereco", "Endereco")
+                        .WithOne("Colaborador")
+                        .HasForeignKey("Models.Colaborador", "EnderecoId");
                 });
 #pragma warning restore 612, 618
         }

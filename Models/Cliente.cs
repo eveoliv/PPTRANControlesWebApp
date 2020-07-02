@@ -11,6 +11,11 @@ namespace Models
         [DisplayName("ID")]
         public long? ClienteId { get; set; }
 
+        [DisplayName("Data Cadastro")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
+        public DateTime DtCadastro { get; set; }
+
         [DisplayName("Nome")]
         public string Nome { get; set; }
 
