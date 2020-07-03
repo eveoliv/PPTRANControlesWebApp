@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class NovasTbls : Migration
+    public partial class AjustaTbls : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -190,6 +190,7 @@ namespace PPTRANControlesWebApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DtCadastro = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     RG = table.Column<string>(nullable: true),
                     CPF = table.Column<string>(nullable: true),
                     CRP = table.Column<string>(nullable: true),

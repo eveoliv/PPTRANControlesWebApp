@@ -10,79 +10,52 @@
     <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
-<h1>Deletar</h1>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Inativar Colaborador</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <a asp-action="Index">Retornar</a>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
-<h3>Em construção</h3>
+                            <dl class="row">
+                                <dt class="col-sm-2">
+                                    @Html.HiddenFor(model => model.ColaboradorId)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.HiddenFor(model => model.ColaboradorId)
+                                </dd>
 
-<div>
-    @*<h4>Colaborador</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RG)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RG)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CPF)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CPF)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CRP)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CRP)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CRM)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CRM)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Endereco)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Funcao)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Funcao)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Clinica)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Clinica)
-        </dd>
-    </dl>
-    *@
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input asp-for="Nome" type="text" class="form-control">
+                                </dd>
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Funcao)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input asp-for="Funcao" type="text" class="form-control">
+                                </dd>
 
-    <form asp-action="Delete">
-        @*<input type="submit" value="Delete" class="btn btn-danger" /> |*@
-        <a asp-action="Index">Retornar</a>
-    </form>
+                            </dl>
+                            <div class="ln_solid"></div>
+                            <form asp-action="Delete">
+                                <input type="submit" value="Inativar" class="btn btn-danger" />
+                            </form>
+                            <div>
+                                * Esta operação altera o status do colaborador para inativo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

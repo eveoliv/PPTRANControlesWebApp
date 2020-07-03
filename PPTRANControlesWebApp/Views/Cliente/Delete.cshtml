@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
 <div class="right_col" role="main">
     <div class="">
         <div class="clearfix"></div>
@@ -42,7 +46,7 @@
                             </dl>
                             <div class="ln_solid"></div>
                             <form asp-action="Delete">
-                                <input type="submit" value="Inativar" class="btn btn-danger" />                                
+                                <input type="submit" value="Inativar" class="btn btn-danger" />
                             </form>
                             <div>
                                 * Esta operação altera o status do cliente para inativo.

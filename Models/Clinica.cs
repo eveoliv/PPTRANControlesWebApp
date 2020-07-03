@@ -16,7 +16,7 @@ namespace Models
         [DisplayName("CNPJ")]
         public string CNPJ { get; set; }
 
-        [DisplayName("Apelido")]
+        [DisplayName("Clinica")]
         public string Alias { get; set; }
 
         [DisplayName("Email")]

@@ -84,7 +84,7 @@
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.DtNascimento)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
-                                    <input asp-for="DtNascimento" type="text" class="form-control"  disabled="disabled">
+                                    <input asp-for="DtNascimento" type="text" class="form-control" disabled="disabled">
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Profissao)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
@@ -94,6 +94,13 @@
                                 <dd class="col-md-9 col-sm-9 ">
                                     <input asp-for="Escolaridade" type="text" class="form-control" disabled="disabled">
                                 </dd>
+
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.ClinicaId)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas disabled="disabled"></select>                                    
+                                </dd>
+
+
                             </dl>
                         </div>
                     </div>

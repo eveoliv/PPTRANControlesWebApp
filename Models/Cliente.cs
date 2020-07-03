@@ -79,6 +79,7 @@ namespace Models
 
         public EnumHelper.Status Status { get; set; }
 
+        [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
 

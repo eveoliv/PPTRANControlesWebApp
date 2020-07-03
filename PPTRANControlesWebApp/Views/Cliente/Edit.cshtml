@@ -96,6 +96,12 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Escolaridade" type="text" class="form-control">
                                         </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.ClinicaId)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
+                                        </dd>
+
+                                        
                                     </dl>
                                 </div>
                             </div>
@@ -118,7 +124,10 @@
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Categoria)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Categoria" type="text" class="form-control">
+                                            <select asp-for="Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
+                                                <option selected="selected" value="">Categoria</option>
+                                            </select>
+                                            @*<input asp-for="Categoria" type="text" class="form-control">*@
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.NumRenach)</dt>
                                         <dd class="col-md-9 col-sm-9 ">

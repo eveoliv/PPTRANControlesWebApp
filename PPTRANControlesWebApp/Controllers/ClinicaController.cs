@@ -81,9 +81,9 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Clinica/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, ClinicaViewModel model)
+        public async Task<IActionResult> Edit(long? id, Clinica clinica)
         {
-            if (id != model.Clinica.ClinicaId)
+            if (id != clinica.ClinicaId)
             {
                 return NotFound();
             }
@@ -92,7 +92,7 @@ namespace PPTRANControlesWebApp.Controllers
             {
                 try
                 {
-                    await clinicaDAL.GravarClinica(model.Clinica);
+                    await clinicaDAL.GravarClinica(clinica);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -101,7 +101,7 @@ namespace PPTRANControlesWebApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View(model.Clinica);
+            return View(clinica);
         }
 
         // GET: Clinica/Delete/5

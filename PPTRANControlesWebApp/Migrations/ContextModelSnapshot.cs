@@ -162,6 +162,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<DateTime>("DtCadastro");
 
+                    b.Property<string>("Email");
+
                     b.Property<long?>("EnderecoId");
 
                     b.Property<string>("Funcao");

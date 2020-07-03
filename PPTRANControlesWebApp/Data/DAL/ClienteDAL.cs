@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
-using PPTRANControlesWebApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,6 +17,8 @@ namespace PPTRANControlesWebApp.Data.DAL
         public IQueryable<Cliente> ObterClientesPorNome()
         {       
             return _context.Clientes
+                .Include(i => i.Clinica)
+                .Include(e => e.Endereco)
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .OrderBy(c => c.Nome);
         }
@@ -28,6 +27,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         {           
 
             return await _context.Clientes                
+                .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.ClienteId == id);

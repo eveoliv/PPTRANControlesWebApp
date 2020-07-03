@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200702004703_NovasTbls")]
-    partial class NovasTbls
+    [Migration("20200702232929_AjustaTbls")]
+    partial class AjustaTbls
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -163,6 +163,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<long?>("ClinicaId");
 
                     b.Property<DateTime>("DtCadastro");
+
+                    b.Property<string>("Email");
 
                     b.Property<long?>("EnderecoId");
 

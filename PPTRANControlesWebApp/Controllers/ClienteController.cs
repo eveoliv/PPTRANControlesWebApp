@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using PPTRANControlesWebApp.Data;
@@ -46,7 +45,11 @@ namespace PPTRANControlesWebApp.Controllers
 
         // GET: Clientes/Create
         public IActionResult Create()
-        {
+        {            
+            var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
+            clinicas.Insert(0, new Clinica() { ClinicaId = 0, Alias = "Clinica" });
+            ViewBag.Clinicas = clinicas;
+
             return View();
         }
 
@@ -88,9 +91,9 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, ClienteViewModel model)
+        public async Task<IActionResult> Edit(long? id, Cliente cliente)
         {
-            if (id != model.Cliente.ClienteId)
+            if (id != cliente.ClienteId)
             {
                 return NotFound();
             }
@@ -99,7 +102,7 @@ namespace PPTRANControlesWebApp.Controllers
             {
                 try
                 {
-                    await clienteDAL.GravarCliente(model.Cliente);
+                    await clienteDAL.GravarCliente(cliente);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -108,7 +111,7 @@ namespace PPTRANControlesWebApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View(model.Cliente);
+            return View(cliente);
         }
 
         // GET: Clientes/Delete/5
@@ -142,6 +145,9 @@ namespace PPTRANControlesWebApp.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Clinicas = 
+                new SelectList(_context.Clinicas.OrderBy(b => b.Nome), "ClinicaId", "Alias", cliente.ClienteId);
 
             return View(cliente);
         }
