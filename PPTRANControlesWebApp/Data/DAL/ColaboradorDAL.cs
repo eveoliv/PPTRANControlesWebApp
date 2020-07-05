@@ -32,6 +32,13 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .SingleOrDefaultAsync(c => c.ColaboradorId == id);
         }
 
+        public async Task<Colaborador> ObterColaboradorPorCPF(string cpf)
+        {
+            return await _context.Colaboradores
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(c => c.CPF == cpf);
+        }
+
         public async Task<Colaborador> GravarColaborador(Colaborador colaborador)
         {
             if (colaborador.ColaboradorId == null)

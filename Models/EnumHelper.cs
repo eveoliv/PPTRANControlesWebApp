@@ -22,16 +22,15 @@ namespace Models
             Clinica2
         };
 
-        public enum Lancamento
+        public enum Tipo
         {
             Credito = 1,
             Debito
         };
 
-        public enum Tipo
+        public enum FormaPgto
         {
-            Cartao = 1,
-            Cheque,
+            Cartao = 1,            
             Dinheiro
         };
 

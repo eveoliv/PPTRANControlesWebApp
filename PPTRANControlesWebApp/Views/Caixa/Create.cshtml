@@ -1,0 +1,102 @@
+﻿@model PPTRANControlesWebApp.Models.CaixaViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Lançamento de Valores</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <a asp-action="Index">Retornar</a>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form asp-action="create" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.Data" class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <input asp-for="Caixa.Data" type="text" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Cliente.CPF" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <input asp-for="Cliente.CPF" type="text" class="form-control" required="required" data-inputmask="'mask': '999.999.999-99'">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.Historico" class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <input asp-for="Caixa.Historico" type="text" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.Ref" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <input asp-for="Caixa.Ref" type="text" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.Tipo" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <select asp-for="Caixa.Tipo" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Tipo>()" required="required">
+                                        <option selected="selected" value="">Tipo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.FormaPgto" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <select asp-for="Caixa.FormaPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.FormaPgto>()" required="required">
+                                        <option selected="selected" value="">Forma</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label asp-for="Clinica.Alias" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6">
+                                    <select asp-for="Clinica.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "ClinicaId", "Alias"))" required="required"></select>
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Caixa.Valor" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <input asp-for="Caixa.Valor" type="number" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <input asp-for="Caixa.CaixaId" type="hidden"/>
+                            <input asp-for="Cliente.ClienteId" type="hidden"/>
+
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-12 col-sm-12 offset-md-2">
+                                    <button type="submit" class="btn btn-success">Registrar</button>
+                                    <button class="btn btn-primary" type="button">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

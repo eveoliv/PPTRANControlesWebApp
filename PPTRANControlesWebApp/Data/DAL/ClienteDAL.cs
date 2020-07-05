@@ -33,6 +33,13 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .SingleOrDefaultAsync(c => c.ClienteId == id);
         }
 
+        public async Task<Cliente> ObterClientePorCPF(string cpf)
+        {
+            return await _context.Clientes
+                 .Where(c => c.Status == EnumHelper.Status.Ativo)
+                 .SingleOrDefaultAsync(c => c.CPF == cpf);
+        }
+
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {
             if (cliente.ClienteId == null)

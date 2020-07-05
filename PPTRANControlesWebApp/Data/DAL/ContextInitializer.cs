@@ -22,7 +22,9 @@ namespace PPTRANControlesWebApp.Data.DAL
             var enderecos = new Endereco[]
             {
                 new Endereco{EnderecoId=1, CPF="12.321.654/6565-46", Cep="01019-020", Rua="Rua do Carmo", Bairro="Sé", Cidade="São Paulo", Estado="SP", Numero=44, Complto="1° ANDAR"},
-                new Endereco{EnderecoId=2, CPF="64.646.546/0001-11", Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""}
+                new Endereco{EnderecoId=2, CPF="64.646.546/0001-11", Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""},
+                new Endereco{EnderecoId=3, CPF="222.245.678-97", Cep="01319-001",Rua="Maria Paula"},
+                new Endereco{EnderecoId=4, CPF="222.245.678-97", Cep="01319-001",Rua="Maria Paula"}
             };
 
             foreach (Endereco e in enderecos)
@@ -55,11 +57,50 @@ namespace PPTRANControlesWebApp.Data.DAL
                 return;
             }
 
+            var clientes = new Cliente[]
+            {
+                new Cliente{
+                    ClienteId = 1,
+                    DtCadastro = DateTime.Today,
+                    Nome = "Everton Oliveira",
+                    NumRenach = "123456",
+                    Categoria = EnumHelper.Categoria.B,
+                    Telefone = "(11)7699-4991",
+                    ClinicaId = 1,
+                    CPF = "222.245.678-97",
+                    EnderecoId = 3}
+            };
+
+            foreach (Cliente c in clientes)
+            {
+                context.Add(c);
+                context.SaveChanges();
+            }
+
+            /**********************************************************************************/
             if (context.Colaboradores.Any())
             {
                 return;
             }
 
+            var colaborador = new Colaborador[]
+            {
+                new Colaborador{
+                    ColaboradorId =1,
+                    Nome = "Everton Oliveira",
+                    CPF = "222.245.678-97",
+                    Funcao = "Analista",
+                    ClinicaId = 1,
+                    EnderecoId = 4}
+            };
+
+            foreach (Colaborador c in colaborador)
+            {
+                context.Add(c);
+                context.SaveChanges();
+            }
+
+            /**********************************************************************************/
             if (context.Agendas.Any())
             {
                 return;

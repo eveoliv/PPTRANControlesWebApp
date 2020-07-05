@@ -21,7 +21,7 @@
                         <a asp-action="Index">Retornar</a>
                     </ul>
                     <div class="clearfix"></div>
-                </div>                
+                </div>
 
                 <div class="x_content">
                     <form asp-action="create" class="form-label-left input_mask">
@@ -101,14 +101,14 @@
                             </div>
 
                             <div class="col-md-4 col-sm-12  form-group">
-                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "ClinicaId", "Alias"))" ></select>
+                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "ClinicaId", "Alias"))"></select>
                             </div>
                         </div>
 
                         <div class=" x_title">
-                                    <h2>Endereço</h2>
-                                    <div class="clearfix"></div>
-</div>
+                            <h2>Endereço</h2>
+                            <div class="clearfix"></div>
+                        </div>
                         <input type="hidden" asp-for="Endereco.EnderecoId" />
                         <input type="hidden" asp-for="Entrevista.EntrevistaId" />
                         <input type="hidden" asp-for="Clinica.ClinicaId" />
@@ -178,7 +178,7 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Enviar</button>                                
+                                <button class="btn btn-success" type="submit">Enviar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
                             </div>
                         </div>
