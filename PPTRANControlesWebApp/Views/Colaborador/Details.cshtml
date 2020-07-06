@@ -64,7 +64,7 @@
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
-                                    <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas disabled="disabled"></select>
+                                    <input value="@ViewBag.ClinicaNome" type="text" class="form-control" disabled="disabled" />
                                 </dd>                              
                             </dl>
                         </div>

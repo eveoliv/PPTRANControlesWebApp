@@ -25,14 +25,14 @@ namespace PPTRANControlesWebApp.Data.DAL
             return _context.Caixas.OrderBy(c => c.CaixaId);
         }
 
-        //public async Task<Clinica> ObterClinicaPorId(long id)
-        //{
-
-        //    return await _context.Clinicas
-        //        .Include(e => e.Endereco)
-        //        .Where(c => c.Status == EnumHelper.Status.Ativo)
-        //        .SingleOrDefaultAsync(c => c.ClinicaId == id);
-        //}
+        public async Task<Caixa> ObterLancamentoPorId(long id)
+        {
+            return await _context.Caixas
+                .Include(c => c.Clinica)
+                .Include(c => c.Cliente)
+                .Include(c => c.Colaborador)
+                .SingleOrDefaultAsync(c => c.CaixaId == id);
+        }
 
         public async Task<Caixa> GravarLancamento(Caixa caixa)
         {

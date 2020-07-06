@@ -11,5 +11,6 @@ namespace PPTRANControlesWebApp.Models
         public Caixa Caixa { get; set; }       
         public Cliente Cliente { get; set; }       
         public Clinica Clinica { get; set; }
+        public Colaborador Colaborador { get; set; }
     }
 }

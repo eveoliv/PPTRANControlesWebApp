@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class AjustaTbls : Migration
+    public partial class ImplCaixa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,22 +22,6 @@ namespace PPTRANControlesWebApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Agendas", x => x.AgendaId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Caixas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Tipo = table.Column<int>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
-                    Saldo = table.Column<decimal>(nullable: false),
-                    Lancamento = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Caixas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,6 +201,60 @@ namespace PPTRANControlesWebApp.Migrations
                         principalColumn: "EnderecoId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Caixas",
+                columns: table => new
+                {
+                    CaixaId = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Historico = table.Column<string>(nullable: true),
+                    Tipo = table.Column<int>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
+                    FormaPgto = table.Column<int>(nullable: false),
+                    Ref = table.Column<string>(nullable: true),
+                    ClienteId = table.Column<long>(nullable: true),
+                    ClinicaId = table.Column<long>(nullable: true),
+                    ColaboradorId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Caixas", x => x.CaixaId);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Clinicas_ClinicaId",
+                        column: x => x.ClinicaId,
+                        principalTable: "Clinicas",
+                        principalColumn: "ClinicaId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Colaboradores_ColaboradorId",
+                        column: x => x.ColaboradorId,
+                        principalTable: "Colaboradores",
+                        principalColumn: "ColaboradorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Caixas_ClienteId",
+                table: "Caixas",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Caixas_ClinicaId",
+                table: "Caixas",
+                column: "ClinicaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Caixas_ColaboradorId",
+                table: "Caixas",
+                column: "ColaboradorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_ClinicaId",

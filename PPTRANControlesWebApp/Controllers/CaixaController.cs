@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using PPTRANControlesWebApp.Data;
@@ -36,9 +37,9 @@ namespace PPTRANControlesWebApp.Controllers
         }
 
         // GET: Caixa/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(long id)
         {
-            return View();
+            return await ObterVisaoLancamentoPorId(id);
         }
 
         // GET: Caixa/Create
@@ -53,16 +54,20 @@ namespace PPTRANControlesWebApp.Controllers
         // POST: Caixa/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Data, CPF, Historico, Ref, Tipo, FormaPgto, Valor, Clinica")] CaixaViewModel model)
-        {
-            //var cpf = model.Caixa.Cliente.CPF;
+        public async Task<IActionResult> Create(CaixaViewModel model)
+        {           
+            var cpf = model.Caixa.Cliente.CPF;
+            var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();
+            //var idCol = (from c in _context.Colaboradores where c.CPF == cpf select c).SingleOrDefault();
+
             try
             {
-                if (ModelState.IsValid /*&& ValidaCpfLancamento(cpf)*/)
+                if (model.Caixa.Cliente.CPF != null && idCli != null )
                 {
-                    //var idCli = (from e in _context.Clientes where e.CPF == cpf select e).Single();
-
-                    //model.Caixa.ClienteId = idCli.ClienteId;
+                    //model.Caixa.ColaboradorId = idCol.ColaboradorId; Id do usuario logado
+                    model.Caixa.Cliente.ClienteId = idCli.ClienteId;
+                    model.Caixa.Colaborador.ColaboradorId = 1;
+                    model.Caixa.ClinicaId = model.Clinica.ClinicaId;
                     await caixaDAL.GravarLancamento(model.Caixa);
                     return RedirectToAction(nameof(Index));
                 }
@@ -122,10 +127,10 @@ namespace PPTRANControlesWebApp.Controllers
             }
         }
 
-
+        /*********************************************************************/
         private bool ValidaCpfLancamento(string cpf)
         {
-            var cliCpf = clienteDAL.ObterClientePorCPF(cpf);
+            var cliCpf = clienteDAL.ObterClientePorCpf(cpf);
             var colCpf = colaboradorDAL.ObterColaboradorPorCPF(cpf);
 
             if (cliCpf != null || colCpf != null)
@@ -134,6 +139,27 @@ namespace PPTRANControlesWebApp.Controllers
             }
         
             return false;
+        }
+
+        /*************************************************************************/
+        private async Task<IActionResult> ObterVisaoLancamentoPorId(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var caixa = await caixaDAL.ObterLancamentoPorId((long)id);
+            if (caixa == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Clinica = caixa.Clinica.Alias;
+            ViewBag.Cliente = caixa.Cliente.Nome;
+            @ViewBag.Colaborador = caixa.Colaborador.Nome;
+
+            return View(caixa);
         }
     }
 }

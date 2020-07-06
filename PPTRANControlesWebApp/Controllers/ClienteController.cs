@@ -146,6 +146,7 @@ namespace PPTRANControlesWebApp.Controllers
                 return NotFound();
             }
 
+            ViewBag.ClinicaNome = cliente.Clinica.Alias;
             ViewBag.Clinicas = 
                 new SelectList(_context.Clinicas.OrderBy(b => b.Nome), "ClinicaId", "Alias", cliente.ClienteId);
 

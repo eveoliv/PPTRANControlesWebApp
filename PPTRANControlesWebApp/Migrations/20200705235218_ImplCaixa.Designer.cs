@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200702232929_AjustaTbls")]
-    partial class AjustaTbls
+    [Migration("20200705235218_ImplCaixa")]
+    partial class ImplCaixa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,18 +39,34 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Caixa", b =>
                 {
-                    b.Property<long?>("Id")
+                    b.Property<long?>("CaixaId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ClienteId");
+
+                    b.Property<long?>("ClinicaId");
+
+                    b.Property<long?>("ColaboradorId");
 
                     b.Property<DateTime>("Data");
 
-                    b.Property<int>("Lancamento");
+                    b.Property<int>("FormaPgto");
 
-                    b.Property<decimal>("Saldo");
+                    b.Property<string>("Historico");
+
+                    b.Property<string>("Ref");
 
                     b.Property<int>("Tipo");
 
-                    b.HasKey("Id");
+                    b.Property<decimal>("Valor");
+
+                    b.HasKey("CaixaId");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("ClinicaId");
+
+                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("Caixas");
                 });
@@ -282,6 +298,21 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasKey("EntrevistaId");
 
                     b.ToTable("Entrevista");
+                });
+
+            modelBuilder.Entity("Models.Caixa", b =>
+                {
+                    b.HasOne("Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
+
+                    b.HasOne("Models.Clinica", "Clinica")
+                        .WithMany()
+                        .HasForeignKey("ClinicaId");
+
+                    b.HasOne("Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>

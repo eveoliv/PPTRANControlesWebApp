@@ -36,7 +36,7 @@ namespace Models
 
         [DisplayName("Cliente")]
         public long? ClienteId { get; set; }
-        public Cliente Cliente { get; set; }
+        public Cliente Cliente { get; set; }       
 
         [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }
