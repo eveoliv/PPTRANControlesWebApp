@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +11,9 @@ using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Controllers
-{
+namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
+{   
+    [Area("Administracao")]
     public class ClinicaController : Controller
     {
         private readonly Context _context;

@@ -66,7 +66,7 @@ namespace PPTRANControlesWebApp.Controllers
                 {
                     //model.Caixa.ColaboradorId = idCol.ColaboradorId; Id do usuario logado
                     model.Caixa.Cliente.ClienteId = idCli.ClienteId;
-                    model.Caixa.Colaborador.ColaboradorId = 1;
+                    model.Caixa.ColaboradorId = 1;
                     model.Caixa.ClinicaId = model.Clinica.ClinicaId;
                     await caixaDAL.GravarLancamento(model.Caixa);
                     return RedirectToAction(nameof(Index));

@@ -9,8 +9,9 @@ using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Controllers
+namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
+    [Area("Administracao")]
     public class ColaboradorController : Controller
     {
         private readonly Context _context;
