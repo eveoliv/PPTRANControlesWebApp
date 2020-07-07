@@ -21,8 +21,9 @@
                     <div class="x_content">
                         <br />
                         <form asp-controller="Caixa" asp-action="create" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>                            
-                            <input type="hidden" asp-for="Caixa.CaixaId"/>                                                      
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Caixa.CaixaId" />
+                            <input type="hidden" asp-for="Colaborador.ColaboradorId" />
 
                             <div class="item form-group">
                                 <label asp-for="Caixa.Data" class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"></label>
