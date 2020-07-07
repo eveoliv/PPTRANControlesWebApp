@@ -9,8 +9,9 @@ using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Controllers
+namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
+    [Area("Operacao")]
     public class ClienteController : Controller
     {
         private readonly Context _context;

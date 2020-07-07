@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PPTRANControlesWebApp.Controllers
+namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
+    [Area("Operacao")]
     public class AgendaController : Controller
     {
         // GET: Agenda

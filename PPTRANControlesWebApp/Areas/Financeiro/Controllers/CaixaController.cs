@@ -12,8 +12,9 @@ using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Controllers
+namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
+    [Area("Financeiro")]
     public class CaixaController : Controller
     {
         private readonly Context _context;
