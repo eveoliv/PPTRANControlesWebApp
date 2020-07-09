@@ -26,18 +26,14 @@ namespace PPTRANControlesWebApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<Context>(options =>
-                options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
+            services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
-            //services.AddDbContext<Context>(options =>
-            //   options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
+            //services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
 
-            //services.AddDbContext<Context>(options =>
-            //   options.UseMySql(Configuration.GetConnectionString("AppIdentityConn")));
+            //services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppIdentityConn")));
 
             services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            {                
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
