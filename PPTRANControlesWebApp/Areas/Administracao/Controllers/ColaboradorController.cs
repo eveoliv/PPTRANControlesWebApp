@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     [Area("Administracao")]
+    [Authorize]
     public class ColaboradorController : Controller
     {
         private readonly Context _context;

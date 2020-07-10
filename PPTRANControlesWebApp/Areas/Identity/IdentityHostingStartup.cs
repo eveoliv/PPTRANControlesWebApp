@@ -20,7 +20,14 @@ namespace PPTRANControlesWebApp.Areas.Identity
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("AppIdentityConn")));
 
-                services.AddDefaultIdentity<AppIdentityUser>()
+                //options altera as preferencias de validacao
+                services.AddDefaultIdentity<AppIdentityUser>( options => 
+                    {
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireLowercase = false;
+                    })
+                    .AddErrorDescriber<IdentityErrorDescriberPtBr>()
                     .AddEntityFrameworkStores<AppIdentityContext>();
             });
         }

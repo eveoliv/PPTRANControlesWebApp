@@ -14,6 +14,7 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {   
     [Area("Administracao")]
+    [Authorize]
     public class ClinicaController : Controller
     {
         private readonly Context _context;
