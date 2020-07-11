@@ -34,6 +34,8 @@ namespace Models
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
+        public string CpfUser { get; set; }
+
         public virtual ICollection<Cliente> Cliente { get; set; }
         public virtual ICollection<Colaborador> Colaborador { get; set; }
     }

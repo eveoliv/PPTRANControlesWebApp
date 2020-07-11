@@ -46,5 +46,6 @@ namespace Models
         public long? ColaboradorId { get; set; }
         public Colaborador Colaborador { get; set; }
 
+        public string CpfUser { get; set; }
     }
 }

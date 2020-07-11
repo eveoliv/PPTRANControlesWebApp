@@ -88,7 +88,7 @@ namespace Models
 
         public long? EntrevistaId { get; set; }
         public Entrevista Entrevista { get; set; }
-      
 
+        public string CpfUser { get; set; }
     }
 }

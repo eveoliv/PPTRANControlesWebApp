@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
-    public partial class Identity : Migration
+    public partial class UsuarioCustomizado : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,9 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Nome = table.Column<string>(nullable: true),
+                    Cpf = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

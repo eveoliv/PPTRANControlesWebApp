@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
@@ -23,10 +25,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
         private readonly ColaboradorDAL colaboradorDAL;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public CaixaController(Context context)
+        public CaixaController(Context context, UserManager<AppIdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             caixaDAL = new CaixaDAL(context);
             clienteDAL = new ClienteDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
@@ -58,18 +62,21 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CaixaViewModel model)
-        {           
+        {
             var cpf = model.Caixa.Cliente.CPF;
-            var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();
-            //var idCol = (from c in _context.Colaboradores where c.CPF == cpf select c).SingleOrDefault();
+            var usuarioCpf = _userManager.GetUserAsync(User).Result.Cpf;
+
+            var idCol = (from c in _context.Colaboradores where c.CPF == usuarioCpf select c).FirstOrDefault();
+            var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();            
 
             try
             {
                 if (model.Caixa.Cliente.CPF != null && idCli != null )
                 {
                     //model.Caixa.ColaboradorId = idCol.ColaboradorId; Id do usuario logado
+                    //model.Caixa.CpfUser = usuarioCpf;
+                    model.Caixa.Colaborador.ColaboradorId = idCol.ColaboradorId;
                     model.Caixa.Cliente.ClienteId = idCli.ClienteId;
-                    model.Caixa.ColaboradorId = 1;
                     model.Caixa.ClinicaId = model.Clinica.ClinicaId;
                     await caixaDAL.GravarLancamento(model.Caixa);
                     return RedirectToAction(nameof(Index));

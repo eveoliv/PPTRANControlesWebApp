@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
@@ -19,10 +21,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         private readonly Context _context;
         private readonly EnderecoDAL enderecoDAL;
         private readonly ColaboradorDAL colaboradorDAL;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public ColaboradorController(Context context)
+        public ColaboradorController(Context context, UserManager<AppIdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
             colaboradorDAL = new ColaboradorDAL(context);
             enderecoDAL = new EnderecoDAL(context);
         }
@@ -45,8 +49,8 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         {
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
             clinicas.Insert(0, new Clinica() { ClinicaId = 0, Alias = "Clinica" });
-            ViewBag.Clinicas = clinicas;      
-     
+            ViewBag.Clinicas = clinicas;                             
+
             return View();
         }
 
@@ -56,6 +60,8 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
         {
+            var usuario = await _userManager.GetUserAsync(User);
+
             try
             {
                 if (model.Colaborador.Nome != null && model.Colaborador.CPF != null)
@@ -64,7 +70,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 
                     model.Endereco.CPF = cpf;
                     await enderecoDAL.GravarEndereco(model.Endereco);
-                    var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).Single();
+                    var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).FirstOrDefault();
 
                     model.Colaborador.DtCadastro = DateTime.Today;
                     model.Colaborador.EnderecoId = idEndereco.EnderecoId;

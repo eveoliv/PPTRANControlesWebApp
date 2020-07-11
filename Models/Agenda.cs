@@ -24,5 +24,7 @@ namespace Models
 
         [DisplayName("Medico")]
         public long? MedicoId { get; set; }
+
+        public string CpfUser { get; set; }
     }
 }

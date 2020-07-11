@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
     [DbContext(typeof(AppIdentityContext))]
-    [Migration("20200710005412_Identity")]
-    partial class Identity
+    [Migration("20200711012529_UserNomeCpf")]
+    partial class UserNomeCpf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -139,6 +139,8 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Cpf");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -147,6 +149,8 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Nome");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
