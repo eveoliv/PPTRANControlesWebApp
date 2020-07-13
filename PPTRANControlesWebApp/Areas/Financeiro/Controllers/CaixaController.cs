@@ -21,13 +21,13 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
     [Authorize]
     public class CaixaController : Controller
     {
-        private readonly Context _context;
+        private readonly ApplicationContext _context;
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> _userManager;
 
-        public CaixaController(Context context, UserManager<AppIdentityUser> userManager)
+        public CaixaController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -53,8 +53,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public IActionResult Create()
         {
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { ClinicaId = 0, Alias = "Clinica" });
+            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
+            
             return View();
         }
 
@@ -64,9 +65,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public async Task<IActionResult> Create(CaixaViewModel model)
         {
             var cpf = model.Caixa.Cliente.CPF;
-            var usuarioCpf = _userManager.GetUserAsync(User).Result.Cpf;
+            var usuarioId = _userManager.GetUserAsync(User).Result.Id;
 
-            var idCol = (from c in _context.Colaboradores where c.CPF == usuarioCpf select c).FirstOrDefault();
+            //var idCol = (from c in _context.Colaboradores where c.CPF == usuarioCpf select c).FirstOrDefault();
             var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();            
 
             try
@@ -75,9 +76,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 {
                     //model.Caixa.ColaboradorId = idCol.ColaboradorId; Id do usuario logado
                     //model.Caixa.CpfUser = usuarioCpf;
-                    model.Caixa.Colaborador.ColaboradorId = idCol.ColaboradorId;
-                    model.Caixa.Cliente.ClienteId = idCli.ClienteId;
-                    model.Caixa.ClinicaId = model.Clinica.ClinicaId;
+                    model.Caixa.IdUser = usuarioId;
+                    model.Caixa.ClienteId = idCli.Id;
+                    model.Caixa.ClinicaId = model.Clinica.Id;
                     await caixaDAL.GravarLancamento(model.Caixa);
                     return RedirectToAction(nameof(Index));
                 }
@@ -166,8 +167,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
 
             ViewBag.Clinica = caixa.Clinica.Alias;
-            ViewBag.Cliente = caixa.Cliente.Nome;
-            @ViewBag.Colaborador = caixa.Colaborador.Nome;
+            ViewBag.Cliente = caixa.Cliente.Nome;                   
+            ViewBag.Colaborador = _userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
 
             return View(caixa);
         }

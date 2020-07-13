@@ -7,9 +7,9 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ColaboradorDAL
     {
-        private Context _context;
+        private ApplicationContext _context;
 
-        public ColaboradorDAL(Context context)
+        public ColaboradorDAL(ApplicationContext context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .SingleOrDefaultAsync(c => c.ColaboradorId == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Colaborador> ObterColaboradorPorCPF(string cpf)
@@ -41,7 +41,7 @@ namespace PPTRANControlesWebApp.Data.DAL
 
         public async Task<Colaborador> GravarColaborador(Colaborador colaborador)
         {
-            if (colaborador.ColaboradorId == null)
+            if (colaborador.Id == null)
             {
                 colaborador.Status = EnumHelper.Status.Ativo;
                 _context.Colaboradores.Add(colaborador);

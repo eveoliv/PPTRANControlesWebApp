@@ -26,7 +26,7 @@ namespace PPTRANControlesWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             /* DEV */
-            services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
+            services.AddDbContext<ApplicationContext>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
             /* PROD */
             //services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));            

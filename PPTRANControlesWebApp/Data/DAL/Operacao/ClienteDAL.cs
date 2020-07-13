@@ -8,9 +8,9 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ClienteDAL
     {
-        private Context _context;
+        private ApplicationContext _context;
 
-        public ClienteDAL(Context context)
+        public ClienteDAL(ApplicationContext context)
         {
             _context = context;
         }
@@ -31,12 +31,12 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .SingleOrDefaultAsync(c => c.ClienteId == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
        
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {
-            if (cliente.ClienteId == null)
+            if (cliente.Id == null)
             {                
                 cliente.Status = EnumHelper.Status.Ativo;
                 _context.Clientes.Add(cliente);

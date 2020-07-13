@@ -6,10 +6,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Caixa
-    {
-        [DisplayName("ID")]
-        public long? CaixaId { get; set; }
+    public class Caixa : BaseModel
+    {       
+        public Caixa() { }
 
         [DisplayName("Data")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -46,6 +45,7 @@ namespace Models
         public long? ColaboradorId { get; set; }
         public Colaborador Colaborador { get; set; }
 
-        public string CpfUser { get; set; }
+        [DisplayName("Usuário")]
+        public string IdUser { get; set; }
     }
 }

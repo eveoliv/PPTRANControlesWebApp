@@ -13,16 +13,16 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class CaixaDAL
     {
-        private Context _context;
+        private ApplicationContext _context;
 
-        public CaixaDAL(Context context)
+        public CaixaDAL(ApplicationContext context)
         {
             _context = context;
         }
 
         public IQueryable<Caixa> ObterLancamentos()
         {
-            return _context.Caixas.OrderBy(c => c.CaixaId);
+            return _context.Caixas.OrderBy(c => c.Id);
         }
 
         public async Task<Caixa> ObterLancamentoPorId(long id)
@@ -31,12 +31,12 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(c => c.Clinica)
                 .Include(c => c.Cliente)
                 .Include(c => c.Colaborador)
-                .SingleOrDefaultAsync(c => c.CaixaId == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Caixa> GravarLancamento(Caixa caixa)
         {
-            if (caixa.CaixaId == null)
+            if (caixa.Id == null)
             {                
                 _context.Caixas.Add(caixa);
             }

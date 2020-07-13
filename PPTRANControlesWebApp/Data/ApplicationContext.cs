@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PPTRANControlesWebApp.Data
 {
-    public class Context : DbContext
+    public class ApplicationContext : DbContext
     {
         //Construtora para as configurações do contexto
-        public Context(DbContextOptions<Context> options) : base(options) { }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //Mapeamento do modelo relacional
         public DbSet<Agenda> Agendas { get; set; }
@@ -23,8 +23,19 @@ namespace PPTRANControlesWebApp.Data
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<Foo>().ToTable("Bar");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Colaborador>().HasKey(c => c.Id);
+            modelBuilder.Entity<Colaborador>().HasOne(c => c.Clinica);
+            modelBuilder.Entity<Colaborador>().HasOne(c => c.Endereco);
+
+            //modelBuilder.Entity<Agenda>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Caixa>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Cliente>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Clinica>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
+            
+            
+            
         }
 
         //Sobrescrita do metodo de acesso ao db

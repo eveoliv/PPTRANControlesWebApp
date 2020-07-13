@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Endereco
+    public class Endereco : BaseModel
     {
-        //pk
-        [DisplayName("EndereçoId")]
-        public long? EnderecoId { get; set; }
+        public Endereco() { }
 
         [DisplayName("CPF")]
         public string CPF { get; set; }  
@@ -34,6 +32,8 @@ namespace Models
 
         [DisplayName("Complemento")]
         public string Complto { get; set; }
+
+        public string IdUser { get; set; }
 
         //fk
         public virtual Cliente Cliente { get; set; }

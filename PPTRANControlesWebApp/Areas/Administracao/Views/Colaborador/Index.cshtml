@@ -30,7 +30,7 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ColaboradorId)
+                                                @Html.DisplayNameFor(model => model.Id)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Nome)
@@ -55,7 +55,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ColaboradorId)
+                                                    @Html.DisplayFor(modelItem => item.Id)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Nome)
@@ -70,9 +70,9 @@
                                                     @Html.DisplayFor(modelItem => item.Clinica.Alias)
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Details" asp-route-id="@item.ColaboradorId" class="glyphicon glyphicon-zoom-in"></a> |
-                                                    <a asp-action="Edit" asp-route-id="@item.ColaboradorId" class="glyphicon glyphicon-edit"></a> |
-                                                    <a asp-action="Delete" asp-route-id="@item.ColaboradorId" class="glyphicon glyphicon-trash"></a>
+                                                    <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a> |
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a> |
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                                 </td>
                                             </tr>
                                         }

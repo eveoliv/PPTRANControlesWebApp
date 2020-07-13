@@ -31,7 +31,7 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ClienteId)
+                                                @Html.DisplayNameFor(model => model.Id)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.DtCadastro)
@@ -68,7 +68,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ClienteId)
+                                                    @Html.DisplayFor(modelItem => item.Id)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.DtCadastro)
@@ -96,10 +96,11 @@
                                                     @Html.DisplayFor(modelItem => item.Clinica.Alias)
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Details" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-zoom-in"></a> |
-                                                    <a asp-action="Edit" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-edit"></a> |
-                                                    <a asp-action="Delete" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-trash"></a>
-                                                    <a asp-action="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>
+                                                    <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a> |
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a> |
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
+                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
                                                     @*<a asp-action="Edit" asp-controller="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>*@
                                                 </td>
                                             </tr>

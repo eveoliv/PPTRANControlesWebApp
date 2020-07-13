@@ -5,10 +5,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Clinica
-    {
-        [DisplayName("ID")]
-        public long? ClinicaId { get; set; }
+    public class Clinica : BaseModel
+    {        
+        public Clinica() { }
 
         [DisplayName("Nome")]
         public string Nome { get; set; }
@@ -34,7 +33,7 @@ namespace Models
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
-        public string CpfUser { get; set; }
+        public string IdUser { get; set; }
 
         public virtual ICollection<Cliente> Cliente { get; set; }
         public virtual ICollection<Colaborador> Colaborador { get; set; }

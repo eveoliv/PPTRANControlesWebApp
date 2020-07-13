@@ -7,8 +7,8 @@ using PPTRANControlesWebApp.Data;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationContext))]
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -19,27 +19,7 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Agenda", b =>
                 {
-                    b.Property<long?>("AgendaId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long?>("ClienteId");
-
-                    b.Property<string>("CpfUser");
-
-                    b.Property<DateTime>("Data");
-
-                    b.Property<long?>("MedicoId");
-
-                    b.Property<long?>("PsicologoId");
-
-                    b.HasKey("AgendaId");
-
-                    b.ToTable("Agendas");
-                });
-
-            modelBuilder.Entity("Models.Caixa", b =>
-                {
-                    b.Property<long?>("CaixaId")
+                    b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<long?>("ClienteId");
@@ -48,7 +28,31 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ColaboradorId");
 
-                    b.Property<string>("CpfUser");
+                    b.Property<DateTime>("Data");
+
+                    b.Property<string>("IdUser");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("ClinicaId");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.ToTable("Agendas");
+                });
+
+            modelBuilder.Entity("Models.Caixa", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ClienteId");
+
+                    b.Property<long?>("ClinicaId");
+
+                    b.Property<long?>("ColaboradorId");
 
                     b.Property<DateTime>("Data");
 
@@ -56,13 +60,15 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Historico");
 
+                    b.Property<string>("IdUser");
+
                     b.Property<string>("Ref");
 
                     b.Property<int>("Tipo");
 
                     b.Property<decimal>("Valor");
 
-                    b.HasKey("CaixaId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
@@ -75,7 +81,7 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Cliente", b =>
                 {
-                    b.Property<long?>("ClienteId")
+                    b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CNH");
@@ -85,8 +91,6 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<int>("Categoria");
 
                     b.Property<long?>("ClinicaId");
-
-                    b.Property<string>("CpfUser");
 
                     b.Property<DateTime>("DtCadastro");
 
@@ -98,13 +102,15 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("EnderecoId");
 
-                    b.Property<long?>("EntrevistaId");
-
                     b.Property<string>("Escolaridade");
 
                     b.Property<string>("EstadoCivil");
 
+                    b.Property<string>("IdUser");
+
                     b.Property<string>("Mae");
+
+                    b.Property<long?>("MedicoId");
 
                     b.Property<string>("Nacionalidade");
 
@@ -118,9 +124,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Pai");
 
-                    b.Property<string>("PerfilPsicologico");
-
                     b.Property<string>("Profissao");
+
+                    b.Property<long?>("PsicologoId");
 
                     b.Property<string>("RG");
 
@@ -128,14 +134,11 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Telefone");
 
-                    b.HasKey("ClienteId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClinicaId");
 
                     b.HasIndex("EnderecoId")
-                        .IsUnique();
-
-                    b.HasIndex("EntrevistaId")
                         .IsUnique();
 
                     b.ToTable("Clientes");
@@ -143,18 +146,18 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Clinica", b =>
                 {
-                    b.Property<long?>("ClinicaId")
+                    b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias");
 
                     b.Property<string>("CNPJ");
 
-                    b.Property<string>("CpfUser");
-
                     b.Property<string>("Email");
 
                     b.Property<long?>("EnderecoId");
+
+                    b.Property<string>("IdUser");
 
                     b.Property<string>("Nome");
 
@@ -164,7 +167,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Tel2");
 
-                    b.HasKey("ClinicaId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EnderecoId");
 
@@ -173,7 +176,7 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Colaborador", b =>
                 {
-                    b.Property<long?>("ColaboradorId")
+                    b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CPF");
@@ -184,15 +187,15 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
-                    b.Property<string>("CpfUser");
-
                     b.Property<DateTime>("DtCadastro");
 
                     b.Property<string>("Email");
 
                     b.Property<long?>("EnderecoId");
 
-                    b.Property<string>("Funcao");
+                    b.Property<int>("Funcao");
+
+                    b.Property<string>("IdUser");
 
                     b.Property<string>("Nome");
 
@@ -202,7 +205,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Telefone");
 
-                    b.HasKey("ColaboradorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClinicaId");
 
@@ -214,7 +217,7 @@ namespace PPTRANControlesWebApp.Migrations
 
             modelBuilder.Entity("Models.Endereco", b =>
                 {
-                    b.Property<long?>("EnderecoId")
+                    b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Bairro");
@@ -229,83 +232,30 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Estado");
 
+                    b.Property<string>("IdUser");
+
                     b.Property<long?>("Numero");
 
                     b.Property<string>("Rua");
 
-                    b.HasKey("EnderecoId");
+                    b.HasKey("Id");
 
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("Models.Entrevista", b =>
+            modelBuilder.Entity("Models.Agenda", b =>
                 {
-                    b.Property<long?>("EntrevistaId")
-                        .ValueGeneratedOnAdd();
+                    b.HasOne("Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
 
-                    b.Property<int>("Acidente");
+                    b.HasOne("Models.Clinica", "Clinica")
+                        .WithMany()
+                        .HasForeignKey("ClinicaId");
 
-                    b.Property<int>("Alimentacao");
-
-                    b.Property<int>("AtividadeRem");
-
-                    b.Property<int>("Bebida");
-
-                    b.Property<string>("CPF");
-
-                    b.Property<int>("Cafe");
-
-                    b.Property<DateTime>("DataForm");
-
-                    b.Property<string>("Declaracao");
-
-                    b.Property<int>("Desmaios");
-
-                    b.Property<int>("Doencas");
-
-                    b.Property<string>("DoencasObs");
-
-                    b.Property<int>("Dominante");
-
-                    b.Property<int>("DorCabeca");
-
-                    b.Property<int>("Drogas");
-
-                    b.Property<string>("DrogasObs");
-
-                    b.Property<int>("Habilitado");
-
-                    b.Property<int>("Insonia");
-
-                    b.Property<int>("Medicamento");
-
-                    b.Property<string>("MedicamentoObs");
-
-                    b.Property<string>("Parecer");
-
-                    b.Property<int>("Pcd");
-
-                    b.Property<string>("PcdObs");
-
-                    b.Property<string>("ProcMedicoObs");
-
-                    b.Property<int>("ProcMedido");
-
-                    b.Property<long?>("PsicologoId");
-
-                    b.Property<int>("RelFamiliar");
-
-                    b.Property<int>("Tabagismo");
-
-                    b.Property<string>("TabagismoObs");
-
-                    b.Property<int>("Tonturas");
-
-                    b.Property<int>("TratPsicologico");
-
-                    b.HasKey("EntrevistaId");
-
-                    b.ToTable("Entrevista");
+                    b.HasOne("Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId");
                 });
 
             modelBuilder.Entity("Models.Caixa", b =>
@@ -332,10 +282,6 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Endereco", "Endereco")
                         .WithOne("Cliente")
                         .HasForeignKey("Models.Cliente", "EnderecoId");
-
-                    b.HasOne("Models.Entrevista", "Entrevista")
-                        .WithOne("Cliente")
-                        .HasForeignKey("Models.Cliente", "EntrevistaId");
                 });
 
             modelBuilder.Entity("Models.Clinica", b =>

@@ -16,15 +16,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
     [Authorize]
     public class ClienteController : Controller
     {
-        private readonly Context _context;
+        private readonly ApplicationContext _context;
         private readonly ClienteDAL clienteDAL;
         private readonly EnderecoDAL enderecoDAL;
+        private readonly ColaboradorDAL colaboradorDAL;
 
-        public ClienteController(Context context)
+        public ClienteController(ApplicationContext context)
         {
             _context = context;
             clienteDAL = new ClienteDAL(context);
             enderecoDAL = new EnderecoDAL(context);
+            colaboradorDAL = new ColaboradorDAL(context);
         }
 
         // GET: Clientes
@@ -40,8 +42,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return await ObterVisaoClientePorId(id);
         }
 
-        // GET: Cliente/Entrevista->Details
-        public async Task<IActionResult> Entrevista(long? id)
+        // GET: Cliente/Entrevista Psicologo->Details
+        public async Task<IActionResult> EntrevistaPsi(long? id)
+        {
+            return await ObterVisaoClientePorId(id);
+        }
+
+        // GET: Cliente/Entrevista Medicos->Details
+        public async Task<IActionResult> EntrevistaMed(long? id)
         {
             return await ObterVisaoClientePorId(id);
         }
@@ -50,8 +58,24 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         public IActionResult Create()
         {            
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { ClinicaId = 0, Alias = "Clinica" });
+            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
+
+
+            var medicos = _context.Colaboradores
+                .Where(c => c.Funcao == EnumHelper.Funcao.Medico)
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .OrderBy(c => c.Nome).ToList();
+            medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
+            ViewBag.Medicos = medicos;
+
+            var psicologos = _context.Colaboradores
+                .Where(c => c.Funcao == EnumHelper.Funcao.Psicologo)
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .OrderBy(c => c.Nome).ToList();
+            psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
+            ViewBag.Psicologos = psicologos;
+
 
             return View();
         }
@@ -72,7 +96,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).Single();
 
                     model.Cliente.DtCadastro = DateTime.Today;
-                    model.Cliente.EnderecoId = idEndereco.EnderecoId;
+                    model.Cliente.EnderecoId = idEndereco.Id;
                     await clienteDAL.GravarCliente(model.Cliente);
 
                     return RedirectToAction(nameof(Index));
@@ -87,7 +111,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(long id)
-        {
+        {            
             return await ObterVisaoClientePorId(id);
         }
 
@@ -96,7 +120,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Cliente cliente)
         {
-            if (id != cliente.ClienteId)
+            if (id != cliente.Id)
             {
                 return NotFound();
             }
@@ -149,11 +173,42 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 return NotFound();
             }
 
-            ViewBag.ClinicaNome = cliente.Clinica.Alias;
-            ViewBag.Clinicas = 
-                new SelectList(_context.Clinicas.OrderBy(b => b.Nome), "ClinicaId", "Alias", cliente.ClienteId);
+            CarregarViewBagsPorNome(cliente);
+
+            CarregarViewBagsComLista(cliente);
 
             return View(cliente);
+        }
+
+        private void CarregarViewBagsPorNome(Cliente cliente)
+        {
+            ViewBag.ClinicaNome = 
+                cliente.Clinica.Alias.ToString();                       
+
+            ViewBag.MedicoNome = 
+                colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
+
+            ViewBag.PsicologoNome = 
+                colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
+        }
+
+        private void CarregarViewBagsComLista(Cliente cliente)
+        {
+            ViewBag.Clinicas =
+                new SelectList(_context.Clinicas
+                .OrderBy(b => b.Nome), "Id", "Alias", cliente.Id);
+
+            ViewBag.Medico =
+                new SelectList(_context.Colaboradores
+                .Where(m => m.Funcao == EnumHelper.Funcao.Medico)
+                .Where(m => m.Status == EnumHelper.Status.Ativo)
+                .OrderBy(m => m.Nome), "Id", "Nome", cliente.Id);
+
+            ViewBag.Psicologo =
+                new SelectList(_context.Colaboradores
+                .Where(m => m.Funcao == EnumHelper.Funcao.Psicologo)
+                .Where(m => m.Status == EnumHelper.Status.Ativo)
+                .OrderBy(m => m.Nome), "Id", "Nome", cliente.Id);
         }
     }
 }

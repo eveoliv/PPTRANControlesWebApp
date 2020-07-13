@@ -17,7 +17,7 @@
             <div class="x_title">
                 <h2>Ficha do Cliente</h2>
                 <ul class="nav navbar-right panel_toolbox">
-                    <a asp-action="Edit" asp-route-id="@Model.ClienteId" class="">Editar</a>&nbsp; | &nbsp;
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="">Editar</a>&nbsp; | &nbsp;
                     <a asp-action="Index">Retornar</a>
                 </ul>
                 <div class="clearfix"></div>
@@ -41,10 +41,10 @@
                             <hr />
                             <dl class="row">
                                 <dt class="col-sm-2">
-                                    @Html.HiddenFor(model => model.ClienteId)
+                                    @Html.HiddenFor(model => model.Id)
                                 </dt>
                                 <dd class="col-sm-10">
-                                    @Html.HiddenFor(model => model.ClienteId)
+                                    @Html.HiddenFor(model => model.Id)
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
@@ -57,10 +57,6 @@
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Email)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
                                     <input asp-for="Email" type="text" class="form-control" disabled="disabled">
-                                </dd>
-                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.PerfilPsicologico)</dt>
-                                <dd class="col-md-9 col-sm-9 ">
-                                    <input asp-for="PerfilPsicologico" type="text" class="form-control" disabled="disabled">
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Pai)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
@@ -97,9 +93,16 @@
 
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.ClinicaId)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
-                                    <input value="@ViewBag.ClinicaNome" type="text" class="form-control" disabled="disabled"/>
+                                    <input value="@ViewBag.ClinicaNome" type="text" class="form-control" disabled="disabled" />
                                 </dd>
-
+                                <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input value="@ViewBag.MedicoNome" type="text" class="form-control" disabled="disabled" />
+                                </dd>
+                                <dt class="col-form-label col-md-3 col-sm-3 ">Psicólogo (a)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input value="@ViewBag.PsicologoNome" type="text" class="form-control" disabled="disabled" />
+                                </dd>
 
                             </dl>
                         </div>

@@ -8,9 +8,9 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class EnderecoDAL
     {
-        private Context _context;
+        private ApplicationContext _context;
 
-        public EnderecoDAL(Context context)
+        public EnderecoDAL(ApplicationContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace PPTRANControlesWebApp.Data.DAL
 
         public async Task<Endereco> GravarEndereco(Endereco endereco)
         {
-            if (endereco.EnderecoId == null)
+            if (endereco.Id == null)
             {
                 _context.Add(endereco);
             }

@@ -14,13 +14,7 @@ namespace Models
             FREQUENTE, SOCIAL,
             BOM, REGULAR, RUIM,
             DESTRO, CANHOTO, AMBIDESTRO
-        };
-
-        public enum Clinica
-        {
-            Clinica1 = 1,
-            Clinica2
-        };
+        };      
 
         public enum Tipo
         {
@@ -31,7 +25,8 @@ namespace Models
         public enum FormaPgto
         {
             Cartao = 1,            
-            Dinheiro
+            Dinheiro,
+            Cheque
         };
 
         public enum Categoria
@@ -45,5 +40,14 @@ namespace Models
             Ativo,
             Inativo    
         };
+
+        public enum Funcao
+        {
+            Administrador = 1,
+            Atendente,
+            Gerente,
+            Medico,            
+            Psicologo,            
+        }
     }
 }

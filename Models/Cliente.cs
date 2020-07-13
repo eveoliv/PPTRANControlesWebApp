@@ -6,10 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class Cliente
-    {       
-        [DisplayName("ID")]
-        public long? ClienteId { get; set; }
+    public class Cliente : BaseModel
+    {              
+        public Cliente() { }
 
         [DisplayName("Data Cadastro")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -36,10 +35,7 @@ namespace Models
 
         [DisplayName("Telefone")]
         public string Telefone { get; set; }
-
-        [DisplayName("Perfil Psicologico")] 
-        public string PerfilPsicologico { get; set; }
-
+    
         [DisplayName("Numero do Laudo")]
         public string NumLaudo { get; set; }
 
@@ -83,12 +79,15 @@ namespace Models
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
 
+        [DisplayName("Medico")]
+        public long? MedicoId { get; set; }       
+
+        [DisplayName("Psicologo")]
+        public long? PsicologoId { get; set; }       
+
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
-        public long? EntrevistaId { get; set; }
-        public Entrevista Entrevista { get; set; }
-
-        public string CpfUser { get; set; }
+        public string IdUser { get; set; }
     }
 }

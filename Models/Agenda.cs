@@ -6,10 +6,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Agenda
+    public class Agenda : BaseModel
     {
-        [DisplayName("ID")]
-        public long? AgendaId { get; set; }
+        public Agenda() { }
 
         [DisplayName("Data")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -18,13 +17,15 @@ namespace Models
 
         [DisplayName("Cliente")]
         public long? ClienteId { get; set; }
+        public Cliente Cliente { get; set; }
 
-        [DisplayName("Psicologo")]
-        public long? PsicologoId { get; set; }
+        [DisplayName("Clinica")]
+        public long? ClinicaId { get; set; }
+        public Clinica Clinica { get; set; }
 
-        [DisplayName("Medico")]
-        public long? MedicoId { get; set; }
+        [DisplayName("Colaborador")]
+        public Colaborador Colaborador { get; set; }
 
-        public string CpfUser { get; set; }
+        public string IdUser { get; set; }
     }
 }

@@ -6,10 +6,9 @@ using System.Text;
 
 namespace Models
 {
-    public class Colaborador
+    public class Colaborador : BaseModel
     {
-        [DisplayName("ID")]
-        public long? ColaboradorId { get; set; }
+        public Colaborador() { }      
 
         [DisplayName("Data de Início")]       
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -38,17 +37,17 @@ namespace Models
         public string Telefone { get; set; }
 
         [DisplayName("Função")]
-        public string Funcao { get; set; }
-        //public EnumHelper.Clinica Clinica { get; set; }
+        public EnumHelper.Funcao Funcao { get; set; }
 
+        [DisplayName("Status")]
         public EnumHelper.Status Status { get; set; }
-
+     
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
-
+       
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
-        public string CpfUser { get; set; }
+        public string IdUser { get; set; }
     }
 }

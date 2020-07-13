@@ -17,11 +17,11 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
     [Authorize]
     public class ClinicaController : Controller
     {
-        private readonly Context _context;
+        private readonly ApplicationContext _context;
         private readonly ClinicaDAL clinicaDAL;
         private readonly EnderecoDAL enderecoDAL;
 
-        public ClinicaController(Context context)
+        public ClinicaController(ApplicationContext context)
         {
             _context = context;
             clinicaDAL = new ClinicaDAL(context);
@@ -62,7 +62,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     await enderecoDAL.GravarEndereco(model.Endereco);
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cnpj select e).Single();
                     
-                    model.Clinica.EnderecoId = idEndereco.EnderecoId;
+                    model.Clinica.EnderecoId = idEndereco.Id;
                     await clinicaDAL.GravarClinica(model.Clinica);
 
                     return RedirectToAction(nameof(Index));
@@ -86,7 +86,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Clinica clinica)
         {
-            if (id != clinica.ClinicaId)
+            if (id != clinica.Id)
             {
                 return NotFound();
             }

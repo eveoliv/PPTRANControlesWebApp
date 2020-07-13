@@ -11,6 +11,7 @@ using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
+using PPTRANControlesWebApp.Repositories;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -18,23 +19,26 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
     [Authorize]
     public class ColaboradorController : Controller
     {
-        private readonly Context _context;
-        private readonly EnderecoDAL enderecoDAL;
-        private readonly ColaboradorDAL colaboradorDAL;
-        private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly UserManager<AppIdentityUser> userManager;       
 
-        public ColaboradorController(Context context, UserManager<AppIdentityUser> userManager)
+        private readonly ApplicationContext _context;
+        private readonly EnderecoDAL enderecoDAL;
+        private readonly ColaboradorDAL colaboradorDAL;        
+
+        public ColaboradorController(ApplicationContext context, 
+            UserManager<AppIdentityUser> userManager)
         {
             _context = context;
-            _userManager = userManager;
-            colaboradorDAL = new ColaboradorDAL(context);
             enderecoDAL = new EnderecoDAL(context);
+            colaboradorDAL = new ColaboradorDAL(context);
+
+            this.userManager = userManager;           
         }
 
         // GET: Colaboradores
         public async Task<IActionResult> Index()
         {
-            var colaboradores = await colaboradorDAL.ObterColaboradoresPorNome().ToListAsync();
+            var colaboradores = await colaboradorDAL.ObterColaboradoresPorNome().ToListAsync();            
             return View(colaboradores);
         }
 
@@ -48,7 +52,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         public IActionResult Create()
         {
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { ClinicaId = 0, Alias = "Clinica" });
+            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;                             
 
             return View();
@@ -60,7 +64,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
         {
-            var usuario = await _userManager.GetUserAsync(User);
+            var usuario = await userManager.GetUserAsync(User);
 
             try
             {
@@ -73,7 +77,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).FirstOrDefault();
 
                     model.Colaborador.DtCadastro = DateTime.Today;
-                    model.Colaborador.EnderecoId = idEndereco.EnderecoId;
+                    model.Colaborador.Endereco.Id = idEndereco.Id;
                     await colaboradorDAL.GravarColaborador(model.Colaborador);
 
                     return RedirectToAction(nameof(Index));
@@ -98,7 +102,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Colaborador colaborador)
         {
-            if (id != colaborador.ColaboradorId)
+            if (id != colaborador.Id)
             {
                 return NotFound();
             }
@@ -152,10 +156,22 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 return NotFound();
             }
 
-            ViewBag.ClinicaNome = colaborador.Clinica.Alias;
-            ViewBag.Clinicas =
-              new SelectList(_context.Clinicas.OrderBy(b => b.Nome), "ClinicaId", "Alias", colaborador.ColaboradorId);
+            CarregarViewBagsPorNome(colaborador);
+            CarregarViewBagsComLista(colaborador);
+
             return View(colaborador);
         }
+
+        private void CarregarViewBagsPorNome(Colaborador colaborador)
+        {
+            ViewBag.ClinicaNome = colaborador.Clinica.Alias;
+        }
+
+        private void CarregarViewBagsComLista(Colaborador colaborador)
+        {
+            ViewBag.Clinicas =
+              new SelectList(_context.Clinicas.OrderBy(b => b.Nome), "Id", "Alias", colaborador.Id);
+        }
+
     }
 }

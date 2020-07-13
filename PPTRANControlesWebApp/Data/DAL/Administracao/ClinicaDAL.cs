@@ -9,9 +9,9 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ClinicaDAL
     {
-        private Context _context;
+        private ApplicationContext _context;
 
-        public ClinicaDAL(Context context)
+        public ClinicaDAL(ApplicationContext context)
         {
             _context = context;
         }
@@ -29,12 +29,12 @@ namespace PPTRANControlesWebApp.Data.DAL
             return await _context.Clinicas
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .SingleOrDefaultAsync(c => c.ClinicaId == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Clinica> GravarClinica(Clinica clinica)
         {
-            if (clinica.ClinicaId == null)
+            if (clinica.Id == null)
             {
                 clinica.Status = EnumHelper.Status.Ativo;
                 _context.Clinicas.Add(clinica);
