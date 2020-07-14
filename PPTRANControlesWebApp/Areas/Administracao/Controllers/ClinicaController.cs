@@ -68,7 +68,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     await enderecoDAL.GravarEndereco(model.Endereco);
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cnpj select e).Single();
                     
-                    model.Clinica.EnderecoId = idEndereco.Id;
+                    model.Clinica.Endereco.Id = idEndereco.Id;
                     await clinicaDAL.GravarClinica(model.Clinica);
 
                     return RedirectToAction(nameof(Index));

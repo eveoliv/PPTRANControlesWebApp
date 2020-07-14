@@ -11,5 +11,6 @@ namespace PPTRANControlesWebApp.Models
         public Cliente Cliente { get; set; }
         public Endereco Endereco { get; set; }        
         public Clinica Clinica { get; set; }
+        public Historico Historico { get; set; }
     }
 }

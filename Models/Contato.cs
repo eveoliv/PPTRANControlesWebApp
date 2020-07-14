@@ -24,5 +24,8 @@ namespace Models
      
         [DisplayName("Endereco")]
         public Endereco Endereco { get; set; }
+
+        [DisplayName("Usuário")]
+        public string IdUser { get; set; }
     }
 }

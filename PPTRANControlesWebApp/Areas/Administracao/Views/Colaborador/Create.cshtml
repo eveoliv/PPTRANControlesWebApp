@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>                                
+                                <select asp-for="Colaborador.Clinica.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>                                
                             </div>
                         </div>
 

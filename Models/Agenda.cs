@@ -26,6 +26,7 @@ namespace Models
         [DisplayName("Colaborador")]
         public Colaborador Colaborador { get; set; }
 
+        [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }
 }

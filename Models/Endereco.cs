@@ -33,11 +33,13 @@ namespace Models
         [DisplayName("Complemento")]
         public string Complto { get; set; }
 
+        [DisplayName("Usuário")]
         public string IdUser { get; set; }
 
         //fk
-        public virtual Cliente Cliente { get; set; }
-        public virtual Colaborador Colaborador { get; set; }
+        public Cliente Cliente { get; set; }
+        public Colaborador Colaborador { get; set; }
+        public Clinica Clinica { get; set;  }
 
     }
 }

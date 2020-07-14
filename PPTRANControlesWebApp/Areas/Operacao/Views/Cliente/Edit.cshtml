@@ -93,17 +93,23 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Escolaridade" type="text" class="form-control">
                                         </dd>
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.ClinicaId)</dt>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Id)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
+                                            <select asp-for="Clinica.Id" class="form-control" asp-items=@ViewBag.Clinicas></select>
                                         </dd>
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Historico.Id)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="Historico.Id" class="form-control" asp-items=@ViewBag.Historico></select>
+                                        </dd>
+
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Medico></select>
+                                            <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico></select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Psicólogo (a)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Psicologo></select>
+                                            <select asp-for="PsicologoId" class="form-control" asp-items=@ViewBag.Psicologo></select>
                                         </dd>
                                     </dl>
                                 </div>
@@ -149,10 +155,10 @@
                                     <hr />
                                     <dl class="row">
                                         <dt class="col-sm-2">
-                                            @Html.HiddenFor(model => model.EnderecoId)
+                                            @Html.HiddenFor(model => model.Endereco.Id)
                                         </dt>
                                         <dd class="col-sm-10">
-                                            @Html.HiddenFor(model => model.EnderecoId)
+                                            @Html.HiddenFor(model => model.Endereco.Id)
                                         </dd>
 
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cep)</dt>

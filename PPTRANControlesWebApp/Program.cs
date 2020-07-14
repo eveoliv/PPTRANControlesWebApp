@@ -25,7 +25,7 @@ namespace PPTRANControlesWebApp
                 try
                 {
                     var context = services.GetRequiredService<ApplicationContext>();
-                   // ContextInitializer.Initialize(context);
+                    //ContextInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

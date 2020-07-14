@@ -99,15 +99,17 @@
                                 <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" class="form-control">
                             </div>
                             @*---------------------------------------------------*@
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <select asp-for="Cliente.Clinica.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                            </div>                            
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
                             </div>
-
-                            <div class="col-md-4 col-sm-12  form-group">
+                            <div class="col-md-3 col-sm-12  form-group">
                                 <select asp-for="Cliente.MedicoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
                             </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <select asp-for="Cliente.Historico.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>
                             </div>
                         </div>
 

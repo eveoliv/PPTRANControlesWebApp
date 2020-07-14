@@ -74,17 +74,17 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return View(produto);
         }
 
-        public async Task<IActionResult> Carrinho(long id, CaixaViewModel model)
-        {
-            var cliente = await clienteDAL.ObterClientePorId(id);
+        public IActionResult Carrinho()
+        {           
             
             return  View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Carrinho(CaixaViewModel model)
+        public async Task<IActionResult> Carrinho(long id,CaixaViewModel model)
         {
+            var cliente = await clienteDAL.ObterClientePorId(id);
             try
             {
                 if (ModelState.IsValid)

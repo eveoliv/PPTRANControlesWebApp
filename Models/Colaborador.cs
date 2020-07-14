@@ -42,12 +42,13 @@ namespace Models
         [DisplayName("Status")]
         public EnumHelper.Status Status { get; set; }
      
-        public long? ClinicaId { get; set; }
+        //public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
        
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
+        [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }
 }

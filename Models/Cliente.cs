@@ -79,19 +79,21 @@ namespace Models
         [DisplayName("Pagamento Realizado")]
         public EnumHelper.OptForm StatusPgto { get; set; }
 
-        [DisplayName("Clinica")]
-        public long? ClinicaId { get; set; }
-        public Clinica Clinica { get; set; }
-
         [DisplayName("Medico")]
         public long? MedicoId { get; set; }       
 
         [DisplayName("Psicologo")]
         public long? PsicologoId { get; set; }       
 
+        [DisplayName("Clinica")]
+        public Clinica Clinica { get; set; }
+
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
+     
+        public Historico Historico { get; set; }
 
+        [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }
 }

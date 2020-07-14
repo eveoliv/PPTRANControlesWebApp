@@ -11,6 +11,11 @@ namespace Models
 
         [DisplayName("Nome Exame")]
         public string Nome { get; set; }
-        public decimal Valor { get; set; }      
+
+        [DisplayName("Valor Exame")]
+        public decimal Valor { get; set; }
+
+        [DisplayName("Usuário")]
+        public string IdUser { get; set; }
     }
 }

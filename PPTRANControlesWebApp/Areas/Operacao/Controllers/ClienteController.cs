@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Data.DAL.Financeiro;
 using PPTRANControlesWebApp.Models;
 
@@ -22,6 +23,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly EnderecoDAL enderecoDAL;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly ProdutoDAL produtoDAL;
+        private readonly HistoricoDAL historicoDAL;
 
         public ClienteController(ApplicationContext context)
         {
@@ -30,6 +32,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             enderecoDAL = new EnderecoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
             produtoDAL = new ProdutoDAL(context);
+            historicoDAL = new HistoricoDAL(context);
         }
 
         // GET: Clientes
@@ -61,24 +64,26 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         public IActionResult Create()
         {            
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+                clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
-
 
             var medicos = _context.Colaboradores
                 .Where(c => c.Funcao == EnumHelper.Funcao.Medico)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .OrderBy(c => c.Nome).ToList();
-            medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
+                medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
             ViewBag.Medicos = medicos;
 
             var psicologos = _context.Colaboradores
                 .Where(c => c.Funcao == EnumHelper.Funcao.Psicologo)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .OrderBy(c => c.Nome).ToList();
-            psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
+                psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
 
+            var historicos = _context.Historicos.OrderBy(h => h.Nome).ToList();
+                historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
+            ViewBag.Historicos = historicos;
 
             return View();
         }
@@ -99,7 +104,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).Single();
 
                     model.Cliente.DtCadastro = DateTime.Today;
-                    model.Cliente.EnderecoId = idEndereco.Id;
+                    model.Cliente.Endereco.Id = idEndereco.Id;
                     await clienteDAL.GravarCliente(model.Cliente);
 
                     return RedirectToAction(nameof(Index));
@@ -193,6 +198,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             ViewBag.PsicologoNome = 
                 colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
+
+            ViewBag.HistoricoNome = 
+                historicoDAL.ObterHistoricoPorId((long)cliente.Historico.Id).Result.Nome.ToString();
         }
 
         private void CarregarViewBagsComLista(Cliente cliente)
@@ -212,6 +220,10 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 .Where(m => m.Funcao == EnumHelper.Funcao.Psicologo)
                 .Where(m => m.Status == EnumHelper.Status.Ativo)
                 .OrderBy(m => m.Nome), "Id", "Nome", cliente.Id);
+
+            ViewBag.Historico = 
+                new SelectList(_context.Historicos
+                .OrderBy(h => h.Nome), "Id", "Nome", cliente.Id);
         }
     }
 }

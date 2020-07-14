@@ -91,7 +91,7 @@
                                     <input asp-for="Escolaridade" type="text" class="form-control" disabled="disabled">
                                 </dd>
 
-                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.ClinicaId)</dt>
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Id)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
                                     <input value="@ViewBag.ClinicaNome" type="text" class="form-control" disabled="disabled" />
                                 </dd>
@@ -145,10 +145,10 @@
                             <hr />
                             <dl class="row">
                                 <dt class="col-sm-2">
-                                    @Html.HiddenFor(model => model.EnderecoId)
+                                    @Html.HiddenFor(model => model.Endereco.Id)
                                 </dt>
                                 <dd class="col-sm-10">
-                                    @Html.HiddenFor(model => model.EnderecoId)
+                                    @Html.HiddenFor(model => model.Endereco.Id)
                                 </dd>
 
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cep)</dt>
