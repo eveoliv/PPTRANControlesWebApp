@@ -11,7 +11,6 @@ using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
-using PPTRANControlesWebApp.Repositories;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -28,11 +27,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         public ColaboradorController(ApplicationContext context, 
             UserManager<AppIdentityUser> userManager)
         {
+            this.userManager = userManager;           
+
             _context = context;
             enderecoDAL = new EnderecoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
 
-            this.userManager = userManager;           
         }
 
         // GET: Colaboradores

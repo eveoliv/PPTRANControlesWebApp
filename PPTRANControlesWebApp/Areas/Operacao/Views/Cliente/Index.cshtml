@@ -39,24 +39,24 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Nome)
                                             </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.NumRenach)
-                                            </th>
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.NumRenach)
+                                                </th>*@
                                             @*<th>
                                                     @Html.DisplayNameFor(model => model.CNH)
-                                                </th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.CPF)
                                                 </th>*@
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Categoria)
+                                                @Html.DisplayNameFor(model => model.CPF)
                                             </th>
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.Categoria)
+                                                </th>*@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Telefone)
                                             </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Clinica)
-                                            </th>
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.Clinica)
+                                                </th>*@
                                             <th>
                                                 Opções
                                             </th>
@@ -76,32 +76,32 @@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Nome)
                                                 </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.NumRenach)
-                                                </td>
+                                                @*<td>
+                                                        @Html.DisplayFor(modelItem => item.NumRenach)
+                                                    </td>*@
                                                 @*<td>
                                                         @Html.DisplayFor(modelItem => item.CNH)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.CPF)
                                                     </td>*@
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Categoria)
+                                                    @Html.DisplayFor(modelItem => item.CPF)
                                                 </td>
+                                                @*<td>
+                                                    @Html.DisplayFor(modelItem => item.Categoria)
+                                                </td>*@
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Telefone)
                                                 </td>
 
-                                                <td>
+                                                @*<td>
                                                     @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                                </td>
+                                                </td>*@
                                                 <td>
+                                                    <a asp-area="Financeiro" asp-controller="Produto" asp-action="Carrinho" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
                                                     <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a> |
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a> |
+                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-star-empty"></a>
+                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-star"></a>
                                                     <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
-                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
-                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
-                                                    @*<a asp-action="Edit" asp-controller="Entrevista" asp-route-id="@item.ClienteId" class="glyphicon glyphicon-file"></a>*@
                                                 </td>
                                             </tr>
                                         }

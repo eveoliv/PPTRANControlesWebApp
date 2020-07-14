@@ -16,7 +16,7 @@ namespace Models
         public DateTime Data { get; set; }
 
         [DisplayName("Histórico")]
-        public string Historico { get; set; }
+        public EnumHelper.Historico Historico { get; set; }
 
         //cartao, dinheiro
         [DisplayName("Tipo")]
@@ -33,6 +33,10 @@ namespace Models
         [DisplayName("Referência")]
         public string Ref { get; set; }
 
+        [DisplayName("Produto")]
+        public long? ProdutoId { get; set; }
+        public Produto Produto { get; set; }
+
         [DisplayName("Cliente")]
         public long? ClienteId { get; set; }
         public Cliente Cliente { get; set; }       
@@ -41,9 +45,9 @@ namespace Models
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
 
-        [DisplayName("Colaborador")]
-        public long? ColaboradorId { get; set; }
-        public Colaborador Colaborador { get; set; }
+        //[DisplayName("Colaborador")]
+        //public long? ColaboradorId { get; set; }
+        //public Colaborador Colaborador { get; set; }
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }

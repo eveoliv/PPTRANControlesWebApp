@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Models;
@@ -17,12 +19,16 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
     [Authorize]
     public class ClinicaController : Controller
     {
+        private readonly UserManager<AppIdentityUser> userManager;
         private readonly ApplicationContext _context;
         private readonly ClinicaDAL clinicaDAL;
         private readonly EnderecoDAL enderecoDAL;
 
-        public ClinicaController(ApplicationContext context)
+        public ClinicaController(ApplicationContext context, 
+            UserManager<AppIdentityUser> userManager)
         {
+            this.userManager = userManager;
+
             _context = context;
             clinicaDAL = new ClinicaDAL(context);
             enderecoDAL = new EnderecoDAL(context);

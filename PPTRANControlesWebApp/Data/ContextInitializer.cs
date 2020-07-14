@@ -13,12 +13,12 @@ namespace PPTRANControlesWebApp.Data.DAL
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+            /********************************* Endereços ************************************************/
             if (context.Enderecos.Any())
             {
                 return;
             }
 
-            /************************ Endereço clinica *********************************/
             var enderecos = new Endereco[]
             {
                 //clinicas
@@ -40,9 +40,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                 context.Enderecos.Add(e);
             }
             context.SaveChanges();
-            /**********************************************************************************/
 
-            /************************ Endereço clinica *********************************/
+            /********************************** CLINICAS ************************************************/           
             if (context.Clinicas.Any())
             {
                 return;
@@ -57,9 +56,10 @@ namespace PPTRANControlesWebApp.Data.DAL
             foreach (Clinica c in clinicas)
             {
                 context.Add(c);
-                context.SaveChanges();
             }
-            /**********************************************************************************/
+            context.SaveChanges();
+
+            /********************************** CLIENTES ************************************************/
             if (context.Clientes.Any())
             {
                 return;
@@ -76,16 +76,18 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Telefone = "(11)97699-4991",
                     ClinicaId = 1,
                     CPF = "222.205.648-90",
+                    PsicologoId = 2,
+                    MedicoId = 3,
                     EnderecoId = 3}
             };
 
             foreach (Cliente c in clientes)
             {
                 context.Add(c);
-                context.SaveChanges();
             }
+            context.SaveChanges();
 
-            /**********************************************************************************/
+            /*********************************** COLABORADORES ******************************************/
             if (context.Colaboradores.Any())
             {
                 return;
@@ -121,19 +123,66 @@ namespace PPTRANControlesWebApp.Data.DAL
             foreach (Colaborador c in colaborador)
             {
                 context.Add(c);
-                context.SaveChanges();
             }
+            context.SaveChanges();
 
-            /**********************************************************************************/
+            /************************************ AGENDAS ***********************************************/
             if (context.Agendas.Any())
             {
                 return;
             }
 
+            /************************************ CAIXAS ************************************************/
             if (context.Caixas.Any())
             {
                 return;
             }
+
+            /************************************ PRODUTOS ********************************************/
+            if (context.Produtos.Any())
+            {
+                return;
+            }
+
+            var produto = new Produto[]
+            {
+                new Produto{ Nome = "Exame Médico", Valor = 91.11M},
+                new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M},
+                new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M},
+                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M}
+            };
+
+            foreach (Produto c in produto)
+            {
+                context.Add(c);
+            }
+            context.SaveChanges();
+
+            /************************************ PRODUTOS ********************************************/
+            if (context.Historicos.Any())
+            {
+                return;
+            }
+
+            var historico = new Historico[]
+            {
+                new Historico{ Nome = "Inscrição CNH"},
+                new Historico{ Nome = "Renovação Ex."},
+                new Historico{ Nome = "2ª Via CNH"},
+                new Historico{ Nome = "Mudança/Adição"},
+                new Historico{ Nome = "Licença Estr."},
+                new Historico{ Nome = "Registro CNH"},
+                new Historico{ Nome = "Baixa Condutor"},
+                new Historico{ Nome = "Alteração de Dados"},
+                new Historico{ Nome = "Laudo Pessoa com Deficiência"}                                
+            };
+
+            foreach (Historico i in historico)
+            {
+                context.Add(i);
+            }
+            context.SaveChanges();
         }
     }
 }
+

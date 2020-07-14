@@ -21,11 +21,11 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
     [Authorize]
     public class CaixaController : Controller
     {
+        private readonly UserManager<AppIdentityUser> _userManager;
         private readonly ApplicationContext _context;
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
         private readonly ColaboradorDAL colaboradorDAL;
-        private readonly UserManager<AppIdentityUser> _userManager;
 
         public CaixaController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -41,14 +41,14 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             var lancamentos = await caixaDAL.ObterLancamentos().ToListAsync();
             return View(lancamentos);
-        }
+        }       
 
         // GET: Caixa/Details/5
         public async Task<IActionResult> Details(long id)
         {
             return await ObterVisaoLancamentoPorId(id);
         }
-
+             
         // GET: Caixa/Create
         public IActionResult Create()
         {
@@ -65,17 +65,13 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public async Task<IActionResult> Create(CaixaViewModel model)
         {
             var cpf = model.Caixa.Cliente.CPF;
-            var usuarioId = _userManager.GetUserAsync(User).Result.Id;
-
-            //var idCol = (from c in _context.Colaboradores where c.CPF == usuarioCpf select c).FirstOrDefault();
+            var usuarioId = _userManager.GetUserAsync(User).Result.Id;            
             var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();            
 
             try
             {
                 if (model.Caixa.Cliente.CPF != null && idCli != null )
-                {
-                    //model.Caixa.ColaboradorId = idCol.ColaboradorId; Id do usuario logado
-                    //model.Caixa.CpfUser = usuarioCpf;
+                {                   
                     model.Caixa.IdUser = usuarioId;
                     model.Caixa.ClienteId = idCli.Id;
                     model.Caixa.ClinicaId = model.Clinica.Id;
@@ -97,6 +93,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             return View();
         }
+
 
         // POST: Caixa/Edit/5
         [HttpPost]

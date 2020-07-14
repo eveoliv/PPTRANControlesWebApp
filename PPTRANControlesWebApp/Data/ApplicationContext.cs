@@ -18,7 +18,10 @@ namespace PPTRANControlesWebApp.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Clinica> Clinicas { get; set; }
         public DbSet<Colaborador> Colaboradores { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }       
+        public DbSet<Endereco> Enderecos { get; set; }     
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Contato> Contatos { get; set; }
+        public DbSet<Historico> Historicos { get; set; }
 
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)

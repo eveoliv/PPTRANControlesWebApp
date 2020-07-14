@@ -29,8 +29,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return await _context.Caixas
                 .Include(c => c.Clinica)
-                .Include(c => c.Cliente)
-                .Include(c => c.Colaborador)
+                .Include(c => c.Cliente)                
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 

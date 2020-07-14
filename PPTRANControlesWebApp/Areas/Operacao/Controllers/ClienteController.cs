@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Data.DAL.Financeiro;
 using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
@@ -20,6 +21,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly ClienteDAL clienteDAL;
         private readonly EnderecoDAL enderecoDAL;
         private readonly ColaboradorDAL colaboradorDAL;
+        private readonly ProdutoDAL produtoDAL;
 
         public ClienteController(ApplicationContext context)
         {
@@ -27,6 +29,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             clienteDAL = new ClienteDAL(context);
             enderecoDAL = new EnderecoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
+            produtoDAL = new ProdutoDAL(context);
         }
 
         // GET: Clientes

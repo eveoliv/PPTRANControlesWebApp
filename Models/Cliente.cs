@@ -73,7 +73,11 @@ namespace Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
+        [DisplayName("Status Cliente")]
         public EnumHelper.Status Status { get; set; }
+
+        [DisplayName("Pagamento Realizado")]
+        public EnumHelper.OptForm StatusPgto { get; set; }
 
         [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }
