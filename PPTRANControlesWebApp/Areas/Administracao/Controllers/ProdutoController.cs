@@ -84,7 +84,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Carrinho(long id,CaixaViewModel model)
         {
-            var cliente = await clienteDAL.ObterClientePorId(id);
+            var cliente = await clienteDAL.ObterClientesPorId(id);
             try
             {
                 if (ModelState.IsValid)

@@ -46,9 +46,7 @@
                                     <hr />
                                     <dl class="row">
                                         @Html.HiddenFor(model => model.Id)
-
                                         @Html.HiddenFor(model => model.DtCadastro)
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Nome" type="text" class="form-control">
@@ -61,7 +59,6 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Email" type="text" class="form-control">
                                         </dd>
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Pai)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Pai" type="text" class="form-control">
@@ -118,8 +115,7 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
                                                 <option selected="selected" value="">Categoria</option>
-                                            </select>
-                                            @*<input asp-for="Categoria" type="text" class="form-control">*@
+                                            </select>                                            
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.NumRenach)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
@@ -137,12 +133,7 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-
                                         @Html.HiddenFor(model => model.Endereco.Id)
-
-                                        @Html.HiddenFor(model => model.Endereco.CPF)
-
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cep)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Endereco.Cep" type="text" class="form-control">
@@ -179,7 +170,6 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.DtCadastro)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="DtCadastro" type="text" class="form-control">
@@ -188,17 +178,14 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="NumLaudo" type="text" class="form-control">
                                         </dd>
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
                                         </dd>
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Historico.Nome)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="HistoricoId" class="form-control" asp-items=@ViewBag.Historico></select>
                                         </dd>
-
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico></select>
@@ -212,14 +199,14 @@
                                             <select asp-for="StatusPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()">
                                                 <option selected="selected" value=""></option>
                                             </select>
-
                                         </dd>
                                     </dl>
                                 </div>
                             </div>
-
+                        
                         </div>
                     </div>
+
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <input type="submit" value="Salvar" class="btn btn-success" />

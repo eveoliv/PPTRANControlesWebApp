@@ -143,20 +143,6 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
         }
 
-        /*********************************************************************/
-        private bool ValidaCpfLancamento(string cpf)
-        {
-            var cliCpf = clienteDAL.ObterClientePorCpf(cpf);
-            var colCpf = colaboradorDAL.ObterColaboradorPorCPF(cpf);
-
-            if (cliCpf != null || colCpf != null)
-            {
-                return true;
-            }
-        
-            return false;
-        }
-
         /*************************************************************************/
         private async Task<IActionResult> ObterVisaoLancamentoPorId(long? id)
         {

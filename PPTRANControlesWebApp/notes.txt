@@ -21,3 +21,6 @@ Get-Help EntityFramework (Comandos disponiveis do Entity)e Database para criar a
 Quando ha duas classes de contexto:
 Add-Migration "Identity" -Context AppIdentityContext
 update-database -Context AppIdentityContext
+
+
+

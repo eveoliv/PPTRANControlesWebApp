@@ -1,8 +1,6 @@
 ﻿using Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
@@ -22,17 +20,17 @@ namespace PPTRANControlesWebApp.Data.DAL
             var enderecos = new Endereco[]
             {
                 //clinicas
-                new Endereco{ Id = 1, CPF="12.321.654/6565-46", Cep="01019-020", Rua="Rua do Carmo", Bairro="Sé", Cidade="São Paulo", Estado="SP", Numero=44, Complto="1° ANDAR"},
-                new Endereco{ Id = 2, CPF="64.646.546/0001-11", Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""},
+                new Endereco{ Id = 1, Cep="01019-020", Rua="Rua do Carmo", Bairro="Sé", Cidade="São Paulo", Estado="SP", Numero=44, Complto="1° ANDAR"},
+                new Endereco{ Id = 2, Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""},
 
                 //cliente
-                new Endereco{ Id = 3, CPF="222.205.648-90", Cep="01319-001",Rua="Maria Paula"},
+                new Endereco{ Id = 3, Cep="01319-001",Rua="Maria Paula"},
                 //atendente
-                new Endereco{ Id = 4, CPF="222.205.648-91", Cep="01319-001",Rua="Maria Paula"},
+                new Endereco{ Id = 4, Cep="01319-001",Rua="Maria Paula"},
                 //psicologo
-                new Endereco{ Id = 5, CPF="222.205.648-92", Cep="01319-001",Rua="Maria Paula"},
+                new Endereco{ Id = 5, Cep="01319-001",Rua="Maria Paula"},
                 //medico
-                new Endereco{ Id = 6, CPF="222.205.648-93", Cep="01319-001",Rua="Maria Paula"}
+                new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"}
             };
 
             foreach (Endereco e in enderecos)

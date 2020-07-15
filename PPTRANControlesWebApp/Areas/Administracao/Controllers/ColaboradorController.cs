@@ -39,7 +39,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         public async Task<IActionResult> Index()
         {
             var colaboradores = 
-                await colaboradorDAL.ObterColaboradoresPorNome().ToListAsync();            
+                await colaboradorDAL.ObterColaboradoresClassificadosPorNome().ToListAsync();            
             return View(colaboradores);
         }
 
@@ -64,22 +64,18 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
-        {
-            var usuarioId = userManager.GetUserAsync(User).Result.Id;
-
+        {          
             try
             {
                 if (model.Colaborador.Nome != null && model.Colaborador.CPF != null)
                 {
                     var cpf = model.Colaborador.CPF;
+                   
+                    await enderecoDAL.GravarEndereco(model.Endereco);                    
 
-                    model.Endereco.CPF = cpf;
-                    await enderecoDAL.GravarEndereco(model.Endereco);
-                    var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).FirstOrDefault();
-
-                    model.Colaborador.IdUser = usuarioId;
                     model.Colaborador.DtCadastro = DateTime.Today;
-                    model.Colaborador.Endereco.Id = idEndereco.Id;
+                    model.Colaborador.Endereco.Id = model.Endereco.Id;
+                    model.Colaborador.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await colaboradorDAL.GravarColaborador(model.Colaborador);
 
                     return RedirectToAction(nameof(Index));

@@ -9,24 +9,23 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ClinicaDAL
     {
-        private ApplicationContext _context;
+        private ApplicationContext context;
 
         public ClinicaDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public IQueryable<Clinica> ObterClinicasPorNome()
+        /*** Revisado ***/
+        public IQueryable<Clinica> ObterClinicasClassificadasPorNome()
         {
-            return _context.Clinicas
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Nome);
-        }
+            return context.Clinicas.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
+        }          
 
         public async Task<Clinica> ObterClinicaPorId(long id)
         {
 
-            return await _context.Clinicas
+            return await context.Clinicas
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.Id == id);
@@ -37,14 +36,14 @@ namespace PPTRANControlesWebApp.Data.DAL
             if (clinica.Id == null)
             {
                 clinica.Status = EnumHelper.Status.Ativo;
-                _context.Clinicas.Add(clinica);
+                context.Clinicas.Add(clinica);
             }
             else
             {
-                _context.Update(clinica);
+                context.Update(clinica);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return clinica;
         }
     }

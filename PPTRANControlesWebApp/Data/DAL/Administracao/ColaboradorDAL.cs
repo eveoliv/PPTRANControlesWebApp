@@ -7,25 +7,42 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ColaboradorDAL
     {
-        private ApplicationContext _context;
+        private ApplicationContext context;
 
         public ColaboradorDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public IQueryable<Colaborador> ObterColaboradoresPorNome()
+        /*** Revisado ***/
+        public IQueryable<Colaborador> ObterColaboradoresClassificadosPorNome()
         {
-            return _context.Colaboradores
-                .Include(c => c.Clinica)
-                .Include(e => e.Endereco)
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Nome);
+            return context.Colaboradores.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
+
+        /*** Revisado ***/
+        public IQueryable<Colaborador> ObterMedicosClassificadosPorNome()
+        {
+            return context.Colaboradores
+                .Where(m => m.Funcao == EnumHelper.Funcao.Medico)
+                .Where(m => m.Status == EnumHelper.Status.Ativo)
+                .OrderBy(m => m.Nome);
+        }
+
+        /*** Revisado ***/
+        public IQueryable<Colaborador> ObterPsicologosClassificadosPorNome()
+        {
+            return context.Colaboradores
+               .Where(m => m.Funcao == EnumHelper.Funcao.Psicologo)
+               .Where(m => m.Status == EnumHelper.Status.Ativo)
+               .OrderBy(m => m.Nome);
+        }
+
+
 
         public async Task<Colaborador> ObterColaboradorPorId(long id)
         {
-            return await _context.Colaboradores
+            return await context.Colaboradores
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
@@ -34,7 +51,7 @@ namespace PPTRANControlesWebApp.Data.DAL
 
         public async Task<Colaborador> ObterColaboradorPorCPF(string cpf)
         {
-            return await _context.Colaboradores
+            return await context.Colaboradores
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.CPF == cpf);
         }
@@ -44,14 +61,14 @@ namespace PPTRANControlesWebApp.Data.DAL
             if (colaborador.Id == null)
             {
                 colaborador.Status = EnumHelper.Status.Ativo;
-                _context.Colaboradores.Add(colaborador);
+                context.Colaboradores.Add(colaborador);
             }
             else
             {
-                _context.Update(colaborador);
+                context.Update(colaborador);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return colaborador;
         }
     }

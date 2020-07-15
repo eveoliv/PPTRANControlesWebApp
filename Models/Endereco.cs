@@ -9,9 +9,6 @@ namespace Models
     {
         public Endereco() { }
 
-        [DisplayName("CPF")]
-        public string CPF { get; set; }  
-
         [DisplayName("CEP")]
         public string Cep { get; set; }
 

@@ -76,7 +76,7 @@ namespace Models
         [DisplayName("Status Cliente")]
         public EnumHelper.Status Status { get; set; }
 
-        [DisplayName("Pagamento Realizado")]
+        [DisplayName("Pagto Realizado")]
         public EnumHelper.YesNo StatusPgto { get; set; }
 
         [DisplayName("Medico")]

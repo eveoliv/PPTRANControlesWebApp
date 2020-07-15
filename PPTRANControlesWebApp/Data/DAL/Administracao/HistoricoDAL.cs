@@ -9,21 +9,22 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
 {
     public class HistoricoDAL
     {
-        private ApplicationContext _context;
+        private ApplicationContext context;
 
         public HistoricoDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
+        /*** Revisado ***/
         public IQueryable<Historico> ObterHistoricoPorNome()
         {
-            return _context.Historicos.OrderBy(c => c.Nome);
+            return context.Historicos.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);            
         }
 
         public async Task<Historico> ObterHistoricoPorId(long id)
         {
-            return await _context.Historicos
+            return await context.Historicos
                .Where(c => c.Status == EnumHelper.Status.Ativo)
                .SingleOrDefaultAsync(c => c.Id == id);
         }
@@ -33,14 +34,14 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
             if (historico.Id == null)
             {
                 historico.Status = EnumHelper.Status.Ativo;
-                _context.Historicos.Add(historico);
+                context.Historicos.Add(historico);
             }
             else
             {
-                _context.Update(historico);
+                context.Update(historico);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return historico;
         }
     }

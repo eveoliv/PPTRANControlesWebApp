@@ -37,7 +37,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         // GET: Clinica
         public async Task<IActionResult> Index()
         {
-            var clinicas = await clinicaDAL.ObterClinicasPorNome().ToListAsync();
+            var clinicas = await clinicaDAL.ObterClinicasClassificadasPorNome().ToListAsync();
             return View(clinicas);
         }
 
@@ -63,12 +63,10 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 if (model.Clinica.Nome != null)
                 {
                     var cnpj = model.Clinica.CNPJ;
-
-                    model.Endereco.CPF = cnpj;
-                    await enderecoDAL.GravarEndereco(model.Endereco);
-                    var idEndereco = (from e in _context.Enderecos where e.CPF == cnpj select e).Single();
                     
-                    model.Clinica.Endereco.Id = idEndereco.Id;
+                    await enderecoDAL.GravarEndereco(model.Endereco);                   
+                    
+                    model.Clinica.Endereco.Id = model.Endereco.Id;
                     await clinicaDAL.GravarClinica(model.Clinica);
 
                     return RedirectToAction(nameof(Index));

@@ -13,18 +13,15 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             this.context = context;           
         }
-    
-        public IQueryable<Cliente> ObterClientesPorNome()
-        {       
-            return context.Clientes
-                .Include(i => i.Clinica)
-                .Include(e => e.Endereco)
-                .Include(h => h.Historico)
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Nome);
+
+        /*** Revisado ***/
+        public IQueryable<Cliente> ObterClientesClassificadosPorNome()
+        {
+            return context.Clientes.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
 
-        public async Task<Cliente> ObterClientePorId(long id)
+        /*** Revisado ***/
+        public async Task<Cliente> ObterClientesPorId(long id)
         {           
             return await context.Clientes                
                 .Include(c => c.Clinica)
@@ -33,7 +30,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
-       
+
+        /*** Revisado ***/
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {            
             if (cliente.Id == null)
@@ -49,22 +47,24 @@ namespace PPTRANControlesWebApp.Data.DAL
             return cliente;
         }
 
-        public async Task<Cliente> ObterClientePorCpf(string cpf)
+        /*** Revisado ***/
+        public async Task<Cliente> EliminarClientePorId(long id)
         {
-            return await context.Clientes
-                 .Where(c => c.Status == EnumHelper.Status.Ativo)
-                 .SingleOrDefaultAsync(c => c.CPF == cpf);
-        }       
-        
-        public async Task<Cliente> ObterClienteIdPeloCpf(Cliente cliente)
+            var cliente = await ObterClientesPorId(id);
+            context.Clientes.Remove(cliente);
+            await context.SaveChangesAsync();
+            return cliente;
+        }
+
+        /*** Revisado ***/
+        public async Task<Cliente> InativarClientePorId(long id, string user)
         {
-            var cpf = cliente.CPF;
-
-            var idCli = context.Clientes
-                 .Where(c => c.Status == EnumHelper.Status.Ativo)
-                 .SingleOrDefaultAsync(c => c.CPF == cpf);           
-
-            return await idCli;
-        }        
+            var cliente = await ObterClientesPorId(id);
+            cliente.IdUser = user;
+            cliente.Status = EnumHelper.Status.Inativo;
+            context.Update(cliente);
+            await context.SaveChangesAsync();
+            return null;
+        }
     }
 }

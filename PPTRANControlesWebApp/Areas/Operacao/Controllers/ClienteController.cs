@@ -15,11 +15,13 @@ using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
+    //REVISADO_20200715
     [Area("Operacao")]
     [Authorize]
     public class ClienteController : Controller
     {
         private readonly ClienteDAL clienteDAL;
+        private readonly ClinicaDAL clinicaDAL;
         private readonly ProdutoDAL produtoDAL;
         private readonly EnderecoDAL enderecoDAL;
         private readonly HistoricoDAL historicoDAL;
@@ -32,66 +34,67 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             this.context = context;
             this.userManager = userManager;
             clienteDAL = new ClienteDAL(context);
+            clinicaDAL = new ClinicaDAL(context);
             produtoDAL = new ProdutoDAL(context);
             enderecoDAL = new EnderecoDAL(context);
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
 
-        // GET: Clientes/
+        // GET: Clientes
         public async Task<IActionResult> Index()
-        {
-            var clientes = await clienteDAL.ObterClientesPorNome().ToListAsync();
-            return View(clientes);
+        {          
+            return View(await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync());
         }
 
-        // GET: Clientes/Details/
+        // GET: Clientes/Details
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id);
         }
-
-        // GET: Cliente/EntrevistaPsicologo/
-        public async Task<IActionResult> EntrevistaPsi(long? id)
-        {
+       
+        // GET: Clientes/Edit
+        public async Task<IActionResult> Edit(long? id)
+        {            
             return await ObterVisaoClientePorId(id);
         }
 
-        // GET: Cliente/EntrevistaMedicos/
-        public async Task<IActionResult> EntrevistaMed(long? id)
+        // POST: Clientes/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, Cliente cliente)
         {
-            return await ObterVisaoClientePorId(id);
+            if (id != cliente.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    cliente.IdUser = userManager.GetUserAsync(User).Result.Id;                    
+                    await clienteDAL.GravarCliente(cliente);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(cliente);
         }
 
         // GET: Clientes/Create/
         public IActionResult Create()
-        {            
-            var clinicas = context.Clinicas.OrderBy(i => i.Nome).ToList();
-                clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
-            ViewBag.Clinicas = clinicas;
-
-            var medicos = context.Colaboradores
-                .Where(c => c.Funcao == EnumHelper.Funcao.Medico)
-                .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Nome).ToList();
-                medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
-            ViewBag.Medicos = medicos;
-
-            var psicologos = context.Colaboradores
-                .Where(c => c.Funcao == EnumHelper.Funcao.Psicologo)
-                .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Nome).ToList();
-                psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
-            ViewBag.Psicologos = psicologos;
-
-            var historicos = context.Historicos.OrderBy(h => h.Nome).ToList();
-                historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
-            ViewBag.Historicos = historicos;
+        {
+            CarregarViewBagsCreate();
 
             return View();
         }
-
-        // POST: Clientes/Create/OK!!!
+  
+        // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
@@ -118,54 +121,31 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(model.Cliente);
         }
 
-        // GET: Clientes/Edit/
-        public async Task<IActionResult> Edit(long id)
-        {            
-            return await ObterVisaoClientePorId(id);
-        }
-
-        // POST: Clientes/Edit/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long? id, Cliente cliente)
-        {
-            if (id != cliente.Id)
-            {
-                return NotFound();
-            }
-
-            if (id != null)
-            {
-                try
-                {
-                    await clienteDAL.GravarCliente(cliente);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-
-                return RedirectToAction("Index");
-            }
-            return View(cliente);
-        }
-
-        // GET: Clientes/Delete/
-        public async Task<IActionResult> Delete(long id)
+        // GET: Clientes/Delete
+        public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoClientePorId(id);
         }
 
-        // POST: Clientes/Delete/
+        // POST: Clientes/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var cliente = await clienteDAL.ObterClientePorId(id);
-
-            cliente.Status = EnumHelper.Status.Inativo;
-            await clienteDAL.GravarCliente(cliente);
+            var IdUser = userManager.GetUserAsync(User).Result.Id;
+            var cliente = await clienteDAL.InativarClientePorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
+        }
+
+        // Entrevistas do Médico e Psicólogo
+        public async Task<IActionResult> EntrevistaPsi(long? id)
+        {
+            return await ObterVisaoClientePorId(id);
+        }
+       
+        public async Task<IActionResult> EntrevistaMed(long? id)
+        {
+            return await ObterVisaoClientePorId(id);
         }
 
         // Metodos Privados do Controller
@@ -176,56 +156,58 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 return NotFound();
             }
 
-            var cliente = await clienteDAL.ObterClientePorId((long)id);
+            var cliente = await clienteDAL.ObterClientesPorId((long)id);
             if (cliente == null)
             {
                 return NotFound();
             }
 
-            CarregarViewBagsPorNome(cliente);
+            CarregarViewBagsDetails(cliente);
 
-            CarregarViewBagsComLista(cliente);
+            CarregarViewBagsEdit(cliente);
 
             return View(cliente);
         }
 
-        private void CarregarViewBagsPorNome(Cliente cliente)
+        private void CarregarViewBagsDetails(Cliente cliente)
         {
-            ViewBag.ClinicaNome = 
-                cliente.Clinica.Alias.ToString();
+            ViewBag.ClinicaNome = cliente.Clinica.Alias.ToString();
 
-            ViewBag.HistoricoNome = 
-                cliente.Historico.Nome.ToString();
+            ViewBag.HistoricoNome = cliente.Historico.Nome.ToString();
 
-            ViewBag.MedicoNome = 
-                colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
+            ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
 
-            ViewBag.PsicologoNome = 
-                colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
-            
+            ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();            
         }
 
-        private void CarregarViewBagsComLista(Cliente cliente)
+        private void CarregarViewBagsEdit(Cliente cliente)
         {
-            ViewBag.Clinicas =
-                new SelectList(context.Clinicas
-                .OrderBy(b => b.Nome), "Id", "Alias", cliente.Id);
+            ViewBag.Clinicas = new SelectList(clinicaDAL.ObterClinicasClassificadasPorNome(), "Id", "Alias", cliente.Id);
 
-            ViewBag.Medico =
-                new SelectList(context.Colaboradores
-                .Where(m => m.Funcao == EnumHelper.Funcao.Medico)
-                .Where(m => m.Status == EnumHelper.Status.Ativo)
-                .OrderBy(m => m.Nome), "Id", "Nome", cliente.Id);
+            ViewBag.Medico = new SelectList(colaboradorDAL.ObterMedicosClassificadosPorNome(), "Id", "Nome", cliente.Id);
 
-            ViewBag.Psicologo =
-                new SelectList(context.Colaboradores
-                .Where(m => m.Funcao == EnumHelper.Funcao.Psicologo)
-                .Where(m => m.Status == EnumHelper.Status.Ativo)
-                .OrderBy(m => m.Nome), "Id", "Nome", cliente.Id);
+            ViewBag.Psicologo = new SelectList(colaboradorDAL.ObterPsicologosClassificadosPorNome(), "Id", "Nome", cliente.Id);
 
-            ViewBag.Historico = 
-                new SelectList(context.Historicos
-                .OrderBy(h => h.Nome), "Id", "Nome", cliente.Id);
+            ViewBag.Historico = new SelectList(historicoDAL.ObterHistoricoPorNome(), "Id", "Nome", cliente.Id);
+        }
+
+        private void CarregarViewBagsCreate()
+        {            
+            var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+            ViewBag.Clinicas = clinicas;
+
+            var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
+            medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
+            ViewBag.Medicos = medicos;
+
+            var psicologos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
+            psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
+            ViewBag.Psicologos = psicologos;
+
+            var historicos = historicoDAL.ObterHistoricoPorNome().ToList();
+            historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
+            ViewBag.Historicos = historicos;
         }
     }
 }
