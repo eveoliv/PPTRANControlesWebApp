@@ -65,7 +65,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
         {
-            var usuario = await userManager.GetUserAsync(User);
+            var usuarioId = userManager.GetUserAsync(User).Result.Id;
 
             try
             {
@@ -77,7 +77,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     await enderecoDAL.GravarEndereco(model.Endereco);
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).FirstOrDefault();
 
-                    model.Colaborador.IdUser = usuario.Id;
+                    model.Colaborador.IdUser = usuarioId;
                     model.Colaborador.DtCadastro = DateTime.Today;
                     model.Colaborador.Endereco.Id = idEndereco.Id;
                     await colaboradorDAL.GravarColaborador(model.Colaborador);

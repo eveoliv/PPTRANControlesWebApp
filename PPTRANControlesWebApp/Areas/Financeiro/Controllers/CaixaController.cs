@@ -22,7 +22,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
     [Authorize]
     public class CaixaController : Controller
     {
-        private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly UserManager<AppIdentityUser> userManager;
         private readonly ApplicationContext _context;
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
@@ -32,7 +32,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public CaixaController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            this.userManager = userManager;
             caixaDAL = new CaixaDAL(context);
             clienteDAL = new ClienteDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
@@ -73,7 +73,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public async Task<IActionResult> Create(CaixaViewModel model)
         {
             var cpf = model.Caixa.Cliente.CPF;
-            var usuarioId = _userManager.GetUserAsync(User).Result.Id;            
+            var usuarioId = userManager.GetUserAsync(User).Result.Id;            
             var idCli = (from c in _context.Clientes where c.CPF == cpf select c).FirstOrDefault();            
 
             try
@@ -173,7 +173,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             ViewBag.Clinica = caixa.Clinica.Alias;
             ViewBag.Cliente = caixa.Cliente.Nome;                   
-            ViewBag.Colaborador = _userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
+            ViewBag.Colaborador = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
 
             return View(caixa);
         }

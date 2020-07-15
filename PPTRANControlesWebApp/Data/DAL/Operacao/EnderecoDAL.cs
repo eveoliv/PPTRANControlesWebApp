@@ -8,11 +8,11 @@ namespace PPTRANControlesWebApp.Data.DAL
 {
     public class EnderecoDAL
     {
-        private ApplicationContext _context;
+        private ApplicationContext context;
 
         public EnderecoDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public IQueryable<Endereco> ObterEnderecoPorId()
@@ -24,24 +24,16 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             if (endereco.Id == null)
             {
-                _context.Add(endereco);
+                context.Add(endereco);
             }
             else
             {
-                _context.Enderecos.Update(endereco);
+                context.Enderecos.Update(endereco);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return endereco;
-        }
-
-        public string BuscaEnderecoId(string cpf)
-        {
-            var idEndereco =
-                       (from e in _context.Enderecos where e.CPF == cpf select e).Single();
-
-
-            return null;
         }
     }
 }
+

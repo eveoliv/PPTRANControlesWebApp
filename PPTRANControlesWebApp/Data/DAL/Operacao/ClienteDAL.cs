@@ -1,23 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
-using System;
+﻿using Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
     public class ClienteDAL
-    {
-        private ApplicationContext _context;
+    {       
+        private ApplicationContext context;
 
         public ClienteDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;           
         }
     
         public IQueryable<Cliente> ObterClientesPorNome()
         {       
-            return _context.Clientes
+            return context.Clientes
                 .Include(i => i.Clinica)
                 .Include(e => e.Endereco)
                 .Include(h => h.Historico)
@@ -27,8 +26,7 @@ namespace PPTRANControlesWebApp.Data.DAL
 
         public async Task<Cliente> ObterClientePorId(long id)
         {           
-
-            return await _context.Clientes                
+            return await context.Clientes                
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Include(h => h.Historico)
@@ -37,26 +35,23 @@ namespace PPTRANControlesWebApp.Data.DAL
         }
        
         public async Task<Cliente> GravarCliente(Cliente cliente)
-        {
+        {            
             if (cliente.Id == null)
-            {
-                cliente.StatusPgto = EnumHelper.OptForm.NAO;
-                cliente.Status = EnumHelper.Status.Ativo;
-                _context.Clientes.Add(cliente);
+            {                                          
+                context.Clientes.Add(cliente);
             }
             else
             {
-                _context.Update(cliente);
-
+                context.Update(cliente);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return cliente;
         }
 
         public async Task<Cliente> ObterClientePorCpf(string cpf)
         {
-            return await _context.Clientes
+            return await context.Clientes
                  .Where(c => c.Status == EnumHelper.Status.Ativo)
                  .SingleOrDefaultAsync(c => c.CPF == cpf);
         }       
@@ -65,7 +60,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             var cpf = cliente.CPF;
 
-            var idCli = _context.Clientes
+            var idCli = context.Clientes
                  .Where(c => c.Status == EnumHelper.Status.Ativo)
                  .SingleOrDefaultAsync(c => c.CPF == cpf);           
 

@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Models
 {
     public class EnumHelper
     {
         public enum YesNo
         {
-            SIM, NÃO
+            Não, Sim
         };
-
-        public enum OptForm
-        {
-            SIM, NAO,
-            MUITO, POUCO,
-            GRAVE, NGRAVE, FREQUENTE,
-            SOCIAL, BOM, REGULAR, RUIM,
-            DESTRO, CANHOTO, AMBIDESTRO
-        };      
 
         public enum Tipo
         {
@@ -37,12 +25,12 @@ namespace Models
 
         public enum Status
         {
-            Ativo, Inativo    
-        };       
+            Ativo, Inativo
+        };
 
         public enum Funcao
         {
-            Administrador, Atendente, Gerente, Medico, Psicologo           
+            Administrador, Atendente, Gerente, Medico, Psicologo
         }
     }
 }

@@ -77,7 +77,7 @@ namespace Models
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Pagamento Realizado")]
-        public EnumHelper.OptForm StatusPgto { get; set; }
+        public EnumHelper.YesNo StatusPgto { get; set; }
 
         [DisplayName("Medico")]
         public long? MedicoId { get; set; }       
