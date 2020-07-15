@@ -6,6 +6,11 @@ namespace Models
 {
     public class EnumHelper
     {
+        public enum YesNo
+        {
+            SIM, NÃO
+        };
+
         public enum OptForm
         {
             SIM, NAO,

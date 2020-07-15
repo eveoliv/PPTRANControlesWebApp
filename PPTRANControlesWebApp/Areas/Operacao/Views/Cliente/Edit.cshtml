@@ -10,7 +10,7 @@
 }
 
 <div class="">
-    <div class="col-md-6 col-sm-6  ">
+    <div class="col-md-8 col-sm-8  ">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Editar Ficha do Cliente</h2>
@@ -30,6 +30,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Endereço</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#clinic" role="tab" aria-controls="contact" aria-selected="false">Clinica</a>
+                    </li>
                 </ul>
 
                 <form asp-action="Edit">
@@ -42,12 +45,10 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.HiddenFor(model => model.Id)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.HiddenFor(model => model.Id)
-                                        </dd>
+                                        @Html.HiddenFor(model => model.Id)
+
+                                        @Html.HiddenFor(model => model.DtCadastro)
+
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Nome" type="text" class="form-control">
@@ -93,24 +94,6 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="Escolaridade" type="text" class="form-control">
                                         </dd>
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
-                                        </dd>
-
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Historico.Nome)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="HistoricoId" class="form-control" asp-items=@ViewBag.Historico></select>
-                                        </dd>
-
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico></select>
-                                        </dd>
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">Psicólogo (a)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="PsicologoId" class="form-control" asp-items=@ViewBag.Psicologo></select>
-                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -154,12 +137,11 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.HiddenFor(model => model.Endereco.Id)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.HiddenFor(model => model.Endereco.Id)
-                                        </dd>
+
+                                        @Html.HiddenFor(model => model.Endereco.Id)
+
+                                        @Html.HiddenFor(model => model.Endereco.CPF)
+
 
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cep)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
@@ -193,15 +175,58 @@
                                 </div>
                             </div>
 
+                            <div class="tab-pane fade" id="clinic" role="tabpanel" aria-labelledby="clinic-tab">
+                                <div>
+                                    <hr />
+                                    <dl class="row">
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.DtCadastro)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="DtCadastro" type="text" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.NumLaudo)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="NumLaudo" type="text" class="form-control">
+                                        </dd>
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
+                                        </dd>
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Historico.Nome)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="HistoricoId" class="form-control" asp-items=@ViewBag.Historico></select>
+                                        </dd>
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico></select>
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">Psicólogo (a)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="PsicologoId" class="form-control" asp-items=@ViewBag.Psicologo></select>
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">Pagamento Realizado</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="StatusPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()">
+                                                <option selected="selected" value=""></option>
+                                            </select>
+
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                        <input type="submit" value="Salvar" class="btn btn-success" />                                                
+                        <input type="submit" value="Salvar" class="btn btn-success" />
                     </div>
 
                 </form>
-                
+
             </div>
         </div>
     </div>

@@ -39,7 +39,8 @@ namespace PPTRANControlesWebApp.Data.DAL
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {
             if (cliente.Id == null)
-            {                
+            {
+                cliente.StatusPgto = EnumHelper.OptForm.NAO;
                 cliente.Status = EnumHelper.Status.Ativo;
                 _context.Clientes.Add(cliente);
             }
