@@ -9,7 +9,6 @@ using Models;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using PPTRANControlesWebApp.Data.DAL.Financeiro;
 using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
@@ -191,16 +190,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private void CarregarViewBagsPorNome(Cliente cliente)
         {
             ViewBag.ClinicaNome = 
-                cliente.Clinica.Alias.ToString();                       
+                cliente.Clinica.Alias.ToString();
+
+            ViewBag.HistoricoNome = 
+                cliente.Historico.Nome.ToString();
 
             ViewBag.MedicoNome = 
                 colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
 
             ViewBag.PsicologoNome = 
                 colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
-
-            ViewBag.HistoricoNome = 
-                historicoDAL.ObterHistoricoPorId((long)cliente.Historico.Id).Result.Nome.ToString();
+            
         }
 
         private void CarregarViewBagsComLista(Cliente cliente)

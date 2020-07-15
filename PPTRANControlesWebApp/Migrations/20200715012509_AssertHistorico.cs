@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class First : Migration
+    public partial class AssertHistorico : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,6 +36,7 @@ namespace PPTRANControlesWebApp.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     IdUser = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -51,6 +52,7 @@ namespace PPTRANControlesWebApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: true),
                     Valor = table.Column<decimal>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     IdUser = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

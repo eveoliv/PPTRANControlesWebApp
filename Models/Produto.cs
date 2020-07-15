@@ -15,6 +15,9 @@ namespace Models
         [DisplayName("Valor Exame")]
         public decimal Valor { get; set; }
 
+        [DisplayName("Status")]
+        public EnumHelper.Status Status { get; set; }
+
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PPTRANControlesWebApp.Data.DAL.Financeiro
+namespace PPTRANControlesWebApp.Data.DAL.Administracao
 {
     public class ProdutoDAL
     {

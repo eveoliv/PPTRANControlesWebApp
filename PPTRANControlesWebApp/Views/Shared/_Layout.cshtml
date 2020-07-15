@@ -53,18 +53,12 @@
                             <h3> Menu </h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-home"></i> Administração <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Administracao" asp-controller="Clinica" asp-action="Index">Clinicas</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Historico" asp-action="Index">Historico</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Contato" asp-action="Index">Contatos</a></li>                                        
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a><i class="fa fa-dollar"></i> Caixa <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a asp-area="Financeiro" asp-controller="Caixa" asp-action="Index">Lançamentos</a></li>
-                                        <li><a asp-area="Financeiro" asp-controller="Produto" asp-action="Index">Valor Exames</a></li>
+                                        <li><a asp-area="Administracao" asp-controller="Produto" asp-action="Index">Valor Exames</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -72,7 +66,6 @@
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Administracao" asp-controller="Colaborador" asp-action="Index">Listar</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Colaborador" asp-action="Create">Cadastrar</a></li>
-
                                     </ul>
                                 </li>
                                 <li>
@@ -83,6 +76,12 @@
                                     </ul>
                                 </li>
 
+                                <li>
+                                    <a><i class="fa fa-dollar"></i> Caixa <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-area="Financeiro" asp-controller="Caixa" asp-action="Index">Lançamentos</a></li>
+                                    </ul>
+                                </li>
                                 <li>
                                     <a><i class="fa fa-table"></i> Agendamentos <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">

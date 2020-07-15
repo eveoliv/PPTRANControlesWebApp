@@ -16,10 +16,32 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
             _context = context;
         }
 
+        public IQueryable<Historico> ObterHistoricoPorNome()
+        {
+            return _context.Historicos.OrderBy(c => c.Nome);
+        }
+
         public async Task<Historico> ObterHistoricoPorId(long id)
         {
             return await _context.Historicos
+               .Where(c => c.Status == EnumHelper.Status.Ativo)
                .SingleOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Historico> GravarHitorico(Historico historico)
+        {
+            if (historico.Id == null)
+            {
+                historico.Status = EnumHelper.Status.Ativo;
+                _context.Historicos.Add(historico);
+            }
+            else
+            {
+                _context.Update(historico);
+            }
+
+            await _context.SaveChangesAsync();
+            return historico;
         }
     }
 }

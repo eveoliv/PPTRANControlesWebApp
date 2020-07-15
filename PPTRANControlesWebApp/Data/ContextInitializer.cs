@@ -84,15 +84,15 @@ namespace PPTRANControlesWebApp.Data.DAL
 
             var historico = new Historico[]
             {
-                new Historico{ Nome = "Inscrição CNH"},
-                new Historico{ Nome = "Renovação Ex."},
-                new Historico{ Nome = "2ª Via CNH"},
-                new Historico{ Nome = "Mudança/adição"},
-                new Historico{ Nome = "Licença Estr."},
-                new Historico{ Nome = "Registro CNH"},
-                new Historico{ Nome = "Baixa Condutor"},
-                new Historico{ Nome = "Alteração de Dados"},
-                new Historico{ Nome = "Laudo Pessoa com Deficiência"}
+                new Historico{ Nome = "Inscrição CNH", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Renovação Ex.", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "2ª Via CNH", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Mudança/adição", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Licença Estr.", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Registro CNH", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Baixa Condutor", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Alteração de Dados", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Laudo Pessoa com Deficiência", Status = EnumHelper.Status.Ativo }
             };
 
             foreach (Historico h in historico)
@@ -121,7 +121,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Historico = new Historico(){ Id = 1 },
                     PsicologoId = 2,
                     MedicoId = 3,
-                    Endereco =  new Endereco(){ Id = 3 }
+                    Endereco =  new Endereco(){ Id = 3 },
+                    Status = EnumHelper.Status.Ativo
                 }
             };
 
@@ -144,6 +145,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Everton Oliveira",
                     CPF = "222.205.648-91",
                     Funcao = EnumHelper.Funcao.Atendente,
+                    Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 4}
                 },
@@ -153,6 +155,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Barbara Hansen",
                     CPF = "222.205.648-92",
                     Funcao = EnumHelper.Funcao.Psicologo,
+                    Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 5}
                  },
@@ -162,6 +165,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Doutor Estranho",
                     CPF = "222.205.648-93",
                     Funcao = EnumHelper.Funcao.Medico,
+                    Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 6}
                   }
@@ -181,10 +185,10 @@ namespace PPTRANControlesWebApp.Data.DAL
 
             var produto = new Produto[]
             {
-                new Produto{ Nome = "Exame Médico", Valor = 91.11M,},
-                new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M},
-                new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M},
-                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M}
+                new Produto{ Nome = "Exame Médico", Valor = 91.11M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo }
             };
 
             foreach (Produto c in produto)

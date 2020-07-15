@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Models;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
@@ -30,15 +32,11 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         }
 
         // GET: Historico
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        // GET: Historico/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            var historico = 
+                await historicoDAL.ObterHistoricoPorNome().ToListAsync();
+            return View(historico);
         }
 
         // GET: Historico/Create
@@ -50,24 +48,31 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         // POST: Historico/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Historico historico)
         {
+            var usuario = await userManager.GetUserAsync(User);
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    historico.IdUser = usuario.Id;
+                    await historicoDAL.GravarHitorico(historico);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(DbUpdateException)
             {
-                return View();
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
+
+            return View(historico);
         }
 
         // GET: Historico/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(long id)
         {
-            return View();
+            return await ObterVisaoHistoricoPorId(id);
         }
 
         // POST: Historico/Edit/5
@@ -108,6 +113,23 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 return View();
             }
+        }
+
+        /*************************************************************************/
+        private async Task<IActionResult> ObterVisaoHistoricoPorId(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var historico = await historicoDAL.ObterHistoricoPorId((long)id);
+            if (historico == null)
+            {
+                return NotFound();
+            }            
+
+            return View(historico);
         }
     }
 }

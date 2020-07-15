@@ -38,7 +38,8 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         // GET: Colaboradores
         public async Task<IActionResult> Index()
         {
-            var colaboradores = await colaboradorDAL.ObterColaboradoresPorNome().ToListAsync();            
+            var colaboradores = 
+                await colaboradorDAL.ObterColaboradoresPorNome().ToListAsync();            
             return View(colaboradores);
         }
 
@@ -76,6 +77,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     await enderecoDAL.GravarEndereco(model.Endereco);
                     var idEndereco = (from e in _context.Enderecos where e.CPF == cpf select e).FirstOrDefault();
 
+                    model.Colaborador.IdUser = usuario.Id;
                     model.Colaborador.DtCadastro = DateTime.Today;
                     model.Colaborador.Endereco.Id = idEndereco.Id;
                     await colaboradorDAL.GravarColaborador(model.Colaborador);

@@ -9,7 +9,8 @@ namespace Models
         public enum OptForm
         {
             SIM = 1,
-            NAO, MUITO, POUCO, GRAVE, NGRAVE, FREQUENTE, SOCIAL, BOM, REGULAR, RUIM, DESTRO, CANHOTO, AMBIDESTRO
+            NAO, MUITO, POUCO, GRAVE, NGRAVE, FREQUENTE,
+            SOCIAL, BOM, REGULAR, RUIM, DESTRO, CANHOTO, AMBIDESTRO
         };      
 
         public enum Tipo
@@ -30,7 +31,7 @@ namespace Models
 
         public enum Status
         {
-            Ativo, Inativo    
+            Ativo = 1, Inativo    
         };       
 
         public enum Funcao

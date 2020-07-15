@@ -1,0 +1,46 @@
+﻿@model Models.Historico
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Editar Histórico Cadastrado&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <a asp-action="Index">&emsp;&emsp;&emsp;Retornar</a>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form asp-controller="Produto" asp-action="Edit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="item form-group">
+                                <label asp-for="Nome" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-8 col-sm-8 ">
+                                    <input asp-for="Nome" type="text" class="form-control" required="required">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-12 col-sm-12 offset-md-2">
+                                    <button type="submit" class="btn btn-success">Alterar</button>
+                                    <button class="btn btn-primary" type="button">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

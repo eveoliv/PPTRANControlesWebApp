@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200714215958_First")]
-    partial class First
+    [Migration("20200715012509_AssertHistorico")]
+    partial class AssertHistorico
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -287,6 +287,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
+                    b.Property<int>("Status");
+
                     b.HasKey("Id");
 
                     b.ToTable("Historicos");
@@ -300,6 +302,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<string>("IdUser");
 
                     b.Property<string>("Nome");
+
+                    b.Property<int>("Status");
 
                     b.Property<decimal>("Valor");
 

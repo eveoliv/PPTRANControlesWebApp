@@ -9,11 +9,13 @@ namespace Models
     {
         public Historico() { }
 
-        [DisplayName("Nome Historico")]
+        [DisplayName("Nome")]
         public string Nome { get; set; }
+
+        [DisplayName("Status")]
+        public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
-       
     }
 }

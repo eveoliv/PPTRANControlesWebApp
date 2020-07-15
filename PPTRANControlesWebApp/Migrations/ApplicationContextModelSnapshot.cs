@@ -285,6 +285,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
+                    b.Property<int>("Status");
+
                     b.HasKey("Id");
 
                     b.ToTable("Historicos");
@@ -298,6 +300,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<string>("IdUser");
 
                     b.Property<string>("Nome");
+
+                    b.Property<int>("Status");
 
                     b.Property<decimal>("Valor");
 

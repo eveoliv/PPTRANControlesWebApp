@@ -11,12 +11,12 @@ using Models;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
-using PPTRANControlesWebApp.Data.DAL.Financeiro;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
+namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
-    [Area("Financeiro")]
+    [Area("Administracao")]
     [Authorize]
     public class ProdutoController : Controller
     {
