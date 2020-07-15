@@ -86,11 +86,14 @@ namespace Models
         public long? PsicologoId { get; set; }       
 
         [DisplayName("Clinica")]
+        public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
 
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
-     
+
+        [DisplayName("Historico")]
+        public long? HistoricoId { get; set; }
         public Historico Historico { get; set; }
 
         [DisplayName("Usuário")]

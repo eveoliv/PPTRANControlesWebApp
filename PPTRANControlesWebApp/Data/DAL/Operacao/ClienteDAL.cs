@@ -20,6 +20,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             return _context.Clientes
                 .Include(i => i.Clinica)
                 .Include(e => e.Endereco)
+                .Include(h => h.Historico)
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .OrderBy(c => c.Nome);
         }
@@ -30,6 +31,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             return await _context.Clientes                
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
+                .Include(h => h.Historico)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
@@ -44,6 +46,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             else
             {
                 _context.Update(cliente);
+
             }
 
             await _context.SaveChangesAsync();

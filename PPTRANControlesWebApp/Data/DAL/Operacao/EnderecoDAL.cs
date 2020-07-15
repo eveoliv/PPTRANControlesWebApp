@@ -28,7 +28,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             }
             else
             {
-                _context.Update(endereco);
+                _context.Enderecos.Update(endereco);
             }
 
             await _context.SaveChangesAsync();

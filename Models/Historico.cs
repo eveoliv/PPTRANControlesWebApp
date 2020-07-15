@@ -9,7 +9,7 @@ namespace Models
     {
         public Historico() { }
 
-        [DisplayName("Nome")]
+        [DisplayName("Histórico")]
         public string Nome { get; set; }
 
         [DisplayName("Status")]
@@ -17,5 +17,7 @@ namespace Models
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
+
+        public virtual ICollection<Cliente> Cliente { get; set; }
     }
 }

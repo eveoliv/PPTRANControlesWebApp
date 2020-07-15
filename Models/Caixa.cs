@@ -15,9 +15,6 @@ namespace Models
         [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime Data { get; set; }
 
-        [DisplayName("Histórico")]
-        public EnumHelper.Historico Historico { get; set; }
-
         //cartao, dinheiro
         [DisplayName("Tipo")]
         public EnumHelper.Tipo Tipo { get; set; }
@@ -33,6 +30,11 @@ namespace Models
         [DisplayName("Referência")]
         public string Ref { get; set; }
 
+
+        [DisplayName("Histórico")]
+        public long? HistoricoId { get; set; }
+        public Historico Historico { get; set; }
+
         [DisplayName("Produto")]
         public long? ProdutoId { get; set; }
         public Produto Produto { get; set; }
@@ -44,10 +46,6 @@ namespace Models
         [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
-
-        //[DisplayName("Colaborador")]
-        //public long? ColaboradorId { get; set; }
-        //public Colaborador Colaborador { get; set; }
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }

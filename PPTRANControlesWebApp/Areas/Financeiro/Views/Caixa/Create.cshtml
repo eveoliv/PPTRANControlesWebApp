@@ -42,7 +42,7 @@
                             <div class="item form-group">
                                 <label asp-for="Caixa.Historico" class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.Historico" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Historico>()" required="required">
+                                    <select asp-for="Caixa.Historico" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))" required="required">
                                         <option selected="selected" value="">Historico</option>
                                     </select>
                                 </div>

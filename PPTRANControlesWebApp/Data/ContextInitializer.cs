@@ -116,13 +116,13 @@ namespace PPTRANControlesWebApp.Data.DAL
                     NumRenach = "123456",
                     Categoria = EnumHelper.Categoria.B,
                     Telefone = "(11)97699-4991",
+                    Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){ Id = 1 },
                     CPF = "222.205.648-90",
                     Historico = new Historico(){ Id = 1 },
                     PsicologoId = 2,
                     MedicoId = 3,
-                    Endereco =  new Endereco(){ Id = 3 },
-                    Status = EnumHelper.Status.Ativo
+                    Endereco =  new Endereco(){ Id = 3 }
                 }
             };
 

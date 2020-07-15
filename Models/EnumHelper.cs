@@ -8,41 +8,36 @@ namespace Models
     {
         public enum OptForm
         {
-            SIM = 1,
-            NAO, MUITO, POUCO, GRAVE, NGRAVE, FREQUENTE,
-            SOCIAL, BOM, REGULAR, RUIM, DESTRO, CANHOTO, AMBIDESTRO
+            SIM, NAO,
+            MUITO, POUCO,
+            GRAVE, NGRAVE, FREQUENTE,
+            SOCIAL, BOM, REGULAR, RUIM,
+            DESTRO, CANHOTO, AMBIDESTRO
         };      
 
         public enum Tipo
         {
-            Credito = 1, Debito
+            Credito, Debito
         };
 
         public enum FormaPgto
         {
-            Cartao = 1, Dinheiro, Cheque
+            Cartao, Dinheiro, Cheque
         };
 
         public enum Categoria
         {
-            A = 1,
-            B, C, D, E, AB, AC, AD, AE
+            A, B, C, D, E, AB, AC, AD, AE
         };
 
         public enum Status
         {
-            Ativo = 1, Inativo    
+            Ativo, Inativo    
         };       
 
         public enum Funcao
         {
-            Administrador = 1, Atendente, Gerente, Medico, Psicologo           
-        }
-
-        public enum Historico
-        {
-            Inscricao_CNH = 1, Renovacao_Ex, Segunda_Via_CNH, Mudanca_Adicao,
-            Licenca_Estr, Registro_CNH, Baixa_Condutor, Alteracao_Dados, Laudo_PCD
+            Administrador, Atendente, Gerente, Medico, Psicologo           
         }
     }
 }

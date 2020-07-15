@@ -100,7 +100,7 @@
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.Clinica.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
                             </div>                            
                             <div class="col-md-3 col-sm-12  form-group">
                                 <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
@@ -109,7 +109,7 @@
                                 <select asp-for="Cliente.MedicoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.Historico.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>
+                                <select asp-for="Cliente.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>
                             </div>
                         </div>
 

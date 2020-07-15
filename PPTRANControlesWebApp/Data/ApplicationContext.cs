@@ -27,16 +27,16 @@ namespace PPTRANControlesWebApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Colaborador>().HasKey(c => c.Id);
-            modelBuilder.Entity<Colaborador>().HasOne(c => c.Clinica);
-            modelBuilder.Entity<Colaborador>().HasOne(c => c.Endereco);
+            //modelBuilder.Entity<Colaborador>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Colaborador>().HasOne(c => c.Clinica);
+            //modelBuilder.Entity<Colaborador>().HasOne(c => c.Endereco);
 
-            modelBuilder.Entity<Cliente>().HasKey(c => c.Id);
-            modelBuilder.Entity<Cliente>().HasOne(c => c.Clinica);
-            modelBuilder.Entity<Cliente>().HasOne(c => c.Endereco);            
-            modelBuilder.Entity<Cliente>().HasOne(c => c.Historico);            
+            //modelBuilder.Entity<Cliente>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Cliente>().HasOne(c => c.Clinica);
+            //modelBuilder.Entity<Cliente>().HasOne(c => c.Endereco);            
+            //modelBuilder.Entity<Cliente>().HasOne(c => c.Historico);            
 
-            modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
+            //modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
          
 
         }

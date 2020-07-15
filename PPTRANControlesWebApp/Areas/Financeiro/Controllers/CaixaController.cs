@@ -13,6 +13,7 @@ using Models;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
@@ -26,6 +27,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
         private readonly ColaboradorDAL colaboradorDAL;
+        private readonly HistoricoDAL historicoDAL;
 
         public CaixaController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -34,6 +36,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             caixaDAL = new CaixaDAL(context);
             clienteDAL = new ClienteDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
+            historicoDAL = new HistoricoDAL(context);
+
         }
 
         // GET: Caixa
@@ -53,8 +57,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         public IActionResult Create()
         {
             var clinicas = _context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+                clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
+
+            var historico = _context.Historicos.OrderBy(h => h.Nome).ToList();
+                historico.Insert(0, new Historico() { Id = 0, Nome = "Historico" });
+            ViewBag.Historicos = historico;
             
             return View();
         }

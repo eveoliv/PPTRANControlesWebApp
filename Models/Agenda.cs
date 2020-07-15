@@ -23,8 +23,11 @@ namespace Models
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
 
-        [DisplayName("Colaborador")]
-        public Colaborador Colaborador { get; set; }
+        [DisplayName("Medico")]
+        public long? MedicoId { get; set; }
+
+        [DisplayName("Psicologo")]
+        public long? PsicologoId { get; set; }
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }

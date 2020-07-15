@@ -23,6 +23,7 @@ namespace Models
         public string Descricao { get; set; }
      
         [DisplayName("Endereco")]
+        public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
         [DisplayName("Usuário")]

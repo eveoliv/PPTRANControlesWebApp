@@ -26,19 +26,19 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
-                    b.Property<long?>("ColaboradorId");
-
                     b.Property<DateTime>("Data");
 
                     b.Property<string>("IdUser");
+
+                    b.Property<long?>("MedicoId");
+
+                    b.Property<long?>("PsicologoId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("ClinicaId");
-
-                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("Agendas");
                 });
@@ -56,7 +56,7 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<int>("FormaPgto");
 
-                    b.Property<int>("Historico");
+                    b.Property<long?>("HistoricoId");
 
                     b.Property<string>("IdUser");
 
@@ -73,6 +73,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("ClinicaId");
+
+                    b.HasIndex("HistoricoId");
 
                     b.HasIndex("ProdutoId");
 
@@ -319,10 +321,6 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Clinica", "Clinica")
                         .WithMany()
                         .HasForeignKey("ClinicaId");
-
-                    b.HasOne("Models.Colaborador", "Colaborador")
-                        .WithMany()
-                        .HasForeignKey("ColaboradorId");
                 });
 
             modelBuilder.Entity("Models.Caixa", b =>
@@ -334,6 +332,10 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Clinica", "Clinica")
                         .WithMany()
                         .HasForeignKey("ClinicaId");
+
+                    b.HasOne("Models.Historico", "Historico")
+                        .WithMany()
+                        .HasForeignKey("HistoricoId");
 
                     b.HasOne("Models.Produto", "Produto")
                         .WithMany()
@@ -351,7 +353,7 @@ namespace PPTRANControlesWebApp.Migrations
                         .HasForeignKey("Models.Cliente", "EnderecoId");
 
                     b.HasOne("Models.Historico", "Historico")
-                        .WithMany()
+                        .WithMany("Cliente")
                         .HasForeignKey("HistoricoId");
                 });
 
