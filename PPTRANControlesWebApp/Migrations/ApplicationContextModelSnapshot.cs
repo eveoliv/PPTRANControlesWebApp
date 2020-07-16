@@ -212,7 +212,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<string>("Telefone");
+                    b.Property<string>("Telefone1");
+
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 
@@ -239,9 +241,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<string>("Tel1");
+                    b.Property<string>("Telefone1");
 
-                    b.Property<string>("Tel2");
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 

@@ -1,27 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PPTRANControlesWebApp.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Data.DAL.Operacao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
+    //REVISADO_20200715
     [Area("Operacao")]
     [Authorize]
     public class AgendaController : Controller
     {
-        // GET: Agenda
-        public ActionResult Index()
+        private readonly AgendaDAL agendaDAL;
+        private readonly ApplicationContext context;
+        private readonly UserManager<AppIdentityUser> userManager;
+
+        public AgendaController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
-            return View();
+            this.context = context;
+            this.userManager = userManager;
+            agendaDAL = new AgendaDAL(context);
         }
 
-        // GET: Agenda/Details/5
-        public ActionResult Details(int id)
+        // GET: Agenda
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await agendaDAL.ObterAgendaClassificadaIdCliente().ToListAsync());
+        }
+
+        // GET: Agenda/Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            return await ObterVisaoAgendaPorId(id);
+        }
+
+        // GET: Agenda/Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return await ObterVisaoAgendaPorId(id);
+        }
+
+        // POST: Agenda/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, Agenda agenda)
+        {
+            if (id != agenda.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    agenda.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await agendaDAL.GravarAgenda(agenda);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(agenda);
         }
 
         // GET: Agenda/Create
@@ -33,64 +80,57 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         // POST: Agenda/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Agenda agenda)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (agenda.Data != null && agenda.ClienteId != null)
+                {
+                    agenda.IdUser = userManager.GetUserAsync(User).Result.Id;
 
-                return RedirectToAction(nameof(Index));
+                    await agendaDAL.GravarAgenda(agenda);
+
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
+            catch (DbUpdateException)
             {
-                return View();
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
+            return View(agenda);
         }
 
-        // GET: Agenda/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Agenda/Delete
+        public async Task<IActionResult> Delete(long? id)
         {
-            return View();
+            return await ObterVisaoAgendaPorId(id);
         }
 
-        // POST: Agenda/Edit/5
-        [HttpPost]
+        // POST: Agenda/Delete
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var IdUser = userManager.GetUserAsync(User).Result.Id;
+            var agenda = await agendaDAL.InativarAgendaPorId((long)id, IdUser);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Agenda/Delete/5
-        public ActionResult Delete(int id)
+        // Metodos Privados do Controller
+        private async Task<IActionResult> ObterVisaoAgendaPorId(long? id)
         {
-            return View();
-        }
-
-        // POST: Agenda/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            if (id == null)
             {
-                // TODO: Add delete logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            var agenda = await agendaDAL.ObterAgendaPorId((long)id);
+            if (agenda == null)
             {
-                return View();
+                return NotFound();
             }
+
+            return View(agenda);
         }
     }
 }

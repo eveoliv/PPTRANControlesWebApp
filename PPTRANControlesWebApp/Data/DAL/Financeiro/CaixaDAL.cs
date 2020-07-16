@@ -1,33 +1,28 @@
-﻿using System;
+﻿using Models;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Models;
-using PPTRANControlesWebApp.Data;
-using PPTRANControlesWebApp.Data.DAL;
-using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
+    //REVISADO_20200715
     public class CaixaDAL
     {
-        private ApplicationContext _context;
+        private ApplicationContext context;
 
         public CaixaDAL(ApplicationContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public IQueryable<Caixa> ObterLancamentos()
+        public IQueryable<Caixa> ObterLancamentosClassificadosPorCliente()
         {
-            return _context.Caixas.OrderBy(c => c.Id);
+            return context.Caixas.OrderBy(c => c.Cliente);
         }
 
         public async Task<Caixa> ObterLancamentoPorId(long id)
         {
-            return await _context.Caixas
+            return await context.Caixas
                 .Include(c => c.Clinica)
                 .Include(c => c.Cliente)                
                 .SingleOrDefaultAsync(c => c.Id == id);
@@ -37,14 +32,31 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             if (caixa.Id == null)
             {                
-                _context.Caixas.Add(caixa);
+                context.Caixas.Add(caixa);
             }
             else
             {
-                _context.Update(caixa);
+                context.Update(caixa);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+            return caixa;
+        }
+
+        public async Task<Caixa> EliminarLancamentoPorId(long id)
+        {
+            var caixa = await ObterLancamentoPorId(id);
+            context.Caixas.Remove(caixa);
+            await context.SaveChangesAsync();
+            return caixa;
+        }
+
+        public async Task<Caixa> InativarLancamentoPorId(long id, string user)
+        {
+            var caixa = await ObterLancamentoPorId(id);
+            caixa.IdUser = user;           
+            context.Update(caixa);
+            await context.SaveChangesAsync();
             return caixa;
         }
     }

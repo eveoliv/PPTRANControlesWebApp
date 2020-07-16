@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200715204043_AjusteEndereco")]
-    partial class AjusteEndereco
+    [Migration("20200716002017_AjusteTelefone")]
+    partial class AjusteTelefone
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -214,7 +214,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<string>("Telefone");
+                    b.Property<string>("Telefone1");
+
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 
@@ -241,9 +243,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<string>("Tel1");
+                    b.Property<string>("Telefone1");
 
-                    b.Property<string>("Tel2");
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 

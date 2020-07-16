@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class First : Migration
+    public partial class AjusteTelefone : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,6 @@ namespace PPTRANControlesWebApp.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CPF = table.Column<string>(nullable: true),
                     Cep = table.Column<string>(nullable: true),
                     Rua = table.Column<string>(nullable: true),
                     Bairro = table.Column<string>(nullable: true),
@@ -95,8 +94,8 @@ namespace PPTRANControlesWebApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Tel1 = table.Column<string>(nullable: true),
-                    Tel2 = table.Column<string>(nullable: true),
+                    Telefone1 = table.Column<string>(nullable: true),
+                    Telefone2 = table.Column<string>(nullable: true),
                     Descricao = table.Column<string>(nullable: true),
                     EnderecoId = table.Column<long>(nullable: true),
                     IdUser = table.Column<string>(nullable: true)
@@ -182,7 +181,8 @@ namespace PPTRANControlesWebApp.Migrations
                     CPF = table.Column<string>(nullable: true),
                     CRP = table.Column<string>(nullable: true),
                     CRM = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
+                    Telefone1 = table.Column<string>(nullable: true),
+                    Telefone2 = table.Column<string>(nullable: true),
                     Funcao = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     ClinicaId = table.Column<long>(nullable: true),

@@ -1,113 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Models;
-using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
+using Microsoft.AspNetCore.Authorization;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
+    //REVISADO_20200715
     [Area("Administracao")]
     [Authorize]
     public class ProdutoController : Controller
-    {
-        private readonly UserManager<AppIdentityUser> _userManager;
-        private readonly ApplicationContext _context;
-        private readonly CaixaDAL caixaDAL;
-        private readonly ClienteDAL clienteDAL;
-        private readonly ProdutoDAL produtoDAL;
+    {       
+        private readonly ProdutoDAL produtoDAL;       
+        private readonly ApplicationContext context;
+        private readonly UserManager<AppIdentityUser> userManager;
 
         public ProdutoController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
-            _context = context;
-            _userManager = userManager;
-            caixaDAL = new CaixaDAL(context);
-            clienteDAL = new ClienteDAL(context);
+            this.context = context;
+            this.userManager = userManager;            
             produtoDAL = new ProdutoDAL(context);
         }
+
         // GET: Produto
         public async Task<IActionResult> Index()
         {
-            var produtos = await produtoDAL.ObterProdutos().ToListAsync();
-            return View(produtos);
+            return View(await produtoDAL.ObterProdutosClassificadosPorNome().ToListAsync());
         }
 
-        // GET: Produto/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Produto/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Produto/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Produto produto)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    await produtoDAL.GravarProduto(produto);
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                ModelState.AddModelError("", "Não foi possível inserir os dados.");
-            }
-            return View(produto);
-        }
-
-        public IActionResult Carrinho()
-        {           
-            
-            return  View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Carrinho(long id,CaixaViewModel model)
-        {
-            var cliente = await clienteDAL.ObterClientesPorId(id);
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    await produtoDAL.GravarProduto(model.Produto);
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                ModelState.AddModelError("", "Não foi possível inserir os dados.");
-            }
-            return View(model.Produto);
-        }
-
-        // GET: Produto/Edit/5
-        public async Task<IActionResult> Edit(long id)
+        // GET: Produto/Details
+        public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoProdutoPorId(id);
         }
 
-        // POST: Produto/Edit/5
+        // GET: Produto/Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return await ObterVisaoProdutoPorId(id);
+        }
+
+        // POST: Produto/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Produto produto)
@@ -121,6 +59,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 try
                 {
+                    produto.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await produtoDAL.GravarProduto(produto);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -133,29 +72,52 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(produto);
         }
 
-        // GET: Produto/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Produto/Create
+        public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Produto/Delete/5
+        // POST: Produto/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Create(Produto produto)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (produto.Nome != null)
+                {
+                    produto.IdUser = userManager.GetUserAsync(User).Result.Id;
 
-                return RedirectToAction(nameof(Index));
+                    await produtoDAL.GravarProduto(produto);
+
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
+            catch (DbUpdateException)
             {
-                return View();
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
+            return View(produto);
         }
 
+        // GET: Produto/Delete
+        public async Task<IActionResult> Delete(long? id)
+        {
+            return await ObterVisaoProdutoPorId(id);
+        }
+
+        // POST: Produto/Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long? id)
+        {
+            var IdUser = userManager.GetUserAsync(User).Result.Id;
+            var produto = await produtoDAL.InativarProdutoPorId((long)id, IdUser);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Metodos Privados do Controller
         private async Task<IActionResult> ObterVisaoProdutoPorId(long? id)
         {
             if (id == null)

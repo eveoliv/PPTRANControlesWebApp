@@ -21,8 +21,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
     public class ClienteController : Controller
     {
         private readonly ClienteDAL clienteDAL;
-        private readonly ClinicaDAL clinicaDAL;
-        private readonly ProdutoDAL produtoDAL;
+        private readonly ClinicaDAL clinicaDAL;        
         private readonly EnderecoDAL enderecoDAL;
         private readonly HistoricoDAL historicoDAL;
         private readonly ApplicationContext context;
@@ -34,8 +33,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             this.context = context;
             this.userManager = userManager;
             clienteDAL = new ClienteDAL(context);
-            clinicaDAL = new ClinicaDAL(context);
-            produtoDAL = new ProdutoDAL(context);
+            clinicaDAL = new ClinicaDAL(context);            
             enderecoDAL = new EnderecoDAL(context);
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
@@ -156,7 +154,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 return NotFound();
             }
 
-            var cliente = await clienteDAL.ObterClientesPorId((long)id);
+            var cliente = await clienteDAL.ObterClientePorId((long)id);
             if (cliente == null)
             {
                 return NotFound();
@@ -188,7 +186,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             ViewBag.Psicologo = new SelectList(colaboradorDAL.ObterPsicologosClassificadosPorNome(), "Id", "Nome", cliente.Id);
 
-            ViewBag.Historico = new SelectList(historicoDAL.ObterHistoricoPorNome(), "Id", "Nome", cliente.Id);
+            ViewBag.Historico = new SelectList(historicoDAL.ObterHistoricosClassificadosPorNome(), "Id", "Nome", cliente.Id);
         }
 
         private void CarregarViewBagsCreate()
@@ -205,7 +203,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
 
-            var historicos = historicoDAL.ObterHistoricoPorNome().ToList();
+            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
             historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
             ViewBag.Historicos = historicos;
         }

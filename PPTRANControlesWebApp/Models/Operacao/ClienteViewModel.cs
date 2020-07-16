@@ -1,16 +1,12 @@
 ﻿using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PPTRANControlesWebApp.Models
 {
     public class ClienteViewModel
     {
+        public Clinica Clinica { get; set; }
         public Cliente Cliente { get; set; }
         public Endereco Endereco { get; set; }        
-        public Clinica Clinica { get; set; }
         public Historico Historico { get; set; }
     }
 }

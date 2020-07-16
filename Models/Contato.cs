@@ -14,10 +14,10 @@ namespace Models
         public string Email { get; set; }
 
         [DisplayName("Telefone")]
-        public string Tel1 { get; set; }
+        public string Telefone1 { get; set; }
 
         [DisplayName("Telefone")]
-        public string Tel2 { get; set; }
+        public string Telefone2 { get; set; }
 
         [DisplayName("Descrição")]
         public string Descricao { get; set; }

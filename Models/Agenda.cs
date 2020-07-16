@@ -29,6 +29,10 @@ namespace Models
         [DisplayName("Psicologo")]
         public long? PsicologoId { get; set; }
 
+        [DisplayName("Colaborador")]
+        public long? ColaboradorId { get; set; }
+        public Colaborador Colaborador { get; set; }
+
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }

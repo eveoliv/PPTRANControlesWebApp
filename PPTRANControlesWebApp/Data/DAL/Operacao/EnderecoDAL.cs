@@ -1,11 +1,11 @@
 ﻿using Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
+    //REVISADO_20200715
     public class EnderecoDAL
     {
         private ApplicationContext context;
@@ -15,9 +15,17 @@ namespace PPTRANControlesWebApp.Data.DAL
             this.context = context;
         }
 
-        public IQueryable<Endereco> ObterEnderecoPorId()
+        public IQueryable<Endereco> ObterEnderecosClassificadosPorCEP()
         {
-            return null;
+            return context.Enderecos.OrderBy(c => c.Cep);
+        }
+
+        public async Task<Endereco> ObterEnderecoPorId(long id)
+        {
+            return await context.Enderecos
+                .Include(c => c.Clinica)
+                .Include(c => c.Cliente)
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Endereco> GravarEndereco(Endereco endereco)

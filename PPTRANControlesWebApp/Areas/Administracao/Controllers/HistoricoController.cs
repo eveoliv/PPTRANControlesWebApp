@@ -1,41 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Models;
-using PPTRANControlesWebApp.Areas.Identity.Data;
+using Microsoft.AspNetCore.Http;
 using PPTRANControlesWebApp.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
+    //REVISADO_20200715
     [Area("Administracao")]
     [Authorize]
     public class HistoricoController : Controller
     {
-        private readonly UserManager<AppIdentityUser> userManager;
-        private readonly ApplicationContext _context;
         private readonly HistoricoDAL historicoDAL;
+        private readonly ApplicationContext context;
+        private readonly UserManager<AppIdentityUser> userManager;
         
-        public HistoricoController(ApplicationContext context,
-            UserManager<AppIdentityUser> userManager)
+        public HistoricoController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
+            this.context = context;
             this.userManager = userManager;
-
-            _context = context;
             historicoDAL = new HistoricoDAL(context);           
         }
 
         // GET: Historico
         public async Task<IActionResult> Index()
         {
-            var historico = 
-                await historicoDAL.ObterHistoricoPorNome().ToListAsync();
+            return View(await historicoDAL.ObterHistoricosClassificadosPorNome().ToListAsync());
+        }
+
+        // GET: Historico/Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            return await ObterVisaoHistoricoPorId(id);
+        }
+
+        // GET: Historico/Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return await ObterVisaoHistoricoPorId(id);
+        }
+
+        // POST: Historico/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, Historico historico)
+        {
+            if (id != historico.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    historico.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await historicoDAL.GravarHistorico(historico);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
             return View(historico);
         }
 
@@ -50,72 +83,41 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Historico historico)
         {
-            var usuario = await userManager.GetUserAsync(User);
             try
             {
-                if (ModelState.IsValid)
-                {
-                    historico.IdUser = usuario.Id;
-                    await historicoDAL.GravarHitorico(historico);
-                }
+                if (historico.Nome != null)
+                {                                    
+                    historico.IdUser = userManager.GetUserAsync(User).Result.Id;
 
-                return RedirectToAction(nameof(Index));
+                    await historicoDAL.GravarHistorico(historico);
+
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
-
             return View(historico);
         }
 
-        // GET: Historico/Edit/5
-        public async Task<IActionResult> Edit(long id)
+        // GET: Historico/Delete
+        public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoHistoricoPorId(id);
         }
 
-        // POST: Historico/Edit/5
-        [HttpPost]
+        // POST: Historico/Delete
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var IdUser = userManager.GetUserAsync(User).Result.Id;
+            var historico = await historicoDAL.InativarHistoricoPorId((long)id, IdUser);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Historico/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Historico/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        /*************************************************************************/
+        // Metodos Privados do Controller
         private async Task<IActionResult> ObterVisaoHistoricoPorId(long? id)
         {
             if (id == null)
@@ -127,7 +129,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             if (historico == null)
             {
                 return NotFound();
-            }            
+            }
 
             return View(historico);
         }

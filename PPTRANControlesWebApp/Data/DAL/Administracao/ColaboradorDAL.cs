@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
+﻿using Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
+    //REVISADO_20200715
     public class ColaboradorDAL
     {
         private ApplicationContext context;
@@ -13,14 +14,14 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             this.context = context;
         }
-
-        /*** Revisado ***/
+        
         public IQueryable<Colaborador> ObterColaboradoresClassificadosPorNome()
         {
-            return context.Colaboradores.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
+            return context.Colaboradores
+                .Include(c => c.Clinica)
+                .Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
 
-        /*** Revisado ***/
         public IQueryable<Colaborador> ObterMedicosClassificadosPorNome()
         {
             return context.Colaboradores
@@ -29,7 +30,6 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .OrderBy(m => m.Nome);
         }
 
-        /*** Revisado ***/
         public IQueryable<Colaborador> ObterPsicologosClassificadosPorNome()
         {
             return context.Colaboradores
@@ -37,8 +37,6 @@ namespace PPTRANControlesWebApp.Data.DAL
                .Where(m => m.Status == EnumHelper.Status.Ativo)
                .OrderBy(m => m.Nome);
         }
-
-
 
         public async Task<Colaborador> ObterColaboradorPorId(long id)
         {
@@ -49,18 +47,10 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Colaborador> ObterColaboradorPorCPF(string cpf)
-        {
-            return await context.Colaboradores
-                .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .SingleOrDefaultAsync(c => c.CPF == cpf);
-        }
-
         public async Task<Colaborador> GravarColaborador(Colaborador colaborador)
         {
             if (colaborador.Id == null)
-            {
-                colaborador.Status = EnumHelper.Status.Ativo;
+            {               
                 context.Colaboradores.Add(colaborador);
             }
             else
@@ -68,6 +58,24 @@ namespace PPTRANControlesWebApp.Data.DAL
                 context.Update(colaborador);
             }
 
+            await context.SaveChangesAsync();
+            return colaborador;
+        }
+
+        public async Task<Colaborador> EliminarColaboradorPorId(long id)
+        {
+            var colaborador = await ObterColaboradorPorId(id);
+            context.Colaboradores.Remove(colaborador);
+            await context.SaveChangesAsync();
+            return colaborador;
+        }
+
+        public async Task<Colaborador> InativarColaboradorPorId(long id, string user)
+        {
+            var colaborador = await ObterColaboradorPorId(id);
+            colaborador.IdUser = user;
+            colaborador.Status = EnumHelper.Status.Inativo;
+            context.Update(colaborador);
             await context.SaveChangesAsync();
             return colaborador;
         }

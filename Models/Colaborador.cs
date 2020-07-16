@@ -33,8 +33,11 @@ namespace Models
         [DisplayName("CRM")]
         public string CRM { get; set; }
     
-        [DisplayName("Telefone")]
-        public string Telefone { get; set; }
+        [DisplayName("Telefone 1")]
+        public string Telefone1 { get; set; }
+
+        [DisplayName("Telefone 2")]
+        public string Telefone2 { get; set; }
 
         [DisplayName("Função")]
         public EnumHelper.Funcao Funcao { get; set; }
@@ -42,7 +45,7 @@ namespace Models
         [DisplayName("Status")]
         public EnumHelper.Status Status { get; set; }
      
-        //public long? ClinicaId { get; set; }
+        public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
        
         public long? EnderecoId { get; set; }

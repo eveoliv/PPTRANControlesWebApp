@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
-using System;
-using System.Collections.Generic;
+﻿using Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data.DAL.Administracao
 {
+    //REVISADO_20200715
     public class HistoricoDAL
     {
         private ApplicationContext context;
@@ -15,25 +14,23 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
         {
             this.context = context;
         }
-
-        /*** Revisado ***/
-        public IQueryable<Historico> ObterHistoricoPorNome()
+       
+        public IQueryable<Historico> ObterHistoricosClassificadosPorNome()
         {
             return context.Historicos.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);            
         }
 
         public async Task<Historico> ObterHistoricoPorId(long id)
         {
-            return await context.Historicos
-               .Where(c => c.Status == EnumHelper.Status.Ativo)
-               .SingleOrDefaultAsync(c => c.Id == id);
+            return await context.Historicos                
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Historico> GravarHitorico(Historico historico)
+        public async Task<Historico> GravarHistorico(Historico historico)
         {
             if (historico.Id == null)
             {
-                historico.Status = EnumHelper.Status.Ativo;
                 context.Historicos.Add(historico);
             }
             else
@@ -41,6 +38,24 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
                 context.Update(historico);
             }
 
+            await context.SaveChangesAsync();
+            return historico;
+        }
+
+        public async Task<Historico> EliminarHistoricoPorId(long id)
+        {
+            var historico = await ObterHistoricoPorId(id);
+            context.Historicos.Remove(historico);
+            await context.SaveChangesAsync();
+            return historico;
+        }
+
+        public async Task<Historico> InativarHistoricoPorId(long id, string user)
+        {
+            var historico = await ObterHistoricoPorId(id);
+            historico.IdUser = user;
+            historico.Status = EnumHelper.Status.Inativo;
+            context.Update(historico);
             await context.SaveChangesAsync();
             return historico;
         }

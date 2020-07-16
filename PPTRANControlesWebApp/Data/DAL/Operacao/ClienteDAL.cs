@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
+    //REVISADO_20200715
     public class ClienteDAL
     {       
         private ApplicationContext context;
@@ -13,15 +14,13 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             this.context = context;           
         }
-
-        /*** Revisado ***/
+       
         public IQueryable<Cliente> ObterClientesClassificadosPorNome()
         {
             return context.Clientes.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
-
-        /*** Revisado ***/
-        public async Task<Cliente> ObterClientesPorId(long id)
+        
+        public async Task<Cliente> ObterClientePorId(long id)
         {           
             return await context.Clientes                
                 .Include(c => c.Clinica)
@@ -31,7 +30,6 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        /*** Revisado ***/
         public async Task<Cliente> GravarCliente(Cliente cliente)
         {            
             if (cliente.Id == null)
@@ -46,25 +44,23 @@ namespace PPTRANControlesWebApp.Data.DAL
             await context.SaveChangesAsync();
             return cliente;
         }
-
-        /*** Revisado ***/
+     
         public async Task<Cliente> EliminarClientePorId(long id)
         {
-            var cliente = await ObterClientesPorId(id);
+            var cliente = await ObterClientePorId(id);
             context.Clientes.Remove(cliente);
             await context.SaveChangesAsync();
             return cliente;
         }
-
-        /*** Revisado ***/
+        
         public async Task<Cliente> InativarClientePorId(long id, string user)
         {
-            var cliente = await ObterClientesPorId(id);
+            var cliente = await ObterClientePorId(id);
             cliente.IdUser = user;
             cliente.Status = EnumHelper.Status.Inativo;
             context.Update(cliente);
             await context.SaveChangesAsync();
-            return null;
+            return cliente;
         }
     }
 }

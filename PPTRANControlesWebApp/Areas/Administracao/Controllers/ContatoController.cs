@@ -1,45 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using PPTRANControlesWebApp.Data.DAL;
+using Microsoft.AspNetCore.Authorization;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Models.Administracao;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
+    //REVISADO_20200715
     [Area("Administracao")]
     [Authorize]
     public class ContatoController : Controller
     {
-        private readonly UserManager<AppIdentityUser> userManager;
-        private readonly ApplicationContext _context;
         private readonly ContatoDAL contatoDAL;
-        
+        private readonly EnderecoDAL enderecoDAL;
+        private readonly ApplicationContext context;
+        private readonly UserManager<AppIdentityUser> userManager;
 
-        public ContatoController(ApplicationContext context, 
-            UserManager<AppIdentityUser> userManager)
+        public ContatoController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
+            this.context = context;
             this.userManager = userManager;
-
-            _context = context;
             contatoDAL = new ContatoDAL(context);
-            
-        }
-        // GET: Contato
-        public ActionResult Index()
-        {
-            return View();
+            enderecoDAL = new EnderecoDAL(context);
         }
 
-        // GET: Contato/Details/5
-        public ActionResult Details(int id)
+        // GET: Contato
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await contatoDAL.ObterContatosClassificadosPorNome().ToListAsync());
+        }
+
+        // GET: Contato/Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            return await ObterVisaoContatoPorId(id);
+        }
+
+        // GET: Contato/Edit
+        public async Task<IActionResult> Edit(int? id)
+        {
+            return await ObterVisaoContatoPorId(id);
+        }
+
+        // POST: Contato/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, Contato contato)
+        {
+            if (id != contato.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    contato.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await contatoDAL.GravarContato(contato);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(contato);
         }
 
         // GET: Contato/Create
@@ -51,64 +84,59 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         // POST: Contato/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(ContatoViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (model.Contato.Nome != null)
+                {
+                    await enderecoDAL.GravarEndereco(model.Endereco);
 
-                return RedirectToAction(nameof(Index));
+                    model.Contato.EnderecoId = model.Endereco.Id;
+                    model.Contato.IdUser = userManager.GetUserAsync(User).Result.Id;
+
+                    await contatoDAL.GravarContato(model.Contato);
+
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            catch
+            catch (DbUpdateException)
             {
-                return View();
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
+            return View(model.Contato);
         }
 
-        // GET: Contato/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Contato/Delete
+        public async Task<IActionResult> Delete(long? id)
         {
-            return View();
+            return await ObterVisaoContatoPorId(id);
         }
 
-        // POST: Contato/Edit/5
-        [HttpPost]
+        // POST: Contato/Delete
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var contato = await contatoDAL.EliminarContatoPorId((long)id);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Contato/Delete/5
-        public ActionResult Delete(int id)
+        // Metodos Privados do Controller
+        private async Task<IActionResult> ObterVisaoContatoPorId(long? id)
         {
-            return View();
-        }
-
-        // POST: Contato/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            if (id == null)
             {
-                // TODO: Add delete logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            var contato = await contatoDAL.ObterContatoPorId((long)id);
+            if (contato == null)
             {
-                return View();
+                return NotFound();
             }
+
+            return View(contato);
         }
     }
 }
