@@ -21,6 +21,9 @@ namespace Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
+        [DisplayName("Status")]
+        public EnumHelper.Status Status { get; set; }
+
         [DisplayName("RG")]
         public string RG { get; set; }
 
@@ -33,18 +36,18 @@ namespace Models
         [DisplayName("CRM")]
         public string CRM { get; set; }
     
-        [DisplayName("Telefone 1")]
+        [DisplayName("Tel. Celular.")]
         public string Telefone1 { get; set; }
 
-        [DisplayName("Telefone 2")]
+        [DisplayName("Tel. Fixo")]
         public string Telefone2 { get; set; }
 
         [DisplayName("Função")]
         public EnumHelper.Funcao Funcao { get; set; }
 
-        [DisplayName("Status")]
-        public EnumHelper.Status Status { get; set; }
-     
+        [DisplayName("Observação")]
+        public string Obs { get; set; }
+
         public long? ClinicaId { get; set; }
         public Clinica Clinica { get; set; }
        

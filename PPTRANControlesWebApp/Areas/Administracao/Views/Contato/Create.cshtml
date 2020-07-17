@@ -1,12 +1,8 @@
-﻿@model PPTRANControlesWebApp.Models.ClienteViewModel
+﻿@model PPTRANControlesWebApp.Models.Administracao.ContatoViewModel
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@section styles {
-    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
 <div class="page-title">
@@ -16,7 +12,7 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Informações Gerais</h2>
+                    <h2>Cadastrar Novo Contato</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index">Retornar</a>
                     </ul>
@@ -24,106 +20,41 @@
                 </div>
 
                 <div class="x_content">
-                    <form asp-action="create" class="form-label-left input_mask">
+                    <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="Cliente.Id" />
-                        <input type="hidden" asp-for="Cliente.Status" />
-                        @*---------------------------------------------------*@
+
                         <div class="row">
-                            <div class="col-md-3 col-sm-3  form-group has-feedback">
-                                <input asp-for="Cliente.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
+                            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                <input asp-for="Contato.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
-                                <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+                                <span asp-validation-for="Contato.Nome" class="text-danger"></span>
                             </div>
-                            <div class="col-md-3 col-sm-3   form-group has-feedback">
-                                <input asp-for="Cliente.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
+
+                            <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                <input asp-for="Contato.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
                                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                             </div>
-
-                            <div class="col-md-3 col-sm-3   form-group has-feedback">
-                                <input asp-for="Cliente.Telefone1" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Celular" data-inputmask="'mask' : '(99) 99999-9999'">
-                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-                            <div class="col-md-3 col-sm-3   form-group has-feedback">
-                                <input asp-for="Cliente.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Fixo" data-inputmask="'mask' : '(99) 9999-9999'">
-                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                            </div>
                         </div>
-                        @*---------------------------------------------------*@
+
                         <div class="row">
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.NumRenach" type="text" placeholder="RENACH" class="form-control">
+                            <div class="col-md-3 col-sm-3  form-group has-feedback">
+                                <input asp-for="Contato.Telefone1" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'" required="required">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">
+                            <div class="col-md-3 col-sm-3  form-group has-feedback">
+                                <input asp-for="Contato.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
-                                    <option selected="selected" value="">Categoria</option>
-                                </select>
-                            </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" required="required" data-inputmask="'mask': '999.999.999-99'">
-                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
-                            </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Pai" type="text" placeholder="Nome do Pai" class="form-control">
-                            </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Mae" type="text" placeholder="Nome da Mãe" class="form-control">
-                            </div>
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Nacionalidade" type="text" placeholder="Nacionalidade" class="form-control">
-                            </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" class="form-control">
-                            </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
-                            </div>                            
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.MedicoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>
-                            </div>
+                            <div class="col-md-6 col-sm-6  form-group">
+                                <input asp-for="Contato.Descricao" type="text" placeholder="Descrição" class="form-control" required="required">
+                            </div>                           
                         </div>
 
-                        <div class=" x_title">
+                        <div class="x_title">
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
                         <input type="hidden" asp-for="Endereco.Id" />
-                        <input type="hidden" asp-for="Clinica.Id" />
-
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
                                 Cep <span class="required"></span>
@@ -189,9 +120,8 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Cadastrar</button>
+                                <button class="btn btn-success" type="submit">Gravar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
-                                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
 

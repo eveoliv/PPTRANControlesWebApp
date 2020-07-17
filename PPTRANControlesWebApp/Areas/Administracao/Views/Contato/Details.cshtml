@@ -1,21 +1,18 @@
-﻿@model Models.Clinica
+﻿@model Models.Contato
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-@section styles {
-    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-}
-
 <div class="">
-    <div class="col-md-6 col-sm-6  ">
+    <div class="col-md-8 col-sm-8  ">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Editar Informações da Clinica</h2>
+                <h2>Informações do Contato</h2>
                 <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="">Editar</a>&nbsp; | &nbsp;
                     <a asp-action="Index">Retornar</a>
                 </ul>
                 <div class="clearfix"></div>
@@ -24,7 +21,7 @@
                 <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informações Gerais</a>
-                    </li>                 
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Endereço</a>
                     </li>
@@ -32,7 +29,6 @@
 
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                     <div class="form-group">
                         <div class="tab-content" id="myTabContent">
 
@@ -40,35 +36,27 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.HiddenFor(model => model.Id)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.HiddenFor(model => model.Id)
-                                        </dd>
+                                        @Html.HiddenFor(model => model.Id)
+
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Nome" type="text" class="form-control">
+                                            <input asp-for="Nome" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Email)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Email" type="text" class="form-control">
-                                        </dd>
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.CNPJ)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="CNPJ" type="text" class="form-control" data-inputmask="'mask': '99.999.999/9999-99'">
+                                            <input asp-for="Email" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Telefone1)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Telefone1" type="text" class="form-control" data-inputmask="'mask' : '(99) 99999-9999'">
+                                            <input asp-for="Telefone1" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Telefone2)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Telefone2" type="text" class="form-control" data-inputmask="'mask' : '(99) 9999-9999'">
+                                            <input asp-for="Telefone2" type="text" class="form-control" disabled="disabled">
                                         </dd>
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Alias)</dt>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Descricao)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Alias" type="text" class="form-control">
+                                            <input asp-for="Descricao" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                     </dl>
                                 </div>
@@ -78,54 +66,43 @@
                                 <div>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-2">
-                                            @Html.HiddenFor(model => model.Endereco.Id)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.HiddenFor(model => model.Endereco.Id)
-                                        </dd>
-
+                                        @Html.HiddenFor(model => model.Endereco.Id)
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cep)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Cep" type="text" class="form-control">
+                                            <input asp-for="Endereco.Cep" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Rua)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Rua" type="text" class="form-control">
+                                            <input asp-for="Endereco.Rua" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Bairro)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Bairro" type="text" class="form-control">
+                                            <input asp-for="Endereco.Bairro" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Cidade)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Cidade" type="text" class="form-control">
+                                            <input asp-for="Endereco.Cidade" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Estado)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Estado" type="text" class="form-control">
+                                            <input asp-for="Endereco.Estado" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Numero)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Numero" type="text" class="form-control">
+                                            <input asp-for="Endereco.Numero" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Endereco.Complto)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Endereco.Complto" type="text" class="form-control">
+                                            <input asp-for="Endereco.Complto" type="text" class="form-control" disabled="disabled">
                                         </dd>
                                     </dl>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                        <input type="submit" value="Salvar" class="btn btn-success" />
-                    </div>
+                    </div>                  
 
                 </form>
-
             </div>
         </div>
     </div>

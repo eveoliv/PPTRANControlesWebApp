@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200716002017_AjusteTelefone")]
-    partial class AjusteTelefone
+    [Migration("20200717015628_CorrecaoTelefone")]
+    partial class CorrecaoTelefone
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,11 +28,15 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
+                    b.Property<long?>("ColaboradorId");
+
                     b.Property<DateTime>("Data");
 
                     b.Property<string>("IdUser");
 
                     b.Property<long?>("MedicoId");
+
+                    b.Property<string>("Obs");
 
                     b.Property<long?>("PsicologoId");
 
@@ -41,6 +45,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("ClinicaId");
+
+                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("Agendas");
                 });
@@ -128,6 +134,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("NumRenach");
 
+                    b.Property<string>("Obs");
+
                     b.Property<string>("Pai");
 
                     b.Property<string>("Profissao");
@@ -140,7 +148,9 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<int>("StatusPgto");
 
-                    b.Property<string>("Telefone");
+                    b.Property<string>("Telefone1");
+
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 
@@ -171,11 +181,13 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
+                    b.Property<string>("Obs");
+
                     b.Property<int>("Status");
 
-                    b.Property<string>("Tel1");
+                    b.Property<string>("Telefone1");
 
-                    b.Property<string>("Tel2");
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 
@@ -210,6 +222,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
+                    b.Property<string>("Obs");
+
                     b.Property<string>("RG");
 
                     b.Property<int>("Status");
@@ -243,13 +257,16 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Nome");
 
+                    b.Property<string>("Obs");
+
                     b.Property<string>("Telefone1");
 
                     b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
 
                     b.ToTable("Contatos");
                 });
@@ -323,6 +340,10 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Clinica", "Clinica")
                         .WithMany()
                         .HasForeignKey("ClinicaId");
+
+                    b.HasOne("Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId");
                 });
 
             modelBuilder.Entity("Models.Caixa", b =>
@@ -380,8 +401,8 @@ namespace PPTRANControlesWebApp.Migrations
             modelBuilder.Entity("Models.Contato", b =>
                 {
                     b.HasOne("Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId");
+                        .WithOne("Contato")
+                        .HasForeignKey("Models.Contato", "EnderecoId");
                 });
 #pragma warning restore 612, 618
         }

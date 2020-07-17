@@ -29,36 +29,39 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="Colaborador.Id" />
                         <input type="hidden" asp-for="Colaborador.Status" />
+                        <input type="hidden" asp-for="Colaborador.DtCadastro" />
 
                         <div class="row">
-                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                            <div class="col-md-6 col-sm-6  form-group has-feedback">
                                 <input asp-for="Colaborador.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                 <span asp-validation-for="Colaborador.Nome" class="text-danger"></span>
                             </div>
 
-                            <div class="col-md-4 col-sm-4  form-group has-feedback">
+                            <div class="col-md-6 col-sm-6  form-group has-feedback">
                                 <input asp-for="Colaborador.Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email">
                                 <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-
-                            <div class="col-md-4 col-sm-4  form-group has-feedback">
-                                <input asp-for="Colaborador.Telefone1" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
-                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
-                            </div>
-                            <div class="col-md-4 col-sm-4  form-group has-feedback">
-                                <input asp-for="Colaborador.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Telefone" data-inputmask="'mask' : '(99) 99999-9999'">
-                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
                         </div>
 
                         <div class="row">
+                            <div class="col-md-3 col-sm-3  form-group has-feedback">
+                                <input asp-for="Colaborador.Telefone1" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Celular" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-3 col-sm-3  form-group has-feedback">
+                                <input asp-for="Colaborador.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Fixo" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                            </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Colaborador.RG" type="text" placeholder="RG" class="form-control"  data-inputmask="'mask': '99.999.999-9'">
+                                <input asp-for="Colaborador.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Colaborador.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'">
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Colaborador.CRM" type="text" placeholder="CRM" class="form-control">
                             </div>
@@ -66,11 +69,12 @@
                                 <input asp-for="Colaborador.CRP" type="text" placeholder="CRP" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Colaborador.Funcao" type="text" placeholder="Função" class="form-control">
+                                <select asp-for="Colaborador.Funcao" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Funcao>()" required="required">
+                                    <option selected="selected" value="">Função</option>
+                                </select>
                             </div>
-
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.Clinica.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>                                
+                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
                             </div>
                         </div>
 
@@ -78,7 +82,7 @@
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
-                        <input type="hidden" asp-for="Endereco.Id" />                        
+                        <input type="hidden" asp-for="Endereco.Id" />
                         <input type="hidden" asp-for="Clinica.Id" />
 
                         <div class="item form-group">
@@ -146,7 +150,7 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Enviar</button>
+                                <button class="btn btn-success" type="submit">Gravar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
                             </div>
                         </div>

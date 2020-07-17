@@ -33,6 +33,9 @@ namespace Models
         public long? ColaboradorId { get; set; }
         public Colaborador Colaborador { get; set; }
 
+        [DisplayName("Observação")]
+        public string Obs { get; set; }
+
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }

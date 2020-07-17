@@ -52,8 +52,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome ="POUPETRAN SÉ",
                     CNPJ ="12.321.654/6565-46",
                     Alias ="SÉ", Email="se@poupetran.com.br",
-                    Tel1 ="(11) 64645-6546",
-                    Tel2 ="(11) 97997-9879",
+                    Telefone1 ="(11) 64645-6546",
+                    Telefone2 ="(11) 97997-9879",
                     Status =EnumHelper.Status.Ativo,
                     Endereco = new Endereco() { Id = 1}
                 },
@@ -62,8 +62,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                     CNPJ ="64.646.546/0001-11",
                     Alias ="DARZAN",
                     Email ="darzan@poupetran.com.br",
-                    Tel1 ="(45) 45454-5454",
-                    Tel2 ="(65) 66565-6565",
+                    Telefone1 ="(45) 45454-5454",
+                    Telefone2 ="(65) 66565-6565",
                     Status =EnumHelper.Status.Ativo,
                     Endereco = new Endereco(){ Id = 2} }
             };
@@ -113,7 +113,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Everton Oliveira",
                     NumRenach = "123456",
                     Categoria = EnumHelper.Categoria.B,
-                    Telefone = "(11)97699-4991",
+                    Telefone1 = "(11)97699-4991",
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){ Id = 1 },
                     CPF = "222.205.648-90",

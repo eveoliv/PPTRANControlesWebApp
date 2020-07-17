@@ -17,7 +17,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
 
         public IQueryable<Produto> ObterProdutosClassificadosPorNome()
         {
-            return context.Produtos.OrderBy(c => c.Nome);
+            return context.Produtos.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
 
         public async Task<Produto> ObterProdutoPorId(long id)

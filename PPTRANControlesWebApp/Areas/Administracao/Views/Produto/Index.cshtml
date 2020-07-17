@@ -19,7 +19,7 @@
                 <div class="x_title">
                     <h2>Tabela de Valores</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a asp-action="Create">Novo</a>&nbsp;
+                        <a asp-action="Create">Novo</a>&emsp;
                         @*<a asp-action="" onClick="window.print()">Imprimir</a>*@
                     </ul>
                     <div class="clearfix"></div>
@@ -56,12 +56,14 @@
                                                     @Html.DisplayFor(modelItem => item.Nome)
                                                 </td>
                                                 <td>
+                                                    &emsp;&emsp;
                                                     @Html.DisplayFor(modelItem => item.Valor)
                                                 </td>                                                
                                                 <td>
+                                                    &emsp;
                                                     @*<a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a> |*@
-                                                    @*<a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>*@
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                                 </td>
                                             </tr>
                                         }

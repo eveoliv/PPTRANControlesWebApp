@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class AjusteTelefone : Migration
+    public partial class CorrecaoTelefone : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,8 +69,9 @@ namespace PPTRANControlesWebApp.Migrations
                     CNPJ = table.Column<string>(nullable: true),
                     Alias = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Tel1 = table.Column<string>(nullable: true),
-                    Tel2 = table.Column<string>(nullable: true),
+                    Telefone1 = table.Column<string>(nullable: true),
+                    Telefone2 = table.Column<string>(nullable: true),
+                    Obs = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     EnderecoId = table.Column<long>(nullable: true),
                     IdUser = table.Column<string>(nullable: true)
@@ -97,6 +98,7 @@ namespace PPTRANControlesWebApp.Migrations
                     Telefone1 = table.Column<string>(nullable: true),
                     Telefone2 = table.Column<string>(nullable: true),
                     Descricao = table.Column<string>(nullable: true),
+                    Obs = table.Column<string>(nullable: true),
                     EnderecoId = table.Column<long>(nullable: true),
                     IdUser = table.Column<string>(nullable: true)
                 },
@@ -119,12 +121,15 @@ namespace PPTRANControlesWebApp.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DtCadastro = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     CPF = table.Column<string>(nullable: true),
                     RG = table.Column<string>(nullable: true),
                     CNH = table.Column<string>(nullable: true),
                     Categoria = table.Column<int>(nullable: false),
                     NumRenach = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
+                    Telefone1 = table.Column<string>(nullable: true),
+                    Telefone2 = table.Column<string>(nullable: true),
                     NumLaudo = table.Column<string>(nullable: true),
                     DtHabHum = table.Column<DateTime>(nullable: false),
                     Pai = table.Column<string>(nullable: true),
@@ -135,8 +140,7 @@ namespace PPTRANControlesWebApp.Migrations
                     DtNascimento = table.Column<DateTime>(nullable: false),
                     Profissao = table.Column<string>(nullable: true),
                     Escolaridade = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
+                    Obs = table.Column<string>(nullable: true),
                     StatusPgto = table.Column<int>(nullable: false),
                     MedicoId = table.Column<long>(nullable: true),
                     PsicologoId = table.Column<long>(nullable: true),
@@ -177,6 +181,7 @@ namespace PPTRANControlesWebApp.Migrations
                     DtCadastro = table.Column<DateTime>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     RG = table.Column<string>(nullable: true),
                     CPF = table.Column<string>(nullable: true),
                     CRP = table.Column<string>(nullable: true),
@@ -184,7 +189,7 @@ namespace PPTRANControlesWebApp.Migrations
                     Telefone1 = table.Column<string>(nullable: true),
                     Telefone2 = table.Column<string>(nullable: true),
                     Funcao = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
+                    Obs = table.Column<string>(nullable: true),
                     ClinicaId = table.Column<long>(nullable: true),
                     EnderecoId = table.Column<long>(nullable: true),
                     IdUser = table.Column<string>(nullable: true)
@@ -202,36 +207,6 @@ namespace PPTRANControlesWebApp.Migrations
                         name: "FK_Colaboradores_Enderecos_EnderecoId",
                         column: x => x.EnderecoId,
                         principalTable: "Enderecos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Agendas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<DateTime>(nullable: false),
-                    ClienteId = table.Column<long>(nullable: true),
-                    ClinicaId = table.Column<long>(nullable: true),
-                    MedicoId = table.Column<long>(nullable: true),
-                    PsicologoId = table.Column<long>(nullable: true),
-                    IdUser = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Agendas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Agendas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Agendas_Clinicas_ClinicaId",
-                        column: x => x.ClinicaId,
-                        principalTable: "Clinicas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -282,6 +257,44 @@ namespace PPTRANControlesWebApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Agendas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(nullable: false),
+                    ClienteId = table.Column<long>(nullable: true),
+                    ClinicaId = table.Column<long>(nullable: true),
+                    MedicoId = table.Column<long>(nullable: true),
+                    PsicologoId = table.Column<long>(nullable: true),
+                    ColaboradorId = table.Column<long>(nullable: true),
+                    Obs = table.Column<string>(nullable: true),
+                    IdUser = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Clinicas_ClinicaId",
+                        column: x => x.ClinicaId,
+                        principalTable: "Clinicas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Agendas_Colaboradores_ColaboradorId",
+                        column: x => x.ColaboradorId,
+                        principalTable: "Colaboradores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Agendas_ClienteId",
                 table: "Agendas",
@@ -291,6 +304,11 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "IX_Agendas_ClinicaId",
                 table: "Agendas",
                 column: "ClinicaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendas_ColaboradorId",
+                table: "Agendas",
+                column: "ColaboradorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Caixas_ClienteId",
@@ -348,7 +366,8 @@ namespace PPTRANControlesWebApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Contatos_EnderecoId",
                 table: "Contatos",
-                column: "EnderecoId");
+                column: "EnderecoId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -360,10 +379,10 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "Caixas");
 
             migrationBuilder.DropTable(
-                name: "Colaboradores");
+                name: "Contatos");
 
             migrationBuilder.DropTable(
-                name: "Contatos");
+                name: "Colaboradores");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

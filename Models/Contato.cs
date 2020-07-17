@@ -13,15 +13,18 @@ namespace Models
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [DisplayName("Telefone")]
+        [DisplayName("Tel. Celular")]
         public string Telefone1 { get; set; }
 
-        [DisplayName("Telefone")]
+        [DisplayName("Tel. Fixo")]
         public string Telefone2 { get; set; }
 
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
-     
+
+        [DisplayName("Observação")]
+        public string Obs { get; set; }
+
         [DisplayName("Endereco")]
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }

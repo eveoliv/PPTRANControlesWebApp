@@ -48,13 +48,13 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         // GET: Clientes/Details
         public async Task<IActionResult> Details(long? id)
         {
-            return await ObterVisaoClientePorId(id);
+            return await ObterVisaoClientePorId(id, "Detail");
         }
        
         // GET: Clientes/Edit
         public async Task<IActionResult> Edit(long? id)
         {            
-            return await ObterVisaoClientePorId(id);
+            return await ObterVisaoClientePorId(id, "Edit");
         }
 
         // POST: Clientes/Edit
@@ -122,7 +122,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         // GET: Clientes/Delete
         public async Task<IActionResult> Delete(long? id)
         {
-            return await ObterVisaoClientePorId(id);
+            return await ObterVisaoClientePorId(id, "");
         }
 
         // POST: Clientes/Delete
@@ -138,16 +138,16 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         // Entrevistas do Médico e Psicólogo
         public async Task<IActionResult> EntrevistaPsi(long? id)
         {
-            return await ObterVisaoClientePorId(id);
+            return await ObterVisaoClientePorId(id, "");
         }
        
         public async Task<IActionResult> EntrevistaMed(long? id)
         {
-            return await ObterVisaoClientePorId(id);
+            return await ObterVisaoClientePorId(id, "");
         }
 
         // Metodos Privados do Controller
-        private async Task<IActionResult> ObterVisaoClientePorId(long? id)
+        private async Task<IActionResult> ObterVisaoClientePorId(long? id, string chamada)
         {
             if (id == null)
             {
@@ -160,9 +160,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 return NotFound();
             }
 
-            CarregarViewBagsDetails(cliente);
+            if (chamada == "Detail")            
+                CarregarViewBagsDetails(cliente);
 
-            CarregarViewBagsEdit(cliente);
+            if (chamada == "Edit")
+                CarregarViewBagsEdit(cliente);
 
             return View(cliente);
         }

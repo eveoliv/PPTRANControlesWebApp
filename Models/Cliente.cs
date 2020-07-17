@@ -18,6 +18,12 @@ namespace Models
         [DisplayName("Nome")]
         public string Nome { get; set; }
 
+        [DisplayName("Email")]
+        public string Email { get; set; }
+
+        [DisplayName("Status Cliente")]
+        public EnumHelper.Status Status { get; set; }
+
         [DisplayName("CPF")]
         public string CPF { get; set; }
 
@@ -34,8 +40,11 @@ namespace Models
         public string NumRenach { get; set; }
 
         [DisplayName("Telefone")]
-        public string Telefone { get; set; }
-    
+        public string Telefone1 { get; set; }
+
+        [DisplayName("Telefone")]
+        public string Telefone2 { get; set; }
+
         [DisplayName("Numero do Laudo")]
         public string NumLaudo { get; set; }
 
@@ -70,11 +79,8 @@ namespace Models
         [DisplayName("Escolaridade")]
         public string Escolaridade { get; set; }
 
-        [DisplayName("Email")]
-        public string Email { get; set; }
-
-        [DisplayName("Status Cliente")]
-        public EnumHelper.Status Status { get; set; }
+        [DisplayName("Observação")]
+        public string Obs { get; set; }     
 
         [DisplayName("Pagto Realizado")]
         public EnumHelper.YesNo StatusPgto { get; set; }

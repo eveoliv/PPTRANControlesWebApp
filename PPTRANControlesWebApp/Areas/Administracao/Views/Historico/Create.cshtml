@@ -14,7 +14,7 @@
                     <div class="x_title">
                         <h2>Cadastrar Novo Histórico&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
+                            @*<a asp-action="Index">Retornar</a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -34,7 +34,7 @@
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 offset-md-2">
                                     <button type="submit" class="btn btn-success">Registrar</button>
-                                    <button class="btn btn-primary" type="button">Cancelar</button>
+                                    <a asp-action="Index" class="btn btn-primary">Cancelar</a>
                                 </div>
                             </div>
                         </form>

@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section styles {
-    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-}
-
 
 <div class="page-title">
     <div class="clearfix"></div>
@@ -20,34 +16,19 @@
                     <h2>Nome do Candidato: @Html.DisplayFor(model => model.Nome)</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index">Retornar</a>&nbsp;|&nbsp;
-                        <a asp-action="" onClick="window.print()">Imprimir</a>               
+                        <a asp-action="" onClick="window.print()">Imprimir</a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
 
                 <div class="x_content">
-                    <dl class="row">
-                        <!--L1-->
-                        <dt class="col-sm-2">
-                            @* @Html.DisplayNameFor(model => model.ClienteId)*@
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.HiddenFor(model => model.Id)
-                        </dd>
+                    <dl class="row" id="L1">
+                        @Html.HiddenFor(model => model.Id)
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.NumRenach):.
                         </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.NumRenach)
-                        </dd>
-
-                        <!--L2-->
-                       
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categoria):.
-                        </dt>
                         <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Categoria)
+                            @Html.DisplayFor(model => model.NumRenach)
                         </dd>
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.NumLaudo):.
@@ -55,56 +36,69 @@
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.NumLaudo)
                         </dd>
-
-                        <!--L3-->
                         <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Telefone1):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.Telefone1)
+                        </dd>
+                    </dl>
+
+                    <dl class="row" id="L2">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Categoria):.
+                        </dt>
+                        <dd class="col-sm-1">
+                            @Html.DisplayFor(model => model.Categoria)
+                        </dd>
+                        <dt class="col-sm-1">
                             @Html.DisplayNameFor(model => model.RG):.
                         </dt>
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.RG)
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-1">
                             @Html.DisplayNameFor(model => model.CPF):.
                         </dt>
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.CPF)
                         </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Telefone):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Telefone)
-                        </dd>
-
-                        <!--L4-->
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-1">
                             @Html.DisplayNameFor(model => model.CNH):.
                         </dt>
-                        <dd class="col-sm-4">
+                        <dd class="col-sm-1">
                             @Html.DisplayFor(model => model.CNH)
                         </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.DtHabHum):.
+                        <dt class="col-sm-1">
+                            1ª Hab:.
                         </dt>
-                        <dd class="col-sm-4">
+                        <dd class="col-sm-1">
                             @Html.DisplayFor(model => model.DtHabHum)
                         </dd>
+                    </dl>
 
-                        <!--L5-->
+                    <dl class="row" id="L3">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DtNascimento):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.DtNascimento)
+                        </dd>
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Pai):.
                         </dt>
-                        <dd class="col-sm-4">
+                        <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.Pai)
                         </dd>
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Mae):.
                         </dt>
-                        <dd class="col-sm-4">
+                        <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.Mae)
                         </dd>
+                    </dl>
 
-                        <!--L6-->
+                    <dl class="row" id="L4">
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Nacionalidade):.
                         </dt>
@@ -123,14 +117,10 @@
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.EstadoCivil)
                         </dd>
+                    </dl>
 
-                        <!--L7-->
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.DtNascimento):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.DtNascimento)
-                        </dd>
+                    <dl class="row" id="L5">
+
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Profissao):.
                         </dt>
@@ -189,7 +179,7 @@
                         <p>Pessoa com deficiência&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo,qual ? ____________________.</p>
 
                         <br />
-                        <p>Eu,_______________________________________________________________,declaro não ter sido reprovado (a) em exame psicológico do DETRAN no último ano.</p>
+                        <p>Eu,_______________________________________________________________, declaro não ter sido reprovado (a) em exame psicológico do DETRAN no último ano.</p>
 
                         <p>Declaro que as informações fornecidas acima são verdadeiras.</p>
 
@@ -199,10 +189,10 @@
                         <div class="ln_solid"></div>
                         <p>Parecer da entrevista: _______________________________________________________________________________________________________________.</p>
 
-                        <p>Data: ____/____/________.</p>
+                        <p>São Paulo,@DateTime.Now.Day de @DateTime.Now.ToString("MMMM") de @DateTime.Now.Year .</p>
                         <div class="text-center">
-                            <p>_________________________________&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  ________________________________</p>
-                            <p> Carimbo e Assinatura do Psicólogo &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Carimbo e Assinatura do Médico</p>
+                            <p>_________________________________</p>
+                            <p> Carimbo e Assinatura do Psicólogo</p>
                         </div>
                     </div>
 

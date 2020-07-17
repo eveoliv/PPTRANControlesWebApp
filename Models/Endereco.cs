@@ -35,8 +35,9 @@ namespace Models
 
         //fk
         public Cliente Cliente { get; set; }
-        public Colaborador Colaborador { get; set; }
         public Clinica Clinica { get; set;  }
+        public Contato Contato { get; set; }
+        public Colaborador Colaborador { get; set; }
 
     }
 }

@@ -19,7 +19,7 @@
                     <div class="x_title">
                         <h2>Inativar Colaborador</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
+                            @*<a asp-action="Index">Retornar</a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -37,17 +37,18 @@
 
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
-                                    <input asp-for="Nome" type="text" class="form-control">
+                                    <input asp-for="Nome" type="text" class="form-control" disabled="disabled">
                                 </dd>
                                 <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Funcao)</dt>
                                 <dd class="col-md-9 col-sm-9 ">
-                                    <input asp-for="Funcao" type="text" class="form-control">
+                                    <input asp-for="Funcao" type="text" class="form-control" disabled="disabled">
                                 </dd>
 
                             </dl>
                             <div class="ln_solid"></div>
                             <form asp-action="Delete">
                                 <input type="submit" value="Inativar" class="btn btn-danger" />
+                                <a asp-action="Index" class="btn btn-primary">Retornar</a>
                             </form>
                             <div>
                                 * Esta operação altera o status do colaborador para inativo.

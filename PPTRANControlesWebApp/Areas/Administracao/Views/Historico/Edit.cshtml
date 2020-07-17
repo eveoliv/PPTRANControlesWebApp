@@ -11,15 +11,15 @@
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Editar Histórico Cadastrado&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
+                        <h2>Editar Histórico Cadastrado&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">&emsp;&emsp;&emsp;Retornar</a>
+                            @*<a asp-action="Index">&emsp;&emsp;&emsp;</a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <br />
-                        <form asp-controller="Produto" asp-action="Edit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <form asp-action="Edit" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
 
@@ -34,7 +34,7 @@
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 offset-md-2">
                                     <button type="submit" class="btn btn-success">Alterar</button>
-                                    <button class="btn btn-primary" type="button">Cancelar</button>
+                                    <a asp-action="Index" class="btn btn-primary">Cancelar</a>
                                 </div>
                             </div>
                         </form>

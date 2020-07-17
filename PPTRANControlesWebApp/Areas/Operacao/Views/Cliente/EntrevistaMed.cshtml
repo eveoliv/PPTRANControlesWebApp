@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section styles {
-    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-}
-
 
 <div class="page-title">
     <div class="clearfix"></div>
@@ -17,196 +13,226 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Nome do Candidato: @Html.DisplayFor(model => model.Nome)</h2>
+                    <h2>@Html.DisplayNameFor(model => model.NumRenach):. @Html.DisplayFor(model => model.NumRenach)</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index">Retornar</a>&nbsp;|&nbsp;
-                        <a asp-action="" onClick="window.print()">Imprimir</a>               
+                        <a asp-action="" onClick="window.print()">Imprimir</a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
 
+                <div class="container container-fluid">
+                    <img src="~/Content/build/images/TblExameMeGf.gif" />
+                </div>
+                <br />
                 <div class="x_content">
-                    <dl class="row">
-                        <!--L1-->
-                        <dt class="col-sm-2">
-                            @* @Html.DisplayNameFor(model => model.ClienteId)*@
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.HiddenFor(model => model.Id)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.NumRenach):.
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.NumRenach)
-                        </dd>
+                    @Html.HiddenFor(model => model.Id)
 
-                        <!--L2-->
-                        
-
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categoria):.
+                    <dl class="row" id="L2">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Nome):.
                         </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Categoria)
+                        <dd class="col-sm-11">
+                            @Html.DisplayFor(model => model.Nome)
                         </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.NumLaudo):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.NumLaudo)
-                        </dd>
+                    </dl>
 
-                        <!--L3-->
-                        <dt class="col-sm-2">
+                    <dl class="row" id="L3">
+                        <dt class="col-sm-1">
                             @Html.DisplayNameFor(model => model.RG):.
                         </dt>
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.RG)
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-1">
                             @Html.DisplayNameFor(model => model.CPF):.
                         </dt>
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.CPF)
                         </dd>
                         <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Telefone):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Telefone)
-                        </dd>
-
-                        <!--L4-->
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.CNH):.
-                        </dt>
-                        <dd class="col-sm-4">
-                            @Html.DisplayFor(model => model.CNH)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.DtHabHum):.
-                        </dt>
-                        <dd class="col-sm-4">
-                            @Html.DisplayFor(model => model.DtHabHum)
-                        </dd>
-
-                        <!--L5-->
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Pai):.
-                        </dt>
-                        <dd class="col-sm-4">
-                            @Html.DisplayFor(model => model.Pai)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Mae):.
-                        </dt>
-                        <dd class="col-sm-4">
-                            @Html.DisplayFor(model => model.Mae)
-                        </dd>
-
-                        <!--L6-->
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Nacionalidade):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Nacionalidade)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Naturalidade):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Naturalidade)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstadoCivil):.
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.EstadoCivil)
-                        </dd>
-
-                        <!--L7-->
-                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.DtNascimento):.
                         </dt>
                         <dd class="col-sm-2">
                             @Html.DisplayFor(model => model.DtNascimento)
                         </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Profissao):.
+                    </dl>
+
+                    <dl class="row" id="L4">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Telefone1):.
                         </dt>
                         <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Profissao)
+                            @Html.DisplayFor(model => model.Telefone1)
                         </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Escolaridade):.
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Telefone2):.
                         </dt>
                         <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.Escolaridade)
+                            @Html.DisplayFor(model => model.Telefone2)
+                        </dd>
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Email):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                    </dl>
+
+                    <dl class="row" id="L5">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Endereco):.
+                        </dt>
+                        <dd class="col-sm-11">
+                            @Html.DisplayFor(model => model.Endereco.Rua),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Numero),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Bairro),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Cidade),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Estado),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Complto)
                         </dd>
                     </dl>
 
                     <div class="ln_solid"></div>
 
                     <div class="text-center">
-                        <h4>ENTREVISTA</h4>
+                        <h4>QUESTIONÁRIO&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h4>
                         <p></p>
                     </div>
                     <div class="">
-                        <p>Fumante&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, quantos por dia ? __________.</p>
+                        01) Você toma algum remétio ou faz algum tratamento de saúde?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        07) Você já foi operado?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Qual? ______________________
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Do Que? ______________________
+                        </p>
 
-                        <p>Consome Cafe preto&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Pouco&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Muito</p>
+                        02) Você tem alguma deficiência física?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;
+                        08) Você faz uso de drogas ilícitas?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
 
-                        <p>Consome Bebida alcoólica&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Com Frequência&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Socialmente</p>
+                        03) Você já sofreu de tonturas, desmaios, convulções ou vertigens?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        09) Você faz uso diariamente de álcool?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
 
-                        <p>Utiliza algum tipo de droga&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, qual ? _____________________.</p>
+                        04) Você já necessitou de tratamento psiquiátrico?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+                        10) Você já sofreu acidente de trânsito com vitimas?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
 
-                        <p>Utiliza algum medicamento&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, qual ? _____________________.</p>
 
-                        <p>Internações ou cirurgias&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Grave&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não Grave</p>
+                        05) Você esta afastado pelo INSS e esta recebendo algum benefício?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        11) Você tem diabetes, epilepsia, doença cardíaca, neurológica, pulmonar ou outras?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Qual? _________________________
+                        </p>
 
-                        <p>Realiza tratamento psiquiátrico&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não</p>
 
-                        <p>Sofreu algum acidente&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Grave&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não Grave</p>
+                        06) Você é aposentado por invalidez?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        12) Pretende exercer atividade remunerada como condutor?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
 
                         <br />
-                        <p>Tem dores de cabeça&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Com Frequência</p>
 
-                        <p>Sofre de tonturas&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Com Frequência</p>
+                        <dl class="row">
+                            <dt class="col-sm-2"></dt>
+                            <dt class="col-sm-8">
+                                Obs. Constitui crime previsto no art. 299, do Código Penal Brasileiro, prestar declaração falsa
+                            </dt>
+                        </dl>
 
-                        <p>Sofre de insônia&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Com Frequência</p>
+                        <dl class="row">
+                            <dt class="col-sm-2"></dt>
+                            <dt class="col-sm-8">
+                                &emsp;&emsp; com o fim de criar obrigação ou alterar a verdade sobre fato juridicamente relevante.
+                            </dt>
+                        </dl>
 
-                        <p>Tem desmaios&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, (&nbsp;&nbsp;&nbsp;) Com Frequência</p>
+                        <dl class="row">
+                            <dt class="col-sm-4"></dt>
+                            <dt class="col-sm-4">
+                                Pena: reclusão de um a três anos e multa.
+                            </dt>
+                        </dl>
 
-                        <p>Tem diabetes, epilepsia, doença cardiaca, doença neurologica, doença pulmonar ou outras&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo, qual ? ____________________.</p>
-
-                        <br />
-                        <p>Como classifica aua alimentacao&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Otima&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Boa&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Adequada&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Ruim&nbsp;&nbsp;&nbsp;</p>
-
-                        <p>Mão dominante&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Destro&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Canhoto&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Ambidestro</p>
-
-                        <p>Relacionamento familiar&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Bom&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Regular&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Ruim</p>
-
-                        <p>Pessoa com deficiência&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Sim&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;) Não, caso afirmativo,qual ? ____________________.</p>
-
-                        <br />
-                        <p>Eu,_______________________________________________________________,declaro não ter sido reprovado (a) em exame psicológico do DETRAN no último ano.</p>
-
-                        <p>Declaro que as informações fornecidas acima são verdadeiras.</p>
-
-                        <p>_____________________________________________</p>
-                        <p>Asssinatura do candidato sob pena de responsabilidade</p>
 
                         <div class="ln_solid"></div>
-                        <p>Parecer da entrevista: _______________________________________________________________________________________________________________.</p>
-
-                        <p>Data: ____/____/________.</p>
+                        <br />
+                        <p>São Paulo,@DateTime.Now.Day de @DateTime.Now.ToString("MMMM") de @DateTime.Now.Year .</p>
                         <div class="text-center">
-                            <p>_________________________________&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  ________________________________</p>
-                            <p> Carimbo e Assinatura do Psicólogo &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Carimbo e Assinatura do Médico</p>
+                            <p>_________________________________</p>
+                            <p>Assinatura</p>
                         </div>
-                    </div>
 
+
+
+                        <div class="col-sm-12">
+                            Observações Médicas: ________________________________________________________________________________________
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-sm-12">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            ________________________________________________________________________________________
+                        </div>
+
+
+                        <p></p>
+                    </div>
                 </div>
             </div>
         </div>
