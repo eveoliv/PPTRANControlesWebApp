@@ -19,6 +19,9 @@ namespace Models
         [DisplayName("Tipo")]
         public EnumHelper.Tipo Tipo { get; set; }
 
+        [DisplayName("Status Lançamento")]
+        public EnumHelper.Status Status { get; set; }
+
         [DisplayName("Valor")]
         public decimal Valor { get; set; }
 
@@ -30,7 +33,6 @@ namespace Models
         [DisplayName("Referência")]
         public string Ref { get; set; }
 
-
         [DisplayName("Histórico")]
         public long? HistoricoId { get; set; }
         public Historico Historico { get; set; }
@@ -41,7 +43,11 @@ namespace Models
 
         [DisplayName("Cliente")]
         public long? ClienteId { get; set; }
-        public Cliente Cliente { get; set; }       
+        public Cliente Cliente { get; set; }
+
+        [DisplayName("Colaborador")]
+        public long? ColaboradorId { get; set; }
+        public Colaborador Colaborador { get; set; }
 
         [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }

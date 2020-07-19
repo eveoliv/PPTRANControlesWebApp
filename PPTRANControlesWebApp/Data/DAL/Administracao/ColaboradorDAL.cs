@@ -79,5 +79,12 @@ namespace PPTRANControlesWebApp.Data.DAL
             await context.SaveChangesAsync();
             return colaborador;
         }
+    
+        public async Task<Colaborador> ObterColaboradorPorCpf(string cpf)
+        {
+            return await context.Colaboradores
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(c => c.CPF == cpf);
+        }
     }
 }

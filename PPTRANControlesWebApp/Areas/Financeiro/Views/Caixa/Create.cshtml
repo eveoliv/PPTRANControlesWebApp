@@ -23,12 +23,23 @@
                         <form asp-controller="Caixa" asp-action="create" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Caixa.Id" />
-                            <input type="hidden" asp-for="Colaborador.Id" />
+                            <input type="hidden" asp-for="Cliente.Id" />
+                            <input type="hidden" asp-for="Clinica.Id" />
+                            <input type="hidden" asp-for="Produto.Id" />
+                            <input type="hidden" asp-for="Historico.Id" />
 
                             <div class="item form-group">
-                                <label asp-for="Caixa.Data" class="col-form-label col-md-3 col-sm-3 label-align" for="first-name"></label>
+                                <label asp-for="Caixa.Data" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input asp-for="Caixa.Data" type="text" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'">
+                                    <input asp-for="Caixa.Data" type="text" value="@DateTime.Today.ToString()" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label asp-for="Produto.Nome" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <div class="col-md-6 col-sm-6 ">
+                                    <select asp-for="Caixa.ProdutoId" class="form-control" required="required" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" ></select>
+                                    <span asp-validation-for="Caixa.ProdutoId" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -40,11 +51,9 @@
                             </div>
 
                             <div class="item form-group">
-                                <label asp-for="Caixa.Historico" class="col-form-label col-md-3 col-sm-3 label-align" for="last-name"></label>
+                                <label asp-for="Caixa.Historico.Nome" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.Historico" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))" required="required">
-                                        <option selected="selected" value="">Historico</option>
-                                    </select>
+                                    <select asp-for="Caixa.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))" required="required"></select>
                                 </div>
                             </div>
 
@@ -58,8 +67,7 @@
                             <div class="item form-group">
                                 <label asp-for="Caixa.Tipo" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.Tipo" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Tipo>()" required="required">
-                                        <option selected="selected" value="">Tipo</option>
+                                    <select asp-for="Caixa.Tipo" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Tipo>()" required="required">                                       
                                     </select>
                                 </div>
                             </div>
@@ -67,15 +75,16 @@
                             <div class="item form-group">
                                 <label asp-for="Caixa.FormaPgto" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.FormaPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.FormaPgto>()" required="required">
-                                        <option selected="selected" value="">Forma</option>
+                                    <select asp-for="Caixa.FormaPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.FormaPgto>()" required="required">                                       
                                     </select>
                                 </div>
                             </div>
+
                             <div class="item form-group">
                                 <label asp-for="Clinica.Alias" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6">
-                                    <select asp-for="Clinica.Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required"></select>
+                                    <select asp-for="Caixa.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">                                      
+                                    </select>
                                 </div>
                             </div>
 

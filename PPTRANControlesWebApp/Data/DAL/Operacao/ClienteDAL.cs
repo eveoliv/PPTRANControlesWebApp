@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
@@ -61,6 +62,13 @@ namespace PPTRANControlesWebApp.Data.DAL
             context.Update(cliente);
             await context.SaveChangesAsync();
             return cliente;
+        }
+
+        public async Task<Cliente> ObterClientePorCpf(string cpf)
+        {
+            return await context.Clientes
+                .Where(s => s.Status == EnumHelper.Status.Ativo)                
+                .SingleOrDefaultAsync(c => c.CPF == cpf);
         }
     }
 }

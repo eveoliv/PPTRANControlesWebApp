@@ -45,6 +45,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync());
         }
 
+        public ActionResult partialview()
+        {
+            return partialview();
+        }
+
         // GET: Clientes/Details
         public async Task<IActionResult> Details(long? id)
         {

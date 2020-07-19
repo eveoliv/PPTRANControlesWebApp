@@ -14,13 +14,15 @@ using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
-    //REVISADO_20200715
+    //REVISADO_20200718
     [Area("Financeiro")]
     [Authorize]
     public class CaixaController : Controller
     {
         private readonly CaixaDAL caixaDAL;
         private readonly ClienteDAL clienteDAL;
+        private readonly ClinicaDAL clinicaDAL;
+        private readonly ProdutoDAL produtoDAL;
         private readonly HistoricoDAL historicoDAL;
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
@@ -32,6 +34,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             this.userManager = userManager;
             caixaDAL = new CaixaDAL(context);
             clienteDAL = new ClienteDAL(context);
+            produtoDAL = new ProdutoDAL(context);
+            clinicaDAL = new ClinicaDAL(context);
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
 
@@ -42,7 +46,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorCliente().ToListAsync();
             return View(lancamentos);
-        }       
+        }
 
         // GET: Caixa/Details
         public async Task<IActionResult> Details(long? id)
@@ -79,19 +83,35 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             CarregarViewBagsCreate();
             return View();
         }
-       
+
         // POST: Caixa/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CaixaViewModel model)
-        { 
+        {
             try
             {
                 if (model.Caixa.Cliente.CPF != null)
-                {                                      
-                    model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id; ;
+                {
+                    var cpf = model.Caixa.Cliente.CPF;
 
-                    await caixaDAL.GravarLancamento(model.Caixa);
+                    var idCli = PesquisarClientePorCpf(cpf);
+                    if (idCli != 0)
+                    {
+                        model.Caixa.ClienteId = idCli;
+                    }
+
+                    var idCol = PesquisarColaboradorPorCpf(cpf);
+                    if (idCol != 0)
+                    {
+                        model.Caixa.ColaboradorId = idCol;
+                    }
+
+                    if (idCli != 0 || idCol != 0)
+                    {
+                        model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+                        await caixaDAL.GravarLancamento(model.Caixa);
+                    }
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -142,20 +162,76 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
         private void CarregarViewBagsDetails(Caixa caixa)
         {
-            ViewBag.Clinica = caixa.Clinica.Alias;
-            ViewBag.Cliente = caixa.Cliente.Nome;
-            ViewBag.Colaborador = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
+            try
+            {
+                ViewBag.Colaborador = caixa.Colaborador.Nome.ToString();
+            }
+            catch (System.Exception)
+            {
+                ViewBag.Colaborador = "";
+            }
+
+            try
+            {
+                ViewBag.Cliente = caixa.Cliente.Nome.ToString();
+            }
+            catch (System.Exception)
+            {
+                ViewBag.Cliente = "";
+            }
+
+            ViewBag.Clinica = caixa.Clinica.Alias.ToString();
+            ViewBag.Historico = caixa.Historico.Nome.ToString();
+            
+            ViewBag.Usuario = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
         }
 
         private void CarregarViewBagsCreate()
         {
-            var clinicas = context.Clinicas.OrderBy(i => i.Nome).ToList();
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+            var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "" });
             ViewBag.Clinicas = clinicas;
 
-            var historico = context.Historicos.OrderBy(h => h.Nome).ToList();
-            historico.Insert(0, new Historico() { Id = 0, Nome = "Historico" });
-            ViewBag.Historicos = historico;
+            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
+            historicos.Insert(0, new Historico() { Id = 0, Nome = "" });
+            ViewBag.Historicos = historicos;
+
+            var produtos = produtoDAL.ObterProdutosClassificadosPorNome().ToList();
+            produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
+            ViewBag.Produtos = produtos;
+
+        }
+
+        private long PesquisarClientePorCpf(string cpf)
+        {
+            long idCliente;
+            try
+            {
+                var cliente = clienteDAL.ObterClientePorCpf(cpf).Result.Id;
+                idCliente = (long)cliente;
+            }
+            catch (System.Exception)
+            {
+
+                idCliente = 0;
+            }
+            return idCliente;
+        }
+
+        private long PesquisarColaboradorPorCpf(string cpf)
+        {
+            long idColab;
+            try
+            {
+                var colaborador = colaboradorDAL.ObterColaboradorPorCpf(cpf).Result.Id;
+                idColab = (long)colaborador;
+            }
+            catch (System.Exception)
+            {
+
+                idColab = 0;
+            }
+            return idColab;
         }
     }
 }

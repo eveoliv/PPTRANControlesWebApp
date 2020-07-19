@@ -9,7 +9,7 @@ namespace Models
     {
         public Produto() { }
 
-        [DisplayName("Nome Exame")]
+        [DisplayName("Produto")]
         public string Nome { get; set; }
 
         [DisplayName("Valor Exame")]

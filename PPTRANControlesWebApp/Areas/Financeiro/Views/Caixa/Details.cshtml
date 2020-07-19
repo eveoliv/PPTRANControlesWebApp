@@ -27,12 +27,7 @@
 
                     <div class="x_content">
                         <dl class="row">
-                            <dt class="col-sm-2">
-                                @Html.HiddenFor(model => model.Id)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.HiddenFor(model => model.Id)
-                            </dd>
+                            @Html.HiddenFor(model => model.Id)                          
                             <dt class="col-sm-4">
                                 @Html.DisplayNameFor(model => model.Data)
                             </dt>
@@ -43,7 +38,7 @@
                                 @Html.DisplayNameFor(model => model.Historico)
                             </dt>
                             <dd class="col-sm-8">
-                                @Html.DisplayFor(model => model.Historico)
+                                @ViewBag.Historico
                             </dd>
                             <dt class="col-sm-4">
                                 @Html.DisplayNameFor(model => model.Tipo)
@@ -75,17 +70,25 @@
                             <dd class="col-sm-8">
                                 @ViewBag.Cliente
                             </dd>
+
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.ColaboradorId)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @ViewBag.Colaborador
+                            </dd>
+
                             <dt class="col-sm-4">
                                 @Html.DisplayNameFor(model => model.Clinica.Alias)
                             </dt>
-                            <dd class="col-sm-8">                                
+                            <dd class="col-sm-8">
                                 @ViewBag.Clinica
                             </dd>
                             <dt class="col-sm-4">
                                 @Html.DisplayNameFor(model => model.IdUser)
                             </dt>
                             <dd class="col-sm-8">
-                                @ViewBag.Colaborador
+                                @ViewBag.Usuario
                             </dd>
                         </dl>
                     </div>

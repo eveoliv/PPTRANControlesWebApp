@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class CorrecaoTelefone : Migration
+    public partial class CaixaReview : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,52 +212,6 @@ namespace PPTRANControlesWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Caixas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<DateTime>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    Valor = table.Column<decimal>(nullable: false),
-                    FormaPgto = table.Column<int>(nullable: false),
-                    Ref = table.Column<string>(nullable: true),
-                    HistoricoId = table.Column<long>(nullable: true),
-                    ProdutoId = table.Column<long>(nullable: true),
-                    ClienteId = table.Column<long>(nullable: true),
-                    ClinicaId = table.Column<long>(nullable: true),
-                    IdUser = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Caixas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Caixas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Caixas_Clinicas_ClinicaId",
-                        column: x => x.ClinicaId,
-                        principalTable: "Clinicas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Caixas_Historicos_HistoricoId",
-                        column: x => x.HistoricoId,
-                        principalTable: "Historicos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Caixas_Produtos_ProdutoId",
-                        column: x => x.ProdutoId,
-                        principalTable: "Produtos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Agendas",
                 columns: table => new
                 {
@@ -295,6 +249,60 @@ namespace PPTRANControlesWebApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Caixas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Tipo = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
+                    FormaPgto = table.Column<int>(nullable: false),
+                    Ref = table.Column<string>(nullable: true),
+                    HistoricoId = table.Column<long>(nullable: true),
+                    ProdutoId = table.Column<long>(nullable: true),
+                    ClienteId = table.Column<long>(nullable: true),
+                    ColaboradorId = table.Column<long>(nullable: true),
+                    ClinicaId = table.Column<long>(nullable: true),
+                    IdUser = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Caixas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Clinicas_ClinicaId",
+                        column: x => x.ClinicaId,
+                        principalTable: "Clinicas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Colaboradores_ColaboradorId",
+                        column: x => x.ColaboradorId,
+                        principalTable: "Colaboradores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Historicos_HistoricoId",
+                        column: x => x.HistoricoId,
+                        principalTable: "Historicos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Caixas_Produtos_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produtos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Agendas_ClienteId",
                 table: "Agendas",
@@ -319,6 +327,11 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "IX_Caixas_ClinicaId",
                 table: "Caixas",
                 column: "ClinicaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Caixas_ColaboradorId",
+                table: "Caixas",
+                column: "ColaboradorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Caixas_HistoricoId",
@@ -382,19 +395,19 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "Contatos");
 
             migrationBuilder.DropTable(
-                name: "Colaboradores");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Colaboradores");
 
             migrationBuilder.DropTable(
                 name: "Produtos");
 
             migrationBuilder.DropTable(
-                name: "Clinicas");
+                name: "Historicos");
 
             migrationBuilder.DropTable(
-                name: "Historicos");
+                name: "Clinicas");
 
             migrationBuilder.DropTable(
                 name: "Enderecos");

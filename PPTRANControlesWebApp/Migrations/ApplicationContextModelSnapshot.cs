@@ -58,6 +58,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<long?>("ClinicaId");
 
+                    b.Property<long?>("ColaboradorId");
+
                     b.Property<DateTime>("Data");
 
                     b.Property<int>("FormaPgto");
@@ -70,6 +72,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<string>("Ref");
 
+                    b.Property<int>("Status");
+
                     b.Property<int>("Tipo");
 
                     b.Property<decimal>("Valor");
@@ -79,6 +83,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("ClinicaId");
+
+                    b.HasIndex("ColaboradorId");
 
                     b.HasIndex("HistoricoId");
 
@@ -353,6 +359,10 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Clinica", "Clinica")
                         .WithMany()
                         .HasForeignKey("ClinicaId");
+
+                    b.HasOne("Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId");
 
                     b.HasOne("Models.Historico", "Historico")
                         .WithMany()
