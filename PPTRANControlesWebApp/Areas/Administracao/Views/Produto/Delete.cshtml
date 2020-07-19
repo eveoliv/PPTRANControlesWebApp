@@ -1,0 +1,48 @@
+﻿@model Models.Produto
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Inativar Exame&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            @*<a asp-action="Index">Retornar</a>*@
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <dl class="row">
+                                @Html.HiddenFor(model => model.Id)
+                                <dt class="col-form-label col-md-4 col-sm-4 ">@Html.DisplayNameFor(model => model.Nome)</dt>
+                                <dd class="col-md-8 col-sm-8 ">
+                                    <input asp-for="Nome" type="text" class="form-control" disabled="disabled">
+                                </dd>
+                            </dl>
+                           
+                            <div class="ln_solid"></div>
+                            <form asp-action="Delete">
+                                <input type="submit" value="Inativar" class="btn btn-danger" />
+                                <a asp-action="Index" class="btn btn-primary">Cancelar</a>
+                            </form>
+                            <div>
+                                <br />
+                                * Esta operação altera o status do exama para inativo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

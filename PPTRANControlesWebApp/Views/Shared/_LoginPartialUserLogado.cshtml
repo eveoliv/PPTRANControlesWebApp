@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PPTRANControlesWebApp.Areas.Identity.Data
+@inject SignInManager<AppIdentityUser> SignInManager
+@inject UserManager<AppIdentityUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+   
+    <h2>Bem vindo, </h2>
+    <h2>@UserManager.GetUserAsync(User).Result.Nome</h2>
+
+}
+else
+{
+    <h2>Não há usuário logado.</h2>
+}

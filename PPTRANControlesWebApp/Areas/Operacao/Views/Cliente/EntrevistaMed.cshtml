@@ -1,0 +1,246 @@
+﻿@model Models.Cliente
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>@Html.DisplayNameFor(model => model.NumRenach):. @Html.DisplayFor(model => model.NumRenach)</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Index">Retornar</a>&nbsp;|&nbsp;
+                        <a asp-action="" onClick="window.print()">Imprimir</a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="container container-fluid">
+                    <img src="~/Content/build/images/TblExameMeGf.gif" />
+                </div>
+                <br />
+                <div class="x_content">
+                    @Html.HiddenFor(model => model.Id)
+
+                    <dl class="row" id="L2">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Nome):.
+                        </dt>
+                        <dd class="col-sm-11">
+                            @Html.DisplayFor(model => model.Nome)
+                        </dd>
+                    </dl>
+
+                    <dl class="row" id="L3">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.RG):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.RG)
+                        </dd>
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.CPF):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.CPF)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DtNascimento):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.DtNascimento)
+                        </dd>
+                    </dl>
+
+                    <dl class="row" id="L4">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Telefone1):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.Telefone1)
+                        </dd>
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Telefone2):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.Telefone2)
+                        </dd>
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Email):.
+                        </dt>
+                        <dd class="col-sm-2">
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                    </dl>
+
+                    <dl class="row" id="L5">
+                        <dt class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.Endereco):.
+                        </dt>
+                        <dd class="col-sm-11">
+                            @Html.DisplayFor(model => model.Endereco.Rua),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Numero),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Bairro),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Cidade),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Estado),&nbsp;
+                            @Html.DisplayFor(model => model.Endereco.Complto)
+                        </dd>
+                    </dl>
+
+                    <div class="ln_solid"></div>
+
+                    <div class="text-center">
+                        <h4>QUESTIONÁRIO&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h4>
+                        <p></p>
+                    </div>
+                    <div class="">
+                        01) Você toma algum remétio ou faz algum tratamento de saúde?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        07) Você já foi operado?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Qual? ______________________
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Do Que? ______________________
+                        </p>
+
+                        02) Você tem alguma deficiência física?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;
+                        08) Você faz uso de drogas ilícitas?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
+
+                        03) Você já sofreu de tonturas, desmaios, convulções ou vertigens?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        09) Você faz uso diariamente de álcool?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
+
+                        04) Você já necessitou de tratamento psiquiátrico?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+                        10) Você já sofreu acidente de trânsito com vitimas?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
+
+
+                        05) Você esta afastado pelo INSS e esta recebendo algum benefício?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        11) Você tem diabetes, epilepsia, doença cardíaca, neurológica, pulmonar ou outras?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            Qual? _________________________
+                        </p>
+
+
+                        06) Você é aposentado por invalidez?
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        12) Pretende exercer atividade remunerada como condutor?
+                        <p>
+                            &emsp;&nbsp;&nbsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Sim (&emsp;)&emsp;&emsp;
+                            Não (&emsp;)&emsp;&emsp;
+                        </p>
+
+                        <br />
+
+                        <dl class="row">
+                            <dt class="col-sm-2"></dt>
+                            <dt class="col-sm-8">
+                                Obs. Constitui crime previsto no art. 299, do Código Penal Brasileiro, prestar declaração falsa
+                            </dt>
+                        </dl>
+
+                        <dl class="row">
+                            <dt class="col-sm-2"></dt>
+                            <dt class="col-sm-8">
+                                &emsp;&emsp; com o fim de criar obrigação ou alterar a verdade sobre fato juridicamente relevante.
+                            </dt>
+                        </dl>
+
+                        <dl class="row">
+                            <dt class="col-sm-4"></dt>
+                            <dt class="col-sm-4">
+                                Pena: reclusão de um a três anos e multa.
+                            </dt>
+                        </dl>
+
+
+                        <div class="ln_solid"></div>
+                        <br />
+                        <p>São Paulo,@DateTime.Now.Day de @DateTime.Now.ToString("MMMM") de @DateTime.Now.Year .</p>
+                        <div class="text-center">
+                            <p>_________________________________</p>
+                            <p>Assinatura</p>
+                        </div>
+
+
+
+                        <div class="col-sm-12">
+                            Observações Médicas: ________________________________________________________________________________________
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-sm-12">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            ________________________________________________________________________________________
+                        </div>
+
+
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /page content -->
+@section ScriptPage {
+
+}

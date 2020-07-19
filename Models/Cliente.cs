@@ -6,10 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class Cliente
-    {       
-        [DisplayName("ID")]
-        public long? ClienteId { get; set; }
+    public class Cliente : BaseModel
+    {              
+        public Cliente() { }
 
         [DisplayName("Data Cadastro")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -18,6 +17,12 @@ namespace Models
 
         [DisplayName("Nome")]
         public string Nome { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
+
+        [DisplayName("Status Cliente")]
+        public EnumHelper.Status Status { get; set; }
 
         [DisplayName("CPF")]
         public string CPF { get; set; }
@@ -35,10 +40,10 @@ namespace Models
         public string NumRenach { get; set; }
 
         [DisplayName("Telefone")]
-        public string Telefone { get; set; }
+        public string Telefone1 { get; set; }
 
-        [DisplayName("Perfil Psicologico")] 
-        public string PerfilPsicologico { get; set; }
+        [DisplayName("Telefone")]
+        public string Telefone2 { get; set; }
 
         [DisplayName("Numero do Laudo")]
         public string NumLaudo { get; set; }
@@ -74,10 +79,17 @@ namespace Models
         [DisplayName("Escolaridade")]
         public string Escolaridade { get; set; }
 
-        [DisplayName("Email")]
-        public string Email { get; set; }
+        [DisplayName("Observação")]
+        public string Obs { get; set; }     
 
-        public EnumHelper.Status Status { get; set; }
+        [DisplayName("Pagto Realizado")]
+        public EnumHelper.YesNo StatusPgto { get; set; }
+
+        [DisplayName("Medico")]
+        public long? MedicoId { get; set; }       
+
+        [DisplayName("Psicologo")]
+        public long? PsicologoId { get; set; }       
 
         [DisplayName("Clinica")]
         public long? ClinicaId { get; set; }
@@ -86,9 +98,11 @@ namespace Models
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
 
-        public long? EntrevistaId { get; set; }
-        public Entrevista Entrevista { get; set; }
-      
+        [DisplayName("Historico")]
+        public long? HistoricoId { get; set; }
+        public Historico Historico { get; set; }
 
+        [DisplayName("Usuário")]
+        public string IdUser { get; set; }
     }
 }

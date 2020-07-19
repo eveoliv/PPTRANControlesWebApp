@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PPTRANControlesWebApp.Data;
+using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp
 {
@@ -25,19 +26,15 @@ namespace PPTRANControlesWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /* DEV */
+            services.AddDbContext<ApplicationContext>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
-            services.AddDbContext<Context>(options =>
-                options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
-
-            //services.AddDbContext<Context>(options =>
-            //   options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
-
-            //services.AddDbContext<Context>(options =>
-            //   options.UseMySql(Configuration.GetConnectionString("AppIdentityConn")));
+            /* PROD */
+            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
+            //services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
 
             services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            {                
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -59,13 +56,19 @@ namespace PPTRANControlesWebApp
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
+            //app.UseSession();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
