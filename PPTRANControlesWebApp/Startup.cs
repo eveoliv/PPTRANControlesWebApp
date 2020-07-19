@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PPTRANControlesWebApp.Data;
+using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp
 {
@@ -29,7 +30,8 @@ namespace PPTRANControlesWebApp
             services.AddDbContext<ApplicationContext>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
             /* PROD */
-            //services.AddDbContext<Context>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));            
+            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
+            //services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {                

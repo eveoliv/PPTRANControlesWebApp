@@ -143,8 +143,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 return NotFound();
             }
-
-            CarregarViewBagsDetails(colaborador);
+            
             CarregarViewBagsEdit(colaborador);
 
             return View(colaborador);

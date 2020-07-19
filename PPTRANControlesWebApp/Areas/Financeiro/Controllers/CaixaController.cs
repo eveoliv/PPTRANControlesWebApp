@@ -44,7 +44,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         // GET: Caixa
         public async Task<IActionResult> Index()
         {
-            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorCliente().ToListAsync();
+            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorProduto().ToListAsync();
             return View(lancamentos);
         }
 
@@ -155,7 +155,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 return NotFound();
             }
 
-            CarregarViewBagsDetails(caixa);
+            ViewBag.Usuario = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
 
             return View(caixa);
         }

@@ -73,7 +73,8 @@
                                                     @Html.DisplayFor(modelItem => item.StatusPgto)
                                                 </td>
                                                 <td>
-                                                    <a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>                                                    
+                                                    @*<a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>*@
+                                                    <a asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#myModal"></a>
                                                     <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
                                                     <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
@@ -93,6 +94,30 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Em construção !!</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Inclusão de exames.....
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Sair</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @section ScriptPage{
     <script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>
@@ -100,5 +125,5 @@
         $(document).ready(function () {
             $('#datatable').DataTable();
         });
-    </script>    
+    </script>
 }        

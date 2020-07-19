@@ -18,6 +18,7 @@ No controller da area:
 Para obter lista de outros comandos disponiveis no Entity, segue comando abaixo:
 Get-Help EntityFramework (Comandos disponiveis do Entity)e Database para criar as tabelas do identity no App    
 
+dotnet publish -c Release
 Quando ha duas classes de contexto:
 Add-Migration "Identity" -Context AppIdentityContext
 update-database -Context AppIdentityContext

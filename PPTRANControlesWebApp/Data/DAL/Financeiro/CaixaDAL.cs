@@ -15,14 +15,15 @@ namespace PPTRANControlesWebApp.Data.DAL
             this.context = context;
         }
 
-        public IQueryable<Caixa> ObterLancamentosClassificadosPorCliente()
+        public IQueryable<Caixa> ObterLancamentosClassificadosPorProduto()
         {
             return context.Caixas
-                .Include(i => i.Historico)
                 .Include(c => c.Cliente)
+                .Include(p => p.Produto)
+                .Include(i => i.Historico)
                 .Include(c => c.Colaborador)
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .OrderBy(c => c.Cliente);
+                .OrderBy(p => p.Produto);
         }
 
         public async Task<Caixa> ObterLancamentoPorId(long id)
@@ -30,6 +31,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             return await context.Caixas
                 .Include(c => c.Clinica)
                 .Include(c => c.Cliente)
+                .Include(p => p.Produto)
                 .Include(h => h.Historico)
                 .Include(c => c.Colaborador)
                 .SingleOrDefaultAsync(c => c.Id == id);

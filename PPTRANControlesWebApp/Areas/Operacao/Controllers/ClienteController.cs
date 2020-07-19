@@ -176,9 +176,10 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsDetails(Cliente cliente)
         {
+            /*
             ViewBag.ClinicaNome = cliente.Clinica.Alias.ToString();
-
             ViewBag.HistoricoNome = cliente.Historico.Nome.ToString();
+            */
 
             ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
 

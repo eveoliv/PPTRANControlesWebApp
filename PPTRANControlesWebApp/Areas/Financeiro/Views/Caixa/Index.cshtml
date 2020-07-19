@@ -34,25 +34,26 @@
                                                 @Html.DisplayNameFor(model => model.Data)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Historico)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Cliente)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Colaborador)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Tipo)
+                                                @Html.DisplayNameFor(model => model.Produto)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Valor)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.FormaPgto)
+                                                @Html.DisplayNameFor(model => model.Tipo)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Ref)
+                                                @Html.DisplayNameFor(model => model.FormaPgto)
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Cliente)
+                                            </th>
+                                            @*<th>
+                                                @Html.DisplayNameFor(model => model.Colaborador)
+                                            </th>*@
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Historico.Nome)
                                             </th>
                                             <th>
                                                 Opções
@@ -63,30 +64,31 @@
                                         @foreach (var item in Model)
                                         {
                                         <tr>
-                                            @Html.DisplayFor(modelItem => item.Id)
+                                            @Html.HiddenFor(modelItem => item.Id)
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Data)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Historico.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cliente.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Colaborador.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                                @Html.DisplayFor(modelItem => item.Produto.Nome)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Valor)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FormaPgto)
+                                                @Html.DisplayFor(modelItem => item.Tipo)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Ref)
+                                                @Html.DisplayFor(modelItem => item.FormaPgto)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                                            </td>
+                                            @*<td>
+                                                @Html.DisplayFor(modelItem => item.Colaborador.Nome)
+                                            </td>*@
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Historico.Nome)
                                             </td>
                                             <td>
                                                 &emsp;

@@ -5,102 +5,88 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <h4>Caixa</h4>
-    <hr />
-    <dl class="row">
-        @Html.HiddenFor(model => model.Id)
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Data)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FormaPgto)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FormaPgto)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ref)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ref)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Historico.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Historico.Nome)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Produto.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Produto.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cliente.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Cliente.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Colaborador.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Colaborador.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Clinica.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Clinica.Nome)
-        </dd>       
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
-
-@*<div class="right_col" role="main">
+<div class="right_col" role="main">
     <div class="">
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 ">
+            <div class="col-md-6 col-sm-6 ">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Inativar Lançamento&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
+                        <h2>Inativar Lançamento</h2>
                         <ul class="nav navbar-right panel_toolbox">                           
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content">
-                        <br />
+                    <div class="x_content">                        
                         <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                             <dl class="row">
+
                                 @Html.HiddenFor(model => model.Id)
-                                <dt class="col-form-label col-md-4 col-sm-4 ">@Html.DisplayNameFor(model => model.Cliente.Nome)</dt>
-                                <dd class="col-md-8 col-sm-8 ">
-                                    <input asp-for="Cliente.Nome" type="text" class="form-control" disabled="disabled">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Cliente.Nome)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Cliente.Nome)
                                 </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Data)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Data)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Tipo)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Tipo)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Valor)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Valor)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.FormaPgto)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.FormaPgto)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Ref)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Ref)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Historico.Nome)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Historico.Nome)
+                                </dd>
+
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.Produto.Nome)-Exame
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Produto.Nome)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Colab.  
+                                    @Html.DisplayNameFor(model => model.Colaborador.Nome)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Colaborador.Nome)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Clinica 
+                                    @Html.DisplayNameFor(model => model.Clinica.Nome)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Clinica.Nome)
+                                </dd>
+
                             </dl>
 
                             <div class="ln_solid"></div>
@@ -118,4 +104,4 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
