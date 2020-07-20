@@ -52,6 +52,21 @@ namespace PPTRANControlesWebApp.Data.DAL
             return caixa;
         }
 
+        public async Task<Caixa> GravarLancamentoPorCarrinhoAsync(Caixa caixa)
+        {
+            if (caixa.Id == null)
+            {
+                context.Caixas.Add(caixa);
+            }
+            else
+            {
+                context.Update(caixa);
+            }
+
+            await context.SaveChangesAsync();
+            return null;
+        }
+
         public async Task<Caixa> EliminarLancamentoPorId(long id)
         {
             var caixa = await ObterLancamentoPorId(id);

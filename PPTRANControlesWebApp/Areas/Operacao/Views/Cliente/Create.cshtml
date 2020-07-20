@@ -66,8 +66,9 @@
                                 </select>
                             </div>
                             @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-3 col-sm-12  form-group">                                
                                 <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                                <span asp-validation-for="Cliente.DtHabHum" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">

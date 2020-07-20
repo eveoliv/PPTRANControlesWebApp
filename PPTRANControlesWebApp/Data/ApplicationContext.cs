@@ -22,6 +22,7 @@ namespace PPTRANControlesWebApp.Data
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Contato> Contatos { get; set; }
         public DbSet<Historico> Historicos { get; set; }
+        public DbSet<Carrinho> Carrinhos { get; set; }
 
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)

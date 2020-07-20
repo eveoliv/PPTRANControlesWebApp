@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200719003024_CaixaReview")]
-    partial class CaixaReview
+    [Migration("20200719235643_Carrinho")]
+    partial class Carrinho
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,32 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("Caixas");
+                });
+
+            modelBuilder.Entity("Models.Carrinho", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ClienteId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<string>("IdUser");
+
+                    b.Property<long?>("Produto1Id");
+
+                    b.Property<long?>("Produto2Id");
+
+                    b.Property<long?>("Produto3Id");
+
+                    b.Property<long?>("Produto4Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Carrinhos");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>
@@ -373,6 +399,13 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId");
+                });
+
+            modelBuilder.Entity("Models.Carrinho", b =>
+                {
+                    b.HasOne("Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>

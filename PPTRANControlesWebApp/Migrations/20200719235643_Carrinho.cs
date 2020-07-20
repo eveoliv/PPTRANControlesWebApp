@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class CaixaReview : Migration
+    public partial class Carrinho : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -212,6 +212,31 @@ namespace PPTRANControlesWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Carrinhos",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ClienteId = table.Column<long>(nullable: true),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Produto1Id = table.Column<long>(nullable: true),
+                    Produto2Id = table.Column<long>(nullable: true),
+                    Produto3Id = table.Column<long>(nullable: true),
+                    Produto4Id = table.Column<long>(nullable: true),
+                    IdUser = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carrinhos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carrinhos_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Agendas",
                 columns: table => new
                 {
@@ -344,6 +369,11 @@ namespace PPTRANControlesWebApp.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Carrinhos_ClienteId",
+                table: "Carrinhos",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clientes_ClinicaId",
                 table: "Clientes",
                 column: "ClinicaId");
@@ -392,10 +422,10 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "Caixas");
 
             migrationBuilder.DropTable(
-                name: "Contatos");
+                name: "Carrinhos");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Contatos");
 
             migrationBuilder.DropTable(
                 name: "Colaboradores");
@@ -404,10 +434,13 @@ namespace PPTRANControlesWebApp.Migrations
                 name: "Produtos");
 
             migrationBuilder.DropTable(
-                name: "Historicos");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "Clinicas");
+
+            migrationBuilder.DropTable(
+                name: "Historicos");
 
             migrationBuilder.DropTable(
                 name: "Enderecos");

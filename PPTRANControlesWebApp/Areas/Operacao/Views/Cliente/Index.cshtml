@@ -74,7 +74,7 @@
                                                 </td>
                                                 <td>
                                                     @*<a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>*@
-                                                    <a asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="#myModal"></a>
+                                                    <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
                                                     <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
                                                     <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
@@ -107,7 +107,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                Inclusão de exames.....
+                Exames ....
             </div>
 
             <!-- Modal footer -->
@@ -126,4 +126,5 @@
             $('#datatable').DataTable();
         });
     </script>
+
 }        

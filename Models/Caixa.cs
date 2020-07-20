@@ -29,6 +29,9 @@ namespace Models
         [DisplayName("Pagamento")]
         public EnumHelper.FormaPgto FormaPgto { get; set; }
 
+        [DisplayName("Pagto Realizado")]
+        public EnumHelper.YesNo StatusPgto { get; set; }
+
         //nome cliente
         [DisplayName("Referência")]
         public string Ref { get; set; }

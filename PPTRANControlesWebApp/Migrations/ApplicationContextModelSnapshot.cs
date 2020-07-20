@@ -93,6 +93,32 @@ namespace PPTRANControlesWebApp.Migrations
                     b.ToTable("Caixas");
                 });
 
+            modelBuilder.Entity("Models.Carrinho", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ClienteId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<string>("IdUser");
+
+                    b.Property<long?>("Produto1Id");
+
+                    b.Property<long?>("Produto2Id");
+
+                    b.Property<long?>("Produto3Id");
+
+                    b.Property<long?>("Produto4Id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Carrinhos");
+                });
+
             modelBuilder.Entity("Models.Cliente", b =>
                 {
                     b.Property<long?>("Id")
@@ -371,6 +397,13 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasOne("Models.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId");
+                });
+
+            modelBuilder.Entity("Models.Carrinho", b =>
+                {
+                    b.HasOne("Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>

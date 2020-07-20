@@ -24,4 +24,4 @@ Add-Migration "Identity" -Context AppIdentityContext
 update-database -Context AppIdentityContext
 
 
-
+<span asp-validation-for="Data" class="text-danger"></span>
