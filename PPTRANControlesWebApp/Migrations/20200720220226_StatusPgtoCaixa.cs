@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class Carrinho : Migration
+    public partial class StatusPgtoCaixa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -285,6 +285,7 @@ namespace PPTRANControlesWebApp.Migrations
                     Status = table.Column<int>(nullable: false),
                     Valor = table.Column<decimal>(nullable: false),
                     FormaPgto = table.Column<int>(nullable: false),
+                    StatusPgto = table.Column<int>(nullable: false),
                     Ref = table.Column<string>(nullable: true),
                     HistoricoId = table.Column<long>(nullable: true),
                     ProdutoId = table.Column<long>(nullable: true),

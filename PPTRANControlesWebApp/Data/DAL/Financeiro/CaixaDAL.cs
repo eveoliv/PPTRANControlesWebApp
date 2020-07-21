@@ -26,6 +26,17 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .OrderBy(p => p.Produto);
         }
 
+        public IQueryable<Caixa> ObterLancamentosClassificadosPorClienteNome()
+        {
+            return context.Caixas
+                .Include(c => c.Cliente)
+                .Include(p => p.Produto)
+                .Include(i => i.Historico)
+                .Include(c => c.Colaborador)
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .OrderBy(c => c.Cliente);
+        }
+
         public async Task<Caixa> ObterLancamentoPorId(long id)
         {
             return await context.Caixas
@@ -34,6 +45,18 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(p => p.Produto)
                 .Include(h => h.Historico)
                 .Include(c => c.Colaborador)
+                .SingleOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Caixa> ObterLancamentoPorIdNaoPago(long id)
+        {
+            return await context.Caixas
+                .Include(c => c.Clinica)
+                .Include(c => c.Cliente)
+                .Include(p => p.Produto)
+                .Include(h => h.Historico)
+                .Include(c => c.Colaborador)
+                .Where(s => s.StatusPgto == EnumHelper.YesNo.Não)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
@@ -52,8 +75,8 @@ namespace PPTRANControlesWebApp.Data.DAL
             return caixa;
         }
 
-        public async Task<Caixa> GravarLancamentoPorCarrinhoAsync(Caixa caixa)
-        {
+        public async Task GravarLancamentoPorCarrinho(Caixa caixa)
+        {           
             if (caixa.Id == null)
             {
                 context.Caixas.Add(caixa);
@@ -64,7 +87,8 @@ namespace PPTRANControlesWebApp.Data.DAL
             }
 
             await context.SaveChangesAsync();
-            return null;
+
+            return;
         }
 
         public async Task<Caixa> EliminarLancamentoPorId(long id)

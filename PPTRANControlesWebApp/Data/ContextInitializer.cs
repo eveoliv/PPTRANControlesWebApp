@@ -113,7 +113,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Everton Oliveira",
                     NumRenach = "123456",
                     Categoria = EnumHelper.Categoria.B,
-                    Telefone1 = "(11)97699-4991",
+                    Telefone1 = "(11)97699-4991",                     
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){ Id = 1 },
                     CPF = "222.205.648-90",

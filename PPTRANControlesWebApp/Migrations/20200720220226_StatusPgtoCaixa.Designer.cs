@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200719235643_Carrinho")]
-    partial class Carrinho
+    [Migration("20200720220226_StatusPgtoCaixa")]
+    partial class StatusPgtoCaixa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,6 +75,8 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<string>("Ref");
 
                     b.Property<int>("Status");
+
+                    b.Property<int>("StatusPgto");
 
                     b.Property<int>("Tipo");
 

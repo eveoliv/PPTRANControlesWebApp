@@ -74,6 +74,8 @@ namespace PPTRANControlesWebApp.Migrations
 
                     b.Property<int>("Status");
 
+                    b.Property<int>("StatusPgto");
+
                     b.Property<int>("Tipo");
 
                     b.Property<decimal>("Valor");

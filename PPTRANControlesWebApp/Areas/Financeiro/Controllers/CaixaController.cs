@@ -44,7 +44,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         // GET: Caixa
         public async Task<IActionResult> Index()
         {
-            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorProduto().ToListAsync();
+            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorClienteNome().ToListAsync();
             return View(lancamentos);
         }
 
@@ -56,27 +56,39 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
         // GET: Caixa/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
-            return await ObterVisaoLancamentoPorId(id);
+        {          
+            return await ObterVisaoLancamentoPorIdNaoPago(id);
         }
 
         // POST: Caixa/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int? id, Caixa caixa)
         {
-            try
+            if (id != caixa.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (id != null)
             {
-                return View();
+                try
+                {
+                    caixa.StatusPgto = EnumHelper.YesNo.Sim;
+                    caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await caixaDAL.GravarLancamento(caixa);
+                    
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
             }
+            return View(caixa);
         }
-
+     
         // GET: Caixa/Create
         public IActionResult Create()
         {
@@ -233,5 +245,21 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
             return idColab;
         }
+
+        private async Task<IActionResult> ObterVisaoLancamentoPorIdNaoPago(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var caixa = await caixaDAL.ObterLancamentoPorIdNaoPago((long)id);
+            if (caixa == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }          
+
+            return View(caixa);
+        }     
     }
 }

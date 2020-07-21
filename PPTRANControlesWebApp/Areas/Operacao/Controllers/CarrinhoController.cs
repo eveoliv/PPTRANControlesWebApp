@@ -89,7 +89,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         // GET: Carrinho/Edit/
         public IActionResult Edit(int? id)
-        {           
+        {
             return View();
         }
 
@@ -122,32 +122,25 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var produto = produtoDAL.ObterProdutoPorId((long)produtoId);
 
             var caixa = new Caixa();
-                caixa.Data = DateTime.Today;
-                caixa.ProdutoId = produtoId;
-                caixa.ClienteId = clienteId;
-                caixa.HistoricoId = cliente.Result.HistoricoId;
-                caixa.ClinicaId = cliente.Result.ClinicaId;
-                caixa.Valor = produto.Result.Valor;
-                caixa.StatusPgto = EnumHelper.YesNo.Não;
-
-            await caixaDAL.GravarLancamento(caixa);
+            caixa.Data = DateTime.Today;
+            caixa.ProdutoId = produtoId;
+            caixa.ClienteId = clienteId;
+            caixa.Valor = produto.Result.Valor;
+            caixa.StatusPgto = EnumHelper.YesNo.Não;
+            caixa.ClinicaId = cliente.Result.ClinicaId;
+            caixa.HistoricoId = cliente.Result.HistoricoId;
+            caixa.FormaPgto = EnumHelper.FormaPgto.Selecionar;
+            caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+            await caixaDAL.GravarLancamentoPorCarrinho(caixa);
         }
 
         private void CarregarViewBagsEdit(long? id)
         {
-            try
-            {
-                ViewBag.Cliente = clienteDAL.ObterClientePorId((long)id).Result.Nome;
-                var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
-                produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
-                ViewBag.Produtos = produtos;
-            }
-            catch (Exception)
-            {
+            ViewBag.Cliente = clienteDAL.ObterClientePorId((long)id).Result.Nome;
 
-                throw;
-            }
-
+            var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
+            produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
+            ViewBag.Produtos = produtos;
         }
     }
 }
