@@ -54,6 +54,12 @@
                             </div>
                             <input asp-for="Produto4Id" type="hidden" class="form-control" />
 
+                            @if (@ViewBag.Caixa > 0)
+                            {
+                                <p> </p>
+                                <p><span style="color: #f00;">* O cliente ja possui exames não pagos cadastrados no caixa!</span></p>
+                            }
+
                             <div class="ln_solid"></div>
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 offset-md-2">

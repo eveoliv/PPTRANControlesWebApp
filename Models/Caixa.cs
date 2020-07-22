@@ -23,6 +23,7 @@ namespace Models
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Valor")]
+        [DataType(DataType.Currency)]
         public decimal Valor { get; set; }
 
         //deb, cred

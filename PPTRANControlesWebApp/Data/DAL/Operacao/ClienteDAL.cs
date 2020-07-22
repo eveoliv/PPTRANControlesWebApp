@@ -21,6 +21,14 @@ namespace PPTRANControlesWebApp.Data.DAL
             return context.Clientes.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
         
+        public IQueryable<Cliente> ObterClientePorId_Find(long id)
+        {
+            return context.Clientes
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(c => c.Id == id)
+                .OrderBy(c => c.Id);
+        }
+
         public async Task<Cliente> ObterClientePorId(long id)
         {           
             return await context.Clientes                

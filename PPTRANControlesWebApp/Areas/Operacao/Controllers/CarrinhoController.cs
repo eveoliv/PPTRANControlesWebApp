@@ -43,7 +43,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         // GET: Carrinho/Create/
         public IActionResult Create(int? id)
         {
-            CarregarViewBagsEdit(id);
+            CarregarViewBagsCreate(id);         
 
             return View();
         }
@@ -77,6 +77,10 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                         }
                     }
                 }
+
+                var cliente = context.Clientes.Find((long)clienteId);
+                cliente.StatusPgto = EnumHelper.YesNo.Não;
+                await clienteDAL.GravarCliente(cliente);
 
                 return RedirectToAction("Index", "Cliente");
             }
@@ -134,9 +138,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             await caixaDAL.GravarLancamentoPorCarrinho(caixa);
         }
 
-        private void CarregarViewBagsEdit(long? id)
+        private void CarregarViewBagsCreate(long? id)
         {
             ViewBag.Cliente = clienteDAL.ObterClientePorId((long)id).Result.Nome;
+
+            ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
             produtos.Insert(0, new Produto() { Id = 0, Nome = "" });

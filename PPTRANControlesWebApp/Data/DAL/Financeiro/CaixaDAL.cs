@@ -37,6 +37,14 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .OrderBy(c => c.Cliente);
         }
 
+        public int ObterLancamentoNaoPagoPeloClienteIdNoCaixa(long? id)
+        {
+            return context.Caixas
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(s => s.StatusPgto == EnumHelper.YesNo.Não)
+                .Where(c => c.ClienteId == id).Count();            
+        }
+
         public async Task<Caixa> ObterLancamentoPorId(long id)
         {
             return await context.Caixas

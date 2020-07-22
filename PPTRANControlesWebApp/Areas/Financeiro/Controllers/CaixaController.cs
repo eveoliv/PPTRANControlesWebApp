@@ -56,7 +56,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
         // GET: Caixa/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {          
+        {
             return await ObterVisaoLancamentoPorIdNaoPago(id);
         }
 
@@ -65,6 +65,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, Caixa caixa)
         {
+
+            if (caixa.FormaPgto == EnumHelper.FormaPgto.Selecionar)
+            {
+                return RedirectToAction("Edit");
+            }
+
             if (id != caixa.Id)
             {
                 return NotFound();
@@ -77,7 +83,19 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     caixa.StatusPgto = EnumHelper.YesNo.Sim;
                     caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await caixaDAL.GravarLancamento(caixa);
-                    
+
+                    var idCli = caixa.ClienteId;
+
+                    var lancamentoNaoPago = 
+                        caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
+
+                    if (lancamentoNaoPago == 0)
+                    {
+                        var cliente = context.Clientes.Find((long)idCli);
+                        cliente.StatusPgto = EnumHelper.YesNo.Sim;
+                        await clienteDAL.GravarCliente(cliente);
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -88,7 +106,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
             return View(caixa);
         }
-     
+
         // GET: Caixa/Create
         public IActionResult Create()
         {
@@ -194,7 +212,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             ViewBag.Clinica = caixa.Clinica.Alias.ToString();
             ViewBag.Historico = caixa.Historico.Nome.ToString();
-            
+
             ViewBag.Usuario = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
         }
 
@@ -257,9 +275,11 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             if (caixa == null)
             {
                 return RedirectToAction(nameof(Index));
-            }          
+            }
 
             return View(caixa);
-        }     
+        }
+
+
     }
 }

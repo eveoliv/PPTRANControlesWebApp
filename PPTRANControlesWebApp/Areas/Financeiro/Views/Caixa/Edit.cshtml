@@ -14,7 +14,7 @@
                     <div class="x_title">
                         <h2>Baixa Lançamento</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
+                            @*<a asp-action="Index">Retornar</a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -23,7 +23,7 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <div>
-                                    <hr />
+
                                     <dl class="row">
                                         @Html.HiddenFor(model => model.Id)
                                         @Html.HiddenFor(model => model.Data)
@@ -34,7 +34,7 @@
                                         @Html.HiddenFor(model => model.ClinicaId)
                                         @Html.HiddenFor(model => model.HistoricoId)
                                         @Html.HiddenFor(model => model.ColaboradorId)
-                                       
+
 
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Cliente.Nome)</dt>
                                         <dd class="col-md-8 col-sm-8 ">
@@ -51,15 +51,15 @@
                                             <input asp-for="Valor" class="form-control" disabled="disabled">
                                         </dd>
 
-                                        <dt class="col-form-label col-md-3 col-sm-3 ">Forma Pgto</dt>
+                                        <dt class="col-form-label col-md-3 col-sm-3 " id="FormaPgto">Forma Pgto</dt>
                                         <dd class="col-md-8 col-sm-8 ">
                                             <select asp-for="FormaPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.FormaPgto>()"></select>
                                         </dd>
 
                                         @*<dt class="col-form-label col-md-3 col-sm-3 ">Pagto Realizado</dt>
-                                        <dd class="col-md-8 col-sm-8 ">
-                                            <select asp-for="StatusPgto" class="form-control" disabled="disabled" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()"></select>
-                                        </dd>*@
+                                            <dd class="col-md-8 col-sm-8 ">
+                                                <select asp-for="StatusPgto" class="form-control" disabled="disabled" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()"></select>
+                                            </dd>*@
 
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Ref)</dt>
                                         <dd class="col-md-8 col-sm-8 ">
@@ -67,11 +67,16 @@
                                         </dd>
                                     </dl>
                                 </div>
+                                @if (Model.FormaPgto == Models.EnumHelper.FormaPgto.Selecionar)
+                                {
+                                    <p> </p>
+                                    <p><span style="color: #f00;">* A opção de pagamento precisa ser alterada!</span></p>
+                                }
 
                                 <div class="ln_solid"></div>
                                 <div class="item form-group">
-                                    <div class="col-md-12 col-sm-12 offset-md-2">
-                                        <button type="submit" class="btn btn-success">Salvar</button>
+                                    <div class="col-md-12 col-sm-12 offset-md-2">                                        
+                                        <button type="submit" class="btn btn-success">Baixar</button>
                                         <a asp-action="Index" class="btn btn-primary">Cancelar</a>
                                     </div>
                                 </div>
@@ -83,3 +88,4 @@
         </div>
     </div>
 </div>
+
