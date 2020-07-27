@@ -23,7 +23,7 @@ namespace Models
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Valor")]
-        [DataType(DataType.Currency)]
+        [DataType(DataType.Currency, ErrorMessage = "Caracteres incorretos para o valor.")]
         public decimal Valor { get; set; }
 
         //deb, cred

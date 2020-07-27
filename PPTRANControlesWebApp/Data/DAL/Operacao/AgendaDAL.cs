@@ -15,20 +15,19 @@ namespace PPTRANControlesWebApp.Data.DAL.Operacao
             this.context = context;
         }
 
-        public IQueryable<Agenda> ObterAgendaClassificadaIdCliente()
+        public IQueryable<Agenda> ObterAgendaClassificadaNomeCliente()
         {
-            return context.Agendas.OrderBy(c => c.ClienteId);
+            return context.Agendas               
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .OrderBy(c => c.Nome);           
         }
 
         public async Task<Agenda> ObterAgendaPorId(long id)
         {
-            return await context.Agendas
-                .Include(c => c.Colaborador)
-                .Include(c => c.Clinica)                                       
-                .SingleOrDefaultAsync(c => c.Id == id);
+            return await context.Agendas.SingleOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Agenda> GravarAgenda(Agenda agenda)
+        public async Task GravarAgenda(Agenda agenda)
         {
             if (agenda.Id == null)
             {
@@ -40,7 +39,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Operacao
             }
 
             await context.SaveChangesAsync();
-            return agenda;
+
+            return;
         }
 
         public async Task<Agenda> EliminarAgendaPorId(long id)
@@ -54,7 +54,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Operacao
         public async Task<Agenda> InativarAgendaPorId(long id, string user)
         {
             var agenda = await ObterAgendaPorId(id);
-            agenda.IdUser = user;            
+            agenda.IdUser = user;
+            agenda.Status = EnumHelper.Status.Inativo;
             context.Update(agenda);
             await context.SaveChangesAsync();
             return agenda;

@@ -22,29 +22,29 @@ namespace PPTRANControlesWebApp.Migrations
                     b.Property<long?>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("ClienteId");
-
-                    b.Property<long?>("ClinicaId");
-
-                    b.Property<long?>("ColaboradorId");
+                    b.Property<string>("Clinica");
 
                     b.Property<DateTime>("Data");
 
+                    b.Property<string>("Hora");
+
                     b.Property<string>("IdUser");
 
-                    b.Property<long?>("MedicoId");
+                    b.Property<string>("Medico");
+
+                    b.Property<string>("Nome");
 
                     b.Property<string>("Obs");
 
-                    b.Property<long?>("PsicologoId");
+                    b.Property<string>("Psicologo");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("Telefone1");
+
+                    b.Property<string>("Telefone2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("ClinicaId");
-
-                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("Agendas");
                 });
@@ -361,21 +361,6 @@ namespace PPTRANControlesWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Produtos");
-                });
-
-            modelBuilder.Entity("Models.Agenda", b =>
-                {
-                    b.HasOne("Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId");
-
-                    b.HasOne("Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("ClinicaId");
-
-                    b.HasOne("Models.Colaborador", "Colaborador")
-                        .WithMany()
-                        .HasForeignKey("ColaboradorId");
                 });
 
             modelBuilder.Entity("Models.Caixa", b =>

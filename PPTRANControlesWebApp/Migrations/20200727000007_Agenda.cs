@@ -4,10 +4,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class StatusPgtoCaixa : Migration
+    public partial class Agenda : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Agendas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Hora = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: true),
+                    Telefone1 = table.Column<string>(nullable: true),
+                    Telefone2 = table.Column<string>(nullable: true),
+                    Medico = table.Column<string>(nullable: true),
+                    Psicologo = table.Column<string>(nullable: true),
+                    Clinica = table.Column<string>(nullable: true),
+                    Obs = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    IdUser = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agendas", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
@@ -237,44 +260,6 @@ namespace PPTRANControlesWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Agendas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<DateTime>(nullable: false),
-                    ClienteId = table.Column<long>(nullable: true),
-                    ClinicaId = table.Column<long>(nullable: true),
-                    MedicoId = table.Column<long>(nullable: true),
-                    PsicologoId = table.Column<long>(nullable: true),
-                    ColaboradorId = table.Column<long>(nullable: true),
-                    Obs = table.Column<string>(nullable: true),
-                    IdUser = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Agendas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Agendas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Agendas_Clinicas_ClinicaId",
-                        column: x => x.ClinicaId,
-                        principalTable: "Clinicas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Agendas_Colaboradores_ColaboradorId",
-                        column: x => x.ColaboradorId,
-                        principalTable: "Colaboradores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Caixas",
                 columns: table => new
                 {
@@ -328,21 +313,6 @@ namespace PPTRANControlesWebApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agendas_ClienteId",
-                table: "Agendas",
-                column: "ClienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agendas_ClinicaId",
-                table: "Agendas",
-                column: "ClinicaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agendas_ColaboradorId",
-                table: "Agendas",
-                column: "ColaboradorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Caixas_ClienteId",

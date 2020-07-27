@@ -35,20 +35,29 @@
                                                 @Html.DisplayNameFor(model => model.Data)
                                             </th>
                                             <th>
-                                                Hora
+                                                @Html.DisplayNameFor(model => model.Hora)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ClienteId)
+                                                @Html.DisplayNameFor(model => model.Nome)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.PsicologoId)
+                                                @Html.DisplayNameFor(model => model.Telefone1)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.MedicoId)
+                                                @Html.DisplayNameFor(model => model.Telefone2)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Medico)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Psicologo)
                                             </th>
 
+                                            @*<th>
+                                                    @Html.DisplayNameFor(model => model.Clinica)
+                                                </th>*@
                                             <th>
-                                                @Html.DisplayNameFor(model => model.ClinicaId)
+                                                Obs
                                             </th>
                                             <th>
                                                 Opções
@@ -59,28 +68,39 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                @Html.DisplayFor(modelItem => item.Id)
+                                                @Html.HiddenFor(modelItem => item.Id)
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Data)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Data)
+                                                    @Html.DisplayFor(modelItem => item.Hora)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ClienteId)
+                                                    @Html.DisplayFor(modelItem => item.Nome)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.PsicologoId)
+                                                    @Html.DisplayFor(modelItem => item.Telefone1)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.MedicoId)
+                                                    @Html.DisplayFor(modelItem => item.Telefone2)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Medico)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Psicologo)
                                                 </td>
 
+                                                @*<td>
+                                                        @Html.DisplayFor(modelItem => item.Clinica)
+                                                    </td>*@
+
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ClinicaId)
+                                                    @Html.DisplayFor(modelItem => item.Obs)
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
+                                                    &emsp;
+                                                    @*<a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>*@
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
                                                     <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                                 </td>
@@ -96,6 +116,7 @@
         </div>
     </div>
 </div>
+
 
 @section ScriptPage{
     <script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>

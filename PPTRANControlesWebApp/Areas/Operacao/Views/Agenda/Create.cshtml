@@ -1,4 +1,4 @@
-﻿@model Models.Agenda
+﻿@model PPTRANControlesWebApp.Models.Operacao.AgendaViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,58 +10,83 @@
     <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
-<h1>Cadastrar</h1>
+<div class="card-body" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Agendar Atendimento</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            @*<a asp-action="Index">Retornar</a>*@
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
 
-<h3>Em construção</h3>
+                    <div class="x_content">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <label asp-for="Id" class="control-label"></label>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5  form-group">
+                                    <input asp-for="Agenda.Nome" type="text" class="form-control" placeholder="Nome" required="required">
+                                </div>
 
+                                <div class="col-md-4 col-sm-4  form-group">
+                                    <input asp-for="Agenda.Data" type="date" class="form-control" placeholder="Data" required="required">
+                                </div>
 
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
+                                <div class="col-md-3 col-sm-3   form-group">
+                                    <input asp-for="Agenda.Hora" type="time" class="form-control" placeholder="Hora" required="required">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3">
+                                    <input asp-for="Agenda.Telefone1" type="text" class="form-control" placeholder="Tel. Celular" data-inputmask="'mask' : '(99) 99999-9999'" required="required">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <input asp-for="Agenda.Telefone2" type="text" class="form-control" placeholder="Tel. Fixo" data-inputmask="'mask' : '(99) 9999-9999'">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <input asp-for="Agenda.Obs" type="text" class="form-control" placeholder="Observação">
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    @if (@ViewBag.Psicologos != null)
+                                    {
+                                        <select asp-for="Agenda.Psicologo" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
+                                    }
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    @if (@ViewBag.Medicos != null)
+                                    {
+                                        <select asp-for="Agenda.Medico" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
+                                    }
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    @if (@ViewBag.Clinicas != null)
+                                    {
+                                        <select asp-for="Agenda.Clinica" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                                    }
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="form-group">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Data" class="control-label">Hora</label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
-                <input asp-for="ClienteId" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="PsicologoId" class="control-label"></label>
-                <input asp-for="PsicologoId" class="form-control" />
-                <span asp-validation-for="PsicologoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MedicoId" class="control-label"></label>
-                <input asp-for="MedicoId" class="form-control" />
-                <span asp-validation-for="MedicoId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MedicoId" class="control-label"></label>
-                <input asp-for="MedicoId" class="form-control" />
-                <span asp-validation-for="MedicoId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Retornar</a>
-</div>
-

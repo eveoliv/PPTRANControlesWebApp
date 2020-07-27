@@ -1,0 +1,105 @@
+﻿@model Models.Agenda
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="">
+    <div class="col-md-8 col-sm-8  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Editar Informações do Contato</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="Index">Retornar</a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informações Gerais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Agenda</a>
+                    </li>
+                </ul>
+
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" class="form-control" />
+                    <input asp-for="Status" type="hidden" class="form-control" />
+
+                    <div class="form-group">
+                        <div class="tab-content" id="myTabContent">
+
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div>
+                                    <hr />
+                                    <dl class="row">
+                                        @Html.HiddenFor(model => model.Id)
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Nome" type="text" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Telefone1)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Telefone1" type="text" class="form-control" data-inputmask="'mask' : '(99) 99999-9999'">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Telefone2)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Telefone2" type="text" class="form-control" data-inputmask="'mask' : '(99) 9999-9999'">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Obs)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Obs" type="text" class="form-control">
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div>
+                                    <hr />
+                                    <dl class="row">                                        
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Data)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Data" type="date" class="form-control" data-inputmask="'mask' : '99/99/9999'">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Hora)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Hora" type="time" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Medico)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Medico" type="text" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Psicologo)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Psicologo" type="text" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Clinica" type="text" class="form-control">
+                                        </dd>
+                                        
+                                    </dl>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -53,7 +53,7 @@ namespace Models
        
         public long? EnderecoId { get; set; }
         public Endereco Endereco { get; set; }
-
+    
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
     }

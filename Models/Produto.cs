@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Models
@@ -13,6 +14,7 @@ namespace Models
         public string Nome { get; set; }
 
         [DisplayName("Valor Exame")]
+        [DataType(DataType.Currency, ErrorMessage = "Caracteres incorretos para o valor.")]
         public decimal Valor { get; set; }
 
         [DisplayName("Status")]

@@ -85,7 +85,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         {
             try
             {
-                if (produto.Nome != null)
+                if (produto.Nome != null && ModelState.IsValid)
                 {
                     produto.IdUser = userManager.GetUserAsync(User).Result.Id;
 
