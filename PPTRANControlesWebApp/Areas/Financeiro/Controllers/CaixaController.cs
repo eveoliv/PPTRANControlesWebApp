@@ -44,7 +44,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         // GET: Caixa
         public async Task<IActionResult> Index()
         {
-            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorProduto().ToListAsync();
+            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorClienteNome().ToListAsync();
             return View(lancamentos);
         }
 
@@ -57,24 +57,54 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         // GET: Caixa/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            return await ObterVisaoLancamentoPorId(id);
+            return await ObterVisaoLancamentoPorIdNaoPago(id);
         }
 
         // POST: Caixa/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int? id, Caixa caixa)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (caixa.FormaPgto == EnumHelper.FormaPgto.Selecionar)
             {
-                return View();
+                return RedirectToAction("Edit");
             }
+
+            if (id != caixa.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    caixa.StatusPgto = EnumHelper.YesNo.Sim;
+                    caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await caixaDAL.GravarLancamento(caixa);
+
+                    var idCli = caixa.ClienteId;
+
+                    var lancamentoNaoPago = 
+                        caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
+
+                    if (lancamentoNaoPago == 0)
+                    {
+                        var cliente = context.Clientes.Find((long)idCli);
+                        cliente.StatusPgto = EnumHelper.YesNo.Sim;
+                        await clienteDAL.GravarCliente(cliente);
+                    }
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(caixa);
         }
 
         // GET: Caixa/Create
@@ -182,7 +212,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             ViewBag.Clinica = caixa.Clinica.Alias.ToString();
             ViewBag.Historico = caixa.Historico.Nome.ToString();
-            
+
             ViewBag.Usuario = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
         }
 
@@ -233,5 +263,23 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
             return idColab;
         }
+
+        private async Task<IActionResult> ObterVisaoLancamentoPorIdNaoPago(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var caixa = await caixaDAL.ObterLancamentoPorIdNaoPago((long)id);
+            if (caixa == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(caixa);
+        }
+
+
     }
 }

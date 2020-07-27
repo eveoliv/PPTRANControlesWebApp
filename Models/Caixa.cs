@@ -23,11 +23,15 @@ namespace Models
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Valor")]
+        [DataType(DataType.Currency, ErrorMessage = "Caracteres incorretos para o valor.")]
         public decimal Valor { get; set; }
 
         //deb, cred
         [DisplayName("Pagamento")]
         public EnumHelper.FormaPgto FormaPgto { get; set; }
+
+        [DisplayName("Pagto Realizado")]
+        public EnumHelper.YesNo StatusPgto { get; set; }
 
         //nome cliente
         [DisplayName("Referência")]

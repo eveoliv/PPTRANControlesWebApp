@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Models;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data;
+using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Data.DAL;
+using Microsoft.AspNetCore.Authorization;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using PPTRANControlesWebApp.Data.DAL.Operacao;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -14,8 +20,10 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
     public class CarrinhoController : Controller
     {
         private readonly CaixaDAL caixaDAL;
-        private readonly ClienteDAL clienteDAL;                       
-        private readonly ProdutoDAL produtoDAL;                       
+        private readonly ClienteDAL clienteDAL;
+        private readonly ProdutoDAL produtoDAL;
+        private readonly CarrinhoDAL carrinhoDAL;
+        private readonly HistoricoDAL historicoDAL;
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
@@ -25,89 +33,120 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             this.context = context;
             this.userManager = userManager;
             caixaDAL = new CaixaDAL(context);
-            clienteDAL = new ClienteDAL(context);
             produtoDAL = new ProdutoDAL(context);
+            clienteDAL = new ClienteDAL(context);
+            carrinhoDAL = new CarrinhoDAL(context);
+            historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-        // GET: Carrinho
-        public ActionResult Index()
+
+        // GET: Carrinho/Create/
+        public IActionResult Create(int? id)
         {
+            CarregarViewBagsCreate(id);         
+
             return View();
         }
 
-        // GET: Carrinho/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Carrinho/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Carrinho/Create
+        // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(Carrinho carrinho)
+        {
+            var clienteId = carrinho.Id;
+            try
+            {
+                if (carrinho.Produto1Id != null)
+                {
+                    carrinho.Id = null;
+                    carrinho.ClienteId = clienteId;
+                    carrinho.Data = DateTime.Today;
+                    carrinho.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await carrinhoDAL.GravarCarrinho(carrinho);
+
+                    var prodLista = new List<long?>();
+                    prodLista.Add(carrinho.Produto1Id);
+                    prodLista.Add(carrinho.Produto2Id);
+                    prodLista.Add(carrinho.Produto3Id);
+
+                    foreach (var p in prodLista)
+                    {
+                        if (p != 0)
+                        {
+                            await IncluirLancamentoExameNoCaixa(p, clienteId);
+                        }
+                    }
+                }
+
+                var cliente = context.Clientes.Find((long)clienteId);
+                cliente.StatusPgto = EnumHelper.YesNo.Não;
+                await clienteDAL.GravarCliente(cliente);
+
+                return RedirectToAction("Index", "Cliente");
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
+            }
+            return View(carrinho);
+        }
+
+        // GET: Carrinho/Edit/
+        public IActionResult Edit(int? id)
+        {
+            return View();
+        }
+
+        // POST: Carrinho/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long? id, Carrinho carrinho)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (carrinho.Produto1Id != null)
+                {
+                    await carrinhoDAL.GravarCarrinho(carrinho);
+                }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Cliente");
             }
-            catch
+            catch (DbUpdateException)
             {
-                return View();
+                ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
+            return View(carrinho);
         }
 
-        // GET: Carrinho/Edit/5
-        public ActionResult Edit(int id)
+        // Metodos Privados do Controller
+        private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId)
         {
-            return View();
+            var cliente = clienteDAL.ObterClientePorId((long)clienteId);
+
+            var produto = produtoDAL.ObterProdutoPorId((long)produtoId);
+
+            var caixa = new Caixa();
+            caixa.Data = DateTime.Today;
+            caixa.ProdutoId = produtoId;
+            caixa.ClienteId = clienteId;
+            caixa.Valor = produto.Result.Valor;
+            caixa.StatusPgto = EnumHelper.YesNo.Não;
+            caixa.ClinicaId = cliente.Result.ClinicaId;
+            caixa.HistoricoId = cliente.Result.HistoricoId;
+            caixa.FormaPgto = EnumHelper.FormaPgto.Selecionar;
+            caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+            await caixaDAL.GravarLancamentoPorCarrinho(caixa);
         }
 
-        // POST: Carrinho/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        private void CarregarViewBagsCreate(long? id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            ViewBag.Cliente = clienteDAL.ObterClientePorId((long)id).Result.Nome;
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
 
-        // GET: Carrinho/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Carrinho/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
+            produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
+            ViewBag.Produtos = produtos;
         }
     }
 }

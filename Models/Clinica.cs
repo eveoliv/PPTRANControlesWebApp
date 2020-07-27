@@ -38,7 +38,7 @@ namespace Models
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
-
+     
         public virtual ICollection<Cliente> Cliente { get; set; }
         public virtual ICollection<Colaborador> Colaborador { get; set; }
     }

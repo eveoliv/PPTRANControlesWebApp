@@ -16,7 +16,7 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Lançamentos</h2>
+                    <h2>Histórico dos Lançamentos de Caixa</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Create">Novo</a>&nbsp;|&nbsp;
                         <a asp-action="" onClick="window.print()">Imprimir</a>
@@ -40,7 +40,7 @@
                                                 @Html.DisplayNameFor(model => model.Valor)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Tipo)
+                                                @Html.DisplayNameFor(model => model.StatusPgto)
                                             </th>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.FormaPgto)
@@ -75,7 +75,7 @@
                                                 @Html.DisplayFor(modelItem => item.Valor)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                                @Html.DisplayFor(modelItem => item.StatusPgto)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FormaPgto)
@@ -91,9 +91,9 @@
                                                 @Html.DisplayFor(modelItem => item.Historico.Nome)
                                             </td>
                                             <td>
-                                                &emsp;
+                                                &nbsp;
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-usd"></a>
                                                 <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a> 
-                                                @*<a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a> |*@
                                                 <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                             </td>
                                         </tr>

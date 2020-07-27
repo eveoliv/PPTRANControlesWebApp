@@ -24,4 +24,8 @@ Add-Migration "Identity" -Context AppIdentityContext
 update-database -Context AppIdentityContext
 
 
+<span asp-validation-for="Data" class="text-danger"></span>
 
+SqlParameter param = new SqlParameter("@idCliente", 1);     
+    context.Database.ExecuteSqlCommand("sp_ExcluirCliente @idCliente", param);
+	return context.Database.SqlQuery<Cliente>("exec sp_Clientes).ToList();

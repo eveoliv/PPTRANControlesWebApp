@@ -113,7 +113,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Everton Oliveira",
                     NumRenach = "123456",
                     Categoria = EnumHelper.Categoria.B,
-                    Telefone1 = "(11)97699-4991",
+                    Telefone1 = "(11)97699-4991",                     
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){ Id = 1 },
                     CPF = "222.205.648-90",
@@ -185,6 +185,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             {
                 new Produto{ Nome = "Exame Médico", Valor = 91.11M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Exame Médico com Psicotécnico", Valor = 197.41M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo }
             };

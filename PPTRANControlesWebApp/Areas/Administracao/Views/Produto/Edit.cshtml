@@ -34,7 +34,8 @@
                             <div class="item form-group">
                                 <label asp-for="Valor" class="col-form-label col-md-4 col-sm-4 label-align"></label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input asp-for="Valor" type="number" class="form-control" required="required">
+                                    <input asp-for="Valor" type="text" class="form-control" required="required">
+                                    <span asp-validation-for="Valor" class="text-danger"></span>
                                 </div>
                             </div>
 

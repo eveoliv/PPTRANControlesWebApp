@@ -66,8 +66,9 @@
                                 </select>
                             </div>
                             @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                            <div class="col-md-3 col-sm-12  form-group">                                
+                                <input asp-for="Cliente.DtHabHum" type="date" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                                <span asp-validation-for="Cliente.DtHabHum" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
@@ -77,7 +78,7 @@
                                 <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
+                                <input asp-for="Cliente.DtNascimento" type="date" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-4 col-sm-12  form-group">

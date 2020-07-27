@@ -1,0 +1,54 @@
+﻿@model Models.Agenda
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Inativar Agendamento</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            @*<a asp-action="Index">Retornar</a>*@
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <dl class="row">
+                                @Html.HiddenFor(model => model.Id)
+
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Nome)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input asp-for="Nome" type="text" disabled="disabled" class="form-control">
+                                </dd>
+                                <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Data)</dt>
+                                <dd class="col-md-9 col-sm-9 ">
+                                    <input asp-for="Data" type="text" disabled="disabled" class="form-control">
+                                </dd>
+
+                            </dl>
+                            <div class="ln_solid"></div>
+                            <form asp-action="Delete">
+                                <input type="submit" value="Inativar" class="btn btn-danger" />
+                                <a asp-action="Index" class="btn btn-primary">Cancelar</a>
+                            </form>
+                            <div>
+                                <br />
+                                * Esta operação altera o status do agendamento para inativo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
