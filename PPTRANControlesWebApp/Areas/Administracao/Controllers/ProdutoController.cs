@@ -8,6 +8,8 @@ using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using System.Text.RegularExpressions;
+using System;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -53,9 +55,9 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             if (id != produto.Id)
             {
                 return NotFound();
-            }
+            }         
 
-            if (id != null)
+            if (id != null && produto.Valor > 0 )
             {
                 try
                 {
@@ -82,10 +84,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Produto produto)
-        {
+        {            
+            //Match match = Regex.Match(Convert.ToString(produto.Valor), @"^\d$");
+
             try
             {
-                if (produto.Nome != null && ModelState.IsValid)
+                if (produto.Nome != null && ModelState.IsValid )
                 {
                     produto.IdUser = userManager.GetUserAsync(User).Result.Id;
 

@@ -23,6 +23,7 @@ namespace Models
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("Valor")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#.####}")]
         [DataType(DataType.Currency, ErrorMessage = "Caracteres incorretos para o valor.")]
         public decimal Valor { get; set; }
 

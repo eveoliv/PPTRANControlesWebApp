@@ -13,8 +13,10 @@ namespace Models
         [DisplayName("Produto")]
         public string Nome { get; set; }
 
+        //[RegularExpression("(\D)\s*([.\d,]+)")]
         [DisplayName("Valor Exame")]
-        [DataType(DataType.Currency, ErrorMessage = "Caracteres incorretos para o valor.")]
+        [DataType(DataType.Currency, ErrorMessage = "Formato inválido para valor!")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#.####}")]        
         public decimal Valor { get; set; }
 
         [DisplayName("Status")]
