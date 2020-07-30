@@ -11,10 +11,7 @@ namespace PPTRANControlesWebApp.Models
 {
     public class AppIdentityContext : IdentityDbContext<AppIdentityUser>
     {
-        public AppIdentityContext(DbContextOptions<AppIdentityContext> options)
-            : base(options)
-        {
-        }
+        public AppIdentityContext(DbContextOptions<AppIdentityContext> options): base(options){}         
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

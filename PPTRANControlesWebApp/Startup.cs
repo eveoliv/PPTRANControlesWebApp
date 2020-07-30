@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using PPTRANControlesWebApp.Areas.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
+using Microsoft.IdentityModel.Protocols;
 
 namespace PPTRANControlesWebApp
 {
@@ -27,24 +30,36 @@ namespace PPTRANControlesWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             /* DEV */
-            services.AddDbContext<ApplicationContext>(options =>options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
+            services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
+            services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
             /* PROD */
             //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
-            //services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
+
 
             services.Configure<CookiePolicyOptions>(options =>
-            {                
+            {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //options altera as preferencias de validacao
+            services.AddDefaultIdentity<AppIdentityUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
+                .AddRoles<IdentityRole>()
+                .AddErrorDescriber<IdentityErrorDescriberPtBr>()
+                .AddEntityFrameworkStores<AppIdentityContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +85,56 @@ namespace PPTRANControlesWebApp
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRoles(serviceProvider).Wait();
+            CreateAdmin(serviceProvider).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
+
+            string[] rolesNames = { RolesNomes.Administrador, RolesNomes.Gerente, RolesNomes.Operador };
+
+            IdentityResult result;
+
+            foreach (var namesRole in rolesNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(namesRole);
+                if (!roleExist)
+                {
+                    result = await roleManager.CreateAsync(new IdentityRole(namesRole));
+                }
+            }
+        }
+
+        private async Task CreateAdmin(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
+        
+            var _user = await userManager.FindByNameAsync("SuperUser");
+            
+            if (_user == null)
+            {
+                var poweruser = new AppIdentityUser
+                {
+                    UserName = "superuser@email.com",
+                    Email = "superuser@email.com",
+                    Nome = "SuperUser",
+                    ClinicaId = 0                
+                };
+
+                string pwd = "@Adm2@2@";
+
+                var createPowerUser = await userManager.CreateAsync(poweruser, pwd);
+
+                if (createPowerUser.Succeeded)
+                {                    
+                    await userManager.AddToRoleAsync(poweruser, RolesNomes.Administrador);
+                }
+            }
         }
     }
 }
