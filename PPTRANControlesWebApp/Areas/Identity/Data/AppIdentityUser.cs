@@ -6,6 +6,7 @@ namespace PPTRANControlesWebApp.Areas.Identity.Data
     public class AppIdentityUser : IdentityUser
     {
         public string Nome { get; set; }        
-        public long ClinicaId { get; set; }       
+        public long ClinicaId { get; set; }
+        
     }
 }

@@ -26,12 +26,13 @@ namespace PPTRANControlesWebApp.Models.Usuario
                 roleManager.Roles.ToList()
                 .Select(funcao => new UsuarioFuncaoViewModel{ Nome = funcao.Name, Id = funcao.Id }).ToList();
 
-            foreach (var funcao in Funcoes)
-            {
-                var userPossuiRole = roleManager.Roles.Any(usuarioRole => usuarioRole.Id == funcao.Id);
+            //foreach (var funcao in Funcoes)
+            //{
+               
+            //    var userPossuiRole = roleManager.Roles.Any(usuarioRole => usuarioRole.Id == funcao.Id);
 
-                funcao.Selecionado = userPossuiRole;
-            }
+            //    funcao.Selecionado = userPossuiRole;
+            //}
         }
     }
 }

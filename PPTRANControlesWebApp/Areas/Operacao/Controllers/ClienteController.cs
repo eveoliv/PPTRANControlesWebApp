@@ -11,8 +11,8 @@ using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Areas.Identity.Models;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {

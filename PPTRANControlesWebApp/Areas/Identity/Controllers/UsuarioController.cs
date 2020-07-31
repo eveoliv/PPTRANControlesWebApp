@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Models.Usuario;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 {
@@ -31,7 +32,10 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
-            var usuario = await userManager.FindByIdAsync(id);
+            var usuario = await userManager.FindByIdAsync(id);   
+            
+       
+                
 
             var model = new UsuarioEditViewModel(usuario, roleManager);
 
