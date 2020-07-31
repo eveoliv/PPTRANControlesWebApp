@@ -12,12 +12,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     //REVISADO_20200715
     [Area("Operacao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Operador)]
+    [Authorize(Roles = RolesNomes.Gerente)]
     public class ClienteController : Controller
     {
         private readonly ClienteDAL clienteDAL;

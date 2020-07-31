@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Models;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Data
 {
@@ -11,6 +6,6 @@ namespace PPTRANControlesWebApp.Areas.Identity.Data
     public class AppIdentityUser : IdentityUser
     {
         public string Nome { get; set; }        
-        public long ClinicaId { get; set; }                
+        public long ClinicaId { get; set; }       
     }
 }

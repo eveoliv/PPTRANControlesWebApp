@@ -13,7 +13,6 @@ using PPTRANControlesWebApp.Areas.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using Microsoft.IdentityModel.Protocols;
 
 namespace PPTRANControlesWebApp
 {
@@ -50,7 +49,7 @@ namespace PPTRANControlesWebApp
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             })
-                .AddRoles<IdentityRole>()
+                .AddRoles<IdentityRole>()                
                 .AddErrorDescriber<IdentityErrorDescriberPtBr>()
                 .AddEntityFrameworkStores<AppIdentityContext>();
 
@@ -114,19 +113,19 @@ namespace PPTRANControlesWebApp
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
         
-            var _user = await userManager.FindByNameAsync("SuperUser");
+            var _user = await userManager.FindByNameAsync("Admin");
             
             if (_user == null)
             {
                 var poweruser = new AppIdentityUser
                 {
-                    UserName = "superuser@email.com",
-                    Email = "superuser@email.com",
-                    Nome = "SuperUser",
+                    UserName = "Admin@email.com",
+                    Email = "Admin@email.com",
+                    Nome = "Admin",
                     ClinicaId = 0                
                 };
 
-                string pwd = "@Adm2@2@";
+                string pwd = "123456";
 
                 var createPowerUser = await userManager.CreateAsync(poweruser, pwd);
 

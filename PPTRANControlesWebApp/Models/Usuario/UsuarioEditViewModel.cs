@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using PPTRANControlesWebApp.Areas.Identity.Data;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Identity;
+using PPTRANControlesWebApp.Areas.Identity.Data;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {
@@ -17,6 +14,7 @@ namespace PPTRANControlesWebApp.Models.Usuario
 
         public List<UsuarioFuncaoViewModel> Funcoes { get; set; }
 
+        public UsuarioEditViewModel() { }
         public UsuarioEditViewModel(AppIdentityUser usuario, RoleManager<IdentityRole> roleManager)
         {
             Id = usuario.Id;
@@ -30,7 +28,9 @@ namespace PPTRANControlesWebApp.Models.Usuario
 
             foreach (var funcao in Funcoes)
             {
-                //var funcaoUser  = roleManager.GetRoleIdAsync()
+                var userPossuiRole = roleManager.Roles.Any(usuarioRole => usuarioRole.Id == funcao.Id);
+
+                funcao.Selecionado = userPossuiRole;
             }
         }
     }
