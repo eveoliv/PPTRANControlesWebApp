@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using PPTRANControlesWebApp.Data;
 using PPTRANControlesWebApp.Models;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +9,14 @@ using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
     //REVISADO_20200718
     [Area("Financeiro")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class CaixaController : Controller
     {
         private readonly CaixaDAL caixaDAL;

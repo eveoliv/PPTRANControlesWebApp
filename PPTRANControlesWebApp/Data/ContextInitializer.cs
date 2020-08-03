@@ -142,7 +142,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Id =1,
                     Nome = "Everton Oliveira",
                     CPF = "222.205.648-91",
-                    Funcao = EnumHelper.Funcao.Atendente,
+                    Funcao = EnumHelper.Funcao.Operador,
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 4}

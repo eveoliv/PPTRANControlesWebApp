@@ -7,6 +7,7 @@ using PPTRANControlesWebApp.Models.Usuario;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PPTRANControlesWebApp.Models;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 {
@@ -16,16 +17,18 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
     {
         private readonly UserManager<AppIdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly AppIdentityContext appIdentityContext;
 
-        public UsuarioController(UserManager<AppIdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsuarioController(AppIdentityContext appIdentityContext, UserManager<AppIdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.appIdentityContext = appIdentityContext;
         }
 
         public IActionResult Index()
         {
-            var usuarios = userManager.Users.Select(usuario => new UsuarioViewModel(usuario)).ToList();
+            var usuarios = userManager.Users.Select(usuario => new UsuarioViewModel(usuario)).ToList();                        
 
             return View(usuarios);
         }
@@ -33,11 +36,9 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var usuario = await userManager.FindByIdAsync(id);   
-            
-       
-                
-
+                                  
             var model = new UsuarioEditViewModel(usuario, roleManager);
+          
 
             return View(model);
         }

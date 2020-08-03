@@ -1,22 +1,23 @@
 ﻿using Models;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
-using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     [Area("Operacao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class CarrinhoController : Controller
     {
         private readonly CaixaDAL caixaDAL;

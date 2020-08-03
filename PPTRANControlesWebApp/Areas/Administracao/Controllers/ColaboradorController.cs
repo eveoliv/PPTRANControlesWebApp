@@ -11,12 +11,13 @@ using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class ColaboradorController : Controller
     {
         private readonly ClinicaDAL clinicaDAL;
@@ -93,16 +94,21 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         public async Task<IActionResult> Create(ColaboradorViewModel model)
         {          
             try
-            {
+            {                
                 if (model.Colaborador.Nome != null && model.Colaborador.CPF != null)
-                {                    
+                {
                     await enderecoDAL.GravarEndereco(model.Endereco);
 
                     model.Colaborador.DtCadastro = DateTime.Today;
                     model.Colaborador.EnderecoId = model.Endereco.Id;
                     model.Colaborador.IdUser = userManager.GetUserAsync(User).Result.Id;
-                   
+
                     await colaboradorDAL.GravarColaborador(model.Colaborador);
+
+                    if (model.Colaborador.Funcao != EnumHelper.Funcao.Medico && model.Colaborador.Funcao != EnumHelper.Funcao.Psicologo)
+                    {
+                        await CadastrarNovoUsuario(model);
+                    }
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -113,7 +119,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             }
             return View(model.Colaborador);
         }
-
+     
         // GET: Colaboradores/Delete
         public async Task<IActionResult> Delete(long? id)
         {
@@ -164,6 +170,41 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
             clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
+        }
+
+        private async Task CadastrarNovoUsuario(ColaboradorViewModel model)
+        {
+            var primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+
+            var novoUsuario = new AppIdentityUser
+            {
+                UserName = model.Colaborador.Email,
+                Email = model.Colaborador.Email,
+                Nome = primeiroNome,
+                ClinicaId = (long)model.Colaborador.ClinicaId,
+            };
+
+            string pwd = model.Colaborador.CPF.Replace(".", "").Replace("-", "");
+
+            var createPowerUser = await userManager.CreateAsync(novoUsuario, pwd);
+
+            if (createPowerUser.Succeeded)
+            {
+                if (model.Colaborador.Funcao == EnumHelper.Funcao.Administrador)
+                {
+                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Administrador);
+                }
+
+                if (model.Colaborador.Funcao == EnumHelper.Funcao.Gestor)
+                {
+                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Gestor);
+                }
+
+                if (model.Colaborador.Funcao == EnumHelper.Funcao.Operador)
+                {
+                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Operador);
+                }
+            }
         }
     }
 }

@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class ClinicaController : Controller
     {
         private readonly ClinicaDAL clinicaDAL;

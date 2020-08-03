@@ -11,12 +11,13 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Models.Operacao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     //REVISADO_20200715
     [Area("Operacao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class AgendaController : Controller
     {
         private readonly AgendaDAL agendaDAL;

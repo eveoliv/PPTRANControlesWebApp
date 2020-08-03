@@ -1,19 +1,19 @@
 ﻿using Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using PPTRANControlesWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class HistoricoController : Controller
     {
         private readonly HistoricoDAL historicoDAL;

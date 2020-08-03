@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {
@@ -26,13 +27,14 @@ namespace PPTRANControlesWebApp.Models.Usuario
                 roleManager.Roles.ToList()
                 .Select(funcao => new UsuarioFuncaoViewModel{ Nome = funcao.Name, Id = funcao.Id }).ToList();
 
-            //foreach (var funcao in Funcoes)
-            //{
-               
-            //    var userPossuiRole = roleManager.Roles.Any(usuarioRole => usuarioRole.Id == funcao.Id);
+            foreach (var funcao in Funcoes)
+            {
+                //var usuarioPossuiRole
+                //    = usuario.Roles.Any(usuarioRole => usuarioRole.RoleId == funcao.Id);
 
-            //    funcao.Selecionado = userPossuiRole;
-            //}
+                //funcao.Selecionado = usuarioPossuiRole;                                          
+               
+            }
         }
     }
 }

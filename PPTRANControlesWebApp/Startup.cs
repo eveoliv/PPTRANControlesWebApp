@@ -94,7 +94,7 @@ namespace PPTRANControlesWebApp
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
 
-            string[] rolesNames = { RolesNomes.Administrador, RolesNomes.Gerente, RolesNomes.Operador };
+            string[] rolesNames = { RolesNomes.Administrador, RolesNomes.Gestor, RolesNomes.Operador };
 
             IdentityResult result;
 

@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
     [DbContext(typeof(AppIdentityContext))]
-    [Migration("20200730004115_AdmSeed")]
-    partial class AdmSeed
+    [Migration("20200802220032_AlterNomeRole")]
+    partial class AlterNomeRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

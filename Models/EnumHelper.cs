@@ -30,7 +30,7 @@ namespace Models
 
         public enum Funcao
         {
-            Administrador, Atendente, Gerente, Medico, Psicologo
+            Administrador, Operador, Gestor, Medico, Psicologo
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
-    public partial class AdmSeed : Migration
+    public partial class AlterNomeRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

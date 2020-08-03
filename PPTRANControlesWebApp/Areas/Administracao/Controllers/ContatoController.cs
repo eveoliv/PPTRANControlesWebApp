@@ -8,13 +8,14 @@ using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Models.Administracao;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize]
+    [Authorize(Roles = RolesNomes.Administrador)]
     public class ContatoController : Controller
     {
         private readonly ContatoDAL contatoDAL;
