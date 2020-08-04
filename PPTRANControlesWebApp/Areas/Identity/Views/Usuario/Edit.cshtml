@@ -5,36 +5,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Funções do usuário @Html.DisplayFor(model => model.Nome)</h2>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Nível de Acesso do Usuário: @Html.DisplayFor(model => model.Nome)</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <a asp-action="Index">Retornar</a>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
 
-@*<h5>@Html.DisplayFor(model => model.UserName)</h5>*@
-@*<h5>@Html.DisplayFor(model => model.Email)</h5>*@
+                        <form asp-action="Edit" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<hr />
-@using (Html.BeginForm("Editar", "Usuario", FormMethod.Post))
-{
-    <div class="form-horizontal">
-        @Html.HiddenFor(model => model.Id)
-        <h4>Selecione as funções </h4>
-        <br />
-        <hr />
-        <table>
-            <tr>
-                <th>
-                    Selecionado
-                </th>
-                <th>
-                    Função
-                </th>
-            </tr>
-            @Html.EditorFor(modelo => modelo.Funcoes)
-        </table>
-        <br />
-        <hr />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Salvar" class="btn btn-default" />
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Email)
+                            @Html.HiddenFor(model => model.Nome)
+                            @Html.HiddenFor(model => model.UserName)
+
+                            <div class="form-group">
+                                <div>
+
+                                    <dl class="row">
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">Atual</dt>
+                                        <dd class="col-md-9 col-sm-9 ">                                            
+                                            @Html.DisplayFor(modelItem => modelItem.Role)
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+
+                                    <dl class="row">
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">Novo</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            @*<label asp-for="Roles"></label>*@
+                                            @Html.DropDownList("Role", new SelectList(Model.Roles, "Text", "Text"))
+                                        </dd>
+
+                                    </dl>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group">
+                                    <div class="col-md-12 col-sm-12 offset-md-2">
+                                        <button type="submit" class="btn btn-success">Alterar</button>
+                                        @*<a asp-controller="Usuario" asp-action="Index" class="btn btn-primary">Cancelar</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
+</div>

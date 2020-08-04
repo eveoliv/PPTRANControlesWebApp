@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {
@@ -12,29 +13,26 @@ namespace PPTRANControlesWebApp.Models.Usuario
         public string Nome { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-
-        public List<UsuarioFuncaoViewModel> Funcoes { get; set; }
+        public string Role { get; set; }
+        public List<SelectListItem> Roles { get; set; }       
 
         public UsuarioEditViewModel() { }
-        public UsuarioEditViewModel(AppIdentityUser usuario, RoleManager<IdentityRole> roleManager)
+        public UsuarioEditViewModel(AppIdentityUser usuario, 
+            RoleManager<IdentityRole> roleManager, IList<string> userRole)
         {
             Id = usuario.Id;
             Nome = usuario.Nome;
             Email = usuario.Email;
             UserName = usuario.UserName;
+            Role = userRole.FirstOrDefault();
 
-            Funcoes = 
-                roleManager.Roles.ToList()
-                .Select(funcao => new UsuarioFuncaoViewModel{ Nome = funcao.Name, Id = funcao.Id }).ToList();
-
-            foreach (var funcao in Funcoes)
+            Roles = new List<SelectListItem>
             {
-                //var usuarioPossuiRole
-                //    = usuario.Roles.Any(usuarioRole => usuarioRole.RoleId == funcao.Id);
-
-                //funcao.Selecionado = usuarioPossuiRole;                                          
-               
-            }
+                new SelectListItem() { Value = "1", Text = RolesNomes.Administrador },
+                new SelectListItem() { Value = "2", Text = RolesNomes.Gestor },
+                new SelectListItem() { Value = "3", Text = RolesNomes.Operador }
+            };
+                                        
         }
     }
 }

@@ -28,17 +28,17 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 
         public IActionResult Index()
         {
-            var usuarios = userManager.Users.Select(usuario => new UsuarioViewModel(usuario)).ToList();                        
+            var usuarios = userManager.Users.Select(usuario => new UsuarioViewModel(usuario)).ToList();           
 
             return View(usuarios);
         }
 
         public async Task<IActionResult> Edit(string id)
         {
-            var usuario = await userManager.FindByIdAsync(id);   
-                                  
-            var model = new UsuarioEditViewModel(usuario, roleManager);
-          
+            var usuario = await userManager.FindByIdAsync(id);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
+            var model = new UsuarioEditViewModel(usuario, roleManager, roleUser);
 
             return View(model);
         }
@@ -46,29 +46,31 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UsuarioEditViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Nome != "Admin")
             {
                 var usuario = await userManager.FindByIdAsync(model.Id);
+                var roleUser = await userManager.GetRolesAsync(usuario);
 
-                var remocaoResult = await userManager.RemoveFromRolesAsync(
-                    usuario, 
-                    roleManager.Roles.Select(funcao => funcao.Name));
+                await userManager.RemoveFromRolesAsync(usuario, roleUser);
 
-                if (remocaoResult.Succeeded)
+                var newRole = model.Role;
+                if (newRole == RolesNomes.Administrador)
                 {
-                    var funcoesSelecionadas = model
-                        .Funcoes
-                        .Where(f => f.Selecionado)
-                        .Select(f => f.Nome)
-                        .ToArray();
-
-                    var adicaoResult = await userManager.AddToRolesAsync(usuario, funcoesSelecionadas);
-
-                    if (adicaoResult.Succeeded)
-                    {
-                        return RedirectToAction("Index");
-                    }
+                    await userManager.AddToRoleAsync(usuario, RolesNomes.Administrador);
                 }
+
+                if (newRole == RolesNomes.Gestor)
+                {
+                    await userManager.AddToRoleAsync(usuario, RolesNomes.Gestor);
+                }
+
+                if (newRole == RolesNomes.Operador)
+                {
+                    await userManager.AddToRoleAsync(usuario, RolesNomes.Operador);
+                }
+
+                return RedirectToAction("Index");
+
             }
 
             return View();

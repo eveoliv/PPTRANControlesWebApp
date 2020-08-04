@@ -10,7 +10,7 @@ using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Models
 {
-    public class AppIdentityContext : IdentityDbContext<AppIdentityUser>
+    public class AppIdentityContext : IdentityDbContext<AppIdentityUser, IdentityRole, string>
     {
         public AppIdentityContext(DbContextOptions<AppIdentityContext> options): base(options){}         
 

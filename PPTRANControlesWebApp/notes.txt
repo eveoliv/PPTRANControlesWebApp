@@ -29,3 +29,6 @@ update-database -Context AppIdentityContext
 SqlParameter param = new SqlParameter("@idCliente", 1);     
     context.Database.ExecuteSqlCommand("sp_ExcluirCliente @idCliente", param);
 	return context.Database.SqlQuery<Cliente>("exec sp_Clientes).ToList();
+
+
+	https://stackoverflow.com/questions/45442567/asp-net-core-how-to-get-the-user-role-in-ef-core-and-identity
