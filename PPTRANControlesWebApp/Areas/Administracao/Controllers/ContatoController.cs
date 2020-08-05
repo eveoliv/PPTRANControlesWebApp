@@ -15,7 +15,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
+    [Authorize]
     public class ContatoController : Controller
     {
         private readonly ContatoDAL contatoDAL;
@@ -31,25 +31,21 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             enderecoDAL = new EnderecoDAL(context);
         }
 
-        // GET: Contato
         public async Task<IActionResult> Index()
         {
             return View(await contatoDAL.ObterContatosClassificadosPorNome().ToListAsync());
         }
 
-        // GET: Contato/Details
         public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoContatoPorId(id);
         }
 
-        // GET: Contato/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoContatoPorId(id);
         }
 
-        // POST: Contato/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Contato contato)
@@ -76,13 +72,11 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(contato);
         }
 
-        // GET: Contato/Create
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Contato/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContatoViewModel model)
@@ -108,13 +102,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(model.Contato);
         }
 
-        // GET: Contato/Delete
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoContatoPorId(id);
         }
-
-        // POST: Contato/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -123,7 +116,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoContatoPorId(long? id)
         {
             if (id == null)

@@ -18,11 +18,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     //REVISADO_20200715   
     [Area("Operacao")]
-    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]        
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
     public class ClienteController : Controller
     {
         private readonly ClienteDAL clienteDAL;
-        private readonly ClinicaDAL clinicaDAL;        
+        private readonly ClinicaDAL clinicaDAL;
         private readonly EnderecoDAL enderecoDAL;
         private readonly HistoricoDAL historicoDAL;
         private readonly ApplicationContext context;
@@ -34,36 +34,36 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             this.context = context;
             this.userManager = userManager;
             clienteDAL = new ClienteDAL(context);
-            clinicaDAL = new ClinicaDAL(context);            
+            clinicaDAL = new ClinicaDAL(context);
             enderecoDAL = new EnderecoDAL(context);
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
 
-        // GET: Clientes
         public async Task<IActionResult> Index()
-        {          
-            return View(await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync());
-        }
-
-        public ActionResult partialview()
         {
-            return partialview();
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var lista = await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync();
+
+            if (userId != 0)
+            {
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
+            }
+
+            return View(lista);
         }
 
-        // GET: Clientes/Details
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id, "Detail");
         }
-       
-        // GET: Clientes/Edit
+
         public async Task<IActionResult> Edit(long? id)
-        {            
+        {
             return await ObterVisaoClientePorId(id, "Edit");
         }
 
-        // POST: Clientes/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Cliente cliente)
@@ -77,7 +77,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 try
                 {
-                    cliente.IdUser = userManager.GetUserAsync(User).Result.Id;                    
+                    cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await clienteDAL.GravarCliente(cliente);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -90,15 +90,13 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(cliente);
         }
 
-        // GET: Clientes/Create/
         public IActionResult Create()
         {
             CarregarViewBagsCreate();
 
             return View();
         }
-  
-        // POST: Clientes/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
@@ -106,7 +104,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             try
             {
                 if (model.Cliente.Nome != null && model.Cliente.CPF != null)
-                {                                      
+                {
                     await enderecoDAL.GravarEndereco(model.Endereco);
 
                     model.Cliente.DtCadastro = DateTime.Today;
@@ -125,13 +123,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(model.Cliente);
         }
 
-        // GET: Clientes/Delete
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoClientePorId(id, "");
         }
 
-        // POST: Clientes/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -141,18 +137,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Entrevistas do Médico e Psicólogo
         public async Task<IActionResult> EntrevistaPsi(long? id)
         {
             return await ObterVisaoClientePorId(id, "");
         }
-       
+
         public async Task<IActionResult> EntrevistaMed(long? id)
         {
             return await ObterVisaoClientePorId(id, "");
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoClientePorId(long? id, string chamada)
         {
             if (id == null)
@@ -166,7 +161,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 return NotFound();
             }
 
-            if (chamada == "Detail")            
+            if (chamada == "Detail")
                 CarregarViewBagsDetails(cliente);
 
             if (chamada == "Edit")
@@ -177,38 +172,52 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsDetails(Cliente cliente)
         {
-            /*
-            ViewBag.ClinicaNome = cliente.Clinica.Alias.ToString();
-            ViewBag.HistoricoNome = cliente.Historico.Nome.ToString();
-            */
-
             ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
 
-            ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();            
+            ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
         }
 
         private void CarregarViewBagsEdit(Cliente cliente)
         {
-            ViewBag.Clinicas = new SelectList(clinicaDAL.ObterClinicasClassificadasPorNome(), "Id", "Alias", cliente.Id);
+            ViewBag.Clinicas 
+                = new SelectList(clinicaDAL.ObterClinicasClassificadasPorNome(), "Id", "Alias", cliente.Id);
 
-            ViewBag.Medico = new SelectList(colaboradorDAL.ObterMedicosClassificadosPorNome(), "Id", "Nome", cliente.Id);
+            ViewBag.Medico
+                = new SelectList(colaboradorDAL.ObterMedicosClassificadosPorNome(), "Id", "Nome", cliente.Id);
 
-            ViewBag.Psicologo = new SelectList(colaboradorDAL.ObterPsicologosClassificadosPorNome(), "Id", "Nome", cliente.Id);
+            ViewBag.Psicologo
+                = new SelectList(colaboradorDAL.ObterPsicologosClassificadosPorNome(), "Id", "Nome", cliente.Id);
 
-            ViewBag.Historico = new SelectList(historicoDAL.ObterHistoricosClassificadosPorNome(), "Id", "Nome", cliente.Id);
+            ViewBag.Historico
+                = new SelectList(historicoDAL.ObterHistoricosClassificadosPorNome(), "Id", "Nome", cliente.Id);
         }
 
         private void CarregarViewBagsCreate()
-        {            
+        {
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+
             var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+            if (userId != 0)
+            {
+                clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
+            }
             clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
 
             var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
+            if (userId != 0)
+            {
+                medicos = medicos.Where(m => m.ClinicaId == idClinica).ToList();
+            }
             medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
             ViewBag.Medicos = medicos;
 
             var psicologos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
+            if (userId != 0)
+            {
+                psicologos = psicologos.Where(p => p.ClinicaId == idClinica).ToList();
+            }
             psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
 

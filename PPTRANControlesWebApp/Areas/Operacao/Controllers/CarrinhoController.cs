@@ -17,7 +17,7 @@ using PPTRANControlesWebApp.Data.DAL.Administracao;
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     [Area("Operacao")]
-    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
+    [Authorize]
     public class CarrinhoController : Controller
     {
         private readonly CaixaDAL caixaDAL;
@@ -40,16 +40,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-
-        // GET: Carrinho/Create/
+        
         public IActionResult Create(int? id)
         {
             CarregarViewBagsCreate(id);         
 
             return View();
         }
-
-        // POST: Clientes/Create
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Carrinho carrinho)
@@ -91,14 +89,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             }
             return View(carrinho);
         }
-
-        // GET: Carrinho/Edit/
+        
         public IActionResult Edit(int? id)
         {
             return View();
         }
-
-        // POST: Carrinho/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Carrinho carrinho)
@@ -119,7 +115,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(carrinho);
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId)
         {
             var cliente = clienteDAL.ObterClientePorId((long)clienteId);

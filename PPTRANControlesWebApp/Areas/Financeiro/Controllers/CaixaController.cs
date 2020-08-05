@@ -16,7 +16,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
     //REVISADO_20200718
     [Area("Financeiro")]
-    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
+    [Authorize]
     public class CaixaController : Controller
     {
         private readonly CaixaDAL caixaDAL;
@@ -40,27 +40,31 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             colaboradorDAL = new ColaboradorDAL(context);
 
         }
-
-        // GET: Caixa
+        
         public async Task<IActionResult> Index()
         {
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
             var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorClienteNome().ToListAsync();
+
+            if (userId != 0)
+            {
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
+            }
+
             return View(lancamentos);
         }
-
-        // GET: Caixa/Details
+        
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoLancamentoPorId(id);
         }
-
-        // GET: Caixa/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoLancamentoPorIdNaoPago(id);
         }
-
-        // POST: Caixa/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, Caixa caixa)
@@ -106,15 +110,13 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
             return View(caixa);
         }
-
-        // GET: Caixa/Create
+        
         public IActionResult Create()
         {
             CarregarViewBagsCreate();
             return View();
         }
-
-        // POST: Caixa/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CaixaViewModel model)
@@ -155,13 +157,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return View(model.Caixa);
         }
 
-        // GET: Caixa/Delete
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoLancamentoPorId(id);
         }
-
-        // POST: Caixa/Delete
+     
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -171,7 +172,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoLancamentoPorId(long? id)
         {
             if (id == null)
@@ -279,7 +280,6 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             return View(caixa);
         }
-
 
     }
 }

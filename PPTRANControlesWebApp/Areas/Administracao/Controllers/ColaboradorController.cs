@@ -17,7 +17,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
+    [Authorize]
     public class ColaboradorController : Controller
     {
         private readonly ClinicaDAL clinicaDAL;
@@ -34,26 +34,32 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             enderecoDAL = new EnderecoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-
-        // GET: Colaboradores
+        
         public async Task<IActionResult> Index()
-        {                                     
-            return View(await colaboradorDAL.ObterColaboradoresClassificadosPorNome().ToListAsync());
-        }
+        {
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var lista = await colaboradorDAL.ObterColaboradoresClassificadosPorNome().ToListAsync();
 
-        // GET: Colaboradores
+            if (userId != 0)
+            {
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
+            }
+
+            return View(lista);
+        }
+        
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoColaboradorPorId(id);
         }
 
-        // GET: Colaboradores
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Edit(long id)
         {
             return await ObterVisaoColaboradorPorId(id);
         }
-
-        // POST: Colaboradores/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Colaborador colaborador)
@@ -80,15 +86,14 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(colaborador);
         }
 
-        // GET: Colaboradores/Create
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public IActionResult Create()
         {
             CarregarViewBagsCreate();
 
             return View();
         }        
-
-        // POST: Colaboradores/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
@@ -119,14 +124,13 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             }
             return View(model.Colaborador);
         }
-     
-        // GET: Colaboradores/Delete
+
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoColaboradorPorId(id);
         }
-
-        // POST: Colaboradores/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -136,7 +140,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoColaboradorPorId(long? id)
         {
             if (id == null)

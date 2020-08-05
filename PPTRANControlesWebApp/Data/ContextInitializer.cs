@@ -30,7 +30,9 @@ namespace PPTRANControlesWebApp.Data.DAL
                 //psicologo
                 new Endereco{ Id = 5, Cep="01319-001",Rua="Maria Paula"},
                 //medico
-                new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"}
+                new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"},
+                //operador
+                new Endereco{ Id = 7, Cep="01319-001",Rua="Maria Paula"}
             };
 
             foreach (Endereco e in enderecos)
@@ -140,9 +142,9 @@ namespace PPTRANControlesWebApp.Data.DAL
             {
                 new Colaborador{
                     Id =1,
-                    Nome = "Everton Oliveira",
+                    Nome = "Administrador",
                     CPF = "222.205.648-91",
-                    Funcao = EnumHelper.Funcao.Operador,
+                    Funcao = EnumHelper.Funcao.Administrador,
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 4}
@@ -166,7 +168,17 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
                     Endereco = new Endereco(){Id = 6}
-                  }
+                  },
+
+                  new Colaborador{
+                    Id =4,
+                    Nome = "Everton Oliveira",
+                    CPF = "222.205.648-94",
+                    Funcao = EnumHelper.Funcao.Operador,
+                    Status = EnumHelper.Status.Ativo,
+                    Clinica = new Clinica(){Id = 1},
+                    Endereco = new Endereco(){Id = 7}
+                },
             };         
 
             foreach (Colaborador c in colaborador)

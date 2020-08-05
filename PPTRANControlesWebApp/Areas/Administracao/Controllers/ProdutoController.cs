@@ -13,7 +13,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize]
     public class ProdutoController : Controller
     {       
         private readonly ProdutoDAL produtoDAL;       
@@ -26,26 +26,23 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             this.userManager = userManager;            
             produtoDAL = new ProdutoDAL(context);
         }
-
-        // GET: Produto
+        
         public async Task<IActionResult> Index()
         {
             return View(await produtoDAL.ObterProdutosClassificadosPorNome().ToListAsync());
         }
-
-        // GET: Produto/Details
+        
         public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoProdutoPorId(id);
         }
-
-        // GET: Produto/Edit
+        
+        [Authorize(Roles = RolesNomes.Administrador)]
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoProdutoPorId(id);
         }
-
-        // POST: Produto/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Produto produto)
@@ -72,19 +69,16 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(produto);
         }
 
-        // GET: Produto/Create
+        [Authorize(Roles = RolesNomes.Administrador)]
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Produto/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Produto produto)
-        {            
-            //Match match = Regex.Match(Convert.ToString(produto.Valor), @"^\d$");
-
+        {                       
             try
             {
                 if (produto.Nome != null && ModelState.IsValid )
@@ -103,13 +97,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(produto);
         }
 
-        // GET: Produto/Delete
+        [Authorize(Roles = RolesNomes.Administrador)]
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoProdutoPorId(id);
         }
-
-        // POST: Produto/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -119,7 +112,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoProdutoPorId(long? id)
         {
             if (id == null)

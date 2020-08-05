@@ -25,10 +25,7 @@ namespace PPTRANControlesWebApp
                 try
                 {
                     var context = services.GetRequiredService<ApplicationContext>();
-                    //ContextInitializer.Initialize(context);     
-
-                    //var serviceProvider = scope.ServiceProvider.GetService<IdentityHostingStartup>();                   
-                    
+                    //ContextInitializer.Initialize(context);                                                           
                 }
                 catch (Exception ex)
                 {
