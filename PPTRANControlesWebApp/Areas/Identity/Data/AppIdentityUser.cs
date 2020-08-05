@@ -9,6 +9,6 @@ namespace PPTRANControlesWebApp.Areas.Identity.Data
     {
         public string Nome { get; set; }
         public long ClinicaId { get; set; }
-        
+        public long ColaboradorId { get; set; }
     }
 }

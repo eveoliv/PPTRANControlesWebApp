@@ -8,27 +8,32 @@ using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Models;
+using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Data;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 {
     [Area("Identity")]
     [Authorize(Roles = RolesNomes.Administrador)]
     public class UsuarioController : Controller
-    {
-        private readonly UserManager<AppIdentityUser> userManager;
+    {        
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly AppIdentityContext appIdentityContext;
+        private readonly UserManager<AppIdentityUser> userManager;
 
-        public UsuarioController(AppIdentityContext appIdentityContext, UserManager<AppIdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsuarioController(AppIdentityContext appIdentityContext,
+            UserManager<AppIdentityUser> userManager,RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
-            this.roleManager = roleManager;
+            this.roleManager = roleManager;            
             this.appIdentityContext = appIdentityContext;
         }
 
         public IActionResult Index()
         {
-            var usuarios = userManager.Users.Select(usuario => new UsuarioViewModel(usuario)).ToList();           
+            var usuarios 
+                = userManager.Users.Where(usuario => usuario.Nome != RolesNomes.Administrador)
+                .Select(usuario => new UsuarioViewModel(usuario)).ToList();            
 
             return View(usuarios);
         }
@@ -46,7 +51,7 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UsuarioEditViewModel model)
         {
-            if (ModelState.IsValid && model.Nome != "Admin")
+            if (ModelState.IsValid)
             {
                 var usuario = await userManager.FindByIdAsync(model.Id);
                 var roleUser = await userManager.GetRolesAsync(usuario);
@@ -67,6 +72,11 @@ namespace PPTRANControlesWebApp.Areas.Identity.Controllers
                 if (newRole == RolesNomes.Operador)
                 {
                     await userManager.AddToRoleAsync(usuario, RolesNomes.Operador);
+                }
+
+                if (newRole == RolesNomes.Inativo)
+                {
+                    await userManager.AddToRoleAsync(usuario, RolesNomes.Inativo);
                 }
 
                 return RedirectToAction("Index");

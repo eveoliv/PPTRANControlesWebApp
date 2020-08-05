@@ -136,6 +136,8 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
 
                     b.Property<long>("ClinicaId");
 
+                    b.Property<long>("ColaboradorId");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 

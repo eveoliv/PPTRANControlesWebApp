@@ -13,9 +13,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Nível de Acesso do Usuário: @Html.DisplayFor(model => model.Nome)</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
-                        </ul>
+                        <ul class="nav navbar-right panel_toolbox"></ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -33,8 +31,8 @@
 
                                     <dl class="row">
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Atual</dt>
-                                        <dd class="col-md-9 col-sm-9 ">                                            
-                                            @Html.DisplayFor(modelItem => modelItem.Role)
+                                        <dd class="col-md-6 col-sm-6 alert-danger border border-danger rounded">
+                                            <b>@Html.DisplayFor(modelItem => modelItem.Role, new { @class = "control-label col-md-9" })</b>
                                         </dd>
 
                                     </dl>
@@ -45,9 +43,9 @@
 
                                     <dl class="row">
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Novo</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            @*<label asp-for="Roles"></label>*@
-                                            @Html.DropDownList("Role", new SelectList(Model.Roles, "Text", "Text"))
+                                        <dd class="col-md-6 col-sm-6 ">
+                                            @Html.DropDownList("Role", new SelectList(Model.Roles, "Text", "Text"), new { @class = "form-control" })
+                                            @*<select asp-for="Role" class="form-control" asp-items="@(new SelectList(Model.Roles, "Text", "Text"))"></select>*@
                                         </dd>
 
                                     </dl>
@@ -57,7 +55,7 @@
                                 <div class="item form-group">
                                     <div class="col-md-12 col-sm-12 offset-md-2">
                                         <button type="submit" class="btn btn-success">Alterar</button>
-                                        @*<a asp-controller="Usuario" asp-action="Index" class="btn btn-primary">Cancelar</a>*@
+                                        <a href="@Url.Action("Index", "Usuario")" class="btn btn-primary">Cancelar</a>                                          
                                     </div>
                                 </div>
                             </div>

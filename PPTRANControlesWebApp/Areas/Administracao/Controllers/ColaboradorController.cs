@@ -182,6 +182,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 Email = model.Colaborador.Email,
                 Nome = primeiroNome,
                 ClinicaId = (long)model.Colaborador.ClinicaId,
+                ColaboradorId = (long)model.Colaborador.Id,
             };
 
             string pwd = model.Colaborador.CPF.Replace(".", "").Replace("-", "");

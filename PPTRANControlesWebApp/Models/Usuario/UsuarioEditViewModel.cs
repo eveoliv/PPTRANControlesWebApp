@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PPTRANControlesWebApp.Data;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {
@@ -17,22 +18,22 @@ namespace PPTRANControlesWebApp.Models.Usuario
         public List<SelectListItem> Roles { get; set; }       
 
         public UsuarioEditViewModel() { }
-        public UsuarioEditViewModel(AppIdentityUser usuario, 
+        public UsuarioEditViewModel(AppIdentityUser usuario,
             RoleManager<IdentityRole> roleManager, IList<string> userRole)
         {
             Id = usuario.Id;
             Nome = usuario.Nome;
             Email = usuario.Email;
             UserName = usuario.UserName;
-            Role = userRole.FirstOrDefault();
+            Role = userRole.FirstOrDefault();           
 
             Roles = new List<SelectListItem>
             {
                 new SelectListItem() { Value = "1", Text = RolesNomes.Administrador },
                 new SelectListItem() { Value = "2", Text = RolesNomes.Gestor },
-                new SelectListItem() { Value = "3", Text = RolesNomes.Operador }
-            };
-                                        
+                new SelectListItem() { Value = "3", Text = RolesNomes.Operador },
+                new SelectListItem() { Value = "4", Text = RolesNomes.Inativo }
+            };                                        
         }
     }
 }

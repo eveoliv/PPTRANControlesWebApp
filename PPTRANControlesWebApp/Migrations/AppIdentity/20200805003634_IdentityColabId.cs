@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
-    public partial class AlterNomeRole : Migration
+    public partial class IdentityColabId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,8 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Nome = table.Column<string>(nullable: true),
-                    ClinicaId = table.Column<long>(nullable: false)
+                    ClinicaId = table.Column<long>(nullable: false),
+                    ColaboradorId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {

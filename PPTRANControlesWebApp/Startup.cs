@@ -94,7 +94,7 @@ namespace PPTRANControlesWebApp
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
 
-            string[] rolesNames = { RolesNomes.Administrador, RolesNomes.Gestor, RolesNomes.Operador };
+            string[] rolesNames = { RolesNomes.Administrador, RolesNomes.Gestor, RolesNomes.Operador, RolesNomes.Inativo };
 
             IdentityResult result;
 
@@ -113,7 +113,7 @@ namespace PPTRANControlesWebApp
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<AppIdentityUser>>();
         
-            var _user = await userManager.FindByNameAsync("Admin");
+            var _user = await userManager.FindByNameAsync("Administrador");
             
             if (_user == null)
             {
@@ -121,7 +121,7 @@ namespace PPTRANControlesWebApp
                 {
                     UserName = "Admin@email.com",
                     Email = "Admin@email.com",
-                    Nome = "Admin",
+                    Nome = "Administrador",
                     ClinicaId = 0                
                 };
 

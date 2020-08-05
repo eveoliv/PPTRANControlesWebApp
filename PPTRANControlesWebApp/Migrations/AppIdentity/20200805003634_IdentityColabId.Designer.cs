@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Migrations.AppIdentity
 {
     [DbContext(typeof(AppIdentityContext))]
-    [Migration("20200802220032_AlterNomeRole")]
-    partial class AlterNomeRole
+    [Migration("20200805003634_IdentityColabId")]
+    partial class IdentityColabId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,6 +137,8 @@ namespace PPTRANControlesWebApp.Migrations.AppIdentity
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<long>("ClinicaId");
+
+                    b.Property<long>("ColaboradorId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();

@@ -10,5 +10,6 @@ namespace PPTRANControlesWebApp.Areas.Identity.Models
         public const string Administrador = "Administrador";
         public const string Gestor = "Gestor";
         public const string Operador = "Operador";
+        public const string Inativo = "Inativo";
     }
 }
