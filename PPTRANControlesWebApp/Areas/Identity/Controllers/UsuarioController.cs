@@ -1,15 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PPTRANControlesWebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Models.Usuario;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using PPTRANControlesWebApp.Models;
-using PPTRANControlesWebApp.Data.DAL;
-using PPTRANControlesWebApp.Data;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Controllers
 {

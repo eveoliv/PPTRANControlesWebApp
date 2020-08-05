@@ -16,7 +16,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
     //REVISADO_20200718
     [Area("Financeiro")]
-    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
     public class CaixaController : Controller
     {
         private readonly CaixaDAL caixaDAL;

@@ -15,7 +15,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
     [Area("Administracao")]
-    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
     public class ContatoController : Controller
     {
         private readonly ContatoDAL contatoDAL;

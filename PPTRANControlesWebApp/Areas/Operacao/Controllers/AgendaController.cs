@@ -17,7 +17,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     //REVISADO_20200715
     [Area("Operacao")]
-    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
     public class AgendaController : Controller
     {
         private readonly AgendaDAL agendaDAL;

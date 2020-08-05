@@ -16,11 +16,9 @@ using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
-    //REVISADO_20200715
+    //REVISADO_20200715   
     [Area("Operacao")]
-    [Authorize(Roles = RolesNomes.Administrador)]
-    [Authorize(Roles = RolesNomes.Gestor)]
-    [Authorize(Roles = RolesNomes.Operador)]
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]        
     public class ClienteController : Controller
     {
         private readonly ClienteDAL clienteDAL;

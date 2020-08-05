@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Areas.Identity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Models
 {
-    public class AppIdentityContext : IdentityDbContext<AppIdentityUser, IdentityRole, string>
+    public class AppIdentityContext : IdentityDbContext<AppIdentityUser>
     {
         public AppIdentityContext(DbContextOptions<AppIdentityContext> options): base(options){}         
 

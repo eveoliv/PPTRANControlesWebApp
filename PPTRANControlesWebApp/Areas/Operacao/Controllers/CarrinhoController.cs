@@ -17,7 +17,7 @@ using PPTRANControlesWebApp.Data.DAL.Administracao;
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
     [Area("Operacao")]
-    [Authorize(Roles = RolesNomes.Administrador)]
+    [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor + "," + RolesNomes.Operador)]
     public class CarrinhoController : Controller
     {
         private readonly CaixaDAL caixaDAL;
