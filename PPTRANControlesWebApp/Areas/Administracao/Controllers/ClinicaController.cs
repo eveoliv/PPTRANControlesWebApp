@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
     //REVISADO_20200715
-    [Area("Administracao")]
     [Authorize]
+    [Area("Administracao")]
     public class ClinicaController : Controller
     {
         private readonly ClinicaDAL clinicaDAL;
@@ -28,26 +29,23 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             clinicaDAL = new ClinicaDAL(context);
             enderecoDAL = new EnderecoDAL(context);
         }
-
-        // GET: Clinica
+    
         public async Task<IActionResult> Index()
         {            
             return View(await clinicaDAL.ObterClinicasClassificadasPorNome().ToListAsync());
         }
-
-        // GET: Clinica/Details
+        
         public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoClinicaPorId(id);
         }
 
-        // GET: Clinica/Edit
+        [Authorize(Roles = RolesNomes.Administrador)]
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoClinicaPorId(id);
         }
-
-        // POST: Clinica/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Clinica clinica)
@@ -74,13 +72,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(clinica);
         }
 
-        // GET: Clinica/Create
+        [Authorize(Roles = RolesNomes.Administrador)]
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Clinica/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task <IActionResult> Create(ClinicaViewModel model)
@@ -105,14 +102,13 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             }
             return View(model.Clinica);
         }
-      
-        // GET: Clinica/Delete
+
+        [Authorize(Roles = RolesNomes.Administrador)]
         public async Task <IActionResult> Delete(long? id)
         {
             return await ObterVisaoClinicaPorId(id);
         }
-
-        // POST: Clinica/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)

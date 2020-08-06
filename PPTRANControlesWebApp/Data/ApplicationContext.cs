@@ -1,9 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Data
 {
@@ -38,8 +34,6 @@ namespace PPTRANControlesWebApp.Data
             modelBuilder.Entity<Cliente>().HasOne(c => c.Historico);
 
             modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
-
-
         }
 
         //Sobrescrita do metodo de acesso ao db

@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace PPTRANControlesWebApp.Models
 {
     public class AppIdentityContext : IdentityDbContext<AppIdentityUser>
     {
-        public AppIdentityContext(DbContextOptions<AppIdentityContext> options)
-            : base(options)
-        {
-        }
+        public AppIdentityContext(DbContextOptions<AppIdentityContext> options): base(options){}         
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

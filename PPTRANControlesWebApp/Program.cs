@@ -3,8 +3,9 @@ using Microsoft.AspNetCore;
 using PPTRANControlesWebApp.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.Extensions.DependencyInjection;
+using PPTRANControlesWebApp.Models;
+using PPTRANControlesWebApp.Data.DAL;
 
 namespace PPTRANControlesWebApp
 {
@@ -19,8 +20,11 @@ namespace PPTRANControlesWebApp
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationContext>();
-                    //ContextInitializer.Initialize(context);
+                    var applicationcontext = services.GetRequiredService<ApplicationContext>();
+                    var identityContext = services.GetRequiredService<AppIdentityContext>();
+
+                    //ContextIdentityInitializer.Initialize(identityContext);
+                    //ContextInitializer.Initialize(applicationcontext);                                                           
                 }
                 catch (Exception ex)
                 {
@@ -31,6 +35,7 @@ namespace PPTRANControlesWebApp
 
             host.Run();
         }
+    
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

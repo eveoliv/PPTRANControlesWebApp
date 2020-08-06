@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Models.Operacao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
+using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -33,26 +35,35 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             clinicaDAL = new ClinicaDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-
-        // GET: Agenda
+        
         public async Task<IActionResult> Index()
-        {           
-            return View(await agendaDAL.ObterAgendaClassificadaNomeCliente().ToListAsync());
-        }
+        {
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
 
-        // GET: Agenda/Details
+            var agenda = await agendaDAL.ObterAgendaClassificadaNomeCliente().ToListAsync();
+
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaAlias = colaboradorDAL.ObterColaboradorPorId(colId).Result.Clinica.Alias;
+                agenda = agenda.Where(c => c.Clinica == userClinicaAlias).ToList();
+            }
+
+            return View(agenda);
+        }
+        
         public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoAgendaPorId(id);
         }
-
-        // GET: Agenda/Edit
+        
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoAgendaPorId(id);
         }
-
-        // POST: Agenda/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Agenda agenda)
@@ -78,15 +89,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             }
             return View(agenda);
         }
-
-        // GET: Agenda/Create
-        public ActionResult Create()
+       
+        public async Task <IActionResult> Create()
         {
-            CarregarViewBagsCreate();
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+        
+            CarregarViewBagsCreate(roleUser);
             return View();
         }    
-
-        // POST: Agenda/Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AgendaViewModel model)
@@ -110,14 +123,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             }
             return View(model.Agenda);
         }
-
-        // GET: Agenda/Delete
+        
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoAgendaPorId(id);
         }
-
-        // POST: Agenda/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -127,7 +138,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoAgendaPorId(long? id)
         {
             if (id == null)
@@ -145,20 +156,36 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         }
 
-        private void CarregarViewBagsCreate()
+        private void CarregarViewBagsCreate(IList<string> roleUser)
         {
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+           
             var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
+            }
             clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
 
             var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                medicos = medicos.Where(m => m.ClinicaId == idClinica).ToList();
+            }
             medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
             ViewBag.Medicos = medicos;
 
             var psicologos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                psicologos = psicologos.Where(p => p.ClinicaId == idClinica).ToList();
+            }
             psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
-
         }
 
         private string BuscaColaborador(string id)

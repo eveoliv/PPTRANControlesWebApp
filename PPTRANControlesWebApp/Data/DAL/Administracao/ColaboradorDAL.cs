@@ -19,7 +19,9 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Colaboradores
                 .Include(c => c.Clinica)
-                .Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
+                .OrderBy(c => c.Nome);
         }
 
         public IQueryable<Colaborador> ObterMedicosClassificadosPorNome()
@@ -44,6 +46,7 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 

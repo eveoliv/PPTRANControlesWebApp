@@ -1,17 +1,18 @@
 ﻿using Models;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
-using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -39,16 +40,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-
-        // GET: Carrinho/Create/
+        
         public IActionResult Create(int? id)
         {
             CarregarViewBagsCreate(id);         
 
             return View();
         }
-
-        // POST: Clientes/Create
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Carrinho carrinho)
@@ -90,14 +89,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             }
             return View(carrinho);
         }
-
-        // GET: Carrinho/Edit/
+        
         public IActionResult Edit(int? id)
         {
             return View();
         }
-
-        // POST: Carrinho/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Carrinho carrinho)
@@ -118,7 +115,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return View(carrinho);
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId)
         {
             var cliente = clienteDAL.ObterClientePorId((long)clienteId);

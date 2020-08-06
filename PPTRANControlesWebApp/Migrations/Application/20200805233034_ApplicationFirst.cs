@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PPTRANControlesWebApp.Migrations
+namespace PPTRANControlesWebApp.Migrations.Application
 {
-    public partial class Agenda : Migration
+    public partial class ApplicationFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

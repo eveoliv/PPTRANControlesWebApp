@@ -44,17 +44,13 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Nome")]
             public string NomeUser { get; set; }
 
-            [Required]          
-            [Display(Name = "Cpf")]
-            public string CpfUser { get; set; }
-
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(10, ErrorMessage = "O campo {0} precisa ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(11, ErrorMessage = "O campo {0} precisa ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 11)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }
@@ -75,7 +71,7 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new AppIdentityUser { UserName = Input.Email, Email = Input.Email, Nome = Input.NomeUser, Cpf = Input.CpfUser };
+                var user = new AppIdentityUser { UserName = Input.Email, Email = Input.Email, Nome = Input.NomeUser };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

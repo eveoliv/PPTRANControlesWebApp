@@ -1,12 +1,12 @@
 ﻿using Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using PPTRANControlesWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
@@ -26,26 +26,23 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             this.userManager = userManager;
             historicoDAL = new HistoricoDAL(context);           
         }
-
-        // GET: Historico
+        
         public async Task<IActionResult> Index()
         {
             return View(await historicoDAL.ObterHistoricosClassificadosPorNome().ToListAsync());
         }
-
-        // GET: Historico/Details
+      
         public async Task<IActionResult> Details(int? id)
         {
             return await ObterVisaoHistoricoPorId(id);
         }
 
-        // GET: Historico/Edit
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoHistoricoPorId(id);
         }
-
-        // POST: Historico/Edit
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Historico historico)
@@ -72,13 +69,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(historico);
         }
 
-        // GET: Historico/Create
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public ActionResult Create()
         {
             return View();
         }
-
-        // POST: Historico/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Historico historico)
@@ -101,13 +97,12 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(historico);
         }
 
-        // GET: Historico/Delete
+        [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Delete(long? id)
         {
             return await ObterVisaoHistoricoPorId(id);
         }
-
-        // POST: Historico/Delete
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -117,7 +112,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Metodos Privados do Controller
+        /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoHistoricoPorId(long? id)
         {
             if (id == null)

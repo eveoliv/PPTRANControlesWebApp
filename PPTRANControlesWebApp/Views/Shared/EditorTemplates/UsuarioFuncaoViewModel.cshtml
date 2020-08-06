@@ -1,0 +1,17 @@
+﻿@model PPTRANControlesWebApp.Models.Usuario.UsuarioFuncaoViewModel
+
+@{
+    Layout = null;
+}
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.Nome)
+
+<tr>
+    <td>
+        @Html.EditorFor(model => model.Selecionado)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Nome)
+    </td>
+</tr>
