@@ -122,7 +122,8 @@ namespace PPTRANControlesWebApp
                     UserName = "Admin@email.com",
                     Email = "Admin@email.com",
                     Nome = "Administrador",
-                    ClinicaId = 0                
+                    ClinicaId = 0,
+                    ColaboradorId = 1                    
                 };
 
                 string pwd = "123456";
