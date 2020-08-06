@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
@@ -43,12 +44,16 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         
         public async Task<IActionResult> Index()
         {
-            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
             var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorClienteNome().ToListAsync();
 
-            if (userId != 0)
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
-                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
@@ -111,9 +116,13 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return View(caixa);
         }
         
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            CarregarViewBagsCreate();
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
+            CarregarViewBagsCreate(roleUser);
             return View();
         }
         
@@ -217,9 +226,16 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             ViewBag.Usuario = userManager.FindByIdAsync(caixa.IdUser).Result.Nome;
         }
 
-        private void CarregarViewBagsCreate()
+        private void CarregarViewBagsCreate(IList<string> userRole)
         {
+            var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+
             var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+            if (userRole.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
+                clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
+            }
             clinicas.Insert(0, new Clinica() { Id = 0, Alias = "" });
             ViewBag.Clinicas = clinicas;
 

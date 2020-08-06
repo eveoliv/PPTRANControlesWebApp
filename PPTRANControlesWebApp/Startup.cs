@@ -31,10 +31,10 @@ namespace PPTRANControlesWebApp
             /* DEV */
             services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
-            services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
             /* PROD */
             //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
 
+            services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
