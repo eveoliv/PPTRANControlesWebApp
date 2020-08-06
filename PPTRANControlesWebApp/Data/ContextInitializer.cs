@@ -1,5 +1,4 @@
 ﻿using Models;
-using System;
 using System.Linq;
 
 namespace PPTRANControlesWebApp.Data.DAL
@@ -23,16 +22,16 @@ namespace PPTRANControlesWebApp.Data.DAL
                 new Endereco{ Id = 1, Cep="01019-020", Rua="Rua do Carmo", Bairro="Sé", Cidade="São Paulo", Estado="SP", Numero=44, Complto="1° ANDAR"},
                 new Endereco{ Id = 2, Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""},
 
-                //cliente
-                new Endereco{ Id = 3, Cep="01319-001",Rua="Maria Paula"},
-                //atendente
-                new Endereco{ Id = 4, Cep="01319-001",Rua="Maria Paula"},
-                //psicologo
-                new Endereco{ Id = 5, Cep="01319-001",Rua="Maria Paula"},
-                //medico
-                new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"},
-                //operador
-                new Endereco{ Id = 7, Cep="01319-001",Rua="Maria Paula"}
+                ////cliente
+                //new Endereco{ Id = 3, Cep="01319-001",Rua="Maria Paula"},
+                ////atendente
+                //new Endereco{ Id = 4, Cep="01319-001",Rua="Maria Paula"},
+                ////psicologo
+                //new Endereco{ Id = 5, Cep="01319-001",Rua="Maria Paula"},
+                ////medico
+                //new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"},
+                ////operador
+                //new Endereco{ Id = 7, Cep="01319-001",Rua="Maria Paula"}
             };
 
             foreach (Endereco e in enderecos)
@@ -102,35 +101,35 @@ namespace PPTRANControlesWebApp.Data.DAL
             context.SaveChanges();
 
             /*********************************** CLIENTES ************************************************/
-            if (context.Clientes.Any())
-            {
-                return;
-            }
+            //if (context.Clientes.Any())
+            //{
+            //    return;
+            //}
 
-            var clientes = new Cliente[]
-            {
-                new Cliente{
-                    Id = 1,
-                    DtCadastro = DateTime.Today,
-                    Nome = "Everton Oliveira",
-                    NumRenach = "123456",
-                    Categoria = EnumHelper.Categoria.B,
-                    Telefone1 = "(11)97699-4991",                     
-                    Status = EnumHelper.Status.Ativo,
-                    Clinica = new Clinica(){ Id = 1 },
-                    CPF = "222.205.648-90",
-                    Historico = new Historico(){ Id = 1 },
-                    PsicologoId = 2,
-                    MedicoId = 3,
-                    Endereco =  new Endereco(){ Id = 3 }
-                }
-            };
+            //var clientes = new Cliente[]
+            //{
+            //    new Cliente{
+            //        Id = 1,
+            //        DtCadastro = DateTime.Today,
+            //        Nome = "Everton Oliveira",
+            //        NumRenach = "123456",
+            //        Categoria = EnumHelper.Categoria.B,
+            //        Telefone1 = "(11)97699-4991",                     
+            //        Status = EnumHelper.Status.Ativo,
+            //        Clinica = new Clinica(){ Id = 1 },
+            //        CPF = "222.205.648-90",
+            //        Historico = new Historico(){ Id = 1 },
+            //        PsicologoId = 2,
+            //        MedicoId = 3,
+            //        Endereco =  new Endereco(){ Id = 3 }
+            //    }
+            //};
 
-            foreach (Cliente c in clientes)
-            {
-                context.Clientes.Add(c);
-            }
-            context.SaveChanges();
+            //foreach (Cliente c in clientes)
+            //{
+            //    context.Clientes.Add(c);
+            //}
+            //context.SaveChanges();
 
             /************************************ COLABORADORES ******************************************/
             if (context.Colaboradores.Any())
@@ -145,40 +144,41 @@ namespace PPTRANControlesWebApp.Data.DAL
                     Nome = "Administrador",
                     CPF = "222.205.648-91",
                     Funcao = EnumHelper.Funcao.Administrador,
+                    Email = "Admin@email",
                     Status = EnumHelper.Status.Ativo,
                     Clinica = new Clinica(){Id = 1},
-                    Endereco = new Endereco(){Id = 4}
-                },
+                    Endereco = new Endereco(){Id = 1}
+                }
 
-                 new Colaborador{
-                    Id =2,
-                    Nome = "Barbara Hansen",
-                    CPF = "222.205.648-92",
-                    Funcao = EnumHelper.Funcao.Psicologo,
-                    Status = EnumHelper.Status.Ativo,
-                    Clinica = new Clinica(){Id = 1},
-                    Endereco = new Endereco(){Id = 5}
-                 },
+                // new Colaborador{
+                //    Id =2,
+                //    Nome = "Barbara Hansen",
+                //    CPF = "222.205.648-92",
+                //    Funcao = EnumHelper.Funcao.Psicologo,
+                //    Status = EnumHelper.Status.Ativo,
+                //    Clinica = new Clinica(){Id = 1},
+                //    Endereco = new Endereco(){Id = 5}
+                // },
 
-                  new Colaborador{
-                    Id =3,
-                    Nome = "Doutor Estranho",
-                    CPF = "222.205.648-93",
-                    Funcao = EnumHelper.Funcao.Medico,
-                    Status = EnumHelper.Status.Ativo,
-                    Clinica = new Clinica(){Id = 1},
-                    Endereco = new Endereco(){Id = 6}
-                  },
+                //  new Colaborador{
+                //    Id =3,
+                //    Nome = "Doutor Estranho",
+                //    CPF = "222.205.648-93",
+                //    Funcao = EnumHelper.Funcao.Medico,
+                //    Status = EnumHelper.Status.Ativo,
+                //    Clinica = new Clinica(){Id = 1},
+                //    Endereco = new Endereco(){Id = 6}
+                //  },
 
-                  new Colaborador{
-                    Id =4,
-                    Nome = "Everton Oliveira",
-                    CPF = "222.205.648-94",
-                    Funcao = EnumHelper.Funcao.Operador,
-                    Status = EnumHelper.Status.Ativo,
-                    Clinica = new Clinica(){Id = 1},
-                    Endereco = new Endereco(){Id = 7}
-                },
+                //  new Colaborador{
+                //    Id =4,
+                //    Nome = "Everton Oliveira",
+                //    CPF = "222.205.648-94",
+                //    Funcao = EnumHelper.Funcao.Operador,
+                //    Status = EnumHelper.Status.Ativo,
+                //    Clinica = new Clinica(){Id = 1},
+                //    Endereco = new Endereco(){Id = 7}
+                //},
             };         
 
             foreach (Colaborador c in colaborador)

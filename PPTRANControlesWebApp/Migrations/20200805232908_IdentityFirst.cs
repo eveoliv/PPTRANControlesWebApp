@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PPTRANControlesWebApp.Migrations.AppIdentity
+namespace PPTRANControlesWebApp.Migrations
 {
-    public partial class IdentityColabId : Migration
+    public partial class IdentityFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

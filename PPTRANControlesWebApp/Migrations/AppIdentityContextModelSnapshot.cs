@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Migrations.AppIdentity
+namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(AppIdentityContext))]
     partial class AppIdentityContextModelSnapshot : ModelSnapshot

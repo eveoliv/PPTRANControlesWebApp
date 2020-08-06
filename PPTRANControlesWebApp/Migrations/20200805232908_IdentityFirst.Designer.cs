@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PPTRANControlesWebApp.Models;
 
-namespace PPTRANControlesWebApp.Migrations.AppIdentity
+namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(AppIdentityContext))]
-    [Migration("20200805003634_IdentityColabId")]
-    partial class IdentityColabId
+    [Migration("20200805232908_IdentityFirst")]
+    partial class IdentityFirst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
