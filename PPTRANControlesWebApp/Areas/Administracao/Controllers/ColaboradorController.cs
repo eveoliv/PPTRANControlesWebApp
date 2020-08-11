@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using PPTRANControlesWebApp.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -211,9 +211,11 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 
             if (createPowerUser.Succeeded)
             {
+                //Cadastrar novo colab como Gestor, caso seje selecionaro Adm
+                //esta alteração deverea ser realizada na gestão de acesso pelo Adm
                 if (model.Colaborador.Funcao == EnumHelper.Funcao.Administrador)
                 {
-                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Administrador);
+                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Gestor);
                 }
 
                 if (model.Colaborador.Funcao == EnumHelper.Funcao.Gestor)
