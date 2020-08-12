@@ -91,8 +91,12 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu"></ul>
+                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios Caixa <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Diario">Diário</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Consolidado">Consolidado</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

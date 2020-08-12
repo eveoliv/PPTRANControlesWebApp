@@ -66,40 +66,51 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            @Html.HiddenFor(modelItem => item.Id)
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.DtCadastro)
-                                            </td>
-                                            @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
-                                            {
-                                                <th>
-                                                    @Html.DisplayNameFor(modelItem => item.Clinica.Alias)
-                                                </th>
-                                            }
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CPF)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Telefone1)
-                                            </td>
-                                            <td>
-                                                &emsp;&emsp;&emsp;
-                                                @Html.DisplayFor(modelItem => item.StatusPgto)
-                                            </td>
-                                            <td>
-                                                @*<a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>*@
-                                                <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
-                                                <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
-                                                <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
-                                                <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
-                                                <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
-                                                <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                @Html.HiddenFor(modelItem => item.Id)
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DtCadastro)
+                                                </td>
+                                                @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                                {
+                                                    <th>
+                                                        @Html.DisplayNameFor(modelItem => item.Clinica.Alias)
+                                                    </th>
+                                                }
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Nome)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CPF)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Telefone1)
+                                                </td>
+                                                <td>
+                                                    &emsp;&emsp;&emsp;
+                                                    @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
+                                                    {
+                                                        <span style="color: #f00;">
+                                                            <strong>
+                                                                @Html.DisplayFor(modelItem => item.StatusPgto)
+                                                            </strong>
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.StatusPgto)
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @*<a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>*@
+                                                    <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
+                                                    <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
+                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
+                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

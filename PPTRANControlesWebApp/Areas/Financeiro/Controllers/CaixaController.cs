@@ -132,7 +132,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             try
             {
-                if (model.Caixa.Cliente.CPF != null)
+                if (model.Caixa.Cliente.CPF != null && model.Caixa.Valor > 0)
                 {
                     var cpf = model.Caixa.Cliente.CPF;
 

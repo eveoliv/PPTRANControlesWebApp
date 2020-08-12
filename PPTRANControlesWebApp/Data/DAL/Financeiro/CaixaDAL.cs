@@ -19,12 +19,13 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Caixas
                 .Include(c => c.Cliente)
+                .Include(c => c.Clinica)
                 .Include(p => p.Produto)
                 .Include(i => i.Historico)
                 .Include(c => c.Colaborador)
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .OrderBy(p => p.Produto);
-        }
+        }     
 
         public IQueryable<Caixa> ObterLancamentosClassificadosPorClienteNome()
         {
