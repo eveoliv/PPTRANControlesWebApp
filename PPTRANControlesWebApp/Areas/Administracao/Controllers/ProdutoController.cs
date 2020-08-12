@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using System.Linq;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -29,7 +30,10 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         
         public async Task<IActionResult> Index()
         {
-            return View(await produtoDAL.ObterProdutosClassificadosPorNome().ToListAsync());
+            var produtos = await produtoDAL.ObterProdutosClassificadosPorNome().ToListAsync();
+            produtos = produtos.Where(i => i.Id != 6).ToList();
+
+            return View(produtos);
         }
         
         public async Task<IActionResult> Details(int? id)

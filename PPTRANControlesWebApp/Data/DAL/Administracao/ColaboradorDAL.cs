@@ -19,8 +19,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Colaboradores
                 .Include(c => c.Clinica)
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
+                .Where(s => s.Status == EnumHelper.Status.Ativo)                
                 .OrderBy(c => c.Nome);
         }
 

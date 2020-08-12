@@ -19,7 +19,7 @@
                 <div class="x_title">
                     <h2>Informações Gerais</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a asp-action="Index">Retornar</a>
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -71,10 +71,13 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <select asp-for="Colaborador.Funcao" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Funcao>()" required="required">
                                     <option selected="selected" value="">Função</option>
-                                </select>                                
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required"></select>
+                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
+                                    <option selected="selected" value="">Clínica</option>
+                                </select>
+
                             </div>
                         </div>
 

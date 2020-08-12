@@ -15,7 +15,7 @@
                     <div class="x_title">
                         <h2>Inativar Clinica</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
+                           @* <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -44,6 +44,7 @@
                             <div class="ln_solid"></div>
                             <form asp-action="Delete">
                                 <input type="submit" value="Inativar" class="btn btn-danger" />
+                                <a asp-action="Index" class="btn btn-primary">Retornar</a>
                             </form>
                             <div>
                                 * Esta operação altera o status da clinica para inativo.

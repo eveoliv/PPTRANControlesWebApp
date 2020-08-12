@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using PPTRANControlesWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
@@ -150,6 +150,11 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
                     if (idCli != 0 || idCol != 0)
                     {
+                        if (model.Caixa.ProdutoId == 0)
+                        {
+                            model.Caixa.ProdutoId = 6;
+                        }
+
                         model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
                     }

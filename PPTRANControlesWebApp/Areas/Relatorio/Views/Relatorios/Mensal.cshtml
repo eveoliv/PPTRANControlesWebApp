@@ -16,7 +16,9 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>Lançamentos de Caixa em @DateTime.Today.ToString("MMMM")/@DateTime.Today.ToString("yyyy")</h2>
-
+                <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+                </ul>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -49,6 +51,9 @@
                                             @Html.DisplayNameFor(model => model.ProdutoId)
                                         </th>
                                         <th>
+                                            @Html.DisplayNameFor(model => model.HistoricoId)
+                                        </th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.ClinicaId)
                                         </th>
                                     </tr>
@@ -56,38 +61,41 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Data)
-                                            </td>
-                                            <td>
-                                                @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.Tipo)
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.Tipo)
-                                                }
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Valor)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FormaPgto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.StatusPgto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Produto.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data)
+                                        </td>
+                                        <td>
+                                            @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Valor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FormaPgto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StatusPgto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Produto.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Historico.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

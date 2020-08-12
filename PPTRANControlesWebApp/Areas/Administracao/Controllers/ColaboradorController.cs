@@ -188,13 +188,25 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
             }
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+            //clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
         }
 
         private async Task CadastrarNovoUsuario(ColaboradorViewModel model)
         {
-            var primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+            string primeiroNome = null;
+
+            try
+            {
+                primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", "O campo 'nome' deve conter nome e sobrenome."); 
+            }
+
+            primeiroNome = model.Colaborador.Nome;
 
             var novoUsuario = new AppIdentityUser
             {

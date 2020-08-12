@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using PPTRANControlesWebApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,6 @@ using PPTRANControlesWebApp.Models.Operacao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -166,7 +166,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
             }
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+            //clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
 
             var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
@@ -175,7 +175,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 medicos = medicos.Where(m => m.ClinicaId == idClinica).ToList();
             }
-            medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
+            //medicos.Insert(0, new Colaborador() { Id = 0, Nome = "Médico(a)" });
             ViewBag.Medicos = medicos;
 
             var psicologos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
@@ -184,7 +184,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 psicologos = psicologos.Where(p => p.ClinicaId == idClinica).ToList();
             }
-            psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
+            //psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
         }
 
