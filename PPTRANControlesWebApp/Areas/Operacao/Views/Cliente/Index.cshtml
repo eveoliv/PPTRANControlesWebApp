@@ -22,7 +22,7 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Lista de Clientes Clinica ABCD</h2>
+                    <h2>Lista de Clientes</h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Create" class="glyphicon glyphicon-plus-sign"></a>&nbsp;&nbsp;
                         <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
@@ -104,8 +104,9 @@
                                                     <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
                                                     <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
-                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
-                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="glyphicon glyphicon-file"></a>
+                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text"></a>
+                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope"></a>
+                                                    <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
                                                     <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                                 </td>
                                             </tr>

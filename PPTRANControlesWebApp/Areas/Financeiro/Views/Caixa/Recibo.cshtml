@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Models.Caixa>
+
+@{
+    ViewData["Title"] = "Recibo";
+}
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="x_panel">
+                <div class="x_title">
+
+                    @if (@ViewBag.ClinicaNome != null)
+                    {
+                        <P class="center">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            CLINICA @ViewBag.ClinicaNome
+                        </P>
+                        <P>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            @ViewBag.ClinicaRuaNum, @ViewBag.ClinicaBairroFone
+                        </P>
+
+                        <hr />
+                        <p>
+                            Recebemos do Sr (a). @ViewBag.ClienteNome, CPF @ViewBag.ClienteCpf,
+                            a quantia de @ViewBag.ValorExt correspondente ao(s) serviço(s) relacionado(s) abaixo:
+                        </p>
+                        <table class="">
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Produto.Nome)&emsp;
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Valor)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <p>@ViewBag.Data</p>
+                        <p></p>
+                        <p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            _____________________________________________________
+                        </p>
+                        <p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                            @ViewBag.ColabNome
+                        </p>
+
+                    }
+                    else
+                    {
+                        <p>Não existem valores quitados para geração de recibo.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav navbar-right panel_toolbox">
+        <a asp-area="Operacao" asp-controller="Cliente" asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
+        <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+    </ul>
+</div>

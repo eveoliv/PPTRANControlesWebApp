@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using System.Globalization;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -82,6 +83,8 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 try
                 {
+                    Convert.ToDateTime(cliente.DtHabHum);
+                    Convert.ToDateTime(cliente.DtNascimento);
                     cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await clienteDAL.GravarCliente(cliente);
                 }
@@ -109,14 +112,22 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
-        {
+        {            
             try
             {
                 if (model.Cliente.Nome != null && model.Cliente.CPF != null)
                 {
                     await enderecoDAL.GravarEndereco(model.Endereco);
 
-                    model.Cliente.DtCadastro = DateTime.Today;
+                    //var dth = model.Cliente.DtHabHum;
+                    //var dth_ptbr = new DateTime(dth.Month, dth.Day, dth.Year);
+                    //model.Cliente.DtHabHum = dth_ptbr;
+
+                    //var dtn = model.Cliente.DtHabHum;
+                    //var dtn_ptbr = new DateTime(dtn.Month, dtn.Day, dtn.Year);
+                    //model.Cliente.DtNascimento = dtn_ptbr;
+
+                    model.Cliente.DtCadastro = DateTime.Today;                                  
                     model.Cliente.EnderecoId = model.Endereco.Id;
                     model.Cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
 
@@ -176,6 +187,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             if (chamada == "Edit")
                 CarregarViewBagsEdit(cliente);
 
+            ViewBag.Data = DataBuilder.PtBr_Data();
             return View(cliente);
         }
 

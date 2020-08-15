@@ -25,7 +25,7 @@
                             <div class="item form-group">
                                 <label asp-for="Data" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input asp-for="Data" type="text" value="@DateTime.Today.ToString()" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
+                                    <input asp-for="Data" type="text" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
                                 </div>
                             </div>
 

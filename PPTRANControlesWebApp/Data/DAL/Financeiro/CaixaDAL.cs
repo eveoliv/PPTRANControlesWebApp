@@ -46,6 +46,19 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Where(c => c.ClienteId == id).Count();            
         }
 
+        public IQueryable<Caixa> ObterLancamentoPagoPeloCliente(long id)
+        {
+            return context.Caixas
+                .Include(c => c.Cliente)
+                .Include(c => c.Clinica)
+                .Include(p => p.Produto)
+                .Include(f => f.Colaborador)
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(s => s.StatusPgto == EnumHelper.YesNo.Sim)
+                .Where(c => c.ClienteId == id)
+                .OrderBy(p => p.ProdutoId);
+        }
+
         public async Task<Caixa> ObterLancamentoPorId(long id)
         {
             return await context.Caixas

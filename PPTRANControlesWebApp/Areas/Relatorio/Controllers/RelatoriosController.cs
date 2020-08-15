@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using PPTRANControlesWebApp.Data.DAL;
 using PPTRANControlesWebApp.Data;
-using PPTRANControlesWebApp.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PPTRANControlesWebApp.Areas.Identity.Models;
+using Microsoft.AspNetCore.Identity;
+using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
-using Models;
 using PPTRANControlesWebApp.Data.DAL.Relatorio;
+using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 {

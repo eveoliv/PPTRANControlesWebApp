@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
@@ -41,7 +43,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             colaboradorDAL = new ColaboradorDAL(context);
 
         }
-        
+
         public async Task<IActionResult> Index()
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
@@ -59,17 +61,17 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             return View(lancamentos);
         }
-        
+
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoLancamentoPorId(id);
         }
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             return await ObterVisaoLancamentoPorIdNaoPago(id);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, Caixa caixa)
@@ -95,7 +97,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
                     var idCli = caixa.ClienteId;
 
-                    var lancamentoNaoPago = 
+                    var lancamentoNaoPago =
                         caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
 
                     if (lancamentoNaoPago == 0)
@@ -115,7 +117,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
             return View(caixa);
         }
-        
+
         public async Task<IActionResult> Create()
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
@@ -125,7 +127,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             CarregarViewBagsCreate(roleUser);
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CaixaViewModel model)
@@ -176,7 +178,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             return await ObterVisaoLancamentoPorId(id);
         }
-     
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -184,6 +186,42 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             var IdUser = userManager.GetUserAsync(User).Result.Id;
             var caixa = await caixaDAL.InativarLancamentoPorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Recibo(long id)
+        {
+            var pagamentos = caixaDAL.ObterLancamentoPagoPeloCliente(id).ToList();
+
+            if (pagamentos.Any())
+            {
+                ViewBag.ClinicaNome = pagamentos.Select(c => c.Clinica.Nome).FirstOrDefault();
+                ViewBag.ClienteNome = pagamentos.Select(c => c.Cliente.Nome).FirstOrDefault();
+                ViewBag.ClienteCpf = pagamentos.Select(c => c.Cliente.CPF).FirstOrDefault();
+
+                var cliId = pagamentos.Select(c => c.ClinicaId).FirstOrDefault();
+                var cliEndereco = clinicaDAL.ObterClinicaPorId((long)cliId);
+                var cliRua = cliEndereco.Result.Endereco.Rua;
+                var cliNum = cliEndereco.Result.Endereco.Numero;
+                var cliBairro = cliEndereco.Result.Endereco.Bairro;
+                var cliFone = cliEndereco.Result.Telefone1;
+                ViewBag.ClinicaRuaNum = cliRua + ", Nº " + cliNum;
+                ViewBag.ClinicaBairroFone = cliBairro + " - Fone: " + cliFone;
+
+                var valorTotal = pagamentos.Sum(v => v.Valor);
+                var valorExt = Converter.toExtenso(valorTotal);
+                ViewBag.ValorExt = valorExt;
+
+                var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
+
+                var colabNome = colaboradorDAL.ObterColaboradorPorIdFull(userId);
+                ViewBag.ColabNome = colabNome.Result.Nome;
+
+                ViewBag.Data = DataBuilder.PtBr_Data();
+
+                return View(pagamentos);
+            }
+
+            return View(pagamentos);
         }
 
         /****** Metodos Privados do Controller ******/
