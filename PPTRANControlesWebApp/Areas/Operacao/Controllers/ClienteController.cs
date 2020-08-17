@@ -167,6 +167,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return await ObterVisaoClientePorId(id, "");
         }
 
+        public async Task<IActionResult> EntrevistaMedPCD(long? id)
+        {
+            return await ObterVisaoClientePorId(id, "");
+        }
+
         /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoClientePorId(long? id, string chamada)
         {

@@ -90,8 +90,8 @@
                                                     &emsp;&emsp;&emsp;
                                                     @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
                                                     {
-                                                        <span style="color: #f00;">                                                            
-                                                                @Html.DisplayFor(modelItem => item.StatusPgto)                                                            
+                                                        <span style="color: #f00;">
+                                                            @Html.DisplayFor(modelItem => item.StatusPgto)
                                                         </span>
                                                     }
                                                     else
@@ -100,13 +100,19 @@
                                                     }
                                                 </td>
                                                 <td>
-                                                    @*<a asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>*@
                                                     <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
+                                                    <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
                                                     <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
-                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text"></a>
-                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope"></a>
-                                                    <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
+
+
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-hospital-o"></i></a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text dropdown-item">&emsp;Entrevista Psico</a>
+                                                        <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Entrevista Médico</a>
+                                                        <a asp-action="EntrevistaMedPCD" asp-route-id="@item.Id" class="fa fa-file dropdown-item">&emsp;Entrevista PCD</a>
+                                                        <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Laudo Médico PCD</a>
+                                                    </div>
                                                     <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
                                                 </td>
                                             </tr>

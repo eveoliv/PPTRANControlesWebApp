@@ -1,0 +1,227 @@
+﻿@model Models.Cliente
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="x_panel">
+                <div class="x_content">
+                    @Html.HiddenFor(model => model.Id)
+
+                    <p>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        ANEXO IX
+                        <br />
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        INFORMAÇÕES COMPLEMENTARES
+                        <br />
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        PORTADOR DE DEFICIÊNCIA FÍSICA E / OU VISUAL
+                    </p>
+                    <div class="card">
+                        <p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <b>IDENTIFICAÇÃO DO REQUERENTE</b>
+                            <br />
+                            &emsp;&emsp;Nome:&emsp;@Html.DisplayFor(model => model.Nome)
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            CPF:&emsp;@Html.DisplayFor(model => model.CPF)
+                        </p>
+                    </div>                    
+                    <div class="card">
+                        <p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <u><b>PORTADOR DE DEFICIÊNCIA FÍSICA</b></u>
+                            <br />
+                            &emsp;&emsp;
+                            O interessado acima identificado foi submetido a perícia perante esta Junta Médica, onde constatou-se que, para fins de
+                            aquisição de veiculo com <b><u>ISENÇÃO DE IPI</u></b>,
+                            <br />                          
+                            &emsp;&emsp;
+                            o mesmo <b>É PORTADOR DE DEFICIÊNCIA FISICA</b>, apresentando alteraçãocompleta ou parcial do(s) seguinte(s) <u><b>SEGMENTOS</b></u> do corpo humano:
+                            <hr />
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            ( Assinalar ao menos um dos segmentos abaixo )
+                        </p>
+                        &emsp;&emsp;
+                        [&emsp;&emsp;]&emsp;CABEÇA&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&emsp;PESCOÇO&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&emsp;TRONCO&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&emsp;MEMBROS INFERIORES&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&emsp;MEMBROS SUPERIORES
+                        <hr />
+                        
+                        <p>
+                            &emsp;&emsp;
+                            A(s) alteração(oes) acima &ensp;ACARRETAM O COMPROMETIMENTO&ensp; DA FUNÇÃO&ensp; FISICA DO&ensp; <b>SEGMENTO</b> AFETADO, &ensp;REPRESENTANDO UMA &ensp;PERDA OU
+                            <br />
+                            &emsp;&emsp;
+                            ANORMALIDADE&ensp; QUE GERA <u><b>INCAPACIDADE</b></u> (*) &ensp;PARA O DESEMPENHO DE ATIVIADE, <b>
+                                DENTRO&ensp; DO PADRÃO CONSIDERADO NORMAL PARA&ensp; O SER
+                                <br />
+                                &emsp; &ensp;
+                                HUMANO
+                            </b>, ainda que de forma parcial, APRESENTANDO-SE SOB A FORMA DE:
+                            <hr />
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            ( Assinalar ao menos um dos segmentos abaixo )
+                        </p>
+                        &emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;PARAPLEGIA &emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;MONOPARESIA&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;TRIPLEGIA  &emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;HEMIPARESIA&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;PARALISIA CEREBRAL
+                        <br />
+                        &emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;PARAPARESIA&emsp;&emsp;&emsp;&ensp;
+                        [&emsp;&emsp;]&ensp;TETRAPLEGIA&ensp;&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;TRIPARESIA &ensp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;OSTOMIA &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;NANISMO
+                        <br />
+                        &emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;MONOPLEGIA &emsp;&emsp;&emsp;&ensp;
+                        [&emsp;&emsp;]&ensp;TETRAPARESIA&emsp;&emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;HEMIPLEGIA &emsp;&emsp;&emsp;
+                        [&emsp;&emsp;]&ensp;AMPUTAÇÃO OU AUSÊNCIA DE MEMBRO
+                        
+
+                        <hr />
+                        <p>
+                            &emsp;&emsp;[&emsp;&emsp;]&emsp;
+                            Membros &ensp;Inferiores e/ou &ensp;Superiores com <b><u>DEFORMIDADE&ensp; CONGÊNITA&ensp;</u></b> ou <b><u>ADQUIRIDA</u></b>
+                            , sendo que tal deformidade <b>NÃO É DE ORIGEM ESTÉTICA</b>
+                            <br />
+                            &emsp;&emsp;
+                            e resulta em <b>DIFICULDADE</b>
+                            para o desempenho&ensp; das funções do <b>MEMBRO</b> deformado, <b>
+                                REPRESENTANDO UMA&ensp; PERDA OU ANORMALIDADE&ensp; QUE GERA
+                                <br />
+                                &ensp;&ensp;&ensp;
+                                <u>INCAPACIDADE</u> (*) PARA O DESEMPENHO DE ATIVIDADE, DENTRO DO PADRÃO CONSIDERADO NORMAL PARA O SER HUMANO
+                            </b>, ainda &ensp;que de forma
+                            <br />
+                            &ensp;&ensp;&ensp;
+                            parcial.
+                            <hr />
+                        </p>
+                        <p>
+                            &emsp;&emsp;
+                            <b>(*) INCAPACIDADE </b>- uma <b><u>REDUÇÃO EFETIVA E ACENTUADA</u></b> DA CAPACIDADE DE INTEGRAÇÃO SOCIAL, com necessidade de equipamentos,
+                            adaptações,<br />
+                            &emsp;&emsp;
+                            meios ou recursos&ensp; especiais para que a &ensp;pessoa portadora de&ensp; deficiência possa receber ou transmitir &ensp;informações necessárias ao seu
+                            bem-estar pessoal e ao
+                            <br />
+                            &emsp;&emsp;
+                            adaptações, desempenho de função ou atividade a ser exercida. (Dec.3.298/99, art.3º, inc.III).                          
+                        </p>
+                        </div>
+                        <div class="card">
+                            <p>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                <u><b>PORTADOR DE DEFICIÊNCIA VISUAL</b></u>
+                                <br />
+                                &emsp;&emsp;
+                                O interessado acima identificado foi submetido a perícia perante esta Junta Médica, onde constatou-se que, para fins de
+                                aquisição de veiculo com <b><u>ISENÇÃO DE IPI</u></b>,
+                                <br />
+                                &emsp;&emsp;
+                                o interessado <b><u>É PORTADOR DE DEFICIÊNCIA VISUAL</u></b>, posto que se enquadra na(s) seguinte(s) condição(ões):
+                                <hr />
+
+                                &emsp;&emsp;
+                                [&emsp;&emsp;]&ensp;Acuidade visual igual ou menor que 20/200 no melhor olho, após a melhor correção. &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                                [&emsp;&emsp;]&ensp;Campo visual inferior a 20° (tabela de Snellen).
+
+                                <hr />
+
+                                &emsp;&emsp;
+                                As informações acima fazem parte integrante do Laudo de Avaliação - DEFICIÊNCIA FISICA E/OU VISUAL, Anexo IX da IN RFB 988, de 2009, por nós subscrita,
+                                <br />
+                                &emsp;&emsp;
+                                sendo a expressão da verdade, sob as penas da Lei nº 8137/1990, que trata dos CRIMES CONTRA A ORDEM  TRIBUTÁRIA, combinado com as demais sanções
+                                <br />
+                                &emsp;&emsp;
+                                legais, em especial o disposto no art. 299 do Código Penal.
+                            </p>
+                        </div>
+                        <p></p>
+                        <div class="card-group">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <br />
+                                        <br />
+                                        ______________________________________<br />
+                                        DR. VALMIR CLARET FEDRIGO<br />
+                                        CRM: 29957<br />
+                                        Port.Detran: 1488/11<br />
+                                        Medicina do Tráfego<br />
+                                        Aut.Especial Port: 214/12<br />
+                                        CPF: 21218285672
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <br />
+                                        <br />
+                                        ______________________________________<br />
+                                        DRA. VERA LUCIA LIENDO VILLALVA<br />
+                                        CRM: 108112<br />
+                                        Port.Detran: 1800/16<br />
+                                        Medicina do Tráfego<br />
+                                        Aut.Especial Port: 1210/17<br />
+                                        CPF: 18706999808
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        &emsp;&emsp;&emsp;UNIDADE EMISSORA DO LAUDO<br />
+                                        ______________________________________<br />
+                                        POSTO DETRAN ARMENIA<br />
+                                        CNPJ: 15.519.361/0001-16<br /><br />
+                                        ______________________________________<br /><br />
+                                        &emsp;&emsp;
+                                        ________________________________<br />
+                                        &emsp;&emsp;&emsp;&emsp;UEL-Assinatura do Responsável
+
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <p>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    Aprovado pela IN RFB nº 1.369, de 2013.
+                </p>
+            </div>
+            <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
+            <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+        </div>
+    </div>
+</div>
+
