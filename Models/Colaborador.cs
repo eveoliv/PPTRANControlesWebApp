@@ -15,13 +15,13 @@ namespace Models
         [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime DtCadastro { get; set; }
 
-        [DisplayName("Nome")]
+        [DisplayName("Nome")]     
         public string Nome { get; set; }
 
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [DisplayName("Status")]
+        [DisplayName("Status")]    
         public EnumHelper.Status Status { get; set; }
 
         [DisplayName("RG")]

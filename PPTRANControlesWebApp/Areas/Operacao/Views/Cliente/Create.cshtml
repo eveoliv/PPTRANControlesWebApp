@@ -18,7 +18,7 @@
                 <div class="x_title">
                     <h2>Informações Gerais</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a asp-action="Index">Retornar</a>
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -66,7 +66,7 @@
                                 </select>
                             </div>
                             @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">                                
+                            <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
                                 <span asp-validation-for="Cliente.DtHabHum" class="text-danger"></span>
                             </div>
@@ -74,7 +74,7 @@
                                 <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" required="required" data-inputmask="'mask': '999.999.999-99'">
+                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" required="required" >
                                 <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
@@ -105,16 +105,24 @@
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
-                            </div>                            
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
+                                <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
+                                    <option selected="selected" value="">Clínica</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.MedicoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
+                                <select asp-for="Cliente.PsicologoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))" required="required">
+                                    <option selected="selected" value="">Psicólogo(a)</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Cliente.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>
+                                <select asp-for="Cliente.MedicoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))" required="required">
+                                    <option selected="selected" value="">Médico(a)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <select asp-for="Cliente.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))" required="required">
+                                    <option selected="selected" value="">Histórico</option>
+                                </select>
                             </div>
                         </div>
 
@@ -132,7 +140,7 @@
                                     Cep <span class="required"></span>
                                 </label>
                                 <div class="col-md-2 col-sm-2 ">
-                                    <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />
+                                    <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" required="required" />
                                 </div>
 
                                 <label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -8,6 +9,9 @@ namespace Models
         public long? ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
+        [DisplayName("Data")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime Data { get; set; }
 
         [DisplayName("Exame")]

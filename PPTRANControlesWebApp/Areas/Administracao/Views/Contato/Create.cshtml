@@ -47,80 +47,79 @@
                             </div>
                             <div class="col-md-6 col-sm-6  form-group">
                                 <input asp-for="Contato.Descricao" type="text" placeholder="Descrição" class="form-control" required="required">
-                            </div>                           
+                            </div>
                         </div>
 
-                        <div class="x_title">
+                        <div class=" x_title">
                             <h2>Endereço</h2>
                             <div class="clearfix"></div>
                         </div>
                         <input type="hidden" asp-for="Endereco.Id" />
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
-                                Cep <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />
-                            </div>
-                        </div>
+                        <div class="card">
+                            <p></p>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">
+                                    Cep <span class="required"></span>
+                                </label>
+                                <div class="col-md-2 col-sm-2 ">
+                                    <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" required="required" />
+                                </div>
 
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
-                                Rua <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Rua" type="text" class="form-control" id="rua" />
+                                <label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">
+                                    Rua <span class="required"></span>
+                                </label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input asp-for="Endereco.Rua" type="text" class="form-control" id="rua" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="item form-group">
-                            <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">
-                                Bairro
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control" />
-                            </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Cidade <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Cidade" type="text" id="cidade" class="form-control" />
-                            </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Estado <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Estado" type="text" id="uf" class="form-control" />
-                            </div>
-                        </div>
+                            <div class="item form-group">
+                                <label for="middle-name" class="col-form-label col-md-2 col-sm-2 label-align">
+                                    Bairro
+                                </label>
+                                <div class="col-md-2 col-sm-2 ">
+                                    <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control" />
+                                </div>
 
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Número <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Numero" type="number" id="uf" class="form-control" />
+                                <label class="col-form-label col-md-2 col-sm-2 label-align">
+                                    Cidade <span class="required"></span>
+                                </label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input asp-for="Endereco.Cidade" type="text" id="cidade" class="form-control" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                Complemento <span class="required"></span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                <input asp-for="Endereco.Complto" type="text" id="uf" class="form-control" />
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-2 col-sm-2 label-align">
+                                    Estado <span class="required"></span>
+                                </label>
+                                <div class="col-md-2 col-sm-2 ">
+                                    <input asp-for="Endereco.Estado" type="text" id="uf" class="form-control" />
+                                </div>
+
+                                <label class="col-form-label col-md-2 col-sm-2 label-align">
+                                    Número <span class="required"></span>
+                                </label>
+                                <div class="col-md-4 col-sm-4 ">
+                                    <input asp-for="Endereco.Numero" type="number" id="uf" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-2 col-sm-2 label-align">
+                                    Complemento <span class="required"></span>
+                                </label>
+                                <div class="col-md-2 col-sm-2 ">
+                                    <input asp-for="Endereco.Complto" type="text" id="uf" class="form-control" />
+                                </div>
                             </div>
                         </div>
 
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Gravar</button>
+                                <button class="btn btn-success" type="submit">Salvar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
                             </div>
                         </div>

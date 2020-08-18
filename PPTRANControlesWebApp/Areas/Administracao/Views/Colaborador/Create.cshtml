@@ -19,7 +19,7 @@
                 <div class="x_title">
                     <h2>Informações Gerais</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a asp-action="Index">Retornar</a>
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -50,14 +50,14 @@
                                 <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
                             <div class="col-md-3 col-sm-3  form-group has-feedback">
-                                <input asp-for="Colaborador.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Fixo" data-inputmask="'mask' : '(99) 99999-9999'">
+                                <input asp-for="Colaborador.Telefone2" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Tel. Fixo" data-inputmask="'mask' : '(99) 9999-9999'">
                                 <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Colaborador.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Colaborador.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'">
+                                <input asp-for="Colaborador.CPF" type="text" placeholder="CPF" class="form-control" required="required" data-inputmask="'mask': '999.999.999-99'">
                             </div>
                         </div>
 
@@ -74,7 +74,10 @@
                                 </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
+                                    <option selected="selected" value="">Clínica</option>
+                                </select>
+
                             </div>
                         </div>
 
@@ -92,7 +95,7 @@
                                     Cep <span class="required"></span>
                                 </label>
                                 <div class="col-md-2 col-sm-2 ">
-                                    <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" data-inputmask="'mask': '99999-999'" />
+                                    <input asp-for="Endereco.Cep" type="text" class="form-control" id="cep" required="required" data-inputmask="'mask': '99999-999'" />
                                 </div>
 
                                 <label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">
@@ -111,7 +114,7 @@
                                 <div class="col-md-2 col-sm-2 ">
                                     <input asp-for="Endereco.Bairro" type="text" id="bairro" class="form-control" />
                                 </div>
-                          
+
                                 <label class="col-form-label col-md-2 col-sm-2 label-align">
                                     Cidade <span class="required"></span>
                                 </label>
@@ -127,7 +130,7 @@
                                 <div class="col-md-2 col-sm-2 ">
                                     <input asp-for="Endereco.Estado" type="text" id="uf" class="form-control" />
                                 </div>
-                           
+
                                 <label class="col-form-label col-md-2 col-sm-2 label-align">
                                     Número <span class="required"></span>
                                 </label>

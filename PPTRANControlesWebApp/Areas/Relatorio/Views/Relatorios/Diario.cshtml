@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Models.Caixa>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Lançamentos de Caixa em @DateTime.Today.ToString("dd/MM/yyyy")</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+
+                            <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Data)
+                                        </th>
+                                        <th>
+                                            Debito
+                                        </th>
+                                        <th>
+                                            Credito
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Valor)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.FormaPgto)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.StatusPgto)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ProdutoId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.HistoricoId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ClinicaId)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Data)
+                                        </td>
+                                        <td>
+                                            @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Tipo)
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Valor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FormaPgto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StatusPgto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Produto.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Historico.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <p></p>
+                        <hr />
+                        <p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
+                        <p><strong>&ensp; Total Credito...:&emsp;<span style="color: #0000ff;">R$ @ViewBag.Credito</span></strong></p>
+                        <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section ScriptPage{
+    <script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+POSTO|POSTO DETRAN ARMENIA
+CNPJ|15.519.361/0001-16
+DR(A)|VALMIR CLARET FEDRIGO
+CRM|29957
+Port.Detran|1488/11
+Especialidade|Medicina do Trafego
+Aut.Especial Port|214/12
+CPF|212.182.856-72
+DR(A)|VERA LUCIA LIENDO VILLALVA
+CRM|108112
+Port.Detran|1800/16
+Especialidade|Medicina do Trafego
+Aut.Especial Port|1210/17
+CPF|187.069.998-08

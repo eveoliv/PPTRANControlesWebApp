@@ -65,7 +65,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
                     var prodLista = new List<long?>();
                     prodLista.Add(carrinho.Produto1Id);
-                    prodLista.Add(carrinho.Produto2Id);
+
+                    if (carrinho.Produto2Id != null)                    
+                        prodLista.Add(carrinho.Produto2Id);
+
+                    if(carrinho.Produto3Id != null)
                     prodLista.Add(carrinho.Produto3Id);
 
                     foreach (var p in prodLista)
@@ -142,7 +146,8 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
-            produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
+            produtos = produtos.Where(i => i.Id != 6).ToList();        
+            //produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
             ViewBag.Produtos = produtos;
         }
     }

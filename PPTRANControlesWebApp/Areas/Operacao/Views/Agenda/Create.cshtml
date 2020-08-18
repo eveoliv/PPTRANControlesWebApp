@@ -61,19 +61,25 @@
                                 <div class="col-md-4 col-sm-4">
                                     @if (@ViewBag.Psicologos != null)
                                     {
-                                        <select asp-for="Agenda.Psicologo" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))"></select>
+                                        <select asp-for="Agenda.Psicologo" class="form-control" asp-items="@(new SelectList(@ViewBag.Psicologos, "Id", "Nome"))" required="required">
+                                            <option selected="selected" value="">Psicólogo(a)</option>
+                                        </select>
                                     }
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     @if (@ViewBag.Medicos != null)
                                     {
-                                        <select asp-for="Agenda.Medico" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))"></select>
+                                        <select asp-for="Agenda.Medico" class="form-control" asp-items="@(new SelectList(@ViewBag.Medicos, "Id", "Nome"))" required="required">
+                                            <option selected="selected" value="">Médico(a)</option>
+                                        </select>
                                     }
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     @if (@ViewBag.Clinicas != null)
                                     {
-                                        <select asp-for="Agenda.Clinica" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))"></select>
+                                        <select asp-for="Agenda.Clinica" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
+                                            <option selected="selected" value="">Clínica</option>
+                                        </select>
                                     }
                                 </div>
                             </div>

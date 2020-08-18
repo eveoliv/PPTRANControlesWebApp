@@ -14,7 +14,7 @@
                     <div class="x_title">
                         <h2>Cadatrar Novo Exame</h2>
                         <ul class="nav navbar-right panel_toolbox">
-                            <a asp-action="Index">Retornar</a>
+                            @*<a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>*@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -42,8 +42,8 @@
                             <div class="ln_solid"></div>
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 offset-md-2">
-                                    <button type="submit" class="btn btn-success">Incluir</button>
-                                    <button class="btn btn-primary" type="button">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Salvar</button>
+                                    <a asp-action="Index" class="btn btn-primary">Cancelar</a>
                                 </div>
                             </div>
                         </form>

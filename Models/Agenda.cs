@@ -10,6 +10,7 @@ namespace Models
 
         [DisplayName("Data")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Data em formato inválido")]
         public DateTime Data { get; set; }
 
         [DisplayName("Hora")]

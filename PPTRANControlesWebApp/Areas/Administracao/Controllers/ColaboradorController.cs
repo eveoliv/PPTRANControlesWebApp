@@ -4,15 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using PPTRANControlesWebApp.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {
@@ -188,13 +188,25 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
             }
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
+            //clinicas.Insert(0, new Clinica() { Id = 0, Alias = "Clinica" });
             ViewBag.Clinicas = clinicas;
         }
 
         private async Task CadastrarNovoUsuario(ColaboradorViewModel model)
         {
-            var primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+            string primeiroNome = null;
+
+            try
+            {
+                primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", "O campo 'nome' deve conter nome e sobrenome."); 
+            }
+
+            primeiroNome = model.Colaborador.Nome;
 
             var novoUsuario = new AppIdentityUser
             {
@@ -211,9 +223,11 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 
             if (createPowerUser.Succeeded)
             {
+                //Cadastrar novo colab como Gestor, caso seje selecionaro Adm
+                //esta alteração deverea ser realizada na gestão de acesso pelo Adm
                 if (model.Colaborador.Funcao == EnumHelper.Funcao.Administrador)
                 {
-                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Administrador);
+                    await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Gestor);
                 }
 
                 if (model.Colaborador.Funcao == EnumHelper.Funcao.Gestor)

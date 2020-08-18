@@ -18,7 +18,9 @@ namespace PPTRANControlesWebApp.Data.DAL
        
         public IQueryable<Cliente> ObterClientesClassificadosPorNome()
         {
-            return context.Clientes.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
+            return context.Clientes
+                .Include(c => c.Clinica)
+                .Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
         }
         
         public IQueryable<Cliente> ObterClientePorId_Find(long id)

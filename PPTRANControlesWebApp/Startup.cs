@@ -31,10 +31,10 @@ namespace PPTRANControlesWebApp
             /* DEV */
             //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn")));
 
-            services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
             /* PROD */
             services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn")));
 
+            services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -52,7 +52,14 @@ namespace PPTRANControlesWebApp
                 .AddRoles<IdentityRole>()                
                 .AddErrorDescriber<IdentityErrorDescriberPtBr>()
                 .AddEntityFrameworkStores<AppIdentityContext>();
-
+          
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }
@@ -72,7 +79,7 @@ namespace PPTRANControlesWebApp
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
-            //app.UseSession();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

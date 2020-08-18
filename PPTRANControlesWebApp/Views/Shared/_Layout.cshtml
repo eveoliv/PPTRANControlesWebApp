@@ -81,6 +81,7 @@
                                     <a><i class="fa fa-dollar"></i> Caixa <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Financeiro" asp-controller="Caixa" asp-action="Index">Lançamentos</a></li>
+                                        <li><a asp-area="Financeiro" asp-controller="Caixa" asp-action="Create">Cadastrar</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -91,8 +92,12 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu"></ul>
+                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios Caixa <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Diario">Diário</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Consolidado">Consolidado</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

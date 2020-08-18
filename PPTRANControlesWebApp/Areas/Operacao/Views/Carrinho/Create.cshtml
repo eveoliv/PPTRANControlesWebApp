@@ -24,15 +24,17 @@
 
                             <div class="item form-group">
                                 <label asp-for="Data" class="col-form-label col-md-3 col-sm-3 label-align"></label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <input asp-for="Data" type="text" value="@DateTime.Today.ToString()" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input asp-for="Data" type="text" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 1</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto1Id" class="form-control" required="required" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))"></select>
+                                    <select asp-for="Produto1Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" required="required" >
+                                        <option selected="selected" value="">Selecionar</option>
+                                    </select>
 
                                 </div>
                             </div>
@@ -40,7 +42,9 @@
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 2</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto2Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))"></select>
+                                    <select asp-for="Produto2Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))">
+                                        <option selected="selected" value="">Selecionar</option>
+                                    </select>
 
                                 </div>
                             </div>
@@ -48,7 +52,9 @@
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 3</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto3Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))"></select>
+                                    <select asp-for="Produto3Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))">
+                                        <option selected="selected" value="">Selecionar</option>
+                                    </select>
 
                                 </div>
                             </div>

@@ -15,8 +15,8 @@
                 <div class="x_title">
                     <h2>@Html.DisplayNameFor(model => model.NumRenach):. @Html.DisplayFor(model => model.NumRenach)</h2>
                     <ul class="nav navbar-right panel_toolbox">
-                        <a asp-action="Index">Retornar</a>&nbsp;|&nbsp;
-                        <a asp-action="" onClick="window.print()">Imprimir</a>
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
+                        <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -212,7 +212,7 @@
 
                         <div class="ln_solid"></div>
                         <br />
-                        <p>São Paulo,@DateTime.Now.Day de @DateTime.Now.ToString("MMMM") de @DateTime.Now.Year .</p>
+                        <p>@ViewBag.Data</p>
                         <div class="text-center">
                             <p>_________________________________</p>
                             <p>Assinatura</p>

@@ -19,12 +19,13 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Caixas
                 .Include(c => c.Cliente)
+                .Include(c => c.Clinica)
                 .Include(p => p.Produto)
                 .Include(i => i.Historico)
                 .Include(c => c.Colaborador)
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .OrderBy(p => p.Produto);
-        }
+        }     
 
         public IQueryable<Caixa> ObterLancamentosClassificadosPorClienteNome()
         {
@@ -43,6 +44,19 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .Where(s => s.StatusPgto == EnumHelper.YesNo.Não)
                 .Where(c => c.ClienteId == id).Count();            
+        }
+
+        public IQueryable<Caixa> ObterLancamentoPagoPeloCliente(long id)
+        {
+            return context.Caixas
+                .Include(c => c.Cliente)
+                .Include(c => c.Clinica)
+                .Include(p => p.Produto)
+                .Include(f => f.Colaborador)
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(s => s.StatusPgto == EnumHelper.YesNo.Sim)
+                .Where(c => c.ClienteId == id)
+                .OrderBy(p => p.ProdutoId);
         }
 
         public async Task<Caixa> ObterLancamentoPorId(long id)

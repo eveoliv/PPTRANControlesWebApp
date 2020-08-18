@@ -19,8 +19,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Colaboradores
                 .Include(c => c.Clinica)
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
-                .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
+                .Where(s => s.Status == EnumHelper.Status.Ativo)                
                 .OrderBy(c => c.Nome);
         }
 
@@ -47,6 +46,15 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Include(e => e.Endereco)
                 .Where(c => c.Status == EnumHelper.Status.Ativo)
                 .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
+                .SingleOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Colaborador> ObterColaboradorPorIdFull(long id)
+        {
+            return await context.Colaboradores
+                .Include(c => c.Clinica)
+                .Include(e => e.Endereco)
+                .Where(c => c.Status == EnumHelper.Status.Ativo)                
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
