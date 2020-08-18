@@ -1,4 +1,5 @@
 ﻿@model Models.Cliente
+@using PPTRANControlesWebApp.Models.Operacao;
 
 @{
     ViewData["Title"] = "Details";
@@ -39,7 +40,7 @@
                             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                             CPF:&emsp;@Html.DisplayFor(model => model.CPF)
                         </p>
-                    </div>                    
+                    </div>
                     <div class="card">
                         <p>
                             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -49,7 +50,7 @@
                             &emsp;&emsp;
                             O interessado acima identificado foi submetido a perícia perante esta Junta Médica, onde constatou-se que, para fins de
                             aquisição de veiculo com <b><u>ISENÇÃO DE IPI</u></b>,
-                            <br />                          
+                            <br />
                             &emsp;&emsp;
                             o mesmo <b>É PORTADOR DE DEFICIÊNCIA FISICA</b>, apresentando alteraçãocompleta ou parcial do(s) seguinte(s) <u><b>SEGMENTOS</b></u> do corpo humano:
                             <hr />
@@ -64,7 +65,7 @@
                         [&emsp;&emsp;]&emsp;MEMBROS INFERIORES&emsp;&emsp;&emsp;&emsp;
                         [&emsp;&emsp;]&emsp;MEMBROS SUPERIORES
                         <hr />
-                        
+
                         <p>
                             &emsp;&emsp;
                             A(s) alteração(oes) acima &ensp;ACARRETAM O COMPROMETIMENTO&ensp; DA FUNÇÃO&ensp; FISICA DO&ensp; <b>SEGMENTO</b> AFETADO, &ensp;REPRESENTANDO UMA &ensp;PERDA OU
@@ -100,7 +101,7 @@
                         [&emsp;&emsp;]&ensp;TETRAPARESIA&emsp;&emsp;&emsp;&emsp;
                         [&emsp;&emsp;]&ensp;HEMIPLEGIA &emsp;&emsp;&emsp;
                         [&emsp;&emsp;]&ensp;AMPUTAÇÃO OU AUSÊNCIA DE MEMBRO
-                        
+
 
                         <hr />
                         <p>
@@ -130,89 +131,89 @@
                             bem-estar pessoal e ao
                             <br />
                             &emsp;&emsp;
-                            adaptações, desempenho de função ou atividade a ser exercida. (Dec.3.298/99, art.3º, inc.III).                          
+                            adaptações, desempenho de função ou atividade a ser exercida. (Dec.3.298/99, art.3º, inc.III).
                         </p>
+                    </div>
+                    <div class="card">
+                        <p>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <u><b>PORTADOR DE DEFICIÊNCIA VISUAL</b></u>
+                            <br />
+                            &emsp;&emsp;
+                            O interessado acima identificado foi submetido a perícia perante esta Junta Médica, onde constatou-se que, para fins de
+                            aquisição de veiculo com <b><u>ISENÇÃO DE IPI</u></b>,
+                            <br />
+                            &emsp;&emsp;
+                            o interessado <b><u>É PORTADOR DE DEFICIÊNCIA VISUAL</u></b>, posto que se enquadra na(s) seguinte(s) condição(ões):
+                            <hr />
+
+                            &emsp;&emsp;
+                            [&emsp;&emsp;]&ensp;Acuidade visual igual ou menor que 20/200 no melhor olho, após a melhor correção. &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                            [&emsp;&emsp;]&ensp;Campo visual inferior a 20° (tabela de Snellen).
+
+                            <hr />
+
+                            &emsp;&emsp;
+                            As informações acima fazem parte integrante do Laudo de Avaliação - DEFICIÊNCIA FISICA E/OU VISUAL, Anexo IX da IN RFB 988, de 2009, por nós subscrita,
+                            <br />
+                            &emsp;&emsp;
+                            sendo a expressão da verdade, sob as penas da Lei nº 8137/1990, que trata dos CRIMES CONTRA A ORDEM  TRIBUTÁRIA, combinado com as demais sanções
+                            <br />
+                            &emsp;&emsp;
+                            legais, em especial o disposto no art. 299 do Código Penal.
+                        </p>
+                    </div>
+                    <p></p>
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <br />
+                                    <br />
+                                    ______________________________________<br />
+                                    DR(A). @ViewBag.Med1Nome <br />
+                                    CRM: @ViewBag.Med1CRM<br />
+                                    Port.Detran: @ViewBag.Med1Port<br />
+                                    @ViewBag.Med1Espec<br />
+                                    Aut.Especial Port: @ViewBag.Med1Aut<br />
+                                    CPF: @ViewBag.Med1CPF
+                                </p>
+                            </div>
                         </div>
                         <div class="card">
-                            <p>
-                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                <u><b>PORTADOR DE DEFICIÊNCIA VISUAL</b></u>
-                                <br />
-                                &emsp;&emsp;
-                                O interessado acima identificado foi submetido a perícia perante esta Junta Médica, onde constatou-se que, para fins de
-                                aquisição de veiculo com <b><u>ISENÇÃO DE IPI</u></b>,
-                                <br />
-                                &emsp;&emsp;
-                                o interessado <b><u>É PORTADOR DE DEFICIÊNCIA VISUAL</u></b>, posto que se enquadra na(s) seguinte(s) condição(ões):
-                                <hr />
-
-                                &emsp;&emsp;
-                                [&emsp;&emsp;]&ensp;Acuidade visual igual ou menor que 20/200 no melhor olho, após a melhor correção. &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
-                                [&emsp;&emsp;]&ensp;Campo visual inferior a 20° (tabela de Snellen).
-
-                                <hr />
-
-                                &emsp;&emsp;
-                                As informações acima fazem parte integrante do Laudo de Avaliação - DEFICIÊNCIA FISICA E/OU VISUAL, Anexo IX da IN RFB 988, de 2009, por nós subscrita,
-                                <br />
-                                &emsp;&emsp;
-                                sendo a expressão da verdade, sob as penas da Lei nº 8137/1990, que trata dos CRIMES CONTRA A ORDEM  TRIBUTÁRIA, combinado com as demais sanções
-                                <br />
-                                &emsp;&emsp;
-                                legais, em especial o disposto no art. 299 do Código Penal.
-                            </p>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <br />
+                                    <br />
+                                    ______________________________________<br />
+                                    DR(A). @ViewBag.Med2Nome <br />
+                                    CRM: @ViewBag.Med2CRM<br />
+                                    Port.Detran: @ViewBag.Med2Port<br />
+                                    @ViewBag.Med2Espec<br />
+                                    Aut.Especial Port: @ViewBag.Med2Aut<br />
+                                    CPF: @ViewBag.Med2CPF
+                                </p>
+                            </div>
                         </div>
-                        <p></p>
-                        <div class="card-group">
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <br />
-                                        <br />
-                                        ______________________________________<br />
-                                        DR. VALMIR CLARET FEDRIGO<br />
-                                        CRM: 29957<br />
-                                        Port.Detran: 1488/11<br />
-                                        Medicina do Tráfego<br />
-                                        Aut.Especial Port: 214/12<br />
-                                        CPF: 21218285672
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <br />
-                                        <br />
-                                        ______________________________________<br />
-                                        DRA. VERA LUCIA LIENDO VILLALVA<br />
-                                        CRM: 108112<br />
-                                        Port.Detran: 1800/16<br />
-                                        Medicina do Tráfego<br />
-                                        Aut.Especial Port: 1210/17<br />
-                                        CPF: 18706999808
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        &emsp;&emsp;&emsp;UNIDADE EMISSORA DO LAUDO<br />
-                                        ______________________________________<br />
-                                        POSTO DETRAN ARMENIA<br />
-                                        CNPJ: 15.519.361/0001-16<br /><br />
-                                        ______________________________________<br /><br />
-                                        &emsp;&emsp;
-                                        ________________________________<br />
-                                        &emsp;&emsp;&emsp;&emsp;UEL-Assinatura do Responsável
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    &emsp;&emsp;&emsp;UNIDADE EMISSORA DO LAUDO<br />
+                                    ______________________________________<br />
+                                    @ViewBag.UnidEmissora<br />
+                                    CNPJ: @ViewBag.UnidCnpjf<br /><br />
+                                    ______________________________________<br /><br />
+                                    &emsp;&emsp;
+                                    ________________________________<br />
+                                    &emsp;&emsp;&emsp;&emsp;UEL-Assinatura do Responsável
 
-                                    </p>
+                                </p>
 
-                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <p>
                     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -220,8 +221,69 @@
                 </p>
             </div>
             <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
+            @*<a asp-action="" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"></a>&nbsp;&nbsp;*@
             <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
         </div>
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Rodapé do Formulário</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            @using (Html.BeginForm("EditEntrevistaPCD", "Cliente", FormMethod.Post))
+            {                
+                <input name="Id" type="hidden" value="@Html.DisplayFor(model => model.Id)" />
+                <div class="modal-body">
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    DR(A).            <input name="Medico1" type="text" value="@ViewBag.Med1Nome" style="border:1px solid #DCDCDC"><br />
+                                    CRM:              <input name="CRM1" type="text" value="@ViewBag.Med1CRM" style="border:1px solid #DCDCDC"><br />
+                                    Port.Detran:      <input name="Port1" type="text" value="@ViewBag.Med1Port" style="border:1px solid #DCDCDC"><br />
+                                    Especialidade:    <input name="Espec1" type="text" value="@ViewBag.Med1Espec" style="border:1px solid #DCDCDC"><br />
+                                    Aut.Especial Port:<input name="Aut1" type="text" value="@ViewBag.Med1Aut" style="border:1px solid #DCDCDC"><br />
+                                    CPF:              <input name="CPF1" type="text" value="@ViewBag.Med1CPF" style="border:1px solid #DCDCDC"><br />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    DR(A).            <input name="Medico2" type="text" value="@ViewBag.Med2Nome" style="border:1px solid #DCDCDC"><br />
+                                    CRM:              <input name="CRM2" type="text" value="@ViewBag.Med2CRM" style="border:1px solid #DCDCDC"><br />
+                                    Port.Detran:      <input name="Port2" type="text" value="@ViewBag.Med2Port" style="border:1px solid #DCDCDC"><br />
+                                    Especialidade:    <input name="Espec2" type="text" value="@ViewBag.Med2Espec" style="border:1px solid #DCDCDC"><br />
+                                    Aut.Especial Port:<input name="Aut2" type="text" value="@ViewBag.Med2Aut" style="border:1px solid #DCDCDC"><br />
+                                    CPF:              <input name="CPF2" type="text" value="@ViewBag.Med2CPF" style="border:1px solid #DCDCDC"><br />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    POSTO: <input name="Posto" type="text" value="@ViewBag.UnidEmissora" style="border:1px solid #DCDCDC"><br />
+                                    CNPJ: <input name="Cnpj" type="text" value="@ViewBag.UnidCnpjf" style="border:1px solid #DCDCDC">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

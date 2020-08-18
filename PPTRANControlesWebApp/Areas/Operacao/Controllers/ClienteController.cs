@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using System.Globalization;
+using PPTRANControlesWebApp.Models.Operacao;
+using System.IO;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {
@@ -169,7 +170,38 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         public async Task<IActionResult> EntrevistaMedPCD(long? id)
         {
+            CarregarViewBagsFormularioPCD();
+
             return await ObterVisaoClientePorId(id, "");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditEntrevistaPCD(FormPdcViewModel form)
+        {            
+            string infoPcdForm = @"..\PPTRANControlesWebApp\wwwroot\Forms\EntrevistaPcdInfo.txt";
+            string[] line = System.IO.File.ReadAllLines(infoPcdForm);
+
+            line[0] = $"POSTO|{form.Posto}";
+            line[1] = $"CNPJ|{form.Cnpj}";
+
+            line[2] = $"DR(A)|{form.Medico1}";
+            line[3] = $"CRM|{form.CRM1}";
+            line[4] = $"Port.Detran|{form.Port1}";
+            line[5] = $"Especialidade|{form.Espec1}";
+            line[6] = $"Aut.Especial Port|{form.Aut1}";
+            line[7] = $"CPF|{form.CPF1}";
+
+            line[8] = $"DR(A)|{form.Medico2}";
+            line[9] = $"CRM|{form.CRM2}";
+            line[10] = $"Port.Detran|{form.Port2}";
+            line[11] = $"Especialidade|{form.Espec2}";
+            line[12] = $"Aut.Especial Port|{form.Aut2}";
+            line[13] = $"CPF|{form.CPF2}";
+
+            System.IO.File.WriteAllLines(infoPcdForm, line);
+
+            return RedirectToRoute(new { controller = "Cliente", action = "EntrevistaMedPCD", id = form.Id });
         }
 
         /****** Metodos Privados do Controller ******/
@@ -255,6 +287,48 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
             //historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
             ViewBag.Historicos = historicos;
+        }
+
+        private void CarregarViewBagsFormularioPCD()
+        {
+            /*
+            string infoPcdForm = @"..\PPTRANControlesWebApp\wwwroot\Forms\EntrevistaPcdInfo.txt";
+            string[] info = System.IO.File.ReadAllLines(infoPcdForm);
+            
+            ViewBag.UnidEmissora = info[0].Split('|')[1].ToString();
+
+            ViewBag.UnidCnpjf = info[1].Split('|')[1].ToString(); 
+
+            ViewBag.Med1Nome =  info[2].Split('|')[1].ToString();
+            ViewBag.Med1CRM =   info[3].Split('|')[1].ToString(); 
+            ViewBag.Med1Port =  info[4].Split('|')[1].ToString();
+            ViewBag.Med1Espec = info[5].Split('|')[1].ToString();
+            ViewBag.Med1Aut =   info[6].Split('|')[1].ToString();
+            ViewBag.Med1CPF =   info[7].Split('|')[1].ToString();
+
+            ViewBag.Med2Nome =  info[8].Split('|')[1].ToString();
+            ViewBag.Med2CRM =   info[9].Split('|')[1].ToString();
+            ViewBag.Med2Port =  info[10].Split('|')[1].ToString();
+            ViewBag.Med2Espec = info[11].Split('|')[1].ToString();
+            ViewBag.Med2Aut =   info[12].Split('|')[1].ToString();
+            ViewBag.Med2CPF =   info[13].Split('|')[1].ToString();
+            */
+            ViewBag.UnidEmissora = "POSTO DETRAN ARMENIA";
+            ViewBag.UnidCnpjf = "15.519.361/0001-16";
+
+            ViewBag.Med1Nome = "VALMIR CLARET FEDRIGO";
+            ViewBag.Med1CRM = "29957";
+            ViewBag.Med1Port = "1488/11";
+            ViewBag.Med1Espec = "Medicina do Tráfego";
+            ViewBag.Med1Aut = "214/12";
+            ViewBag.Med1CPF = "212.182.856-72";
+
+            ViewBag.Med2Nome = "VERA LUCIA LIENDO VILLALVA";
+            ViewBag.Med2CRM = "108112";
+            ViewBag.Med2Port = "1800/16";
+            ViewBag.Med2Espec = "Medicina do Tráfego";
+            ViewBag.Med2Aut = "1210/17";
+            ViewBag.Med2CPF = "187.069.998-08";
         }
     }
 }

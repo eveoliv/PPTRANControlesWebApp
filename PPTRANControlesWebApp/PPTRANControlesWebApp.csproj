@@ -8,6 +8,7 @@
   <ItemGroup>
     <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.js" />
     <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\Forms\EntrevistaPcdInfo.txt" />
   </ItemGroup>
 
 
