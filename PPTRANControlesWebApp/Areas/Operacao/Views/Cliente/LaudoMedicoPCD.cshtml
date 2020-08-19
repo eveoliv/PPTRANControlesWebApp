@@ -1,0 +1,323 @@
+﻿@model Models.Cliente
+
+@{
+    ViewData["Title"] = "LaudoMedicoPCD";
+}
+
+
+<div class="page-title">
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="x_panel">
+                <div class="x_content">
+                    <center>
+                        <p></p>
+                        <p>SECRETARIA  DE  PLANEJAMENTO  E  GESTAO <br />DEPARTAMENTO  ESTADUAL  DE  TRANSITO-SP<br />CNPJ. 15.519.316/0001-16</p>
+                    </center>
+                    <center>
+                        <h2>LAUDO  DE  AVALIACAO  DEFICIENCIA  FISICA</h2>
+                    </center>
+                    <br />
+                    <p>
+                        &emsp;
+                        Data : @DateTime.Now.ToString("dd/MM/yyyy")
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        Laudo Medico Nº :&emsp;@Html.DisplayFor(model => model.NumLaudo)&emsp;/&emsp;@DateTime.Now.Year
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        Via Nº : ___________________
+                    </p>
+                    <br />
+                    <center>
+                        <p><b>IDENTIFICACAO  DO  REQUERENTE  E  DADOS  COMPLEMENTARES</b></p>
+                    </center>
+
+                    <div>
+                        <dl class="row">
+                            @*L1*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                @Html.DisplayNameFor(model => model.Nome):
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Nome)
+                            </dd>
+                            @*L2*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                @Html.DisplayNameFor(model => model.DtNascimento):
+                            </dt>
+                            <dd class="col-sm-2">
+                                @Html.DisplayFor(model => model.DtNascimento)
+                            </dd>
+                            <dt class="col-sm-1">
+                                @Html.DisplayNameFor(model => model.CPF):
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.CPF)
+                            </dd>
+                            @*L3*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                Identidade Nº:
+                            </dt>
+                            <dd class="col-sm-2">
+                                @Html.DisplayFor(model => model.RG)
+                            </dd>
+                            <dt class="col-sm-2">
+                                Orgao emissor:
+                            </dt>
+                            <dd class="col-sm-1">
+                                SSP
+                            </dd>
+                            <dt class="col-sm-1">
+                                UF:
+                            </dt>
+                            <dd class="col-sm-4">
+                                SP
+                            </dd>
+                            @*L4*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                @Html.DisplayNameFor(model => model.Pai):
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Pai)
+                            </dd>
+                            <dt class="col-sm-2">
+                                &emsp;
+                                @Html.DisplayNameFor(model => model.Mae):
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Mae)
+                            </dd>
+                            @*L5*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                Endereco:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Endereco.Rua), &emsp;&emsp;@Html.DisplayFor(model => model.Endereco.Numero)
+                            </dd>
+                            @*L6*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                Bairro:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Endereco.Bairro) &emsp;&emsp;<b>Compl:</b> &emsp;@Html.DisplayFor(model => model.Endereco.Complto)
+                            </dd>
+                            @*L7*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                Cidade:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Endereco.Cidade) &emsp;-&emsp;@Html.DisplayFor(model => model.Endereco.Estado)&emsp;&emsp;
+                                <b> Cep:</b> &emsp;@Html.DisplayFor(model => model.Endereco.Cep)
+                            </dd>
+                            @*L8*@
+                            <dt class="col-sm-2">
+                                &emsp;
+                                @Html.DisplayNameFor(model => model.Telefone1):
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Telefone1)
+                            </dd>
+                        </dl>
+                    </div>
+                    <p></p>
+                    <center>
+                        <p>
+                            Atestamos para a finalidade de concessao do beneficio previsto no inciso IV do art.1o. da lei n.8.989, de 24 de fevereiro de 1995,
+                            que o requerente acima qualificado possui a deficiencia abaixo assinalada:
+                        </p>
+                    </center>
+
+                    <div class="card-group">
+                        <div class="card">
+                            <center>
+                                <b>Tipo de Deficiencia</b>
+                            </center>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" style="border: 5px solid transparent;"></textarea>
+                        </div>
+                        <div class="card">
+                            <center>
+                                <b>Cod. Internacional Doencas Cid-10</b>
+                            </center>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="border: 5px solid transparent;"></textarea>
+                            <center>
+                                <small>( Preencher com tantos codigos quantos sejam necessarios )</small>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card">
+                            <center>
+                                <b>Deficiencia Fisica</b>
+                            </center>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <small>
+                                        Obs: E considerada pessoa portadora de deficiencia fisica
+                                        aquela que apresenta alteração completa ou paracial de um ou
+                                        mais segmentos da função fisica, apresentando-se sob a forma
+                                        de paraplegia, paraparesia, monoplegia, monoparesia, tetraplegica,
+                                        tetraparesia, triplegia, triparesia, hemiplegia, hemiparesia,
+                                        amputação ou ausencia de membro, paralisia cerebral, membros com
+                                        deformidade congenita ou adquirida, exceto as deformidades esteticas
+                                        e as que não produzem dificuldades para o desempenho de função.
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <center>
+                                <b>Descricao Detalhada da Deficiencia</b>
+                            </center>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" style="border: 5px solid transparent;"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <center>
+                                <b>Descricao do Veiculo: APTO prara Dirigir somente</b>
+                            </center>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="border: 5px solid transparent;"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <br />
+                                    <br />
+                                    ______________________________________<br />
+                                    DR(A). @ViewBag.Med1Nome <br />
+                                    CRM: @ViewBag.Med1CRM<br />
+                                    Port.Detran: @ViewBag.Med1Port<br />
+                                    @ViewBag.Med1Espec<br />
+                                    Aut.Especial Port: @ViewBag.Med1Aut<br />
+                                    CPF: @ViewBag.Med1CPF
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <br />
+                                    <br />
+                                    ______________________________________<br />
+                                    DR(A). @ViewBag.Med2Nome <br />
+                                    CRM: @ViewBag.Med2CRM<br />
+                                    Port.Detran: @ViewBag.Med2Port<br />
+                                    @ViewBag.Med2Espec<br />
+                                    Aut.Especial Port: @ViewBag.Med2Aut<br />
+                                    CPF: @ViewBag.Med2CPF
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    &emsp;&emsp;&emsp;UNIDADE EMISSORA DO LAUDO<br />
+                                    ______________________________________<br />
+                                    @ViewBag.UnidEmissora<br />
+                                    CNPJ: @ViewBag.UnidCnpjf<br /><br />
+                                    ______________________________________<br /><br />
+                                    &emsp;&emsp;
+                                    ________________________________<br />
+                                    &emsp;&emsp;&emsp;&emsp;UEL-Assinatura do Responsável
+
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                    <center>
+                        <small>
+                            Anexo IX da Instrução Normativa RFB Nr. 1369, de 26 de Junho de 2013
+                        </small>
+                    </center>
+
+                </div>
+            </div>
+            <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
+            <a asp-action="" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"></a>&nbsp;&nbsp;
+            <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Rodapé do Formulário</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            @using (Html.BeginForm("LaudoMedicoPCD", "Cliente", FormMethod.Post))
+            {
+                <input name="Id" type="hidden" value="@Html.DisplayFor(model => model.Id)" />
+                <div class="modal-body">
+                    <div class="card-group">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    DR(A).            <input name="Medico1" type="text" value="@ViewBag.Med1Nome" style="border:1px solid #DCDCDC"><br />
+                                    CRM:              <input name="CRM1" type="text" value="@ViewBag.Med1CRM" style="border:1px solid #DCDCDC"><br />
+                                    Port.Detran:      <input name="Port1" type="text" value="@ViewBag.Med1Port" style="border:1px solid #DCDCDC"><br />
+                                    Especialidade:    <input name="Espec1" type="text" value="@ViewBag.Med1Espec" style="border:1px solid #DCDCDC"><br />
+                                    Aut.Especial Port:<input name="Aut1" type="text" value="@ViewBag.Med1Aut" style="border:1px solid #DCDCDC"><br />
+                                    CPF:              <input name="CPF1" type="text" value="@ViewBag.Med1CPF" style="border:1px solid #DCDCDC"><br />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    DR(A).            <input name="Medico2" type="text" value="@ViewBag.Med2Nome" style="border:1px solid #DCDCDC"><br />
+                                    CRM:              <input name="CRM2" type="text" value="@ViewBag.Med2CRM" style="border:1px solid #DCDCDC"><br />
+                                    Port.Detran:      <input name="Port2" type="text" value="@ViewBag.Med2Port" style="border:1px solid #DCDCDC"><br />
+                                    Especialidade:    <input name="Espec2" type="text" value="@ViewBag.Med2Espec" style="border:1px solid #DCDCDC"><br />
+                                    Aut.Especial Port:<input name="Aut2" type="text" value="@ViewBag.Med2Aut" style="border:1px solid #DCDCDC"><br />
+                                    CPF:              <input name="CPF2" type="text" value="@ViewBag.Med2CPF" style="border:1px solid #DCDCDC"><br />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    POSTO: <input name="Posto" type="text" value="@ViewBag.UnidEmissora" style="border:1px solid #DCDCDC"><br />
+                                    CNPJ: <input name="Cnpj" type="text" value="@ViewBag.UnidCnpjf" style="border:1px solid #DCDCDC">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

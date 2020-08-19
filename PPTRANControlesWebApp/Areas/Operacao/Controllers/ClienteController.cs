@@ -47,7 +47,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
-            var roleUser = await userManager.GetRolesAsync(usuario);            
+            var roleUser = await userManager.GetRolesAsync(usuario);
 
             var lista = await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync();
 
@@ -113,7 +113,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
-        {            
+        {
             try
             {
                 if (model.Cliente.Nome != null && model.Cliente.CPF != null)
@@ -128,7 +128,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                     //var dtn_ptbr = new DateTime(dtn.Month, dtn.Day, dtn.Year);
                     //model.Cliente.DtNascimento = dtn_ptbr;
 
-                    model.Cliente.DtCadastro = DateTime.Today;                                  
+                    model.Cliente.DtCadastro = DateTime.Today;
                     model.Cliente.EnderecoId = model.Endereco.Id;
                     model.Cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
 
@@ -168,40 +168,70 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return await ObterVisaoClientePorId(id, "");
         }
 
+        private static bool viewEdit = false;
         public async Task<IActionResult> EntrevistaMedPCD(long? id)
         {
             CarregarViewBagsFormularioPCD();
+            return await ObterVisaoClientePorId(id, "");
+        }
 
+        private static IList<string> EditarFormPCD = new List<string>();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditEntrevistaPCD(FormPdcViewModel form)
+        {
+            EditarFormPCD.Clear();
+            EditarFormPCD.Add(form.Posto);
+            EditarFormPCD.Add(form.Cnpj);
+
+            EditarFormPCD.Add(form.Medico1);
+            EditarFormPCD.Add(form.CRM1);
+            EditarFormPCD.Add(form.Port1);
+            EditarFormPCD.Add(form.Espec1);
+            EditarFormPCD.Add(form.Aut1);
+            EditarFormPCD.Add(form.CPF1);
+
+            EditarFormPCD.Add(form.Medico2);
+            EditarFormPCD.Add(form.CRM2);
+            EditarFormPCD.Add(form.Port2);
+            EditarFormPCD.Add(form.Espec2);
+            EditarFormPCD.Add(form.Aut2);
+            EditarFormPCD.Add(form.CPF2);
+
+            viewEdit = true;
+            return RedirectToRoute(new { controller = "Cliente", action = "EntrevistaMedPCD", id = form.Id });
+        }
+
+        public async Task<IActionResult> LaudoMedicoPCD(long? id)
+        {
+            CarregarViewBagsFormularioPCD();
             return await ObterVisaoClientePorId(id, "");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditEntrevistaPCD(FormPdcViewModel form)
-        {            
-            string infoPcdForm = @"..\PPTRANControlesWebApp\wwwroot\Forms\EntrevistaPcdInfo.txt";
-            string[] line = System.IO.File.ReadAllLines(infoPcdForm);
+        public IActionResult LaudoMedicoPCD(FormPdcViewModel form)
+        {
+            EditarFormPCD.Clear();
+            EditarFormPCD.Add(form.Posto);
+            EditarFormPCD.Add(form.Cnpj);
 
-            line[0] = $"POSTO|{form.Posto}";
-            line[1] = $"CNPJ|{form.Cnpj}";
+            EditarFormPCD.Add(form.Medico1);
+            EditarFormPCD.Add(form.CRM1);
+            EditarFormPCD.Add(form.Port1);
+            EditarFormPCD.Add(form.Espec1);
+            EditarFormPCD.Add(form.Aut1);
+            EditarFormPCD.Add(form.CPF1);
 
-            line[2] = $"DR(A)|{form.Medico1}";
-            line[3] = $"CRM|{form.CRM1}";
-            line[4] = $"Port.Detran|{form.Port1}";
-            line[5] = $"Especialidade|{form.Espec1}";
-            line[6] = $"Aut.Especial Port|{form.Aut1}";
-            line[7] = $"CPF|{form.CPF1}";
+            EditarFormPCD.Add(form.Medico2);
+            EditarFormPCD.Add(form.CRM2);
+            EditarFormPCD.Add(form.Port2);
+            EditarFormPCD.Add(form.Espec2);
+            EditarFormPCD.Add(form.Aut2);
+            EditarFormPCD.Add(form.CPF2);
 
-            line[8] = $"DR(A)|{form.Medico2}";
-            line[9] = $"CRM|{form.CRM2}";
-            line[10] = $"Port.Detran|{form.Port2}";
-            line[11] = $"Especialidade|{form.Espec2}";
-            line[12] = $"Aut.Especial Port|{form.Aut2}";
-            line[13] = $"CPF|{form.CPF2}";
-
-            System.IO.File.WriteAllLines(infoPcdForm, line);
-
-            return RedirectToRoute(new { controller = "Cliente", action = "EntrevistaMedPCD", id = form.Id });
+            viewEdit = true;
+            return RedirectToRoute(new { controller = "Cliente", action = "LaudoMedicoPCD", id = form.Id });
         }
 
         /****** Metodos Privados do Controller ******/
@@ -230,9 +260,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsDetails(Cliente cliente)
         {
-            if (cliente.MedicoId != 0)            
+            if (cliente.MedicoId != 0)
                 ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
-            
+
 
             if (cliente.PsicologoId != 0)
                 ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
@@ -240,7 +270,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsEdit(Cliente cliente)
         {
-            ViewBag.Clinicas 
+            ViewBag.Clinicas
                 = new SelectList(clinicaDAL.ObterClinicasClassificadasPorNome(), "Id", "Alias", cliente.Id);
 
             ViewBag.Medico
@@ -256,7 +286,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private void CarregarViewBagsCreate(IList<string> userRole)
         {
             var userId = userManager.GetUserAsync(User).Result.ColaboradorId;
-            
+
             var clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
             if (userRole.FirstOrDefault() != RolesNomes.Administrador)
             {
@@ -291,44 +321,46 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsFormularioPCD()
         {
-            /*
-            string infoPcdForm = @"..\PPTRANControlesWebApp\wwwroot\Forms\EntrevistaPcdInfo.txt";
-            string[] info = System.IO.File.ReadAllLines(infoPcdForm);
-            
-            ViewBag.UnidEmissora = info[0].Split('|')[1].ToString();
+            if (viewEdit == true)
+            {
+                ViewBag.UnidEmissora = EditarFormPCD[0];
+                ViewBag.UnidCnpjf = EditarFormPCD[1];
 
-            ViewBag.UnidCnpjf = info[1].Split('|')[1].ToString(); 
+                ViewBag.Med1Nome = EditarFormPCD[2];
+                ViewBag.Med1CRM = EditarFormPCD[3];
+                ViewBag.Med1Port = EditarFormPCD[4];
+                ViewBag.Med1Espec = EditarFormPCD[5];
+                ViewBag.Med1Aut = EditarFormPCD[6];
+                ViewBag.Med1CPF = EditarFormPCD[7];
 
-            ViewBag.Med1Nome =  info[2].Split('|')[1].ToString();
-            ViewBag.Med1CRM =   info[3].Split('|')[1].ToString(); 
-            ViewBag.Med1Port =  info[4].Split('|')[1].ToString();
-            ViewBag.Med1Espec = info[5].Split('|')[1].ToString();
-            ViewBag.Med1Aut =   info[6].Split('|')[1].ToString();
-            ViewBag.Med1CPF =   info[7].Split('|')[1].ToString();
+                ViewBag.Med2Nome = EditarFormPCD[8];
+                ViewBag.Med2CRM = EditarFormPCD[9];
+                ViewBag.Med2Port = EditarFormPCD[10];
+                ViewBag.Med2Espec = EditarFormPCD[11];
+                ViewBag.Med2Aut = EditarFormPCD[12];
+                ViewBag.Med2CPF = EditarFormPCD[13];
+                viewEdit = false;
+            }
+            else
+            {
+                ViewBag.UnidEmissora = "POSTO DETRAN ARMENIA";
+                ViewBag.UnidCnpjf = "15.519.361/0001-16";
 
-            ViewBag.Med2Nome =  info[8].Split('|')[1].ToString();
-            ViewBag.Med2CRM =   info[9].Split('|')[1].ToString();
-            ViewBag.Med2Port =  info[10].Split('|')[1].ToString();
-            ViewBag.Med2Espec = info[11].Split('|')[1].ToString();
-            ViewBag.Med2Aut =   info[12].Split('|')[1].ToString();
-            ViewBag.Med2CPF =   info[13].Split('|')[1].ToString();
-            */
-            ViewBag.UnidEmissora = "POSTO DETRAN ARMENIA";
-            ViewBag.UnidCnpjf = "15.519.361/0001-16";
+                ViewBag.Med1Nome = "VALMIR CLARET FEDRIGO";
+                ViewBag.Med1CRM = "29957";
+                ViewBag.Med1Port = "1488/11";
+                ViewBag.Med1Espec = "Medicina do Tráfego";
+                ViewBag.Med1Aut = "214/12";
+                ViewBag.Med1CPF = "212.182.856-72";
 
-            ViewBag.Med1Nome = "VALMIR CLARET FEDRIGO";
-            ViewBag.Med1CRM = "29957";
-            ViewBag.Med1Port = "1488/11";
-            ViewBag.Med1Espec = "Medicina do Tráfego";
-            ViewBag.Med1Aut = "214/12";
-            ViewBag.Med1CPF = "212.182.856-72";
+                ViewBag.Med2Nome = "VERA LUCIA LIENDO VILLALVA";
+                ViewBag.Med2CRM = "108112";
+                ViewBag.Med2Port = "1800/16";
+                ViewBag.Med2Espec = "Medicina do Tráfego";
+                ViewBag.Med2Aut = "1210/17";
+                ViewBag.Med2CPF = "187.069.998-08";
 
-            ViewBag.Med2Nome = "VERA LUCIA LIENDO VILLALVA";
-            ViewBag.Med2CRM = "108112";
-            ViewBag.Med2Port = "1800/16";
-            ViewBag.Med2Espec = "Medicina do Tráfego";
-            ViewBag.Med2Aut = "1210/17";
-            ViewBag.Med2CPF = "187.069.998-08";
+            }
         }
     }
 }
