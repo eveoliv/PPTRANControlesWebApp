@@ -10,10 +10,28 @@
         <div class="row">
             <div class="x_panel">
                 <div class="x_content">
-                    <center>
-                        <p></p>
-                        <p>SECRETARIA  DE  PLANEJAMENTO  E  GESTAO <br />DEPARTAMENTO  ESTADUAL  DE  TRANSITO-SP<br />CNPJ. 15.519.316/0001-16</p>
-                    </center>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                &emsp;
+                                <img src="~/Content/build/images/SpLogo.png" width="80" height="80" />
+                            </div>
+                            <div class="col-sm">
+                                <center>
+                                    SECRETARIA  DE  PLANEJAMENTO  E  GESTAO
+                                    DEPARTAMENTO  ESTADUAL  DE  TRANSITO-SP
+                                    CNPJ. 15.519.316/0001-16
+                                </center>
+                            </div>
+                            <div class="col-sm">
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                <img src="~/Content/build/images/DetranLogo.png" width="190" height="60" />
+                            </div>
+                        </div>
+                    </div>
+
+
                     <center>
                         <h2>LAUDO  DE  AVALIACAO  DEFICIENCIA  FISICA</h2>
                     </center>
@@ -67,13 +85,13 @@
                                 Orgao emissor:
                             </dt>
                             <dd class="col-sm-1">
-                                SSP
+                                @Html.DisplayFor(model => model.Emissor)
                             </dd>
                             <dt class="col-sm-1">
                                 UF:
                             </dt>
                             <dd class="col-sm-4">
-                                SP
+                                @Html.DisplayFor(model => model.UF)
                             </dd>
                             @*L4*@
                             <dt class="col-sm-2">

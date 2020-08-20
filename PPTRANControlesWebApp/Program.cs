@@ -23,8 +23,8 @@ namespace PPTRANControlesWebApp
                     var applicationcontext = services.GetRequiredService<ApplicationContext>();
                     var identityContext = services.GetRequiredService<AppIdentityContext>();
 
-                    //ContextIdentityInitializer.Initialize(identityContext);
                     //ContextInitializer.Initialize(applicationcontext);                                                           
+                    //ContextIdentityInitializer.Initialize(identityContext);
                 }
                 catch (Exception ex)
                 {

@@ -57,27 +57,35 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
                                     <option selected="selected" value="">Categoria</option>
                                 </select>
                             </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
                                 <span asp-validation-for="Cliente.DtHabHum" class="text-danger"></span>
                             </div>
+                            @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" required="required" >
-                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                            <div class="col-md-2 col-sm-12  form-group">
+                                <input asp-for="Cliente.Emissor" type="text" placeholder="Orgão Emissor" class="form-control">
+                            </div>
+                            <div class="col-md-2 col-sm-12  form-group">
+                                <select asp-for="Cliente.UF" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.UF>()" required="required">
+                                    <option selected="selected" value="">UF</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
+                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" required="required">
+                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
                             </div>
                             @*---------------------------------------------------*@

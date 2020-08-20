@@ -199,7 +199,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                 new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Exame Médico com Psicotécnico", Valor = 197.41M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M, Status = EnumHelper.Status.Ativo },
-                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo }
+                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Outros", Valor = 0M, Status = EnumHelper.Status.Ativo }
             };
 
             foreach (Produto c in produto)

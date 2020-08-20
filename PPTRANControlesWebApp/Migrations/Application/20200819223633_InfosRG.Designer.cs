@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200805233034_ApplicationFirst")]
-    partial class ApplicationFirst
+    [Migration("20200819223633_InfosRG")]
+    partial class InfosRG
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,8 @@ namespace PPTRANControlesWebApp.Migrations.Application
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("Emissor");
+
                     b.Property<long?>("EnderecoId");
 
                     b.Property<string>("Escolaridade");
@@ -185,6 +187,8 @@ namespace PPTRANControlesWebApp.Migrations.Application
                     b.Property<string>("Telefone1");
 
                     b.Property<string>("Telefone2");
+
+                    b.Property<int>("UF");
 
                     b.HasKey("Id");
 

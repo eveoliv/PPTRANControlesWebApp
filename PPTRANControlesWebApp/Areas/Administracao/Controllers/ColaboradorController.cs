@@ -194,20 +194,16 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 
         private async Task CadastrarNovoUsuario(ColaboradorViewModel model)
         {
-            string primeiroNome = null;
+            var primeiroNome = model.Colaborador.Nome;
 
-            try
+            char[] espaco = { ' ' };
+            var check = primeiroNome.IndexOfAny(espaco);
+
+            if (check > 0)
             {
-                primeiroNome = model.Colaborador.Nome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
+                primeiroNome = primeiroNome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
             }
-            catch (Exception)
-            {
-
-                ModelState.AddModelError("", "O campo 'nome' deve conter nome e sobrenome."); 
-            }
-
-            primeiroNome = model.Colaborador.Nome;
-
+                                                                     
             var novoUsuario = new AppIdentityUser
             {
                 UserName = model.Colaborador.Email,

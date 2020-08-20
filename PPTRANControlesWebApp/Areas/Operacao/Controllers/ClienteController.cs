@@ -15,7 +15,6 @@ using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 using PPTRANControlesWebApp.Models.Operacao;
-using System.IO;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 {

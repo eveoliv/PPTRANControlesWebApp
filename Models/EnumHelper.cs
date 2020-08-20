@@ -32,5 +32,11 @@ namespace Models
         {
             Administrador, Operador, Gestor, Medico, Psicologo
         }
+
+        public enum UF
+        {
+            SP, RJ, AC, AM, RR, PA, AP, TO, MA, PI, CE, RN, PB, PE,
+            AL, SE, BA, MG, ES, RO, PR, SC, RS, MS, MT, GO, DF
+        }
     }
 }

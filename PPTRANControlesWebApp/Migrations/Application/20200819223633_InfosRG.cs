@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.Application
 {
-    public partial class ApplicationFirst : Migration
+    public partial class InfosRG : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -148,6 +148,8 @@ namespace PPTRANControlesWebApp.Migrations.Application
                     Status = table.Column<int>(nullable: false),
                     CPF = table.Column<string>(nullable: true),
                     RG = table.Column<string>(nullable: true),
+                    Emissor = table.Column<string>(nullable: true),
+                    UF = table.Column<int>(nullable: false),
                     CNH = table.Column<string>(nullable: true),
                     Categoria = table.Column<int>(nullable: false),
                     NumRenach = table.Column<string>(nullable: true),

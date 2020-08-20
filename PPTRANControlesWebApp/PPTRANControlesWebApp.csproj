@@ -6,9 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\AppIdentity\**" />
+    <Content Remove="Migrations\AppIdentity\**" />
+    <EmbeddedResource Remove="Migrations\AppIdentity\**" />
+    <None Remove="Migrations\AppIdentity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="EntrevistaPcdInfo.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.js" />
     <None Include="wwwroot\Content\vendors\dataTables\js\jquery.dataTables.min.js" />
-    <None Include="wwwroot\Forms\EntrevistaPcdInfo.txt" />
   </ItemGroup>
 
 
@@ -24,11 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Migrations\AppIdentity\" />
   </ItemGroup>
 
 </Project>
