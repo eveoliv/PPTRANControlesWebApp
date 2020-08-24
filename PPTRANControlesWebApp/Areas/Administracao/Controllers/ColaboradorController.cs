@@ -44,11 +44,24 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         
             var lista = await colaboradorDAL.ObterColaboradoresClassificadosPorNome().ToListAsync();
 
-            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            if (roleUser.FirstOrDefault() == RolesNomes.Administrador)
+            {                               
+                lista = lista.Where(c => c.Id != 1).ToList();
+            }
+
+            if (roleUser.FirstOrDefault() == RolesNomes.Gestor)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
-                lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
+                lista = lista.Where(c => c.ClinicaId == userClinicaId && c.Funcao != EnumHelper.Funcao.Administrador).ToList();
+            }
+
+            if (roleUser.FirstOrDefault() == RolesNomes.Operador)
+            {
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+                lista = lista.Where(c => c.ClinicaId == userClinicaId && 
+                ( c.Funcao == EnumHelper.Funcao.Medico || c.Funcao == EnumHelper.Funcao.Psicologo)).ToList();               
             }
 
             return View(lista);

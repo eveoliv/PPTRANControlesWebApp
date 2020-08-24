@@ -129,6 +129,16 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="RG" type="text" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                                         </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Emissor)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <input asp-for="Emissor" type="text" class="form-control">
+                                        </dd>
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.UF)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="UF" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.UF>()">
+                                                <option selected="selected" value="">UF</option>
+                                            </select>
+                                        </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.CNH)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
                                             <input asp-for="CNH" type="text" class="form-control">

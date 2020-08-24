@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Linq;
 
 namespace PPTRANControlesWebApp.Data.DAL
@@ -141,6 +142,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             {
                 new Colaborador{
                     Id =1,
+                    DtCadastro = DateTime.Today,
                     Nome = "Administrador",
                     CPF = "222.205.648-91",
                     Funcao = EnumHelper.Funcao.Administrador,
