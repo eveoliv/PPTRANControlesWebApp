@@ -13,6 +13,9 @@ using PPTRANControlesWebApp.Areas.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace PPTRANControlesWebApp
 {
@@ -75,6 +78,13 @@ namespace PPTRANControlesWebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+            {
+                SupportedCultures = new List<CultureInfo> { new CultureInfo("pt-BR")},
+                SupportedUICultures = new List<CultureInfo> { new CultureInfo("pt-BR")},
+                DefaultRequestCulture = new RequestCulture("pt-BR")
+            };
 
             app.UseStaticFiles();
             app.UseAuthentication();
