@@ -30,6 +30,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
+        static bool verificaCliente = false;
 
         public ClienteController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -106,6 +107,8 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             CarregarViewBagsCreate(roleUser);
 
+            if (verificaCliente) ViewBag.Msg = " - Este cliente já esta cadastrado!";
+
             return View();
         }
 
@@ -115,18 +118,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         {
             try
             {
-                if (model.Cliente.Nome != null && model.Cliente.CPF != null)
+                var clienteExiste = ValidaClienteCreate(model.Cliente.CPF);
+
+                if (model.Cliente.Nome != null && clienteExiste == false)
                 {
                     await enderecoDAL.GravarEndereco(model.Endereco);
-
-                    //var dth = model.Cliente.DtHabHum;
-                    //var dth_ptbr = new DateTime(dth.Month, dth.Day, dth.Year);
-                    //model.Cliente.DtHabHum = dth_ptbr;
-
-                    //var dtn = model.Cliente.DtHabHum;
-                    //var dtn_ptbr = new DateTime(dtn.Month, dtn.Day, dtn.Year);
-                    //model.Cliente.DtNascimento = dtn_ptbr;
-
+                  
                     model.Cliente.DtCadastro = DateTime.Today;
                     model.Cliente.EnderecoId = model.Endereco.Id;
                     model.Cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
@@ -140,7 +137,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
-            return View(model.Cliente);
+
+            verificaCliente = true;
+            return RedirectToAction("Create", "Cliente");
         }
 
         public async Task<IActionResult> Delete(long? id)
@@ -359,6 +358,19 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 ViewBag.Med2Aut = "1210/17";
                 ViewBag.Med2CPF = "187.069.998-08";
 
+            }
+        }
+
+        private bool ValidaClienteCreate(string cpf)
+        {
+            try
+            {
+                var verifica = clienteDAL.ObterClientePorCpf(cpf).Result.Id;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

@@ -24,8 +24,9 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         private readonly ClinicaDAL clinicaDAL;
         private readonly EnderecoDAL enderecoDAL;
         private readonly ApplicationContext context;
-        private readonly ColaboradorDAL colaboradorDAL;        
-        private readonly UserManager<AppIdentityUser> userManager;       
+        private readonly ColaboradorDAL colaboradorDAL;
+        private readonly UserManager<AppIdentityUser> userManager;
+        static bool verificaColab = false;
 
         public ColaboradorController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -35,17 +36,17 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             enderecoDAL = new EnderecoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-        
+
         public async Task<IActionResult> Index()
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
-        
+
             var lista = await colaboradorDAL.ObterColaboradoresClassificadosPorNome().ToListAsync();
 
             if (roleUser.FirstOrDefault() == RolesNomes.Administrador)
-            {                               
+            {
                 lista = lista.Where(c => c.Id != 1).ToList();
             }
 
@@ -60,13 +61,13 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
-                lista = lista.Where(c => c.ClinicaId == userClinicaId && 
-                ( c.Funcao == EnumHelper.Funcao.Medico || c.Funcao == EnumHelper.Funcao.Psicologo)).ToList();               
+                lista = lista.Where(c => c.ClinicaId == userClinicaId &&
+                (c.Funcao == EnumHelper.Funcao.Medico || c.Funcao == EnumHelper.Funcao.Psicologo)).ToList();
             }
 
             return View(lista);
         }
-        
+
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoColaboradorPorId(id);
@@ -77,7 +78,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         {
             return await ObterVisaoColaboradorPorId(id);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Colaborador colaborador)
@@ -105,7 +106,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         }
 
         [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
-        public async Task <IActionResult> Create()
+        public async Task<IActionResult> Create()
         {
 
             var userId = userManager.GetUserAsync(User).Result.Id;
@@ -113,16 +114,20 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             var roleUser = await userManager.GetRolesAsync(usuario);
             CarregarViewBagsCreate(roleUser);
 
+            if (verificaColab) ViewBag.Msg = " - Este colaborador já esta cadastrado!";
+
             return View();
-        }        
-        
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ColaboradorViewModel model)
-        {          
+        {
             try
-            {                
-                if (model.Colaborador.Nome != null && model.Colaborador.CPF != null)
+            {
+                var colabExiste = ValidaColaboradorCreate(model.Colaborador.CPF);
+
+                if (model.Colaborador.Nome != null && colabExiste == false)
                 {
                     await enderecoDAL.GravarEndereco(model.Endereco);
 
@@ -144,7 +149,8 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
-            return View(model.Colaborador);
+            verificaColab = true;
+            return RedirectToAction("Create", "Colaborador");
         }
 
         [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
@@ -152,7 +158,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         {
             return await ObterVisaoColaboradorPorId(id);
         }
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
@@ -175,7 +181,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 return NotFound();
             }
-            
+
             CarregarViewBagsEdit(colaborador);
 
             return View(colaborador);
@@ -187,7 +193,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         }
 
         private void CarregarViewBagsEdit(Colaborador colaborador)
-        {            
+        {
             ViewBag.Clinicas = new SelectList(clinicaDAL.ObterClinicasClassificadasPorNome(), "Id", "Alias", colaborador.Id);
         }
 
@@ -216,7 +222,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             {
                 primeiroNome = primeiroNome.Substring(0, model.Colaborador.Nome.IndexOf(" "));
             }
-                                                                     
+
             var novoUsuario = new AppIdentityUser
             {
                 UserName = model.Colaborador.Email,
@@ -249,6 +255,19 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                     await userManager.AddToRoleAsync(novoUsuario, RolesNomes.Operador);
                 }
             }
+        }
+
+        private bool ValidaColaboradorCreate(string cpf)
+        {
+            try
+            {
+                var verifica = colaboradorDAL.ObterColaboradorPorCpf(cpf).Result.Id;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }            
         }
     }
 }

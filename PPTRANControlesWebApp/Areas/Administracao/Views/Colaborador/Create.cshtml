@@ -17,13 +17,13 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Informações Gerais</h2>
+                    <h2>Informações Gerais <span style="color: #f00;">@ViewBag.Msg</span></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-
+                
                 <div class="x_content">
                     <form asp-action="create" class="form-label-left input_mask">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
