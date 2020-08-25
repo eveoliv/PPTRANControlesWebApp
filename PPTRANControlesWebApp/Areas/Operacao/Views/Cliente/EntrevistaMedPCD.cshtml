@@ -1,5 +1,4 @@
 ﻿@model Models.Cliente
-@using PPTRANControlesWebApp.Models.Operacao;
 
 @{
     ViewData["Title"] = "Details";
@@ -214,14 +213,14 @@
                         </div>
                     </div>
                 </div>
-                <p>
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    Aprovado pela IN RFB nº 1.369, de 2013.
-                </p>
+                <center>
+                    <p>
+                        Aprovado pela IN RFB nº 1.369, de 2013.
+                    </p>
+                </center>
             </div>
             <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>&nbsp;&nbsp;
-            @*<a asp-action="" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"></a>&nbsp;&nbsp;*@
+            <a asp-action="" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#myModal"></a>&nbsp;&nbsp;
             <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
         </div>
     </div>
@@ -240,7 +239,7 @@
 
             <!-- Modal body -->
             @using (Html.BeginForm("EditEntrevistaPCD", "Cliente", FormMethod.Post))
-            {                
+            {
                 <input name="Id" type="hidden" value="@Html.DisplayFor(model => model.Id)" />
                 <div class="modal-body">
                     <div class="card-group">

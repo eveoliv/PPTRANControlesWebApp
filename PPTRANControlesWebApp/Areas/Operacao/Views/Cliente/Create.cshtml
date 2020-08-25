@@ -16,7 +16,7 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Informações Gerais</h2>
+                    <h2>Informações Gerais <span style="color: #f00;">@ViewBag.Msg</span></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
@@ -31,7 +31,7 @@
                         @*---------------------------------------------------*@
                         <div class="row">
                             <div class="col-md-3 col-sm-3  form-group has-feedback">
-                                <input asp-for="Cliente.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
+                                <input asp-for="Cliente.Nome" type="text" class="form-control has-feedback-left" id="fname" placeholder="Nome" required="required">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                 <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
                             </div>
@@ -57,51 +57,59 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.NumLaudo" type="text" placeholder="Número Laudo" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.CNH" type="text" placeholder="CHN" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <select asp-for="Cliente.Categoria" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Categoria>()">
                                     <option selected="selected" value="">Categoria</option>
                                 </select>
                             </div>
-                            @*---------------------------------------------------*@
-                            <div class="col-md-3 col-sm-12  form-group">
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.DtHabHum" type="text" placeholder="Data 1ª Habilitação" class="form-control" data-inputmask="'mask': '99/99/9999'">
                                 <span asp-validation-for="Cliente.DtHabHum" class="text-danger"></span>
                             </div>
+                            @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.RG" type="text" placeholder="RG" class="form-control" data-inputmask="'mask': '99.999.999-9'">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" required="required" >
-                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                            <div class="col-md-2 col-sm-12  form-group">
+                                <input asp-for="Cliente.Emissor" type="text" placeholder="Orgão Emissor" id="femissor" class="form-control">
+                            </div>
+                            <div class="col-md-2 col-sm-12  form-group">
+                                <select asp-for="Cliente.UF" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.UF>()" required="required">
+                                    <option selected="selected" value="">UF</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
+                                <input asp-for="Cliente.CPF" type="text" placeholder="CPF" class="form-control" data-inputmask="'mask': '999.999.999-99'" required="required" id="cpf">
+                                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-2 col-sm-12  form-group">
                                 <input asp-for="Cliente.DtNascimento" type="text" placeholder="Data Nascimento" class="form-control" data-inputmask="'mask': '99/99/9999'">
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Pai" type="text" placeholder="Nome do Pai" class="form-control">
+                                <input asp-for="Cliente.Pai" type="text" placeholder="Nome do Pai" id="fnamePai" class="form-control">
                             </div>
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Mae" type="text" placeholder="Nome da Mãe" class="form-control">
+                                <input asp-for="Cliente.Mae" type="text" placeholder="Nome da Mãe" id="fnameMae" class="form-control">
                             </div>
                             <div class="col-md-4 col-sm-12  form-group">
-                                <input asp-for="Cliente.Nacionalidade" type="text" placeholder="Nacionalidade" class="form-control">
+                                <input asp-for="Cliente.Nacionalidade" type="text" placeholder="Nacionalidade" id="fnacionalidade" class="form-control">
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" class="form-control">
+                                <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" id="fnaturalidade" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" class="form-control">
+                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" id="fecivil" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" class="form-control">
+                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" id="fescolaridade" class="form-control">
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" class="form-control">
+                                <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" id="fprofissao" class="form-control">
                             </div>
                             @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
@@ -189,7 +197,7 @@
                                     Complemento <span class="required"></span>
                                 </label>
                                 <div class="col-md-2 col-sm-2 ">
-                                    <input asp-for="Endereco.Complto" type="text" id="uf" class="form-control" />
+                                    <input asp-for="Endereco.Complto" type="text" id="fname" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -197,7 +205,7 @@
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
-                                <button class="btn btn-success" type="submit">Cadastrar</button>
+                                <button class="btn btn-success" type="submit" id="sbmt">Cadastrar</button>
                                 <button class="btn btn-primary" type="reset">Limpar</button>
                                 <a asp-action="Index" class="btn btn-danger">Cancelar</a>
                             </div>
@@ -277,5 +285,105 @@
             });
         });
 
+    </script>
+
+    <script>
+        document.getElementById("fname").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fname");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("femissor").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("femissor");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fnamePai").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fnamePai");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fnameMae").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fnameMae");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fnacionalidade").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fnacionalidade");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fnaturalidade").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fnaturalidade");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fecivil").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fecivil");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fecivil").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fecivil");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fescolaridade").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fescolaridade");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("fprofissao").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fprofissao");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        document.getElementById("sbmt").addEventListener("click", function () {
+            var validaCpf = document.getElementById("cpf");
+
+            if (!validaCpf.value) {
+                alert("O preenchimento do CPF é obrigatório!");
+            };
+        });
     </script>
 }

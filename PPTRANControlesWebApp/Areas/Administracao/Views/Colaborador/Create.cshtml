@@ -17,13 +17,13 @@
 
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Informações Gerais</h2>
+                    <h2>Informações Gerais <span style="color: #f00;">@ViewBag.Msg</span></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-
+                
                 <div class="x_content">
                     <form asp-action="create" class="form-label-left input_mask">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,7 +33,7 @@
 
                         <div class="row">
                             <div class="col-md-6 col-sm-6  form-group has-feedback">
-                                <input asp-for="Colaborador.Nome" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Nome" required="required">
+                                <input asp-for="Colaborador.Nome" type="text" class="form-control has-feedback-left" id="fname" placeholder="Nome" required="required">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                 <span asp-validation-for="Colaborador.Nome" class="text-danger"></span>
                             </div>
@@ -63,21 +63,20 @@
 
                         <div class="row">
                             <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Colaborador.CRM" type="text" placeholder="CRM" class="form-control">
+                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
+                                    <option selected="selected" value="">Clínica</option>
+                                </select>
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Colaborador.CRP" type="text" placeholder="CRP" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.Funcao" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Funcao>()" required="required">
+                            <div class="col-md-3 col-sm-12  form-group" id="demo">
+                                <select asp-for="Colaborador.Funcao" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Funcao>()" required="required" id="selectOption">
                                     <option selected="selected" value="">Função</option>
                                 </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
-                                <select asp-for="Colaborador.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
-                                    <option selected="selected" value="">Clínica</option>
-                                </select>
-
+                                <input asp-for="Colaborador.CRM" type="text" placeholder="CRM" class="form-control" id="CRM">
+                            </div>
+                            <div class="col-md-3 col-sm-12  form-group">
+                                <input asp-for="Colaborador.CRP" type="text" placeholder="CRP" class="form-control" id="CRP">
                             </div>
                         </div>
 
@@ -144,7 +143,7 @@
                                     Complemento <span class="required"></span>
                                 </label>
                                 <div class="col-md-2 col-sm-2 ">
-                                    <input asp-for="Endereco.Complto" type="text" id="uf" class="form-control" />
+                                    <input asp-for="Endereco.Complto" type="text" id="fname" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -232,4 +231,33 @@
         });
 
     </script>
+
+    <script>
+        document.getElementById("fname").addEventListener("change", myFunction);
+
+        function myFunction() {
+            var x = document.getElementById("fname");
+            x.value = x.value.toUpperCase();
+        }
+    </script>
+
+    <script>
+        $('#selectOption').change(function () {
+            var option = $('#selectOption').find(":selected").text();
+            if (option == "Medico") {
+                $('#CRP').fadeOut();
+                $('#CRM').fadeIn();
+                console.log("Med");
+            } else if (option == "Psicologo") {
+                $('#CRM').fadeOut();
+                $('#CRP').fadeIn();
+                console.log("Psico");
+            } else if (option != "Psicologo" && option != "Medico") {
+                $('#CRM').fadeOut();
+                $('#CRP').fadeOut();
+            };
+        });
+    </script>
+
 }
+

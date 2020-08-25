@@ -44,8 +44,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             return await context.Colaboradores
                 .Include(c => c.Clinica)
                 .Include(e => e.Endereco)
-                .Where(c => c.Status == EnumHelper.Status.Ativo)
-                .Where(c => c.Funcao != EnumHelper.Funcao.Administrador)
+                .Where(c => c.Status == EnumHelper.Status.Ativo)                
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 

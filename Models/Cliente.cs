@@ -30,6 +30,12 @@ namespace Models
         [DisplayName("RG")]
         public string RG { get; set; }
 
+        [DisplayName("Orgão Emissor")]
+        public string Emissor { get; set; }
+
+        [DisplayName("UF")]
+        public EnumHelper.UF UF { get; set; }
+
         [DisplayName("CNH")]
         public string CNH { get; set; }
 

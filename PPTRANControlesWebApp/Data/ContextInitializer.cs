@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Linq;
 
 namespace PPTRANControlesWebApp.Data.DAL
@@ -141,6 +142,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             {
                 new Colaborador{
                     Id =1,
+                    DtCadastro = DateTime.Today,
                     Nome = "Administrador",
                     CPF = "222.205.648-91",
                     Funcao = EnumHelper.Funcao.Administrador,
@@ -199,7 +201,8 @@ namespace PPTRANControlesWebApp.Data.DAL
                 new Produto{ Nome = "Exame Psicotécnico", Valor = 106.30M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Exame Médico com Psicotécnico", Valor = 197.41M, Status = EnumHelper.Status.Ativo },
                 new Produto{ Nome = "Laudo Pessoa com Deficiência", Valor = 600.00M, Status = EnumHelper.Status.Ativo },
-                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo }
+                new Produto{ Nome = "Exame Médico Pessoa com Deficiência", Valor = 66.82M, Status = EnumHelper.Status.Ativo },
+                new Produto{ Nome = "Outros", Valor = 0M, Status = EnumHelper.Status.Ativo }
             };
 
             foreach (Produto c in produto)

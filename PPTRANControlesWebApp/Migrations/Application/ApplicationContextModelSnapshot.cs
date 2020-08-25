@@ -142,6 +142,8 @@ namespace PPTRANControlesWebApp.Migrations.Application
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("Emissor");
+
                     b.Property<long?>("EnderecoId");
 
                     b.Property<string>("Escolaridade");
@@ -183,6 +185,8 @@ namespace PPTRANControlesWebApp.Migrations.Application
                     b.Property<string>("Telefone1");
 
                     b.Property<string>("Telefone2");
+
+                    b.Property<int>("UF");
 
                     b.HasKey("Id");
 
