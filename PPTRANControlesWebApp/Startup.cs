@@ -86,6 +86,7 @@ namespace PPTRANControlesWebApp
                 DefaultRequestCulture = new RequestCulture("pt-BR")
             };
 
+            app.UseRequestLocalization(localizationOptions);
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
