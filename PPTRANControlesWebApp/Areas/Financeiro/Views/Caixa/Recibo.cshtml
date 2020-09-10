@@ -13,16 +13,14 @@
 
                     @if (@ViewBag.ClinicaNome != null)
                     {
-                        <P class="center">
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        <center>
+                            <br />
+                            <img src="~/Content/build/images/PptrLogo.png" width="40" height="30" />
                             CLINICA @ViewBag.ClinicaNome
-                        </P>
-                        <P>
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            <br />
                             @ViewBag.ClinicaRuaNum, @ViewBag.ClinicaBairroFone
-                        </P>
+
+                        </center>
 
                         <hr />
                         <p>
@@ -57,7 +55,9 @@
                             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
                             @ViewBag.ColabNome
                         </p>
+                        <center>
 
+                        </center>
                     }
                     else
                     {

@@ -102,11 +102,15 @@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.Naturalidade" type="text" placeholder="Naturalidade" id="fnaturalidade" class="form-control">
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.EstadoCivil" type="text" placeholder="Estado Civil" id="fecivil" class="form-control">
+                            <div class="col-md-3 col-sm-12  form-group">                               
+                                <select asp-for="Cliente.EstadoCivil" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.EstadoCivil>()">
+                                    <option selected="selected" value="">Estado Civil</option>
+                                </select>                                                                                    
                             </div>
-                            <div class="col-md-3 col-sm-12  form-group">
-                                <input asp-for="Cliente.Escolaridade" type="text" placeholder="Escolaridade" id="fescolaridade" class="form-control">
+                            <div class="col-md-3 col-sm-12  form-group">                                
+                                <select asp-for="Cliente.Escolaridade" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Escolaridade>()">
+                                    <option selected="selected" value="">Escolaridade</option>
+                                </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">
                                 <input asp-for="Cliente.Profissao" type="text" placeholder="Profissão" id="fprofissao" class="form-control">

@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200819223633_InfosRG")]
-    partial class InfosRG
+    [Migration("20200831231450_AtualizaEnum")]
+    partial class AtualizaEnum
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -148,9 +148,9 @@ namespace PPTRANControlesWebApp.Migrations.Application
 
                     b.Property<long?>("EnderecoId");
 
-                    b.Property<string>("Escolaridade");
+                    b.Property<int>("Escolaridade");
 
-                    b.Property<string>("EstadoCivil");
+                    b.Property<int>("EstadoCivil");
 
                     b.Property<long?>("HistoricoId");
 

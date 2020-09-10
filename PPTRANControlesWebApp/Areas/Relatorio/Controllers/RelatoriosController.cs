@@ -72,11 +72,29 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
+            var dinheiro = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Dinheiro && c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
+            ViewBag.Dinheiro = dinheiro.ToString("0#.####");
+
+            var cartao = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cartao).Sum(c => c.Valor);
+            ViewBag.Cartao = cartao.ToString("0#.####");
+
+            var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
+            ViewBag.Cheque = cheque.ToString("0#.####");
+
+            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Tansferencia).Sum(c => c.Valor);
+            ViewBag.Transf = transf.ToString("0#.####");           
+
             var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
             ViewBag.Credito = credito.ToString("0#.####");
 
             var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito).Sum(c => c.Valor);
             ViewBag.Debito = debito.ToString("0#.####");
+
+            var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
+            ViewBag.Finalizados = finalizados.ToString("0#.####");
+
+            var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
+            ViewBag.Abertos = abertos.ToString("0#.####");
 
             var total = credito - debito;
             ViewBag.Total = total.ToString("0#.####");

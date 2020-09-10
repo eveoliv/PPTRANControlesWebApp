@@ -312,7 +312,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             //psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
 
-            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
+            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().Where(h => h.Id < 10).ToList();
             //historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
             ViewBag.Historicos = historicos;
         }

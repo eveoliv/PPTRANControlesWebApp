@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 
 namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 {
@@ -183,6 +181,11 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
+            var idCli = caixaDAL.ObterLancamentoPorId((long)id).Result.Cliente.Id;           
+            var cliente = context.Clientes.Find((long)idCli);
+            cliente.StatusPgto = EnumHelper.YesNo.Não;
+            await clienteDAL.GravarCliente(cliente);
+
             var IdUser = userManager.GetUserAsync(User).Result.Id;
             var caixa = await caixaDAL.InativarLancamentoPorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
@@ -283,13 +286,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             ViewBag.Clinicas = clinicas;
 
             var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
-            historicos.Insert(0, new Historico() { Id = 0, Nome = "" });
+            historicos.Insert(0, new Historico() { Id = 0, Nome = "" });            
             ViewBag.Historicos = historicos;
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorNome().ToList();
             produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
             ViewBag.Produtos = produtos;
-
         }
 
         private long PesquisarClientePorCpf(string cpf)
