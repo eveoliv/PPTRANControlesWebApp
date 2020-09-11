@@ -92,7 +92,7 @@ namespace PPTRANControlesWebApp.Data.DAL
             {
                 context.Update(caixa);
             }
-
+            
             await context.SaveChangesAsync();
             return caixa;
         }

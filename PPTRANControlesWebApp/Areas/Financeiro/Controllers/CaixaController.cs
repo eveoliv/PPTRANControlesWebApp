@@ -132,9 +132,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             try
             {
-                if (model.Caixa.Cliente.CPF != null && model.Caixa.Valor > 0)
+                if (model.Cliente.CPF != null && model.Caixa.Valor > 0)
                 {
-                    var cpf = model.Caixa.Cliente.CPF;
+                    var cpf = model.Cliente.CPF;
 
                     var idCli = PesquisarClientePorCpf(cpf);
                     if (idCli != 0)
@@ -153,9 +153,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                         if (model.Caixa.ProdutoId == 0)
                         {
                             model.Caixa.ProdutoId = 6;
-                        }
-
-                        model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+                        }                        
+                       
+                        model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;                        
                         await caixaDAL.GravarLancamento(model.Caixa);
                     }
 
