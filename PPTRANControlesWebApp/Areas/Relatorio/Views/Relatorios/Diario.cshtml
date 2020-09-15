@@ -113,16 +113,15 @@
                                 <br />
                                 <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>                               
                                 <br />
-                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
-                                <br />
-                                <p>Lançamentos Finalizados .(=):&emsp;R$ @ViewBag.Finalizados</p>
-                                <p>Lançamentos Em Aberto .(=):&emsp;R$ @ViewBag.Abertos</p>
+                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>                                
                             </div>
                         </div>
-                        
-                        @*<p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
-        <p><strong>&ensp; Total Credito...:&emsp;<span style="color: #0000ff;">R$ @ViewBag.Credito</span></strong></p>
-        <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong></p>*@
+                        <div>
+                            <hr />
+                            <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>                            
+                            <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>                            
+                            <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>                            
+                        </div>
                     </div>
                 </div>
             </div>
