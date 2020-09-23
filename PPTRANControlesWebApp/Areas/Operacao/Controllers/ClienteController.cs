@@ -258,12 +258,24 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsDetails(Cliente cliente)
         {
-            if (cliente.MedicoId != 0)
+            if (cliente.MedicoId >= 1)
+            {
                 ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
+            }
+            else
+            {
+                ViewBag.MedicoNome = "NÃO SELECIONADO";
+            }
 
 
-            if (cliente.PsicologoId != 0)
+            if (cliente.PsicologoId >= 1)
+            {
                 ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
+            }
+            else
+            {
+                ViewBag.PsicologoNome = "NÃO SELECIONADO";
+            }
         }
 
         private void CarregarViewBagsEdit(Cliente cliente)

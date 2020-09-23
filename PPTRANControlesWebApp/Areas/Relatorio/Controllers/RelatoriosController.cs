@@ -143,14 +143,56 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
-            var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
+            var dinheiro = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Dinheiro && c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
+            ViewBag.Dinheiro = dinheiro.ToString("0#.####");
+
+            var cartao = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cartao).Sum(c => c.Valor);
+            ViewBag.Cartao = cartao.ToString("0#.####");
+
+            var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
+            ViewBag.Cheque = cheque.ToString("0#.####");
+
+            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Tansferencia).Sum(c => c.Valor);
+            ViewBag.Transf = transf.ToString("0#.####");
+
+            var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
             ViewBag.Credito = credito.ToString("0#.####");
 
             var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito).Sum(c => c.Valor);
             ViewBag.Debito = debito.ToString("0#.####");
 
+            var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
+            ViewBag.Finalizados = finalizados.ToString("0#.####");
+
+            var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
+            ViewBag.Abertos = abertos.ToString("0#.####");
+
             var total = credito - debito;
             ViewBag.Total = total.ToString("0#.####");
+
+            //-------------------------------------------//
+
+            var totalExameMedicoRealizado = lancamentos.Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5);
+            ViewBag.TotalExameMedicoRealizado = totalExameMedicoRealizado.Count();
+
+            var totalExameMedicoRecebido = totalExameMedicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            ViewBag.TotalExameMedicoRecebido = totalExameMedicoRecebido.Count();
+
+            //-------------------------------------------//
+
+            var totalExamePsicoRealizado = lancamentos.Where(c => c.ProdutoId == 2 || c.ProdutoId == 3);
+            ViewBag.TotalExamePsicoRealizado = totalExamePsicoRealizado.Count();
+
+            var totalExamePsicoRecebido = totalExamePsicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            ViewBag.TotalExamePsicoRecebido = totalExamePsicoRecebido.Count();
+
+            //-------------------------------------------//
+
+            var totalLaudoRealizado = lancamentos.Where(c => c.ProdutoId == 4);
+            ViewBag.TotalLaudoRealizado = totalLaudoRealizado.Count();
+
+            var totalLaudoRecebido = totalLaudoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            ViewBag.TotalLaudoRecebido = totalLaudoRecebido.Count();
 
             return View(lancamentos);
         }
