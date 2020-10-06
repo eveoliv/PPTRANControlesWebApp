@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.Application
 {
-    public partial class AtualizaEnum : Migration
+    public partial class AppContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

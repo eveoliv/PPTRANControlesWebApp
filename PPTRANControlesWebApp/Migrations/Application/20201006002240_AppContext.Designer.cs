@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Data;
 namespace PPTRANControlesWebApp.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200831231450_AtualizaEnum")]
-    partial class AtualizaEnum
+    [Migration("20201006002240_AppContext")]
+    partial class AppContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
