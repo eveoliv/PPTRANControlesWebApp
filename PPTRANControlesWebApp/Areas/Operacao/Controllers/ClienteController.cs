@@ -49,18 +49,20 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lista = await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync();
+            //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
 
+            var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
+          
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
-            }
+            }                    
 
             return View(lista);
         }
-
+    
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id, "Detail");
@@ -230,6 +232,33 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             viewEdit = true;
             return RedirectToRoute(new { controller = "Cliente", action = "LaudoMedicoPCD", id = form.Id });
+        }
+
+        public IActionResult Pesquisa()
+        {          
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Pesquisa(PesquisaViewModel model)
+        {
+            var lista = 
+                clienteDAL.ObterHistoricoDeClientes(model.Nome, model.Cpf, model.DtInicio, model.DtFim).ToList();
+
+            try
+            {
+                if (lista.Count <= 400)               
+                    return View(lista);               
+            }
+            catch (ApplicationException e)
+            {
+                throw e;
+            }
+            
+            ViewBag.Erros = " O resultado da pesquisas está limitado a 400 registros, faça um refinamento da busca.";
+
+            return View();
         }
 
         /****** Metodos Privados do Controller ******/

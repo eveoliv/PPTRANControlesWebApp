@@ -35,10 +35,10 @@ namespace PPTRANControlesWebApp
             //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn_d")));
 
             /* HOM */
-            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_h")));
+            services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_h")));
 
             /* PROD */
-            services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_p")));
+            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_p")));
 
             services.AddDbContext<AppIdentityContext>(options => options.UseSqlite(Configuration.GetConnectionString("AppIdentityConn")));
 

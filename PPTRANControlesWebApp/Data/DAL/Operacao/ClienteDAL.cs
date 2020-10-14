@@ -20,9 +20,38 @@ namespace PPTRANControlesWebApp.Data.DAL
         {
             return context.Clientes
                 .Include(c => c.Clinica)
-                .Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);
+                .Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);       
         }
-        
+
+        public IQueryable<Cliente> ObterClientesClassificadosPorNomeNoMes()
+        {            
+            var mes = DateTime.Today.Month;
+            var ano = 2015;//DateTime.Today.Year;
+
+            return context.Clientes
+                .Include(c => c.Clinica)
+                .Where(s =>s.Status == EnumHelper.Status.Ativo &&
+                    s.DtCadastro.Month == mes && 
+                    s.DtCadastro.Year == ano || 
+                    s.StatusPgto == EnumHelper.YesNo.Não                   
+                    ).OrderBy(c => c.DtCadastro);
+        }
+
+        public IQueryable<Cliente> ObterHistoricoDeClientes(string nome, string cpf, DateTime dtInicio, DateTime dtfim)
+        {
+            if (nome != null)
+                return context.Clientes.Include(c => c.Clinica).Where(s => s.Status == EnumHelper.Status.Ativo && s.Nome.Contains(nome)).OrderBy(c => c.Nome);
+
+            if (cpf != null)
+                return context.Clientes.Include(c => c.Clinica).Where(s => s.Status == EnumHelper.Status.Ativo && s.CPF == cpf).OrderBy(c => c.Nome);
+
+            if (dtInicio != null && dtfim != null)
+                return context.Clientes.Include(c => c.Clinica).Where(s => s.Status == EnumHelper.Status.Ativo &&
+                s.DtCadastro >= dtInicio && s.DtCadastro <= dtfim).OrderBy(c => c.Nome);
+            
+            return null;
+        }
+
         public IQueryable<Cliente> ObterClientePorId_Find(long id)
         {
             return context.Clientes
