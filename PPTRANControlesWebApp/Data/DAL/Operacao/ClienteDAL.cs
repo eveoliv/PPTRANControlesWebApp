@@ -26,7 +26,7 @@ namespace PPTRANControlesWebApp.Data.DAL
         public IQueryable<Cliente> ObterClientesClassificadosPorNomeNoMes()
         {            
             var mes = DateTime.Today.Month;
-            var ano = 2015;//DateTime.Today.Year;
+            var ano = DateTime.Today.Year;
 
             return context.Clientes
                 .Include(c => c.Clinica)
