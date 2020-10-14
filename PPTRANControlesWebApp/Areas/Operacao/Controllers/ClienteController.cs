@@ -49,18 +49,20 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lista = await clienteDAL.ObterClientesClassificadosPorNome().ToListAsync();
+            //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
 
+            var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
+          
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
-            }
+            }                    
 
             return View(lista);
         }
-
+    
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id, "Detail");
@@ -232,6 +234,33 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             return RedirectToRoute(new { controller = "Cliente", action = "LaudoMedicoPCD", id = form.Id });
         }
 
+        public IActionResult Pesquisa()
+        {          
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Pesquisa(PesquisaViewModel model)
+        {
+            var lista = 
+                clienteDAL.ObterHistoricoDeClientes(model.Nome, model.Cpf, model.DtInicio, model.DtFim).ToList();
+
+            try
+            {
+                if (lista.Count <= 400)               
+                    return View(lista);               
+            }
+            catch (ApplicationException e)
+            {
+                throw e;
+            }
+            
+            ViewBag.Erros = " O resultado da pesquisas está limitado a 400 registros, faça um refinamento da busca.";
+
+            return View();
+        }
+
         /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoClientePorId(long? id, string chamada)
         {
@@ -258,12 +287,24 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsDetails(Cliente cliente)
         {
-            if (cliente.MedicoId != 0)
+            if (cliente.MedicoId >= 1)
+            {
                 ViewBag.MedicoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.MedicoId).Result.Nome.ToString();
+            }
+            else
+            {
+                ViewBag.MedicoNome = "NÃO SELECIONADO";
+            }
 
 
-            if (cliente.PsicologoId != 0)
+            if (cliente.PsicologoId >= 1)
+            {
                 ViewBag.PsicologoNome = colaboradorDAL.ObterColaboradorPorId((long)cliente.PsicologoId).Result.Nome.ToString();
+            }
+            else
+            {
+                ViewBag.PsicologoNome = "NÃO SELECIONADO";
+            }
         }
 
         private void CarregarViewBagsEdit(Cliente cliente)
@@ -312,7 +353,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             //psicologos.Insert(0, new Colaborador() { Id = 0, Nome = "Psicologo(a)" });
             ViewBag.Psicologos = psicologos;
 
-            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
+            var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().Where(h => h.Id < 10).ToList();
             //historicos.Insert(0, new Historico() { Id = 0, Nome = "Histórico" });
             ViewBag.Historicos = historicos;
         }

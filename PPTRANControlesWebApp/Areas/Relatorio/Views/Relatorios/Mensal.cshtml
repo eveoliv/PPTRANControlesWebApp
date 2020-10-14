@@ -61,50 +61,71 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Data)
-                                        </td>
-                                        <td>
-                                            @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
-                                            {
-                                                @Html.DisplayFor(modelItem => item.Tipo)
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
-                                            {
-                                                @Html.DisplayFor(modelItem => item.Tipo)
-                                            }
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Valor)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.FormaPgto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.StatusPgto)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Produto.Nome)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Historico.Nome)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Data)
+                                            </td>
+                                            <td>
+                                                @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Tipo)
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Tipo)
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Valor)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FormaPgto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StatusPgto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Produto.Nome)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Historico.Nome)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
-                        <p></p>
+                        <p></p>                       
                         <hr />
-                        <p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12  form-group">
+                                <p><strong>Resumo do Período</strong></p>
+                                <p>Total em Dinheiro .(+):&emsp;R$ @ViewBag.Dinheiro</p>
+                                <p>Total em Cartão ...(+):&emsp;R$ @ViewBag.Cartao</p>
+                                <p>Total em Cheque ..(+):&emsp;R$ @ViewBag.Cheque</p>
+                                <p>Total em Transf ....(+):&emsp;R$ @ViewBag.Transf</p>
+                                <p>Total Recebido ....(=):&emsp;R$ @ViewBag.Credito</p>
+                                <br />
+                                <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>
+                                <br />
+                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
+                            </div>
+                        </div>
+                        <div>
+                            <hr />
+                            <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>
+                            <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>
+                            <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>
+                        </div>
+
+                        @*<p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
                         <p><strong>&ensp; Total Credito...:&emsp;<span style="color: #0000ff;">R$ @ViewBag.Credito</span></strong></p>
-                        <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong></p>
+                        <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong>*@</p>
                     </div>
                 </div>
             </div>

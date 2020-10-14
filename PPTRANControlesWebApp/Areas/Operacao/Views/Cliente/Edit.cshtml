@@ -96,8 +96,10 @@
                                             <input asp-for="Naturalidade" type="text" class="form-control">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.EstadoCivil)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="EstadoCivil" type="text" class="form-control">
+                                        <dd class="col-md-9 col-sm-9 ">                                          
+                                            <select asp-for="EstadoCivil" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.EstadoCivil>()">
+                                                <option selected="selected" value="">Estado Civil</option>
+                                            </select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.DtNascimento)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
@@ -109,7 +111,9 @@
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Escolaridade)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <input asp-for="Escolaridade" type="text" class="form-control">
+                                            <select asp-for="Escolaridade" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Escolaridade>()">
+                                                <option selected="selected" value="">Escolaridade</option>
+                                            </select>                                            
                                         </dd>
                                     </dl>
                                 </div>

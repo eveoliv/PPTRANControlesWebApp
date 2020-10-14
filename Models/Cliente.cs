@@ -72,7 +72,7 @@ namespace Models
         public string Naturalidade { get; set; }
 
         [DisplayName("Estado Civil")]
-        public string EstadoCivil { get; set; }
+        public EnumHelper.EstadoCivil EstadoCivil { get; set; }
 
         [DisplayName("Data de Nascimento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -83,7 +83,7 @@ namespace Models
         public string Profissao { get; set; }
 
         [DisplayName("Escolaridade")]
-        public string Escolaridade { get; set; }
+        public EnumHelper.Escolaridade Escolaridade { get; set; }
 
         [DisplayName("Observação")]
         public string Obs { get; set; }     

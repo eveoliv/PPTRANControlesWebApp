@@ -9,8 +9,8 @@ using PPTRANControlesWebApp.Models;
 namespace PPTRANControlesWebApp.Migrations
 {
     [DbContext(typeof(AppIdentityContext))]
-    [Migration("20200805232908_IdentityFirst")]
-    partial class IdentityFirst
+    [Migration("20201006002039_Identity")]
+    partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

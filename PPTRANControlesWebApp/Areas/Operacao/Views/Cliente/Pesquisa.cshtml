@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Models.Cliente>
+@using Microsoft.AspNetCore.Identity
+@using PPTRANControlesWebApp.Areas.Identity.Data
+@using PPTRANControlesWebApp.Areas.Identity.Models
+@inject SignInManager<AppIdentityUser> SignInManager
+@inject UserManager<AppIdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Pesquisa Histórico</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Create" class="glyphicon glyphicon-plus-sign"></a>&nbsp;&nbsp;
+                        <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+
+                                @using (Html.BeginForm("Historico", "Cliente", FormMethod.Post))
+                                {
+                                    <p class="card-text">
+                                        Nome:&emsp;&emsp;&ensp;&ensp;<input name="nome" type="text" value="" style="border:2px solid #DCDCDC">
+                                        &emsp;&emsp;
+                                        CPF:&emsp;&emsp;&emsp;<input name="cpf" type="text" value="" style="border:2px solid #DCDCDC" data-inputmask="'mask': '999.999.999-99'"><br /><br />
+                                        Data Inicio:&emsp;<input name="dtInicio" type="date" value="" style="border:2px solid #DCDCDC">
+                                        &emsp;&emsp;&emsp;&emsp;&ensp;
+                                        Data Fim:&emsp;<input name="dtFim" type="date" value="" style="border:2px solid #DCDCDC">
+                                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                        <input type="submit" value="Buscar" class="btn btn-primary" />
+                                        <hr />
+                                    </p>
+
+                                }
+                                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DtCadastro)
+                                            </th>
+                                            @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                            {
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Clinica.Alias)
+                                                </th>
+                                            }
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Nome)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.CPF)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Telefone1)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.StatusPgto)
+                                            </th>
+                                            <th>
+                                                Opções
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @Html.HiddenFor(modelItem => item.Id)
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DtCadastro)
+                                                    </td>
+                                                    @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                                    {
+                                                        <th>
+                                                            @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                                        </th>
+                                                    }
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Nome)
+                                                    </td>
+                                                    <td id="cpf">
+                                                        @Html.DisplayFor(modelItem => item.CPF)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Telefone1)
+                                                    </td>
+                                                    <td>
+                                                        &emsp;&emsp;&emsp;
+                                                        @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
+                                                        {
+                                                            <span style="color: #f00;">
+                                                                @Html.DisplayFor(modelItem => item.StatusPgto)
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.StatusPgto)
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
+                                                        <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
+
+
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text dropdown-item">&emsp;Entrevista Psico</a>
+                                                            <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Entrevista Médico</a>
+                                                            <a asp-action="EntrevistaMedPCD" asp-route-id="@item.Id" class="fa fa-file dropdown-item">&emsp;Entrevista PCD</a>
+                                                            <a asp-action="LaudoMedicoPCD" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Laudo Médico PCD</a>
+                                                        </div>
+                                                        <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span style="color: #f00;">
+                @ViewBag.Erros
+            </span>
+        </div>
+    </div>
+</div>
+
+@section ScriptPage{
+    <script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+
+}

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PPTRANControlesWebApp.Migrations.Application
 {
-    public partial class InfosRG : Migration
+    public partial class AppContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,10 +161,10 @@ namespace PPTRANControlesWebApp.Migrations.Application
                     Mae = table.Column<string>(nullable: true),
                     Nacionalidade = table.Column<string>(nullable: true),
                     Naturalidade = table.Column<string>(nullable: true),
-                    EstadoCivil = table.Column<string>(nullable: true),
+                    EstadoCivil = table.Column<int>(nullable: false),
                     DtNascimento = table.Column<DateTime>(nullable: false),
                     Profissao = table.Column<string>(nullable: true),
-                    Escolaridade = table.Column<string>(nullable: true),
+                    Escolaridade = table.Column<int>(nullable: false),
                     Obs = table.Column<string>(nullable: true),
                     StatusPgto = table.Column<int>(nullable: false),
                     MedicoId = table.Column<long>(nullable: true),

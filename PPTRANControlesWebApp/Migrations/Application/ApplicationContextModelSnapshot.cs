@@ -146,9 +146,9 @@ namespace PPTRANControlesWebApp.Migrations.Application
 
                     b.Property<long?>("EnderecoId");
 
-                    b.Property<string>("Escolaridade");
+                    b.Property<int>("Escolaridade");
 
-                    b.Property<string>("EstadoCivil");
+                    b.Property<int>("EstadoCivil");
 
                     b.Property<long?>("HistoricoId");
 

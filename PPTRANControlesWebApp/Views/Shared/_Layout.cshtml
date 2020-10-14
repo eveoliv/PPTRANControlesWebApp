@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>PPTR-Controles | Teste</title>
+    <title>PPTR-Controles</title>
 
     <!-- Bootstrap -->
     <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +20,8 @@
     <link href="~/Content/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="~/Content/build/css/custom.min.css" rel="stylesheet">
+    <!--Marca dagua-->
+    <link href="~/css/watermark.css" rel="stylesheet" />
     @RenderSection("Styles", required: false)
 </head>
 
@@ -74,6 +76,7 @@
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Operacao" asp-controller="Cliente" asp-action="Index">Listar</a></li>
                                         <li><a asp-area="Operacao" asp-controller="Cliente" asp-action="Create">Cadastrar</a></li>
+                                        <li><a asp-area="Operacao" asp-controller="Cliente" asp-action="Pesquisa">Pesquisar Histórico</a></li>
                                     </ul>
                                 </li>
 
@@ -96,7 +99,7 @@
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Diario">Diário</a></li>
                                         <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal</a></li>
-                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Consolidado">Consolidado</a></li>
+                                        @*<li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Consolidado">Consolidado</a></li>*@
                                     </ul>
                                 </li>
                             </ul>
@@ -121,6 +124,7 @@
                 <!-- top tiles -->
                 <div class="row" style="display: inline-block;">
                     @RenderBody()
+                   
                     @*<<<<<<<<<<<<<<<<<Layout das paginas aqui>>>>>>>>>>>>>>>>>*@
 
                 </div>
