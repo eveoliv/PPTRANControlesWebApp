@@ -148,9 +148,9 @@ namespace PPTRANControlesWebApp
                 };
 
                 //prod
-                string pwd = "sudo2020";
+                //string pwd = "sudo2020";
                 //dev-homolog
-                //string pwd = "123456";
+                string pwd = "123456";
 
                 var createPowerUser = await userManager.CreateAsync(poweruser, pwd);
 
