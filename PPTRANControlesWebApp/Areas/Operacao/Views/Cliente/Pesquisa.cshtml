@@ -44,7 +44,10 @@
                                         Data Fim:&emsp;<input name="dtFim" type="date" value="" style="border:2px solid #DCDCDC">
                                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                                         <input type="submit" value="Buscar" class="btn btn-primary" />
-                                        <hr />
+                                        <br />
+                                    <span style="color: #f00;">@ViewBag.ErroNome</span>
+                                    <span style="color: #f00;">@ViewBag.ErroData</span>
+                                    <hr />
                                     </p>
 
                                 }
@@ -141,10 +144,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <span style="color: #f00;">
-                @ViewBag.Erros
-            </span>
+            </div>            
         </div>
     </div>
 </div>

@@ -52,17 +52,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
 
             var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
-          
+
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
-            }                    
+            }
 
             return View(lista);
         }
-    
+
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id, "Detail");
@@ -125,7 +125,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 if (model.Cliente.Nome != null && clienteExiste == false)
                 {
                     await enderecoDAL.GravarEndereco(model.Endereco);
-                  
+
                     model.Cliente.DtCadastro = DateTime.Today;
                     model.Cliente.EnderecoId = model.Endereco.Id;
                     model.Cliente.IdUser = userManager.GetUserAsync(User).Result.Id;
@@ -235,30 +235,43 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         }
 
         public IActionResult Pesquisa()
-        {          
+        {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Pesquisa(PesquisaViewModel model)
+        public async Task<IActionResult> Pesquisa(PesquisaViewModel model)
         {
-            var lista = 
-                clienteDAL.ObterHistoricoDeClientes(model.Nome, model.Cpf, model.DtInicio, model.DtFim).ToList();
+            var diasDif = (model.DtFim - model.DtInicio);           
 
-            try
+            if ( (diasDif.Days + 1) > 31)
             {
-                if (lista.Count <= 400)               
-                    return View(lista);               
-            }
-            catch (ApplicationException e)
-            {
-                throw e;
+                ViewBag.ErroData = "A pesquisa por DATA deve ter um intervalo de no máximo 31 dias.";
+                return View();
             }
             
-            ViewBag.Erros = " O resultado da pesquisas está limitado a 400 registros, faça um refinamento da busca.";
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
 
-            return View();
+            var lista =
+                clienteDAL.ObterHistoricoDeClientes(model.Nome, model.Cpf, model.DtInicio, model.DtFim).ToList();
+
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+                lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
+            }
+
+            if (model.Nome != null && lista.Count > 100)
+            {
+                ViewBag.ErroNome = "A pesquisa por NOME ultrapassou 100 registros, utilize Nome e Sobrenome para refinar a busca.";
+                return View();
+            }
+
+            return View(lista);
         }
 
         /****** Metodos Privados do Controller ******/

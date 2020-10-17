@@ -32,10 +32,10 @@ namespace PPTRANControlesWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             /* DEV */
-            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn_d")));
+            services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextLocalConn_d")));
 
             /* HOM */
-            services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_h")));
+            //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_h")));
 
             /* PROD */
             //services.AddDbContext<ApplicationContext>(options => options.UseMySql(Configuration.GetConnectionString("AppContextUolConn_p")));
@@ -147,7 +147,10 @@ namespace PPTRANControlesWebApp
                     ColaboradorId = 1                    
                 };
 
+                //prod
                 string pwd = "sudo2020";
+                //dev-homolog
+                //string pwd = "123456";
 
                 var createPowerUser = await userManager.CreateAsync(poweruser, pwd);
 
