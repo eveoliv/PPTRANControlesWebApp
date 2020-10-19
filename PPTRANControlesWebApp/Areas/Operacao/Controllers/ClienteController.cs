@@ -31,6 +31,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
         static bool verificaCliente = false;
+        static bool validaCpf = false;
 
         public ClienteController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -109,7 +110,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             CarregarViewBagsCreate(roleUser);
 
-            if (verificaCliente) ViewBag.Msg = " - Este cliente já esta cadastrado!";
+            if (verificaCliente) ViewBag.CpfExistente = "  -  O CPF informado já esta cadastrado!";
+
+            if (validaCpf) ViewBag.CpfInvalido = "  -  O CPF informado não é um CPF válido!";
 
             return View();
         }
@@ -118,9 +121,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
         {
+            var cpfValido = ValidadorDeCpf.IsCpf(model.Cliente.CPF);
+
+            if ( !cpfValido )
+            {
+                validaCpf = true;
+                return RedirectToAction("Create", "Cliente");
+            }
+
             try
             {
-                var clienteExiste = ValidaClienteCreate(model.Cliente.CPF);
+                var clienteExiste = ValidaClienteCreate(model.Cliente.CPF);                
 
                 if (model.Cliente.Nome != null && clienteExiste == false)
                 {
