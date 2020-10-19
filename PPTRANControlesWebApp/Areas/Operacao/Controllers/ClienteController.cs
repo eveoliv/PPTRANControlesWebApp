@@ -114,6 +114,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             if (validaCpf) ViewBag.CpfInvalido = "  -  O CPF informado não é um CPF válido!";
 
+            verificaCliente = false;
+            validaCpf = false;
+
             return View();
         }
 
