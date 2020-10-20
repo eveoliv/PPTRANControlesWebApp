@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Data.DAL;
+using PPTRANControlesWebApp.Data;
+using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
 {
@@ -18,11 +21,13 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppIdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ColaboradorDAL colaboradorDAL;
 
-        public LoginModel(SignInManager<AppIdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AppIdentityUser> signInManager, ILogger<LoginModel> logger, ApplicationContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            colaboradorDAL = new ColaboradorDAL(context);
         }
 
         [BindProperty]
@@ -75,8 +80,15 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                
                 if (result.Succeeded)
                 {
+                    if (!ValidaLoginOperadorNoHorarioComercial(Input.Email))
+                    {
+                        ModelState.AddModelError(string.Empty, "Login não permitido neste horário. " + DateTime.Now.Hour);
+                        return Page();
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
@@ -91,13 +103,32 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.");
                     return Page();
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private bool ValidaLoginOperadorNoHorarioComercial(string email)
+        {
+            var funcaoEncontrada = colaboradorDAL.ObterColaboradorPorEmail(email).Result.Funcao;
+
+            if (funcaoEncontrada.ToString() == RolesNomes.Operador.ToString())
+            {
+                if (DateTime.Now.Hour <= 7 || DateTime.Now.Hour >= 18)                
+                    return false;
+
+                if ((DateTime.Now.Hour <= 7 || DateTime.Now.Hour >= 13) && DateTime.Today.DayOfWeek.ToString() == "Saturday")                
+                    return false;
+
+                if (DateTime.Today.DayOfWeek.ToString() == "Sunday")
+                    return false;
+            }
+
+            return true;
         }
     }
 }

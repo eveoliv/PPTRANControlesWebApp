@@ -25,15 +25,12 @@ namespace PPTRANControlesWebApp.Data.DAL
 
         public IQueryable<Cliente> ObterClientesClassificadosPorNomeNoMes()
         {            
-            var mes = DateTime.Today.Month;
-            var ano = DateTime.Today.Year;
-
             return context.Clientes
                 .Include(c => c.Clinica)
                 .Where(s =>s.Status == EnumHelper.Status.Ativo &&
-                    s.DtCadastro.Month == mes && 
-                    s.DtCadastro.Year == ano || 
-                    s.StatusPgto == EnumHelper.YesNo.Não                   
+                    s.DtCadastro.Year == DateTime.Today.Year &&
+                    s.DtCadastro.Month == DateTime.Today.Month && 
+                    s.DtCadastro.Day >= DateTime.Today.Day - 7
                     ).OrderBy(c => c.DtCadastro);
         }
 

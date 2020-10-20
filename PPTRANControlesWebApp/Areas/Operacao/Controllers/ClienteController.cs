@@ -50,8 +50,6 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
-
             var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
@@ -61,7 +59,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
+            ViewBag.DtCabecalho = PeriodoDataCabecalho();
+
             return View(lista);
+        }
+
+        private string PeriodoDataCabecalho()
+        {
+            return $"{DateTime.Today.Day - 7}/{DateTime.Today.Month}/{DateTime.Today.Year} até {DateTime.Today.ToString("dd/MM/yyyy")}";                    
         }
 
         public async Task<IActionResult> Details(long? id)
