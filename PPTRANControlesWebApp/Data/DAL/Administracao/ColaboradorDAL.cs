@@ -96,5 +96,12 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .Where(s => s.Status == EnumHelper.Status.Ativo)
                 .SingleOrDefaultAsync(c => c.CPF == cpf);
         }
+
+        public async Task<Colaborador> ObterColaboradorPorEmail(string email)
+        {                       
+            return await context.Colaboradores
+                .Where(c => c.Email == email)
+                .SingleOrDefaultAsync();
+        }
     }
 }

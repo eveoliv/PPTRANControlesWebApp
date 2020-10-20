@@ -31,6 +31,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
         static bool verificaCliente = false;
+        static bool validaCpf = false;
 
         public ClienteController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -49,8 +50,6 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
-
             var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
@@ -60,7 +59,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
+            ViewBag.DtCabecalho = PeriodoDataCabecalho();
+
             return View(lista);
+        }
+
+        private string PeriodoDataCabecalho()
+        {
+            return $"{DateTime.Today.Day - 7}/{DateTime.Today.Month}/{DateTime.Today.Year} até {DateTime.Today.ToString("dd/MM/yyyy")}";                    
         }
 
         public async Task<IActionResult> Details(long? id)
@@ -109,7 +115,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             CarregarViewBagsCreate(roleUser);
 
-            if (verificaCliente) ViewBag.Msg = " - Este cliente já esta cadastrado!";
+            if (verificaCliente) ViewBag.CpfExistente = "  -  O CPF informado já esta cadastrado!";
+
+            if (validaCpf) ViewBag.CpfInvalido = "  -  O CPF informado não é um CPF válido!";
+
+            verificaCliente = false;
+            validaCpf = false;
 
             return View();
         }
@@ -118,9 +129,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClienteViewModel model)
         {
+            var cpfValido = ValidadorDeCpf.IsCpf(model.Cliente.CPF);
+
+            if ( !cpfValido )
+            {
+                validaCpf = true;
+                return RedirectToAction("Create", "Cliente");
+            }
+
             try
             {
-                var clienteExiste = ValidaClienteCreate(model.Cliente.CPF);
+                var clienteExiste = ValidaClienteCreate(model.Cliente.CPF);                
 
                 if (model.Cliente.Nome != null && clienteExiste == false)
                 {
