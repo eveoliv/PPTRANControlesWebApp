@@ -47,9 +47,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
-            var roleUser = await userManager.GetRolesAsync(usuario);
-
-            //Data cadastro, clinica, nome, cpf, telefone, pgto realizado, opções
+            var roleUser = await userManager.GetRolesAsync(usuario);            
 
             var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
 
