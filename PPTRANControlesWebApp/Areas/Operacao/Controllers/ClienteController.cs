@@ -48,7 +48,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
-            var roleUser = await userManager.GetRolesAsync(usuario);            
+            var roleUser = await userManager.GetRolesAsync(usuario);
 
             var lista = await clienteDAL.ObterClientesClassificadosPorNomeNoMes().ToListAsync();
 
@@ -59,7 +59,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
+            ViewBag.DtCabecalho = PeriodoDataCabecalho();
+
             return View(lista);
+        }
+
+        private string PeriodoDataCabecalho()
+        {
+            return $"{DateTime.Today.Day - 7}/{DateTime.Today.Month}/{DateTime.Today.Year} até {DateTime.Today.ToString("dd/MM/yyyy")}";                    
         }
 
         public async Task<IActionResult> Details(long? id)
