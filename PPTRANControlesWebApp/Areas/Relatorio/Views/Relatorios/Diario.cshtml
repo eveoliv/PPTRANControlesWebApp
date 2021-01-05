@@ -45,7 +45,7 @@
                                             Tipo Valor
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.StatusPgto)
+                                            Pago?
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.ProdutoId)
@@ -54,7 +54,13 @@
                                             @Html.DisplayNameFor(model => model.HistoricoId)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ClinicaId)
+                                            @Html.DisplayNameFor(model => model.Cliente.Nome)
+                                        </th>
+                                        <th>
+                                            Medico
+                                        </th>
+                                        <th>
+                                            Psicologo
                                         </th>
                                     </tr>
                                 </thead>
@@ -93,8 +99,15 @@
                                                 @Html.DisplayFor(modelItem => item.Historico.Nome)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                                @Html.DisplayFor(modelItem => item.Cliente.Nome)
                                             </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cliente.MedicoId)
+                                            </td> 
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cliente.PsicologoId)
+                                            </td>
+
                                         </tr>
                                     }
                                 </tbody>
@@ -111,16 +124,16 @@
                                 <p>Total em Transf ....(+):&emsp;R$ @ViewBag.Transf</p>
                                 <p>Total Recebido ....(=):&emsp;R$ @ViewBag.Credito</p>
                                 <br />
-                                <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>                               
+                                <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>
                                 <br />
-                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>                                
+                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
                             </div>
                         </div>
                         <div>
                             <hr />
-                            <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>                            
-                            <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>                            
-                            <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>                            
+                            <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>
+                            <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>
+                            <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Data.DAL;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Data.DAL.Relatorio;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using System.Collections.Generic;
+using System;
 
 namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 {
@@ -64,7 +65,10 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lancamentos = await relatorioDAL.ObterLancamentosClassificadosPorClinicaDiario().ToListAsync();
+            //var data = DateTime.Today;
+            var data = new DateTime(2021, 1, 4);
+
+            var lancamentos = await relatorioDAL.ObterLancamentosClassificadosPorClinicaDiario(data).ToListAsync();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
@@ -82,7 +86,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
             ViewBag.Cheque = cheque.ToString("0#.####");
 
-            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Tansferencia).Sum(c => c.Valor);
+            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Transferencia).Sum(c => c.Valor);
             ViewBag.Transf = transf.ToString("0#.####");           
 
             var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
@@ -152,7 +156,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
             ViewBag.Cheque = cheque.ToString("0#.####");
 
-            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Tansferencia).Sum(c => c.Valor);
+            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Transferencia).Sum(c => c.Valor);
             ViewBag.Transf = transf.ToString("0#.####");
 
             var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
