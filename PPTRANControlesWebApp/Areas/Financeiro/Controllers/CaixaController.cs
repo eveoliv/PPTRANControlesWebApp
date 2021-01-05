@@ -153,9 +153,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                         if (model.Caixa.ProdutoId == 0)
                         {
                             model.Caixa.ProdutoId = 6;
-                        }                        
-                       
-                        model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;                        
+                        }
+
+                        model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
                     }
 
@@ -181,16 +181,20 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var idCli = caixaDAL.ObterLancamentoPorId((long)id).Result.Cliente.Id;           
-            var cliente = context.Clientes.Find((long)idCli);
-            cliente.StatusPgto = EnumHelper.YesNo.Não;
-            await clienteDAL.GravarCliente(cliente);
+            var clienteExiste  = caixaDAL.ObterLancamentoPorId((long)id).Result.ClienteId;
+            if (clienteExiste != null)
+            {
+                var idCli = caixaDAL.ObterLancamentoPorId((long)id).Result.Cliente.Id;
+                var cliente = context.Clientes.Find((long)idCli);
+                cliente.StatusPgto = EnumHelper.YesNo.Não;
+                await clienteDAL.GravarCliente(cliente);
+            }
 
             var IdUser = userManager.GetUserAsync(User).Result.Id;
             var caixa = await caixaDAL.InativarLancamentoPorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
         }
-
+       
         public IActionResult Recibo(long id)
         {
             var pagamentos = caixaDAL.ObterLancamentoPagoPeloCliente(id).ToList();
@@ -286,7 +290,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             ViewBag.Clinicas = clinicas;
 
             var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();
-            historicos.Insert(0, new Historico() { Id = 0, Nome = "" });            
+            historicos.Insert(0, new Historico() { Id = 0, Nome = "" });
             ViewBag.Historicos = historicos;
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorNome().ToList();
@@ -341,6 +345,6 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             return View(caixa);
         }
-
+        
     }
 }
