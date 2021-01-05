@@ -181,8 +181,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-            var clienteExiste  = caixaDAL.ObterLancamentoPorId((long)id).Result.ClienteId;
-            if (clienteExiste != null)
+           
+            if (ClienteExiste((long)id))
             {
                 var idCli = caixaDAL.ObterLancamentoPorId((long)id).Result.Cliente.Id;
                 var cliente = context.Clientes.Find((long)idCli);
@@ -194,7 +194,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             var caixa = await caixaDAL.InativarLancamentoPorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
         }
-       
+      
         public IActionResult Recibo(long id)
         {
             var pagamentos = caixaDAL.ObterLancamentoPagoPeloCliente(id).ToList();
@@ -345,6 +345,11 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             return View(caixa);
         }
-        
+
+        private bool ClienteExiste(long? id)
+        {
+            return caixaDAL.ObterLancamentoPorId((long)id).Result.ClienteId != null;
+        }
+
     }
 }
