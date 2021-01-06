@@ -110,5 +110,6 @@ namespace Models
 
         [DisplayName("Usuário")]
         public string IdUser { get; set; }
+       
     }
 }

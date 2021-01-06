@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using PPTRANControlesWebApp.Models.Relatorio;
 
 namespace PPTRANControlesWebApp.Data.DAL.Relatorio
 {
@@ -28,31 +29,6 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
 
         public IQueryable<Caixa> ObterLancamentosClassificadosPorClinicaDiario(DateTime dateTime)
         {
-            //return from a in context.Caixas
-            //          join b in context.Clientes on a.ClienteId equals b.Id
-            //          join c in context.Colaboradores on b.MedicoId equals c.Id
-            //          join d in context.Colaboradores on b.PsicologoId equals d.Id
-            //          join e in context.Clinicas on b.ClinicaId equals e.Id
-            //          join f in context.Produtos on a.ProdutoId equals f.Id
-            //          join g in context.Historicos on a.HistoricoId equals g.Id
-            //          where b.Status == EnumHelper.Status.Ativo
-            //          where a.Data == dateTime
-            //          orderby a.Clinica
-            //          select new
-            //          {
-            //              Data = a.Data,
-            //              Debito = a.Tipo,
-            //              Credito = a.Tipo,
-            //              Valor = a.Valor,
-            //              FormaPgto = a.FormaPgto,
-            //              Status = a.Status,
-            //              Produto = f.Nome,
-            //              Historico = g.Nome,
-            //              Nome = b.Nome,
-            //              Medico = c.Nome,
-            //              Psico = d.Nome
-            //          };
-
             return context.Caixas
               .Include(c => c.Cliente)
               .Include(c => c.Clinica)
@@ -70,7 +46,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
             var mes = DateTime.Today.Month;
             var dias = DateTime.DaysInMonth(ano, mes);
 
-            DateTime dtInicio = new DateTime(ano,mes,01);
+            DateTime dtInicio = new DateTime(ano, mes, 01);
             DateTime dtFim = new DateTime(ano, mes, dias);
 
             return context.Caixas
@@ -82,6 +58,46 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
               .Where(s => s.Status == EnumHelper.Status.Ativo)
               .Where(d => d.Data >= dtInicio && d.Data <= dtFim)
               .OrderBy(p => p.Clinica);
+        }
+
+        public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model)
+        {
+            return from a in context.Caixas
+                   join b in context.Clientes on a.ClienteId equals b.Id
+                   join c in context.Colaboradores on b.MedicoId equals c.Id
+                   where b.Status == EnumHelper.Status.Ativo
+                   where a.Status == EnumHelper.Status.Ativo
+                   where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                   where a.Data == model.Data
+                   orderby c.Nome
+                   select new DiarioMedicoViewModel
+                   {
+                       Id = c.Id,
+                       ClinicaId = c.ClinicaId,
+                       Nome = c.Nome,
+                       Data = a.Data,
+                       Cliente = b.Nome
+                   };
+        }
+
+        public IQueryable<DiarioPsicologoViewModel> ObterExamePorPsicologoDiario(DiarioPsicologoViewModel model)
+        {
+            return from a in context.Caixas
+                   join b in context.Clientes on a.ClienteId equals b.Id
+                   join c in context.Colaboradores on b.PsicologoId equals c.Id
+                   where b.Status == EnumHelper.Status.Ativo
+                   where a.Status == EnumHelper.Status.Ativo
+                   where a.ProdutoId == 2 || a.ProdutoId == 3
+                   where a.Data == model.Data
+                   orderby c.Nome
+                   select new DiarioPsicologoViewModel
+                   {
+                       Id = c.Id,
+                       ClinicaId = c.ClinicaId,
+                       Nome = c.Nome,
+                       Data = a.Data,
+                       Cliente = b.Nome
+                   };
         }
     }
 }

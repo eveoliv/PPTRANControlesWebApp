@@ -25,7 +25,8 @@
     @RenderSection("Styles", required: false)
 </head>
 
-<body class="nav-md"> <!--footer_fixed-->
+<body class="nav-md">
+    <!--footer_fixed-->
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -42,8 +43,8 @@
                             <img src="http://poupetran.com.br/images/tratadas/poupetran-logo-126x116-0.png" alt="Logo - Poupetran" class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            
-                           <partial name="_LoginPartialUserLogado"/>
+
+                            <partial name="_LoginPartialUserLogado" />
                         </div>
                     </div>
 
@@ -60,7 +61,7 @@
                                         <li><a asp-area="Identity" asp-controller="Usuario" asp-action="Index">Acessos</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Clinica" asp-action="Index">Clinicas</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Historico" asp-action="Index">Historico</a></li>
-                                        <li><a asp-area="Administracao" asp-controller="Contato" asp-action="Index">Contatos</a></li>                                        
+                                        <li><a asp-area="Administracao" asp-controller="Contato" asp-action="Index">Contatos</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Produto" asp-action="Index">Produtos    </a></li>
                                     </ul>
                                 </li>
@@ -95,10 +96,14 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios Caixa <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Diario">Diário</a></li>
-                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioCaixa">Diário Caixa</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioMedico">Diário Medico</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioPsico">Diário Psicologo</a></li>
+
+
+                                        @*<li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal Caixa</a></li>*@
                                         @*<li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Consolidado">Consolidado</a></li>*@
                                     </ul>
                                 </li>
@@ -114,7 +119,7 @@
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                     </div>
                     <nav class="nav navbar-nav">
-                        <partial name="_LoginPartial"/>
+                        <partial name="_LoginPartial" />
                     </nav>
                 </div>
             </div>
@@ -124,7 +129,7 @@
                 <!-- top tiles -->
                 <div class="row" style="display: inline-block;">
                     @RenderBody()
-                   
+
                     @*<<<<<<<<<<<<<<<<<Layout das paginas aqui>>>>>>>>>>>>>>>>>*@
 
                 </div>
@@ -151,7 +156,7 @@
     <script src="~/Content/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="~/Content/vendors/nprogress/nprogress.js"></script>
-    <!-- jquery.inputmask -->        
+    <!-- jquery.inputmask -->
     <script src="~/Content/vendors/jquery/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/Content/build/js/custom.min.js"></script>

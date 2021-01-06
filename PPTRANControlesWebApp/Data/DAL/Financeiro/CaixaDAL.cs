@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -27,14 +28,14 @@ namespace PPTRANControlesWebApp.Data.DAL
                 .OrderBy(p => p.Produto);
         }     
 
-        public IQueryable<Caixa> ObterLancamentosClassificadosPorClienteNome()
+        public IQueryable<Caixa> ObterLancamentosClassificadosPorClienteNome(DateTime dateTime)
         {
             return context.Caixas
                 .Include(c => c.Cliente)
                 .Include(p => p.Produto)
                 .Include(i => i.Historico)
                 .Include(c => c.Colaborador)
-                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .Where(s => s.Status == EnumHelper.Status.Ativo && s.Data == dateTime)
                 .OrderBy(c => c.Cliente);
         }
 

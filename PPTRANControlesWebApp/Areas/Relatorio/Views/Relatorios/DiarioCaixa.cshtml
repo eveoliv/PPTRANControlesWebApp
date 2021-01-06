@@ -15,10 +15,19 @@
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Lançamentos de Caixa em @DateTime.Today.ToString("dd/MM/yyyy")</h2>
+                <h2>Lançamentos de Caixa em @ViewBag.DataAtual</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
                 </ul>
+                <br />
+                @using (Html.BeginForm("Index", "Diario", FormMethod.Post))
+                {
+                    <h6>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        Filtrar outra data: &emsp;<input name="dateTime" type="date" value="DateTime.Today.ToString()" style="border:2px solid #DCDCDC">
+                        <input type="submit" value="Buscar" class="btn btn-primary" />
+                    </h6>
+                }
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -103,7 +112,7 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Cliente.MedicoId)
-                                            </td> 
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Cliente.PsicologoId)
                                             </td>

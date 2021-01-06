@@ -63,12 +63,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             return View(lista);
         }
-
-        private string PeriodoDataCabecalho()
-        {
-            return $"{DateTime.Today.Day - 7}/{DateTime.Today.Month}/{DateTime.Today.Year} até {DateTime.Today.ToString("dd/MM/yyyy")}";                    
-        }
-
+     
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoClientePorId(id, "Detail");
@@ -445,6 +440,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 return false;
             }
+        }
+
+        private string PeriodoDataCabecalho()
+        {
+            return $"{DateTime.Today.ToString("dd/MM/yyyy")}";
         }
     }
 }

@@ -1,4 +1,9 @@
 ﻿@model Models.Cliente
+@using Microsoft.AspNetCore.Identity
+@using PPTRANControlesWebApp.Areas.Identity.Data
+@using PPTRANControlesWebApp.Areas.Identity.Models
+@inject SignInManager<AppIdentityUser> SignInManager
+@inject UserManager<AppIdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Edit";
@@ -96,7 +101,7 @@
                                             <input asp-for="Naturalidade" type="text" class="form-control">
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.EstadoCivil)</dt>
-                                        <dd class="col-md-9 col-sm-9 ">                                          
+                                        <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="EstadoCivil" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.EstadoCivil>()">
                                                 <option selected="selected" value="">Estado Civil</option>
                                             </select>
@@ -113,7 +118,7 @@
                                         <dd class="col-md-9 col-sm-9 ">
                                             <select asp-for="Escolaridade" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.Escolaridade>()">
                                                 <option selected="selected" value="">Escolaridade</option>
-                                            </select>                                            
+                                            </select>
                                         </dd>
                                     </dl>
                                 </div>
@@ -232,8 +237,14 @@
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Pagamento Realizado</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="StatusPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()" disabled="disabled">                                               
-                                            </select>
+                                            @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                            {
+                                                <select asp-for="StatusPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()"></select>
+                                            }
+                                            else
+                                            {
+                                                <select asp-for="StatusPgto" class="form-control" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()" disabled="disabled"></select>
+                                            }
                                         </dd>
                                     </dl>
                                 </div>

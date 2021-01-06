@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -42,13 +43,17 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime dateTime)
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lancamentos = await caixaDAL.ObterLancamentosClassificadosPorClienteNome().ToListAsync();
+            if (dateTime.Year == 1)                
+                dateTime = DateTime.Today;
+            
+            var lancamentos =
+                await caixaDAL.ObterLancamentosClassificadosPorClienteNome(dateTime).ToListAsync();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
@@ -56,6 +61,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
+
+            ViewBag.DataAual = dateTime.ToString("dd/MM/yyyy");
 
             return View(lancamentos);
         }
@@ -229,7 +236,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
 
             return View(pagamentos);
-        }
+        }     
 
         /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoLancamentoPorId(long? id)

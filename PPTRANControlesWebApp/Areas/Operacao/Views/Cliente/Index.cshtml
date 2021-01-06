@@ -23,7 +23,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Lista de Clientes no Período de @ViewBag.DtCabecalho
+                        Lista de Clientes em @ViewBag.DtCabecalho
                     </h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <a asp-action="Create" class="glyphicon glyphicon-plus-sign"></a>&nbsp;&nbsp;
@@ -57,7 +57,13 @@
                                                 @Html.DisplayNameFor(model => model.Telefone1)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.StatusPgto)
+                                                Pago?
+                                            </th>
+                                            <th>
+                                                Medico
+                                            </th>
+                                            <th>
+                                                Psicologo
                                             </th>
                                             <th>
                                                 Opções
@@ -68,56 +74,62 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                @Html.HiddenFor(modelItem => item.Id)
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DtCadastro)
-                                                </td>
-                                                @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                        <tr>
+                                            @Html.HiddenFor(modelItem => item.Id)
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DtCadastro)
+                                            </td>
+                                            @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
+                                            {
+                                                <th>
+                                                    @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                                </th>
+                                            }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nome)
+                                            </td>
+                                            <td id="cpf">
+                                                @Html.DisplayFor(modelItem => item.CPF)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Telefone1)
+                                            </td>
+                                            <td>
+                                                @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
                                                 {
-                                                    <th>
-                                                        @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                                    </th>
-                                                }
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Nome)
-                                                </td>
-                                                <td id="cpf">
-                                                    @Html.DisplayFor(modelItem => item.CPF)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Telefone1)
-                                                </td>
-                                                <td>
-                                                    &emsp;&emsp;&emsp;
-                                                    @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
-                                                    {
-                                                        <span style="color: #f00;">
-                                                            @Html.DisplayFor(modelItem => item.StatusPgto)
-                                                        </span>
-                                                    }
-                                                    else
-                                                    {
+                                                    <span style="color: #f00;">
                                                         @Html.DisplayFor(modelItem => item.StatusPgto)
-                                                    }
-                                                </td>
-                                                <td>
-                                                    <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
-                                                    <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
-                                                    <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
-                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.StatusPgto)
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MedicoId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PsicologoId)
+                                            </td>
+                                            <td>
+                                                <a asp-area="Operacao" asp-controller="Carrinho" asp-action="Create" asp-route-id="@item.Id" class="glyphicon glyphicon-shopping-cart"></a>
+                                                <a asp-area="Financeiro" asp-action="Recibo" asp-controller="Caixa" asp-route-id="@item.Id" class="fa fa-money"></a>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="glyphicon glyphicon-zoom-in"></a>
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
 
 
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text dropdown-item">&emsp;Entrevista Psico</a>
-                                                        <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Entrevista Médico</a>
-                                                        <a asp-action="EntrevistaMedPCD" asp-route-id="@item.Id" class="fa fa-file dropdown-item">&emsp;Entrevista PCD</a>
-                                                        <a asp-action="LaudoMedicoPCD" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Laudo Médico PCD</a>
-                                                    </div>
-                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
-                                                </td>
-                                            </tr>
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i></a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a asp-action="EntrevistaPsi" asp-route-id="@item.Id" class="fa fa-file-text dropdown-item">&emsp;Entrevista Psico</a>
+                                                    <a asp-action="EntrevistaMed" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Entrevista Médico</a>
+                                                    <a asp-action="EntrevistaMedPCD" asp-route-id="@item.Id" class="fa fa-file dropdown-item">&emsp;Entrevista PCD</a>
+                                                    <a asp-action="LaudoMedicoPCD" asp-route-id="@item.Id" class="fa fa-stethoscope dropdown-item">&emsp;Laudo Médico PCD</a>
+                                                </div>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="glyphicon glyphicon-trash"></a>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

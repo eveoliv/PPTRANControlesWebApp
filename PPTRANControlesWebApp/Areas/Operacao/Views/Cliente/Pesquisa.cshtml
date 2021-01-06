@@ -73,7 +73,7 @@
                                                 @Html.DisplayNameFor(model => model.Telefone1)
                                             </th>
                                             <th>
-                                                @Html.DisplayNameFor(model => model.StatusPgto)
+                                                Pago?
                                             </th>
                                             <th>
                                                 Opções
@@ -106,8 +106,7 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Telefone1)
                                                     </td>
-                                                    <td>
-                                                        &emsp;&emsp;&emsp;
+                                                    <td>                                                        
                                                         @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
                                                         {
                                                             <span style="color: #f00;">

@@ -5,7 +5,7 @@ namespace Models
     {
         public enum YesNo
         {
-            Não, Sim
+            Não, Sim, Cancelado
         };
 
         public enum Tipo

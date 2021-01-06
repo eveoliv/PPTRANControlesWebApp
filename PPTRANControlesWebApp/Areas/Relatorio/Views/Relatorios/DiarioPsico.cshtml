@@ -1,0 +1,90 @@
+﻿@model IEnumerable<PPTRANControlesWebApp.Models.Relatorio.DiarioPsicologoViewModel>
+
+@{
+    ViewData["Title"] = "Diario Psicologo";
+}
+
+<div class="row" style="display: block;">
+    <div class="col-md-12 col-sm-12  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Exames por Psicologo em @ViewBag.DataAtual</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>                   
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                @using (Html.BeginForm("DiarioPsico", "Relatorio", FormMethod.Post))
+                {
+                    <div>
+                        <h6>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Filtrar outra data: &emsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
+                            <input type="submit" value="Buscar" class="btn btn-primary" />
+                        </h6>
+                    </div>
+                }
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Contagem
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cliente)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var i = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => i)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cliente)
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+                
+                <div class="alert alert-success alert-dismissible ">
+                    @ViewBag.Agrupar0
+                    <br />
+                    @ViewBag.Agrupar1
+                    <br />
+                    @ViewBag.Agrupar2
+                    <br />
+                    @ViewBag.Agrupar3
+                    <br />
+                    @ViewBag.Agrupar4
+                    <br />
+                    @ViewBag.Agrupar5
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
