@@ -18,13 +18,18 @@
 
                 @using (Html.BeginForm("DiarioPsico", "Relatorio", FormMethod.Post))
                 {
-                    <div>
-                        <h6>
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            Filtrar outra data: &emsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
-                            <input type="submit" value="Buscar" class="btn btn-primary" />
-                        </h6>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                @Html.DropDownList("psico", ViewData["Psicologos"] as SelectList, new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm">
+                                Selecionar Data: &nbsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
+                                <input type="submit" value="Buscar" class="btn btn-primary" />
+                            </div>
+                        </div>
                     </div>
+                    <br />
                 }
 
                 <table class="table">
@@ -69,7 +74,7 @@
                         }
                     </tbody>
                 </table>
-                
+
                 <div class="alert alert-success alert-dismissible ">
                     @ViewBag.Agrupar0
                     <br />

@@ -139,7 +139,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         {
             try
             {
-                if (model.Cliente.CPF != null && model.Caixa.Valor > 0)
+                if (model.Caixa.Valor > 0)
                 {
                     var cpf = model.Cliente.CPF;
 
@@ -154,6 +154,14 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     {
                         model.Caixa.ColaboradorId = idCol;
                     }
+                    else
+                    {
+                        var userId = userManager.GetUserAsync(User).Result.Id;
+                        var usuario = await userManager.FindByIdAsync(userId);                        
+                        var idLogado = colaboradorDAL.ObterColaboradorPorEmail(usuario.ToString()).Result.Id;
+                        model.Caixa.ColaboradorId = idLogado;
+                    }
+                    
 
                     if (idCli != 0 || idCol != 0)
                     {

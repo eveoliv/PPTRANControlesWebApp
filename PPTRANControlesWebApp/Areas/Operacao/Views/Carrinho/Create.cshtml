@@ -32,7 +32,7 @@
                             <div class="item form-group">
                                 <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 1</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto1Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" required="required" >
+                                    <select asp-for="Produto1Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" required="required">
                                         <option selected="selected" value="">Selecionar</option>
                                     </select>
 
@@ -65,6 +65,15 @@
                                 <p> </p>
                                 <p><span style="color: #f00;">* O cliente ja possui exames não pagos cadastrados no caixa!</span></p>
                             }
+                            @*<div class="item form-group">
+                                <div class="col-md-11 col-sm-11 ">
+                                    <div class="checkbox">
+                                        <label class="col-form-label col-md-12 col-sm-12 label-align">
+                                            <input name="baixaFlag" type="checkbox" class="flat"> Realizar baixa automatica do(s) exame(s) cadastrado(s).
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>*@
 
                             <div class="ln_solid"></div>
                             <div class="item form-group">

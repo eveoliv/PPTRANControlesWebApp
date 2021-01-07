@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Models.Relatorio;
 using PPTRANControlesWebApp.Data.DAL.Relatorio;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
+using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 {
@@ -20,6 +22,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
     [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
     public class RelatoriosController : Controller
     {
+        private readonly ProdutoDAL produtoDAL;
         private readonly RelatorioDAL relatorioDAL;
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
@@ -31,6 +34,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             this.userManager = userManager;
             relatorioDAL = new RelatorioDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
+            produtoDAL = new ProdutoDAL(context);
         }
 
         public async Task<IActionResult> Consolidado()
@@ -81,31 +85,38 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             ViewBag.DataAtual = dateTime.ToString("dd/MM/yyyy");
 
             var dinheiro = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Dinheiro && c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
-            ViewBag.Dinheiro = dinheiro.ToString("0#.####");
+            ViewBag.Dinheiro = dinheiro.ToString("N2");
 
             var cartao = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cartao).Sum(c => c.Valor);
-            ViewBag.Cartao = cartao.ToString("0#.####");
+            ViewBag.Cartao = cartao.ToString("N2");
 
             var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
-            ViewBag.Cheque = cheque.ToString("0#.####");
+            ViewBag.Cheque = cheque.ToString("N2");
 
             var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Transferencia).Sum(c => c.Valor);
-            ViewBag.Transf = transf.ToString("0#.####");
+            ViewBag.Transf = transf.ToString("N2");
 
+            /////////////////////////ini
+            //Alteração para exibir apenas dinheiro no total recebido 
             var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
-            ViewBag.Credito = credito.ToString("0#.####");
+            //ViewBag.Credito = credito.ToString("N2");
+            ViewBag.Credito = dinheiro.ToString("N2");
+
+            var cartaoETransf = cartao + transf;
+            ViewBag.CartaoETransf = cartaoETransf.ToString("N2");
+            ///////////////////////fim
 
             var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito).Sum(c => c.Valor);
-            ViewBag.Debito = debito.ToString("0#.####");
+            ViewBag.Debito = debito.ToString("N2");
 
             var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
-            ViewBag.Finalizados = finalizados.ToString("0#.####");
+            ViewBag.Finalizados = finalizados.ToString("N2");
 
             var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
-            ViewBag.Abertos = abertos.ToString("0#.####");
+            ViewBag.Abertos = abertos.ToString("N2");
 
             var total = credito - debito;
-            ViewBag.Total = total.ToString("0#.####");
+            ViewBag.Total = total.ToString("N2");
 
             //-------------------------------------------//
 
@@ -204,8 +215,9 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             return View(lancamentos);
         }
 
-        public async Task<IActionResult> DiarioMedico(DiarioMedicoViewModel model, DateTime dateTime)
+        public async Task<IActionResult> DiarioMedico(DiarioMedicoViewModel model, DateTime dateTime, string medico)
         {
+            var userColId = userManager.GetUserAsync(User).Result.ColaboradorId;
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
@@ -221,25 +233,39 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 dtCabecalho = dateTime;
             }
 
-            var lancamentos = relatorioDAL.ObterExamePorMedicoDiario(model);
+            var lancamentos = relatorioDAL.ObterExamePorMedicoDiario(model, medico);
+            var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
+
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
+                medicos = medicos.Where(m => m.ClinicaId == idClinica).ToList();
             }
 
-            AgrupamentoDeExamesMedico(lancamentos);
+            var medicoList = new List<string>();
+            medicoList.Add("Selecionar Medico");
+            foreach (var m in medicos)
+            {
+                medicoList.Add(m.Nome);
+            }
+
+            SelectList Medicos = new SelectList(medicoList);
+            ViewData["Medicos"] = Medicos;
+
+            AgrupamentoDeExamesMedico(lancamentos, medico);
 
             ViewBag.DataAtual = dtCabecalho.ToString("dd/MM/yyyy");
 
             return View(lancamentos);
         }
 
-        public async Task<IActionResult> DiarioPsico(DiarioPsicologoViewModel model, DateTime dateTime)
+        public async Task<IActionResult> DiarioPsico(DiarioPsicologoViewModel model, DateTime dateTime, string psico)
         {
-
+            var userColId = userManager.GetUserAsync(User).Result.ColaboradorId;
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
@@ -255,74 +281,130 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 dtCabecalho = dateTime;
             }
 
-            var lancamentos = relatorioDAL.ObterExamePorPsicologoDiario(model);
+            var lancamentos = relatorioDAL.ObterExamePorPsicologoDiario(model, psico);
+            var psicos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+
+                var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
             }
 
-            AgrupamentoDeExamesPsico(lancamentos);
+            var psicoList = new List<string>();
+            psicoList.Add("Selecionar Psicologo");
+            foreach (var p in psicos)
+            {
+                psicoList.Add(p.Nome);
+            }
+
+            SelectList Psicologos = new SelectList(psicoList);
+            ViewData["Psicologos"] = Psicologos;
+
+            AgrupamentoDeExamesPsico(lancamentos, psico);
 
             ViewBag.DataAtual = dtCabecalho.ToString("dd/MM/yyyy");
 
             return View(lancamentos);
         }
 
-        private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos)
+        private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico)
         {
-            var psico = (from l in lancamentos select new { l.Nome }).ToList();
+            var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
 
-            var groupped = 
-                psico.GroupBy(x => x.Nome).Select(g => new {Chave = g.Key, Itens = g.ToList(), Total = g.Count()});
-
-            string[] grupo = new string[10];
-            int i = 0;
-            foreach (var g in groupped)
+            if (psico != null && psico != "Selecionar Psicologo")
             {
-                grupo[i] = $"{g.Chave}     {g.Total}";
-                i++;
-            }
+                var psicos = (from l in lancamentos select new { l.Nome }).ToList();
 
-            ViewBag.Agrupar0 = grupo[0];
-            ViewBag.Agrupar1 = grupo[1];
-            ViewBag.Agrupar2 = grupo[2];
-            ViewBag.Agrupar3 = grupo[3];
-            ViewBag.Agrupar4 = grupo[4];
-            ViewBag.Agrupar5 = grupo[5];
-            ViewBag.Agrupar6 = grupo[6];
-            ViewBag.Agrupar7 = grupo[7];
-            ViewBag.Agrupar8 = grupo[8];
-            ViewBag.Agrupar9 = grupo[9];
+                var groupped =
+                    psicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
+
+                string[] grupo = new string[1];
+                int i = 0;
+                foreach (var g in groupped)
+                {
+                    grupo[i] = $"{g.Chave} - Total Exames: {g.Total} / Valor Total: R$ {(g.Total * valorExamePsi).ToString("N2")}";
+                    i++;
+                }
+
+                ViewBag.Agrupar0 = grupo[0];           
+            }
+            else
+            {
+
+                var psicos = (from l in lancamentos select new { l.Nome }).ToList();
+
+                var groupped =
+                    psicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
+
+                string[] grupo = new string[10];
+                int i = 0;
+                foreach (var g in groupped)
+                {
+                    grupo[i] = $"{g.Chave}     {g.Total}";
+                    i++;
+                }
+
+                ViewBag.Agrupar0 = grupo[0];
+                ViewBag.Agrupar1 = grupo[1];
+                ViewBag.Agrupar2 = grupo[2];
+                ViewBag.Agrupar3 = grupo[3];
+                ViewBag.Agrupar4 = grupo[4];
+                ViewBag.Agrupar5 = grupo[5];
+                ViewBag.Agrupar6 = grupo[6];
+                ViewBag.Agrupar7 = grupo[7];
+                ViewBag.Agrupar8 = grupo[8];
+                ViewBag.Agrupar9 = grupo[9];
+            }
         }
 
-        private void AgrupamentoDeExamesMedico(IQueryable<DiarioMedicoViewModel> lancamentos)
+        private void AgrupamentoDeExamesMedico(IQueryable<DiarioMedicoViewModel> lancamentos, string medico)
         {
-            var psico = (from l in lancamentos select new { l.Nome }).ToList();
+            var valorExameMed = produtoDAL.ObterValorProdutoPorId(1).Result.Valor;
 
-            var groupped = 
-                psico.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count()});
-
-            string[] grupo = new string[10];
-            int i = 0;
-            foreach (var g in groupped)
+            if (medico != null && medico != "Selecionar Medico")
             {
-                grupo[i] = $"{g.Chave}     {g.Total}";
-                i++;
-            }
+                var medicos = (from l in lancamentos select new { l.Nome }).ToList();
+                var groupped =
+                    medicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
 
-            ViewBag.Agrupar0 = grupo[0];
-            ViewBag.Agrupar1 = grupo[1];
-            ViewBag.Agrupar2 = grupo[2];
-            ViewBag.Agrupar3 = grupo[3];
-            ViewBag.Agrupar4 = grupo[4];
-            ViewBag.Agrupar5 = grupo[5];
-            ViewBag.Agrupar6 = grupo[6];
-            ViewBag.Agrupar7 = grupo[7];
-            ViewBag.Agrupar8 = grupo[8];
-            ViewBag.Agrupar9 = grupo[9];
+                string[] grupo = new string[1];
+                int i = 0;
+                foreach (var g in groupped)
+                {
+                    grupo[i] = $"{g.Chave} - Total Exames: {g.Total} / Valor Total: R$ {(g.Total * valorExameMed).ToString("N2")}";
+                    i++;
+                }
+
+                ViewBag.Agrupar0 = grupo[0];
+            }
+            else
+            {
+                var medicos = (from l in lancamentos select new { l.Nome }).ToList();
+                var groupped =
+                    medicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
+
+                string[] grupo = new string[10];
+                int i = 0;
+                foreach (var g in groupped)
+                {
+                    grupo[i] = $"{g.Chave}  {g.Total}";
+                    i++;
+                }
+
+                ViewBag.Agrupar0 = grupo[0];
+                ViewBag.Agrupar1 = grupo[1];
+                ViewBag.Agrupar2 = grupo[2];
+                ViewBag.Agrupar3 = grupo[3];
+                ViewBag.Agrupar4 = grupo[4];
+                ViewBag.Agrupar5 = grupo[5];
+                ViewBag.Agrupar6 = grupo[6];
+                ViewBag.Agrupar7 = grupo[7];
+                ViewBag.Agrupar8 = grupo[8];
+                ViewBag.Agrupar9 = grupo[9];
+            }
         }
     }
 }

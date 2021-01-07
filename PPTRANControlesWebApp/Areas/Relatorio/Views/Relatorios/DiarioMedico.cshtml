@@ -7,27 +7,33 @@
 @section styles {
     <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
+
 <div class="row" style="display: block;">
     <div class="col-md-12 col-sm-12  ">
         <div class="x_panel">
             <div class="x_title">
-                <h2> Exames por Medico em @ViewBag.DataAtual</h2>
+                <h2> Exames Medicos Realizados em @ViewBag.DataAtual</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
                 </ul>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-
                 @using (Html.BeginForm("DiarioMedico", "Relatorio", FormMethod.Post))
                 {
-                    <h6>
-                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        Filtrar outra data: &emsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
-                        <input type="submit" value="Buscar" class="btn btn-primary" />
-                    </h6>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                @Html.DropDownList("medico", ViewData["Medicos"] as SelectList, new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm">
+                                Selecionar Data: &nbsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
+                                <input type="submit" value="Buscar" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
                 }
-
                 <table class="table">
                     <thead>
                         <tr>

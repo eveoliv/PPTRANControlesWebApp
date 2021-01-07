@@ -60,8 +60,29 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
               .OrderBy(p => p.Clinica);
         }
 
-        public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model)
+        public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model, string medico)
         {
+            if (medico != null && medico != "Selecionar Medico")
+            {
+                return from a in context.Caixas
+                       join b in context.Clientes on a.ClienteId equals b.Id
+                       join c in context.Colaboradores on b.MedicoId equals c.Id
+                       where c.Nome == medico
+                       where b.Status == EnumHelper.Status.Ativo
+                       where a.Status == EnumHelper.Status.Ativo
+                       where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                       where a.Data == model.Data
+                       orderby c.Nome
+                       select new DiarioMedicoViewModel
+                       {
+                           Id = c.Id,
+                           ClinicaId = c.ClinicaId,
+                           Nome = c.Nome,
+                           Data = a.Data,
+                           Cliente = b.Nome
+                       };
+            }
+
             return from a in context.Caixas
                    join b in context.Clientes on a.ClienteId equals b.Id
                    join c in context.Colaboradores on b.MedicoId equals c.Id
@@ -80,8 +101,29 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                    };
         }
 
-        public IQueryable<DiarioPsicologoViewModel> ObterExamePorPsicologoDiario(DiarioPsicologoViewModel model)
+        public IQueryable<DiarioPsicologoViewModel> ObterExamePorPsicologoDiario(DiarioPsicologoViewModel model, string psico)
         {
+            if (psico != null && psico != "Selecionar Psicologo")
+            {
+                return from a in context.Caixas
+                       join b in context.Clientes on a.ClienteId equals b.Id
+                       join c in context.Colaboradores on b.PsicologoId equals c.Id
+                       where c.Nome == psico
+                       where b.Status == EnumHelper.Status.Ativo
+                       where a.Status == EnumHelper.Status.Ativo
+                       where a.ProdutoId == 2 || a.ProdutoId == 3
+                       where a.Data == model.Data
+                       orderby c.Nome
+                       select new DiarioPsicologoViewModel
+                       {
+                           Id = c.Id,
+                           ClinicaId = c.ClinicaId,
+                           Nome = c.Nome,
+                           Data = a.Data,
+                           Cliente = b.Nome
+                       };
+            }
+
             return from a in context.Caixas
                    join b in context.Clientes on a.ClienteId equals b.Id
                    join c in context.Colaboradores on b.PsicologoId equals c.Id
@@ -99,5 +141,6 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                        Cliente = b.Nome
                    };
         }
+
     }
 }

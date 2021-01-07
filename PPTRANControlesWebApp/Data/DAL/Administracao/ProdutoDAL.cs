@@ -32,6 +32,13 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Produto> ObterValorProdutoPorId(long id)
+        {
+            return await context.Produtos
+                .Where(s => s.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<Produto> GravarProduto(Produto produto)
         {
             if (produto.Id == null)
