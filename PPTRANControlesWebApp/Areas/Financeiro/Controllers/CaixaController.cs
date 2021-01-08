@@ -160,15 +160,21 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                         var usuario = await userManager.FindByIdAsync(userId);                        
                         var idLogado = colaboradorDAL.ObterColaboradorPorEmail(usuario.ToString()).Result.Id;
                         model.Caixa.ColaboradorId = idLogado;
+                        idCol = (long)idLogado;
                     }
                     
 
                     if (idCli != 0 || idCol != 0)
                     {
                         if (model.Caixa.ProdutoId == 0)
-                        {
                             model.Caixa.ProdutoId = 6;
-                        }
+                        
+                        if (model.Caixa.HistoricoId == 0)
+                            model.Caixa.HistoricoId = 8;
+
+                        if (model.Caixa.Tipo == EnumHelper.Tipo.Credito)                        
+                            model.Caixa.StatusPgto = EnumHelper.YesNo.Sim;
+                        
 
                         model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
@@ -301,7 +307,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 var idClinica = colaboradorDAL.ObterColaboradorPorId(userId).Result.ClinicaId;
                 clinicas = clinicas.Where(c => c.Id == idClinica).ToList();
             }
-            clinicas.Insert(0, new Clinica() { Id = 0, Alias = "" });
+            //clinicas.Insert(0, new Clinica() { Id = 0, Alias = "" });
             ViewBag.Clinicas = clinicas;
 
             var historicos = historicoDAL.ObterHistoricosClassificadosPorNome().ToList();

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PPTRANControlesWebApp.Models.Operacao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
@@ -40,49 +42,58 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             historicoDAL = new HistoricoDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
         }
-        
+
         public IActionResult Create(int? id)
         {
-            CarregarViewBagsCreate(id);         
+            CarregarViewBagsCreate(id);
 
             return View();
         }
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Carrinho carrinho)
+        public async Task<IActionResult> Create(CarrinhoViewModel model)
         {
-            var clienteId = carrinho.Id;
+            var clienteId = model.Id;
             try
             {
-                if (carrinho.Produto1Id != null)
+                if (model.Carrinho.Produto1Id != null)
                 {
-                    carrinho.Id = null;
-                    carrinho.ClienteId = clienteId;
-                    carrinho.Data = DateTime.Today;
-                    carrinho.IdUser = userManager.GetUserAsync(User).Result.Id;
-                    await carrinhoDAL.GravarCarrinho(carrinho);
+                    model.Carrinho.Id = null;
+                    model.Carrinho.ClienteId = clienteId;
+                    model.Carrinho.Data = DateTime.Today;
+                    model.Carrinho.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await carrinhoDAL.GravarCarrinho(model.Carrinho);
 
-                    var prodLista = new List<long?>();
-                    prodLista.Add(carrinho.Produto1Id);
+                    var prodLista = new List<long?>
+                    {
+                        model.Carrinho.Produto1Id
+                    };
 
-                    if (carrinho.Produto2Id != null)                    
-                        prodLista.Add(carrinho.Produto2Id);
+                    if (model.Carrinho.Produto2Id != null)
+                        prodLista.Add(model.Carrinho.Produto2Id);
 
-                    if(carrinho.Produto3Id != null)
-                    prodLista.Add(carrinho.Produto3Id);
+                    if (model.Carrinho.Produto3Id != null)
+                        prodLista.Add(model.Carrinho.Produto3Id);
 
                     foreach (var p in prodLista)
                     {
                         if (p != 0)
                         {
-                            await IncluirLancamentoExameNoCaixa(p, clienteId);
+                            await IncluirLancamentoExameNoCaixa(p, clienteId, model.FormaPagamento);
                         }
                     }
                 }
 
                 var cliente = context.Clientes.Find((long)clienteId);
-                cliente.StatusPgto = EnumHelper.YesNo.Não;
+                if (model.FormaPagamento != "Selecionar Forma Pagamento")
+                {
+                    cliente.StatusPgto = EnumHelper.YesNo.Sim;
+                }
+                else
+                {
+                    cliente.StatusPgto = EnumHelper.YesNo.Não;
+                }
                 await clienteDAL.GravarCliente(cliente);
 
                 return RedirectToAction("Index", "Cliente");
@@ -91,14 +102,14 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 ModelState.AddModelError("", "Não foi possível inserir os dados.");
             }
-            return View(carrinho);
+            return View(model.Carrinho);
         }
-        
+
         public IActionResult Edit(int? id)
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long? id, Carrinho carrinho)
@@ -120,7 +131,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         }
 
         /****** Metodos Privados do Controller ******/
-        private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId)
+        private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId, string formaPgto)
         {
             var cliente = clienteDAL.ObterClientePorId((long)clienteId);
 
@@ -131,10 +142,37 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             caixa.ProdutoId = produtoId;
             caixa.ClienteId = clienteId;
             caixa.Valor = produto.Result.Valor;
-            caixa.StatusPgto = EnumHelper.YesNo.Não;
+
+            if (formaPgto != "Selecionar Forma Pagamento")
+            {
+                caixa.StatusPgto = EnumHelper.YesNo.Sim;
+            }
+            else
+            {
+                caixa.StatusPgto = EnumHelper.YesNo.Não;
+            }
             caixa.ClinicaId = cliente.Result.ClinicaId;
             caixa.HistoricoId = cliente.Result.HistoricoId;
-            caixa.FormaPgto = EnumHelper.FormaPgto.Selecionar;
+
+            switch (formaPgto)
+            {
+                case "Selecionar Forma Pagamento":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Selecionar;
+                    break;
+                case "Dinheiro":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Dinheiro;
+                    break;
+                case "Cartao":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Cartao;
+                    break;
+                case "Cheque":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Cheque;
+                    break;
+                case "Transferencia":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Transferencia;
+                    break;
+            }
+
             caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
             await caixaDAL.GravarLancamentoPorCarrinho(caixa);
         }
@@ -146,9 +184,21 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
-            produtos = produtos.Where(i => i.Id != 6).ToList();        
+            produtos = produtos.Where(i => i.Id != 6).ToList();
             //produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
             ViewBag.Produtos = produtos;
+
+            var pagamentos = new List<string>
+            {
+                { "Selecionar Forma Pagamento" },
+                { "Dinheiro" },
+                { "Cartao" },
+                { "Cheque" },
+                { "Transferencia" }
+            };
+
+            SelectList formaPagamento = new SelectList(pagamentos);
+            ViewData["FormaPagamento"] = formaPagamento;
         }
     }
 }

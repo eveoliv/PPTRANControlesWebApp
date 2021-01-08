@@ -102,7 +102,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             //ViewBag.Credito = credito.ToString("N2");
             ViewBag.Credito = dinheiro.ToString("N2");
 
-            var cartaoETransf = cartao + transf;
+            var cartaoETransf = cartao + transf + cheque;
             ViewBag.CartaoETransf = cartaoETransf.ToString("N2");
             ///////////////////////fim
 
@@ -115,7 +115,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
             ViewBag.Abertos = abertos.ToString("N2");
 
-            var total = credito - debito;
+            var total = dinheiro - debito;
             ViewBag.Total = total.ToString("N2");
 
             //-------------------------------------------//

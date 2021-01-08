@@ -122,7 +122,7 @@
                             @*---------------------------------------------------*@
                             <div class="col-md-3 col-sm-12  form-group">
                                 <select asp-for="Cliente.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required">
-                                    <option selected="selected" value="">Clínica</option>
+                                    @*<option selected="selected" value="">Clínica</option>*@
                                 </select>
                             </div>
                             <div class="col-md-3 col-sm-12  form-group">

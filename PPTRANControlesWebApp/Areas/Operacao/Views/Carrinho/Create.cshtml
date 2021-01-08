@@ -1,4 +1,4 @@
-﻿@model Models.Carrinho
+﻿@model PPTRANControlesWebApp.Models.Operacao.CarrinhoViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -23,16 +23,16 @@
                             <input asp-for="Id" type="hidden" class="form-control" />
 
                             <div class="item form-group">
-                                <label asp-for="Data" class="col-form-label col-md-3 col-sm-3 label-align"></label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <input asp-for="Data" type="text" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
+                                <label asp-for="Carrinho.Data" class="col-form-label col-md-4 col-sm-4 label-align"></label>
+                                <div class="col-md-8 col-sm-8 ">
+                                    <input asp-for="Carrinho.Data" type="text" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control" required="required" data-inputmask="'mask': '99/99/9999'" disabled="disabled">
                                 </div>
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 1</label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto1Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" required="required">
+                                <label class="col-form-label col-md-4 col-sm-4 label-align">Exame 1</label>
+                                <div class="col-md-8 col-sm-8 ">
+                                    <select asp-for="Carrinho.Produto1Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))" required="required">
                                         <option selected="selected" value="">Selecionar</option>
                                     </select>
 
@@ -40,9 +40,9 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 2</label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto2Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))">
+                                <label class="col-form-label col-md-4 col-sm-4 label-align">Exame 2</label>
+                                <div class="col-md-8 col-sm-8 ">
+                                    <select asp-for="Carrinho.Produto2Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))">
                                         <option selected="selected" value="">Selecionar</option>
                                     </select>
 
@@ -50,30 +50,18 @@
                             </div>
 
                             <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">Exame 3</label>
-                                <div class="col-md-9 col-sm-9 ">
-                                    <select asp-for="Produto3Id" class="form-control" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))">
-                                        <option selected="selected" value="">Selecionar</option>
-                                    </select>
-
+                                <label class="col-form-label col-md-4 col-sm-4 label-align">Baixar no Caixa</label>
+                                <div class="col-md-8 col-sm-8 ">
+                                    @Html.DropDownList("FormaPagamento", ViewData["FormaPagamento"] as SelectList, new { @class = "form-control" })
                                 </div>
                             </div>
-                            <input asp-for="Produto4Id" type="hidden" class="form-control" />
+                            
 
                             @if (@ViewBag.Caixa > 0)
                             {
                                 <p> </p>
                                 <p><span style="color: #f00;">* O cliente ja possui exames não pagos cadastrados no caixa!</span></p>
                             }
-                            @*<div class="item form-group">
-                                <div class="col-md-11 col-sm-11 ">
-                                    <div class="checkbox">
-                                        <label class="col-form-label col-md-12 col-sm-12 label-align">
-                                            <input name="baixaFlag" type="checkbox" class="flat"> Realizar baixa automatica do(s) exame(s) cadastrado(s).
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>*@
 
                             <div class="ln_solid"></div>
                             <div class="item form-group">
