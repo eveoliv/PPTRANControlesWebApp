@@ -1,4 +1,5 @@
 ﻿using Models;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PPTRANControlesWebApp.Data;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
-using System.Linq;
 
 namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 {

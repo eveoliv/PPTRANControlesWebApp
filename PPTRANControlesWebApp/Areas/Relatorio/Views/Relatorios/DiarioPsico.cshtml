@@ -10,7 +10,7 @@
             <div class="x_title">
                 <h2> Exames por Psicologo em @ViewBag.DataAtual</h2>
                 <ul class="nav navbar-right panel_toolbox">
-                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>                   
+                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -20,13 +20,13 @@
                 {
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 @Html.DropDownList("psico", ViewData["Psicologos"] as SelectList, new { @class = "form-control" })
                             </div>
-                            <div class="col-sm">
-                                Selecionar Data: &nbsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
+                            <div class="col-sm-6">
+                                Nova Data: &nbsp;<input name="dateTime" type="date" value="" style="border:2px solid #DCDCDC">
                                 <input type="submit" value="Buscar" class="btn btn-primary" />
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                     <br />

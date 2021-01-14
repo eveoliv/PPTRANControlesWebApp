@@ -142,5 +142,26 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                    };
         }
 
+        public IQueryable<SemanalPsicologoViewModel> ObterExamePorPsicologoSemanal(SemanalPsicologoViewModel model, string psico)
+        {           
+
+            return from a in context.Caixas
+                   join b in context.Clientes on a.ClienteId equals b.Id
+                   join c in context.Colaboradores on b.PsicologoId equals c.Id
+                   where c.Nome == psico
+                   where a.Data >= model.DataInicio && a.Data <= model.DataFim
+                   where b.Status == EnumHelper.Status.Ativo
+                   where a.Status == EnumHelper.Status.Ativo
+                   where a.ProdutoId == 2 || a.ProdutoId == 3
+                   orderby c.Nome
+                   select new SemanalPsicologoViewModel
+                   {
+                       Id = c.Id,
+                       ClinicaId = c.ClinicaId,
+                       Nome = c.Nome,
+                       DataCx = a.Data,
+                       Cliente = b.Nome
+                   };            
+        }
     }
 }

@@ -367,6 +367,24 @@ namespace PPTRANControlesWebApp.Migrations.Application
                     b.ToTable("Produtos");
                 });
 
+            modelBuilder.Entity("Models.Repasse", b =>
+                {
+                    b.Property<long?>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Medico");
+
+                    b.Property<string>("Psicologo");
+
+                    b.Property<decimal>("ValorMedico");
+
+                    b.Property<decimal>("ValorPsicologo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Repasses");
+                });
+
             modelBuilder.Entity("Models.Caixa", b =>
                 {
                     b.HasOne("Models.Cliente", "Cliente")

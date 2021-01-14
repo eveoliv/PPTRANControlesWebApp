@@ -22,7 +22,8 @@ dotnet publish -c Release
 Quando ha duas classes de contexto:
 Add-Migration "Identity" -Context AppIdentityContext
 update-database -Context AppIdentityContext
-
+Add-Migration "AppContext" -Context ApplicationContext
+update-database -Context ApplicationContext
 
 <span asp-validation-for="Data" class="text-danger"></span>
 

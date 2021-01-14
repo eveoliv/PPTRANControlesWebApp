@@ -174,12 +174,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         public async Task<IActionResult> EntrevistaPsi(long? id)
         {
-            return await ObterVisaoClientePorId(id, "");
+            return await ObterVisaoClientePorId(id, "Detail");
         }
 
         public async Task<IActionResult> EntrevistaMed(long? id)
         {
-            return await ObterVisaoClientePorId(id, "");
+            return await ObterVisaoClientePorId(id, "Detail");
         }
 
         private static bool viewEdit = false;

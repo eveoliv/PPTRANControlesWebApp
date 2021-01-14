@@ -59,10 +59,11 @@
                                     <a><i class="fa fa-home"></i> Administração <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Identity" asp-controller="Usuario" asp-action="Index">Acessos</a></li>
-                                        <li><a asp-area="Administracao" asp-controller="Clinica" asp-action="Index">Clinicas</a></li>
-                                        <li><a asp-area="Administracao" asp-controller="Historico" asp-action="Index">Historico</a></li>
+                                        <li><a asp-area="Administracao" asp-controller="Clinica" asp-action="Index">Clínicas</a></li>
                                         <li><a asp-area="Administracao" asp-controller="Contato" asp-action="Index">Contatos</a></li>
-                                        <li><a asp-area="Administracao" asp-controller="Produto" asp-action="Index">Produtos    </a></li>
+                                        <li><a asp-area="Administracao" asp-controller="Produto" asp-action="Index">Exames</a></li>
+                                        <li><a asp-area="Administracao" asp-controller="Historico" asp-action="Index">Histórico</a></li>
+                                        <li><a asp-area="Administracao" asp-controller="Repasse" asp-action="Index">Repasse</a></li>
                                     </ul>
                                 </li>
                                 <li>
@@ -99,8 +100,9 @@
                                     <a><i class="fa fa-bar-chart-o"></i> Relatórios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioCaixa">Diário Caixa</a></li>
-                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioMedico">Diário Medico</a></li>
-                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioPsico">Diário Psicologo</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioMedico">Diário Médico</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="DiarioPsico">Diário Psicólogo</a></li>
+                                        <li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="SemanalPsico">Semanal Psicólogo</a></li>
 
 
                                         @*<li><a asp-area="Relatorio" asp-controller="Relatorios" asp-action="Mensal">Mensal Caixa</a></li>*@

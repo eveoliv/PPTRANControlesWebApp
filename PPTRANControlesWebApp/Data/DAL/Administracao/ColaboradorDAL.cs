@@ -39,6 +39,14 @@ namespace PPTRANControlesWebApp.Data.DAL
                .OrderBy(m => m.Nome);
         }
 
+        public async Task<Colaborador> ObterPsicologoPorNome(string nome)
+        {
+            return await context.Colaboradores
+                .Include(c => c.Clinica)               
+                .Where(c => c.Status == EnumHelper.Status.Ativo)
+                .SingleOrDefaultAsync(c => c.Nome == nome);
+        }
+
         public async Task<Colaborador> ObterColaboradorPorId(long id)
         {
             return await context.Colaboradores

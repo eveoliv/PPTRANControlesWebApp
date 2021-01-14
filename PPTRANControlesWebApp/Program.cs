@@ -3,9 +3,9 @@ using Microsoft.AspNetCore;
 using PPTRANControlesWebApp.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using PPTRANControlesWebApp.Models;
 using PPTRANControlesWebApp.Data.DAL;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PPTRANControlesWebApp
 {
