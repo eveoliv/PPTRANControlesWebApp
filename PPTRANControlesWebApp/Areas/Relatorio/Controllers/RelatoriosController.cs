@@ -108,8 +108,13 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             ViewBag.CartaoETransf = cartaoETransf.ToString("N2");
             ///////////////////////fim
 
-            var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito).Sum(c => c.Valor);
+            //Alteração para realização de sangria no caixa historico = 36
+            var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito && c.HistoricoId != 36).Sum(c => c.Valor);
             ViewBag.Debito = debito.ToString("N2");
+
+            var retirada = lancamentos.Where(c => c.HistoricoId == 36).Sum(c => c.Valor);
+            ViewBag.Retirada = retirada.ToString("N2");
+            ////////////////////////
 
             var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
             ViewBag.Finalizados = finalizados.ToString("N2");
@@ -117,7 +122,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
             ViewBag.Abertos = abertos.ToString("N2");
 
-            var total = dinheiro - debito;
+            var total = dinheiro - debito - retirada;
             ViewBag.Total = total.ToString("N2");
 
             //-------------------------------------------//
