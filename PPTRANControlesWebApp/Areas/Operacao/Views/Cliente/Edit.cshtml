@@ -221,19 +221,27 @@
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
+                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas>
+                                                <option selected="selected" value="">NÃO SELECIONADO</option>
+                                            </select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Historico.Nome)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="HistoricoId" class="form-control" asp-items=@ViewBag.Historico></select>
+                                            <select asp-for="HistoricoId" class="form-control" asp-items=@ViewBag.Historico>
+                                                <option selected="selected" value="">NÃO SELECIONADO</option>
+                                            </select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Médico (a)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico></select>
+                                            <select asp-for="MedicoId" class="form-control" asp-items=@ViewBag.Medico>
+                                                <option selected="selected" value="">NÃO SELECIONADO</option>
+                                            </select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Psicólogo (a)</dt>
                                         <dd class="col-md-9 col-sm-9 ">
-                                            <select asp-for="PsicologoId" class="form-control" asp-items=@ViewBag.Psicologo></select>
+                                            <select asp-for="PsicologoId" class="form-control" asp-items=@ViewBag.Psicologo>
+                                                <option selected="selected" value="">NÃO SELECIONADO</option>
+                                            </select>
                                         </dd>
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Pagamento Realizado</dt>
                                         <dd class="col-md-9 col-sm-9 ">
