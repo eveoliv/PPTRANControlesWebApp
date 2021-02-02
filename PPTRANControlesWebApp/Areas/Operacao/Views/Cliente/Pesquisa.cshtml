@@ -33,7 +33,7 @@
                         <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                                @using (Html.BeginForm("Historico", "Cliente", FormMethod.Post))
+                                @using (Html.BeginForm("Pesquisa", "Cliente", FormMethod.Post))
                                 {
                                     <p class="card-text">
                                         Nome:&emsp;&emsp;&ensp;&ensp;<input name="nome" type="text" value="" style="border:2px solid #DCDCDC">
@@ -45,9 +45,9 @@
                                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                                         <input type="submit" value="Buscar" class="btn btn-primary" />
                                         <br />
-                                    <span style="color: #f00;">@ViewBag.ErroNome</span>
-                                    <span style="color: #f00;">@ViewBag.ErroData</span>
-                                    <hr />
+                                        <span style="color: #f00;">@ViewBag.ErroNome</span>
+                                        <span style="color: #f00;">@ViewBag.ErroData</span>
+                                        <hr />
                                     </p>
 
                                 }
@@ -57,12 +57,12 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => model.DtCadastro)
                                             </th>
-                                            @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
-                                            {
-                                                <th>
-                                                    @Html.DisplayNameFor(model => model.Clinica.Alias)
-                                                </th>
-                                            }
+                                            @*@if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador){*@
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Clinica.Alias)
+                                            </th>
+
                                             <th>
                                                 @Html.DisplayNameFor(model => model.Nome)
                                             </th>
@@ -91,12 +91,10 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.DtCadastro)
                                                     </td>
-                                                    @if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador)
-                                                    {
-                                                        <th>
-                                                            @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                                        </th>
-                                                    }
+                                                    @*@if (UserManager.GetUserAsync(User).Result.Nome == RolesNomes.Administrador){*@
+                                                    <th>
+                                                        @Html.DisplayFor(modelItem => item.Clinica.Alias)
+                                                    </th>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Nome)
                                                     </td>
@@ -106,7 +104,7 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Telefone1)
                                                     </td>
-                                                    <td>                                                        
+                                                    <td>
                                                         @if (item.StatusPgto == Models.EnumHelper.YesNo.Não)
                                                         {
                                                             <span style="color: #f00;">
@@ -143,7 +141,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>

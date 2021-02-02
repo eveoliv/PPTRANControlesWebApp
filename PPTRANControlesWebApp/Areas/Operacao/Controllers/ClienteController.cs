@@ -272,12 +272,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             var lista =
                 clienteDAL.ObterHistoricoDeClientes(model.Nome, model.Cpf, model.DtInicio, model.DtFim).ToList();
 
-            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
-            {
-                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
-                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
-                lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
-            }
+            //if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            //{
+            //    var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            //    var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+            //    lista = lista.Where(c => c.ClinicaId == userClinicaId).ToList();
+            //}
 
             if (model.Nome != null && lista.Count > 100)
             {
