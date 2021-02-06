@@ -369,7 +369,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
         private void AgrupamentoSemanalDeExamesPsico(IQueryable<SemanalPsicologoViewModel> lancamentos, string psico)
         {
             //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            var valorRepasse = repasseDAL.ObterRepassePorId(1).Result.Valor;
+            var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
             {
@@ -422,7 +422,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
         private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico)
         {
             //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            var valorRepasse = repasseDAL.ObterRepassePorId(1).Result.Valor;
+            var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
             {
