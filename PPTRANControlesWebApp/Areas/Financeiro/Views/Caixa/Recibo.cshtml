@@ -25,7 +25,7 @@
                         <hr />
                         <p>
                             Recebemos do Sr (a). @ViewBag.ClienteNome, CPF @ViewBag.ClienteCpf,
-                            a quantia de @ViewBag.ValorExt correspondente ao(s) serviço(s) relacionado(s) abaixo:
+                            a quantia de R$ @ViewBag.ValotTotal.ToString("F") ( @ViewBag.ValorExt ) correspondente ao(s) serviço(s) relacionado(s) abaixo:
                         </p>
                         <table class="">
                             <tbody>
@@ -33,11 +33,18 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Produto.Nome)&emsp;
+                                            @if (item.Produto.Nome == "Valor Fracionado")
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Produto.Nome)
+                                            }
                                         </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Valor)
-                                        </td>
+                                        @*<td>
+                                                @Html.DisplayFor(modelItem => item.Valor)
+                                            </td>*@
                                     </tr>
                                 }
                             </tbody>

@@ -31,7 +31,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
         public async Task<IActionResult> Index()
         {
             var produtos = await produtoDAL.ObterProdutosClassificadosPorNome().ToListAsync();
-            produtos = produtos.Where(i => i.Id != 6).ToList();
+            produtos = produtos.Where(i => i.Id != 6 && i.Id != 7).ToList();
 
             return View(produtos);
         }

@@ -184,7 +184,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
 
             var produtos = produtoDAL.ObterProdutosClassificadosPorId().ToList();
-            produtos = produtos.Where(i => i.Id != 6).ToList();
+            produtos = produtos.Where(i => i.Id != 6 && i.Id != 7).ToList();
             //produtos.Insert(0, new Produto() { Id = 0, Nome = "" });
             ViewBag.Produtos = produtos;
 

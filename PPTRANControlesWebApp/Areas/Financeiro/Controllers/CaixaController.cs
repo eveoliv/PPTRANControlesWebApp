@@ -49,9 +49,9 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            if (dateTime.Year == 1)                
+            if (dateTime.Year == 1)
                 dateTime = DateTime.Today;
-            
+
             var lancamentos =
                 await caixaDAL.ObterLancamentosClassificadosPorClienteNome(dateTime).ToListAsync();
 
@@ -123,6 +123,57 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return View(caixa);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFracao(int? id, Caixa caixa, string valor1, string valor2, int FormaPgto1, int FormaPgto2)
+        {
+            var v1 = Convert.ToDecimal(valor1);
+            var v2 = Convert.ToDecimal(valor2);
+
+            if (valor1 == null || valor2 == null)
+                return RedirectToAction("Edit", new { id });
+
+            if (caixa.Valor != (v1 + v2))
+                return RedirectToAction("Edit", new { id });            
+
+            if (id != caixa.Id)
+                return NotFound();
+
+            if (id != null)
+            {
+                try
+                {
+                    caixa.Valor = v1;
+                    caixa.FormaPgto = (EnumHelper.FormaPgto)FormaPgto1;
+                    await BaixaFracionada(caixa);
+
+                    var fracao = new Caixa
+                    {
+                        Valor = v2,
+                        ProdutoId = 7,
+                        Data = caixa.Data,
+                        Tipo = caixa.Tipo,
+                        IdUser = caixa.IdUser,
+                        Status = caixa.Status,
+                        ClienteId = caixa.ClienteId,
+                        ClinicaId = caixa.ClinicaId,
+                        StatusPgto = caixa.StatusPgto,
+                        FormaPgto = (EnumHelper.FormaPgto)FormaPgto2
+                    };
+
+                    await caixaDAL.GravarLancamento(fracao);                    
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Index");
+            }
+            return View(caixa);
+        }
+
         public async Task<IActionResult> Create()
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
@@ -157,24 +208,24 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     else
                     {
                         var userId = userManager.GetUserAsync(User).Result.Id;
-                        var usuario = await userManager.FindByIdAsync(userId);                        
+                        var usuario = await userManager.FindByIdAsync(userId);
                         var idLogado = colaboradorDAL.ObterColaboradorPorEmail(usuario.ToString()).Result.Id;
                         model.Caixa.ColaboradorId = idLogado;
                         idCol = (long)idLogado;
                     }
-                    
+
 
                     if (idCli != 0 || idCol != 0)
                     {
                         if (model.Caixa.ProdutoId == 0)
                             model.Caixa.ProdutoId = 6;
-                        
+
                         if (model.Caixa.HistoricoId == 0)
                             model.Caixa.HistoricoId = 8;
 
-                        if (model.Caixa.Tipo == EnumHelper.Tipo.Credito)                        
+                        if (model.Caixa.Tipo == EnumHelper.Tipo.Credito)
                             model.Caixa.StatusPgto = EnumHelper.YesNo.Sim;
-                        
+
 
                         model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
@@ -202,7 +253,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long? id)
         {
-           
+
             if (ClienteExiste((long)id))
             {
                 var idCli = caixaDAL.ObterLancamentoPorId((long)id).Result.Cliente.Id;
@@ -215,7 +266,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             var caixa = await caixaDAL.InativarLancamentoPorId((long)id, IdUser);
             return RedirectToAction(nameof(Index));
         }
-      
+
         public IActionResult Recibo(long id)
         {
             var pagamentos = caixaDAL.ObterLancamentoPagoPeloCliente(id).ToList();
@@ -236,6 +287,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 ViewBag.ClinicaBairroFone = cliBairro + " - Fone: " + cliFone;
 
                 var valorTotal = pagamentos.Sum(v => v.Valor);
+                ViewBag.ValotTotal = valorTotal;
+
                 var valorExt = Converter.toExtenso(valorTotal);
                 ViewBag.ValorExt = valorExt;
 
@@ -250,7 +303,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             }
 
             return View(pagamentos);
-        }     
+        }
 
         /****** Metodos Privados do Controller ******/
         private async Task<IActionResult> ObterVisaoLancamentoPorId(long? id)
@@ -372,5 +425,23 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
             return caixaDAL.ObterLancamentoPorId((long)id).Result.ClienteId != null;
         }
 
+        private async Task BaixaFracionada(Caixa caixa)
+        {
+            caixa.StatusPgto = EnumHelper.YesNo.Sim;
+            caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
+            await caixaDAL.GravarLancamento(caixa);
+
+            var idCli = caixa.ClienteId;
+
+            var lancamentoNaoPago =
+                caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
+
+            if (lancamentoNaoPago == 0)
+            {
+                var cliente = context.Clientes.Find((long)idCli);
+                cliente.StatusPgto = EnumHelper.YesNo.Sim;
+                await clienteDAL.GravarCliente(cliente);
+            }
+        }
     }
 }

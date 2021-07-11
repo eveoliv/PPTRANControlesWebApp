@@ -75,9 +75,9 @@
                                         </dd>
 
                                         @*<dt class="col-form-label col-md-3 col-sm-3 ">Pagto Realizado</dt>
-                                            <dd class="col-md-8 col-sm-8 ">
-                                                <select asp-for="StatusPgto" class="form-control" disabled="disabled" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()"></select>
-                                            </dd>*@
+        <dd class="col-md-8 col-sm-8 ">
+            <select asp-for="StatusPgto" class="form-control" disabled="disabled" asp-items="@Html.GetEnumSelectList<Models.EnumHelper.YesNo>()"></select>
+        </dd>*@
 
                                         <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Ref)</dt>
                                         <dd class="col-md-8 col-sm-8 ">
@@ -95,8 +95,7 @@
                                 <div class="item form-group">
                                     <div class="col-md-12 col-sm-12 offset-md-2">
                                         <button type="submit" class="btn btn-success">Baixar</button>
-                                        <a asp-action="Index" class="btn btn-primary">Cancelar</a>
-                                        <a asp-action="" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Fracionar</a>
+                                        <a asp-action="Index" class="btn btn-primary">Cancelar</a>                                        
                                     </div>
                                 </div>
                             </div>
@@ -104,79 +103,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- The Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Fracionar formas de pagamento.</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            @using (Html.BeginForm("EditFracao", "Caixa", FormMethod.Post))
-            {
-
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.Data)
-                @Html.HiddenFor(model => model.Valor)
-                @Html.HiddenFor(model => model.IdUser)
-                @Html.HiddenFor(model => model.ProdutoId)
-                @Html.HiddenFor(model => model.ClienteId)
-                @Html.HiddenFor(model => model.ClinicaId)
-                @Html.HiddenFor(model => model.HistoricoId)
-                @Html.HiddenFor(model => model.ColaboradorId)
-
-                @*<input name="Id" type="hidden" value="@Html.DisplayFor(model => model.Id)" />*@
-                <div class="modal-body">
-
-                    Valor Total &emsp;&emsp;<input name="Valor" type="text" size="10" value="@Html.DisplayFor(model => model.Valor)" style="border:1px solid #DCDCDC" disabled="disabled">
-                    <br />
-                    <br />
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-
-                                    Valor 1 &emsp;&emsp;<input name="Valor1" type="text" size="10" value="" style="border:1px solid #DCDCDC">
-                                    <br />
-                                    <br />
-                                    Forma Pgto <select name="FormaPgto1" type="text" value="" style="border:1px solid #DCDCDC">
-                                        <option value="0">Dinheiro</option>
-                                        <option value="1">Cartao</option>
-                                        <option value="2">Cheque</option>
-                                        <option value="3">Transferencia</option>
-                                    </select>
-                                </div>
-
-                                <div class="col">
-                                    Valor 2 &emsp;&emsp;<input name="Valor2" type="text" size="10" value="" style="border:1px solid #DCDCDC">
-                                    <br />
-                                    <br />
-                                    Forma Pgto <select name="FormaPgto2" type="text" value="" style="border:1px solid #DCDCDC">
-                                        <option value="0">Dinheiro</option>
-                                        <option value="1">Cartao</option>
-                                        <option value="2">Cheque</option>
-                                        <option value="3">Transferencia</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <input type="submit" value="Baixar" class="btn btn-success" />
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">&nbsp;&nbsp;&nbsp;Sair&nbsp;&nbsp;&nbsp;</button>
-                </div>
-            }
         </div>
     </div>
 </div>
