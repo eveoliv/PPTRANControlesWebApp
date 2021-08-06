@@ -17,7 +17,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
        
         public IQueryable<Historico> ObterHistoricosClassificadosPorNome()
         {
-            return context.Historicos.Where(s => s.Status == EnumHelper.Status.Ativo).OrderBy(c => c.Nome);            
+            //id historico 1 reservado para valor fracionado
+            return context.Historicos.Where(s => s.Status == EnumHelper.Status.Ativo && s.Id != 1).OrderBy(c => c.Nome);            
         }
 
         public async Task<Historico> ObterHistoricoPorId(long id)

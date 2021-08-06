@@ -20,7 +20,7 @@ namespace Models
         [DisplayName("Exame")]
         public long? Produto2Id { get; set; }
 
-        [DisplayName("UsuExameário")]
+        [DisplayName("Exame")]
         public long? Produto3Id { get; set; }
 
         [DisplayName("Exame")]

@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Models.Caixa>
-
+﻿@model IEnumerable<PPTRANControlesWebApp.Models.Relatorio.MensalViewModel>
+<a href="~/Models/Relatorio/MensalViewModel.cs"></a>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,135 +10,142 @@
 }
 
 
-<div class="clearfix"></div>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Lançamentos de Caixa em @DateTime.Today.ToString("MMMM")/@DateTime.Today.ToString("yyyy")</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
-                </ul>
-                <div class="clearfix"></div>
+            <div class="d-flex justify-content-between">
+                <h2>
+                    Lançamentos no Caixa @ViewBag.Mes
+                </h2>
+                <a onClick="window.print()" class="glyphicon glyphicon-print"></a>
             </div>
+            <p></p>
             <div class="x_content">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box table-responsive">
-
-                            <table id="datatable" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Data)
-                                        </th>
-                                        <th>
-                                            Debito
-                                        </th>
-                                        <th>
-                                            Credito
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Valor)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.FormaPgto)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.StatusPgto)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ProdutoId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.HistoricoId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ClinicaId)
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Data)
-                                            </td>
-                                            <td>
-                                                @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.Tipo)
-                                                }
-                                            </td>
-                                            <td>
-                                                @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
-                                                {
-                                                    @Html.DisplayFor(modelItem => item.Tipo)
-                                                }
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Valor)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FormaPgto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.StatusPgto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Produto.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Historico.Nome)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Clinica.Alias)
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <p></p>                       
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12  form-group">
-                                <p><strong>Resumo do Período</strong></p>
-                                <p>Total em Dinheiro .(+):&emsp;R$ @ViewBag.Dinheiro</p>
-                                <p>Total em Cartão ...(+):&emsp;R$ @ViewBag.Cartao</p>
-                                <p>Total em Cheque ..(+):&emsp;R$ @ViewBag.Cheque</p>
-                                <p>Total em Transf ....(+):&emsp;R$ @ViewBag.Transf</p>
-                                <p>Total Recebido ....(=):&emsp;R$ @ViewBag.Credito</p>
-                                <br />
-                                <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>
-                                <br />
-                                <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
+                @using (Html.BeginForm("Mensal", "Relatorio", FormMethod.Post))
+                {
+                    <div class="container">
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-sm-5">
+                                Inicio: &nbsp;<input name="dataInicio" type="date" value="" style="border:2px solid #DCDCDC">
+                            </div>
+                            <div class="col-sm-5">
+                                Fim: &nbsp;<input name="dataFim" type="date" value="" style="border:2px solid #DCDCDC">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="submit" value="Buscar" class="btn btn-primary" />
                             </div>
                         </div>
-                        <div>
-                            <hr />
-                            <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>
-                            <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>
-                            <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>
-                        </div>
-
-                        @*<p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
-                        <p><strong>&ensp; Total Credito...:&emsp;<span style="color: #0000ff;">R$ @ViewBag.Credito</span></strong></p>
-                        <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong>*@</p>
                     </div>
-                </div>
+                }
+
+                <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Clinica)
+                            </th>
+                            <th>
+                                Lançamento
+                            </th>
+                            <th>
+                                Historico / Referencia
+                            </th>
+                            <th>
+                                Debito
+                            </th>
+                            <th>
+                                Credito
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Clinica)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Produto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Historico)
+                                    &nbsp;-&nbsp;
+                                    @Html.DisplayFor(modelItem => item.Referencia)
+                                </td>
+                                <td class="text-right">
+                                    @if (item.Tipo == Models.EnumHelper.Tipo.Debito)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Valor)
+                                    }
+                                </td>
+                                <td class="text-right">
+                                    @if (item.Tipo == Models.EnumHelper.Tipo.Credito)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Valor)
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tbody class="border-purple alert-heading ">
+
+                        <tr>
+                            <td>
+                                <font size="4"><b> Total do Periodo</b></font>
+                            </td>
+                            <td>                                
+                            </td>
+                            <td>                                
+                            </td>
+                            <td class="text-right">
+                                @ViewBag.Debito
+                            </td>
+                            <td class="text-right">
+                                @ViewBag.Credito
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
             </div>
+
+            @*<div class="row">
+                    <div class="col-md-4 col-sm-12  form-group">
+                        <p><strong>Resumo do Período</strong></p>
+                        <p>Total em Dinheiro .(+):&emsp;R$ @ViewBag.Dinheiro</p>
+                        <p>Total em Cartão ...(+):&emsp;R$ @ViewBag.Cartao</p>
+                        <p>Total em Cheque ..(+):&emsp;R$ @ViewBag.Cheque</p>
+                        <p>Total em Transf ....(+):&emsp;R$ @ViewBag.Transf</p>
+                        <p>Total Recebido ....(=):&emsp;R$ @ViewBag.Credito</p>
+                        <br />
+                        <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>
+                        <br />
+                        <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
+                    </div>
+                </div>*@
+            @*<div>
+                    <hr />
+                    <p>Total de Exames Médicos..: Realizados [ @ViewBag.TotalExameMedicoRealizado ] e Recebidos [ @ViewBag.TotalExameMedicoRecebido ]</p>
+                    <p>Total de Exames Psicotec..: Realizados [ @ViewBag.TotalExamePsicoRealizado ] e Recebidos [ @ViewBag.TotalExamePsicoRecebido ]</p>
+                    <p>Total de Laudos P.C.D........: Realizados [ @ViewBag.TotalLaudoRealizado ] e Recebidos [ @ViewBag.TotalLaudoRecebido ]</p>
+                </div>*@
+
+            @*<p><strong>&ensp; Total Debito....:&emsp;<span style="color: #f00;">R$ @ViewBag.Debito</span></strong></p>
+                <p><strong>&ensp; Total Credito...:&emsp;<span style="color: #0000ff;">R$ @ViewBag.Credito</span></strong></p>
+                <p><strong>&ensp; Total Final.......:&emsp;<span style="color: #000000;">R$ @ViewBag.Total</span></strong>*@</p>
         </div>
     </div>
 </div>
 
 
+
 @section ScriptPage{
-    <script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#datatable').DataTable();
-        });
-    </script>
+    @*<script type="text/javascript" src="~/Content/vendors/dataTables/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#datatable').DataTable();
+            });
+        </script>*@
 }

@@ -37,7 +37,7 @@ namespace Models
         //nome cliente
         [DisplayName("Referência")]
         public string Ref { get; set; }
-
+        
         [DisplayName("Histórico")]
         public long? HistoricoId { get; set; }
         public Historico Historico { get; set; }

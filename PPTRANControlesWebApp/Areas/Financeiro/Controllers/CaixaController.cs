@@ -100,12 +100,12 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await caixaDAL.GravarLancamento(caixa);
 
-                    var idCli = caixa.ClienteId;
+                    var idCli = caixa.ClienteId > 0 ? caixa.ClienteId : 0;
 
-                    var lancamentoNaoPago =
+                    var lancamentoNaoPago = 
                         caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
 
-                    if (lancamentoNaoPago == 0)
+                    if (lancamentoNaoPago == 0 && idCli != 0)
                     {
                         var cliente = context.Clientes.Find((long)idCli);
                         cliente.StatusPgto = EnumHelper.YesNo.Sim;
@@ -150,7 +150,8 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     var fracao = new Caixa
                     {
                         Valor = v2,
-                        ProdutoId = 7,
+                        ProdutoId = caixa.ProdutoId,
+                        HistoricoId = 1, //1 eh o valor fracionado
                         Data = caixa.Data,
                         Tipo = caixa.Tipo,
                         IdUser = caixa.IdUser,
@@ -218,15 +219,23 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                     if (idCli != 0 || idCol != 0)
                     {
                         if (model.Caixa.ProdutoId == 0)
+                        {
                             model.Caixa.ProdutoId = 6;
+                            model.Caixa.StatusPgto = EnumHelper.YesNo.Sim;
+                        }
+                        else
+                        {
+                            if (model.Cliente.CPF == null)
+                            {
+                                return RedirectToAction("Create");
+                            }
+                        }
 
                         if (model.Caixa.HistoricoId == 0)
-                            model.Caixa.HistoricoId = 8;
-
-                        if (model.Caixa.Tipo == EnumHelper.Tipo.Credito)
-                            model.Caixa.StatusPgto = EnumHelper.YesNo.Sim;
-
-
+                        {                            
+                            return RedirectToAction("Create");
+                        }
+                                                                           
                         model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
                     }
@@ -380,7 +389,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 var cliente = clienteDAL.ObterClientePorCpf(cpf).Result.Id;
                 idCliente = (long)cliente;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
 
                 idCliente = 0;

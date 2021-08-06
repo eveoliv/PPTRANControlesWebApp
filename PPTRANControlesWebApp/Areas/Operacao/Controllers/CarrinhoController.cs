@@ -55,8 +55,11 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         public async Task<IActionResult> Create(CarrinhoViewModel model)
         {
             var clienteId = model.Id;
+            var cliente = await clienteDAL.ObterClientePorId((long)clienteId);
+            //var cliente = context.Clientes.Find((long)clienteId);
+
             try
-            {
+            {                
                 if (model.Carrinho.Produto1Id != null)
                 {
                     model.Carrinho.Id = null;
@@ -65,27 +68,34 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                     model.Carrinho.IdUser = userManager.GetUserAsync(User).Result.Id;
                     await carrinhoDAL.GravarCarrinho(model.Carrinho);
 
-                    var prodLista = new List<long?>
-                    {
-                        model.Carrinho.Produto1Id
-                    };
+                    var prodLista = new List<long?>();
 
-                    if (model.Carrinho.Produto2Id != null)
+                    if (model.Carrinho.Produto1Id == 3)
+                    {
+                        prodLista.Add(1);
+                        prodLista.Add(2);
+                    }
+                    else
+                    {
+                        prodLista.Add(model.Carrinho.Produto1Id);
+                    }                                            
+
+                    if (model.Carrinho.Produto2Id != null && model.Carrinho.Produto2Id != 3)
                         prodLista.Add(model.Carrinho.Produto2Id);
 
-                    if (model.Carrinho.Produto3Id != null)
-                        prodLista.Add(model.Carrinho.Produto3Id);
+                    //if (model.Carrinho.Produto3Id != null)
+                    //    prodLista.Add(model.Carrinho.Produto3Id);
 
                     foreach (var p in prodLista)
                     {
                         if (p != 0)
                         {
-                            await IncluirLancamentoExameNoCaixa(p, clienteId, model.FormaPagamento);
+                            var produto = await produtoDAL.ObterProdutoPorId((long)p);
+                            await IncluirLancamentoExameNoCaixa(cliente, produto, model.FormaPagamento);
                         }
                     }
                 }
-
-                var cliente = context.Clientes.Find((long)clienteId);
+                
                 if (model.FormaPagamento != "Selecionar Forma Pagamento")
                 {
                     cliente.StatusPgto = EnumHelper.YesNo.Sim;
@@ -131,17 +141,16 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         }
 
         /****** Metodos Privados do Controller ******/
-        private async Task IncluirLancamentoExameNoCaixa(long? produtoId, long? clienteId, string formaPgto)
+        private async Task IncluirLancamentoExameNoCaixa(Cliente cliente, Produto produto, string formaPgto)
         {
-            var cliente = clienteDAL.ObterClientePorId((long)clienteId);
-
-            var produto = produtoDAL.ObterProdutoPorId((long)produtoId);
-
-            var caixa = new Caixa();
-            caixa.Data = DateTime.Today;
-            caixa.ProdutoId = produtoId;
-            caixa.ClienteId = clienteId;
-            caixa.Valor = produto.Result.Valor;
+            var caixa = new Caixa
+            {
+                Data = DateTime.Today,
+                Valor = produto.Valor,
+                ProdutoId = produto.Id,
+                ClienteId = cliente.Id,
+                Status = EnumHelper.Status.Ativo
+            };
 
             if (formaPgto != "Selecionar Forma Pagamento")
             {
@@ -151,8 +160,17 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
             {
                 caixa.StatusPgto = EnumHelper.YesNo.Não;
             }
-            caixa.ClinicaId = cliente.Result.ClinicaId;
-            caixa.HistoricoId = cliente.Result.HistoricoId;
+
+            caixa.ClinicaId = cliente.ClinicaId;
+
+            if(cliente.HistoricoId == null)
+            {
+                caixa.HistoricoId = 8;
+            }
+            else
+            {
+                caixa.HistoricoId = cliente.HistoricoId;
+            }
 
             switch (formaPgto)
             {

@@ -1,9 +1,5 @@
-﻿using System;
-using Models;
-using System.Linq;
+﻿using Models;
 using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace PPTRANControlesWebApp.Models.Operacao
 {

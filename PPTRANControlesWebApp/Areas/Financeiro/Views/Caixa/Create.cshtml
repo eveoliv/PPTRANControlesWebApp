@@ -36,9 +36,9 @@
                             </div>
 
                             <div class="item form-group">
-                                <label asp-for="Produto.Nome" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+                                <label asp-for="Produto.Nome" class="col-form-label col-md-3 col-sm-3 label-align">Exame</label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.ProdutoId" class="form-control" required="required" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))"></select>
+                                    <select asp-for="Caixa.ProdutoId" id="prod" class="form-control" required="required" asp-items="@(new SelectList(@ViewBag.Produtos, "Id", "Nome"))"></select>
                                     <span asp-validation-for="Caixa.ProdutoId" class="text-danger"></span>
                                 </div>
                             </div>
@@ -46,14 +46,14 @@
                             <div class="item form-group">
                                 <label asp-for="Cliente.CPF" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6 ">
-                                    <input asp-for="Cliente.CPF" type="text" class="form-control" data-inputmask="'mask': '999.999.999-99'">
+                                    <input asp-for="Cliente.CPF" id="cpf" type="text" class="form-control" data-inputmask="'mask': '999.999.999-99'">
                                 </div>
                             </div>
 
                             <div class="item form-group">
                                 <label asp-for="Caixa.Historico.Nome" class="col-form-label col-md-3 col-sm-3 label-align"></label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    <select asp-for="Caixa.HistoricoId" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))" required="required"></select>
+                                <div class="col-md-6 col-sm-6" style="color: #f00;">
+                                    <select asp-for="Caixa.HistoricoId" id="histo" class="form-control" asp-items="@(new SelectList(@ViewBag.Historicos, "Id", "Nome"))"></select>                                                                        
                                 </div>
                             </div>
 
@@ -83,7 +83,7 @@
                             <div class="item form-group">
                                 <label asp-for="Clinica.Alias" for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
                                 <div class="col-md-6 col-sm-6">
-                                    <select asp-for="Caixa.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required" id="clinica"></select>
+                                    <select asp-for="Caixa.ClinicaId" class="form-control" asp-items="@(new SelectList(@ViewBag.Clinicas, "Id", "Alias"))" required="required"></select>
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@
                             <div class="ln_solid"></div>
                             <div class="item form-group">
                                 <div class="col-md-12 col-sm-12 offset-md-2">
-                                    <button type="submit" class="btn btn-success" id="sbmt">Salvar</button>
+                                    <button type="submit" class="btn btn-success" onclick="funcao1()">Salvar</button>
                                     <a asp-action="Index" class="btn btn-primary">Cancelar</a>
                                 </div>
                             </div>
@@ -111,14 +111,25 @@
 </div>
 
 @section ScriptPage {
-
     <script>
         document.getElementById("sbmt").addEventListener("click", function () {
-            var validaClinica = document.getElementById("clinica");
-            console.log(validaClinica);
-            if (!validaClinica.value) {
-                alert("O preenchimento da Clínica é obrigatório!");
+            var validaHist = document.getElementById("hist");            
+            if (validaHist.value == 0) {
+                alert("O preenchimento do Historico é obrigatório!");
             };
         });
+    </script>   
+    <script>
+        function funcao1() {
+            var hist = document.getElementById("histo");
+            if (hist.value == 0)
+                alert("O preenchimento do historico é obrigatorio!");
+
+            var doc = document.getElementById("cpf");
+            var produto = document.getElementById("prod");
+            if (produto.value != 0 && doc.value == 0) {
+                alert("O preenchimento do CPF é obrigatorio!");
+            }
+        }
     </script>
 }

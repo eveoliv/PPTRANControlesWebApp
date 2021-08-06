@@ -127,7 +127,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             //-------------------------------------------//
 
-            var totalExameMedicoRealizado = lancamentos.Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5);
+            var totalExameMedicoRealizado = lancamentos.Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5).Where(c => c.HistoricoId != 1);
             ViewBag.TotalExameMedicoRealizado = totalExameMedicoRealizado.Count();
 
             var totalExameMedicoRecebido = totalExameMedicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
@@ -135,7 +135,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             //-------------------------------------------//
 
-            var totalExamePsicoRealizado = lancamentos.Where(c => c.ProdutoId == 2 || c.ProdutoId == 3);
+            var totalExamePsicoRealizado = lancamentos.Where(c => c.ProdutoId == 2 || c.ProdutoId == 3).Where(c => c.HistoricoId != 1);
             ViewBag.TotalExamePsicoRealizado = totalExamePsicoRealizado.Count();
 
             var totalExamePsicoRecebido = totalExamePsicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
@@ -153,13 +153,22 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             return View(lancamentos);
         }
 
-        public async Task<IActionResult> Mensal()
+        public async Task<IActionResult> Mensal(MensalViewModel model)
         {
             var userId = userManager.GetUserAsync(User).Result.Id;
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lancamentos = await relatorioDAL.ObterLancamentosClassificadosPorClinicaMensal().ToListAsync();
+            if (model.DataInicio.Year == 1 && model.DataFim.Year == 1)
+            {
+                model.DataInicio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                model.DataFim = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+            }
+
+            ViewBag.Mes = $" de {model.DataInicio.ToString("dd/MM/yy")} até {model.DataFim.ToString("dd/MM/yy")}";
+
+            var lancamentos
+                = await relatorioDAL.ObterLancamentosClassificadosPorClinicaMensal(model.DataInicio, model.DataFim).ToListAsync();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
@@ -168,59 +177,43 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
             }
 
-            var dinheiro = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Dinheiro && c.Tipo == EnumHelper.Tipo.Credito).Sum(c => c.Valor);
-            ViewBag.Dinheiro = dinheiro.ToString("0#.####");
+            var novaLitsta = new List<MensalViewModel>();
 
-            var cartao = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cartao).Sum(c => c.Valor);
-            ViewBag.Cartao = cartao.ToString("0#.####");
+            var exames = lancamentos.AsEnumerable()
+                .Select(l => new MensalViewModel
+                {
+                    ClinicaId = l.ClinicaId,
+                    Clinica = l.Clinica,
+                    Historico = l.Historico,
+                    Referencia = l.Referencia,
+                    Produto = l.Produto,
+                    ProdutoId = l.ProdutoId,
+                    Tipo = l.Tipo,
+                    Valor = l.Valor
+                })
+                .GroupBy(s => new { s.ClinicaId, s.Clinica, s.Referencia, s.ProdutoId, s.Produto, s.Tipo })
+                .Select(n => new MensalViewModel
+                {
+                    ClinicaId = n.Key.ClinicaId,
+                    Clinica = n.Key.Clinica,
+                    ProdutoId = n.Key.ProdutoId,
+                    Produto = n.Key.Produto,
+                   
+                    Referencia = n.Key.Referencia,
+                    Tipo = n.Key.Tipo,
+                    Valor = n.Sum(l => l.Valor)
+                }).Where(n => n.ProdutoId != 6).ToList();
 
-            var cheque = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cheque).Sum(c => c.Valor);
-            ViewBag.Cheque = cheque.ToString("0#.####");
+            novaLitsta.AddRange(exames);
 
-            var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Transferencia).Sum(c => c.Valor);
-            ViewBag.Transf = transf.ToString("0#.####");
+            var outros = lancamentos.Where(p => p.ProdutoId == 6).ToList();
+            novaLitsta.AddRange(outros);
 
-            var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
-            ViewBag.Credito = credito.ToString("0#.####");
+            ViewBag.Credito = novaLitsta.Where(t => t.Tipo == EnumHelper.Tipo.Credito).Sum(v => v.Valor).ToString("N2");
+            ViewBag.Debito = novaLitsta.Where(t => t.Tipo == EnumHelper.Tipo.Debito).Sum(v => v.Valor).ToString("N2");
 
-            var debito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Debito).Sum(c => c.Valor);
-            ViewBag.Debito = debito.ToString("0#.####");
-
-            var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
-            ViewBag.Finalizados = finalizados.ToString("0#.####");
-
-            var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
-            ViewBag.Abertos = abertos.ToString("0#.####");
-
-            var total = credito - debito;
-            ViewBag.Total = total.ToString("0#.####");
-
-            //-------------------------------------------//
-
-            var totalExameMedicoRealizado = lancamentos.Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5);
-            ViewBag.TotalExameMedicoRealizado = totalExameMedicoRealizado.Count();
-
-            var totalExameMedicoRecebido = totalExameMedicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
-            ViewBag.TotalExameMedicoRecebido = totalExameMedicoRecebido.Count();
-
-            //-------------------------------------------//
-
-            var totalExamePsicoRealizado = lancamentos.Where(c => c.ProdutoId == 2 || c.ProdutoId == 3);
-            ViewBag.TotalExamePsicoRealizado = totalExamePsicoRealizado.Count();
-
-            var totalExamePsicoRecebido = totalExamePsicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
-            ViewBag.TotalExamePsicoRecebido = totalExamePsicoRecebido.Count();
-
-            //-------------------------------------------//
-
-            var totalLaudoRealizado = lancamentos.Where(c => c.ProdutoId == 4);
-            ViewBag.TotalLaudoRealizado = totalLaudoRealizado.Count();
-
-            var totalLaudoRecebido = totalLaudoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
-            ViewBag.TotalLaudoRecebido = totalLaudoRecebido.Count();
-
-            return View(lancamentos);
-        }
+            return View(novaLitsta.OrderBy(c => c.ClinicaId));
+        }       
 
         public async Task<IActionResult> DiarioMedico(DiarioMedicoViewModel model, DateTime dateTime, string medico)
         {
@@ -469,7 +462,6 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 ViewBag.Agrupar9 = grupo[9];
             }
         }
-
 
         private void AgrupamentoDeExamesMedico(IQueryable<DiarioMedicoViewModel> lancamentos, string medico)
         {

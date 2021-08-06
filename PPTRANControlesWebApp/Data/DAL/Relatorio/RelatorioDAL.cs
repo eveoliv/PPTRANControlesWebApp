@@ -40,25 +40,29 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
               .OrderBy(p => p.Clinica);
         }
 
-        public IQueryable<Caixa> ObterLancamentosClassificadosPorClinicaMensal()
+        public IQueryable<MensalViewModel> ObterLancamentosClassificadosPorClinicaMensal(DateTime dtInicio, DateTime dtFim)
         {
-            var ano = DateTime.Today.Year;
-            var mes = DateTime.Today.Month;
-            var dias = DateTime.DaysInMonth(ano, mes);
-
-            DateTime dtInicio = new DateTime(ano, mes, 01);
-            DateTime dtFim = new DateTime(ano, mes, dias);
-
-            return context.Caixas
-              .Include(c => c.Cliente)
-              .Include(c => c.Clinica)
-              .Include(p => p.Produto)
-              .Include(i => i.Historico)
-              .Include(c => c.Colaborador)
-              .Where(s => s.Status == EnumHelper.Status.Ativo)
-              .Where(d => d.Data >= dtInicio && d.Data <= dtFim)
-              .OrderBy(p => p.Clinica);
-        }
+            return from a in context.Caixas
+                   join b in context.Clinicas on a.ClinicaId equals b.Id
+                   join c in context.Produtos on a.ProdutoId equals c.Id
+                   join d in context.Historicos on a.HistoricoId equals d.Id
+                   where a.Status == EnumHelper.Status.Ativo // 0
+                   where a.StatusPgto == EnumHelper.YesNo.Sim // 1
+                   where a.Data >= dtInicio && a.Data <= dtFim
+                   orderby b.Nome
+                   select new MensalViewModel
+                   {
+                       ClinicaId = b.Id,
+                       Clinica = b.Nome,
+                       HistoricoId = d.Id,
+                       Historico = d.Nome,
+                       ProdutoId = c.Id,
+                       Produto = c.Nome,
+                       Referencia = a.Ref,
+                       Tipo = a.Tipo,
+                       Valor = a.Valor
+                   };            
+        }        
 
         public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model, string medico)
         {
