@@ -233,7 +233,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 dtCabecalho = dateTime;
             }
 
-            var lancamentos = relatorioDAL.ObterExamePorMedicoDiario(model, medico);
+            var lancamentos = relatorioDAL.ObterExamePorMedicoDiario(model, medico).Distinct();
             var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
@@ -281,7 +281,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 dtCabecalho = dateTime;
             }
 
-            var lancamentos = relatorioDAL.ObterExamePorPsicologoDiario(model, psico);
+            var lancamentos = relatorioDAL.ObterExamePorPsicologoDiario(model, psico).Distinct();
             var psicos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
@@ -472,7 +472,8 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             {
                 var medicos = (from l in lancamentos select new { l.Nome }).ToList();
                 var groupped =
-                    medicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
+                    medicos.GroupBy(x => x.Nome)
+                    .Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
 
                 string[] grupo = new string[1];
                 int i = 0;

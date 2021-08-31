@@ -84,7 +84,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                            Nome = c.Nome,
                            Data = a.Data,
                            Cliente = b.Nome
-                       };
+                       };                
             }
 
             return from a in context.Caixas
