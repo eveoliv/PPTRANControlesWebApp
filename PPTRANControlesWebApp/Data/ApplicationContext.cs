@@ -1,6 +1,5 @@
 ﻿using Models;
 using Microsoft.EntityFrameworkCore;
-using PPTRANControlesWebApp.Models.Relatorio;
 
 namespace PPTRANControlesWebApp.Data
 {
@@ -10,17 +9,17 @@ namespace PPTRANControlesWebApp.Data
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //Mapeamento do modelo relacional
-        public DbSet<Colaborador> Colaboradores { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Caixa> Caixas { get; set; }
+        public DbSet<Agenda> Agendas { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Clinica> Clinicas { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }     
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Contato> Contatos { get; set; }
-        public DbSet<Historico> Historicos { get; set; }
-        public DbSet<Carrinho> Carrinhos { get; set; }
         public DbSet<Repasse> Repasses { get; set; }        
+        public DbSet<Endereco> Enderecos { get; set; }     
+        public DbSet<Carrinho> Carrinhos { get; set; }
+        public DbSet<Historico> Historicos { get; set; }
+        public DbSet<Colaborador> Colaboradores { get; set; }
 
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)

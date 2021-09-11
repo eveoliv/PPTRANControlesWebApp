@@ -235,6 +235,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var lancamentos = relatorioDAL.ObterExamePorMedicoDiario(model, medico).Distinct();
             var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
+            var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
@@ -242,12 +243,14 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
 
-                var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
                 medicos = medicos.Where(m => m.ClinicaId == idClinica).ToList();
             }
 
-            var medicoList = new List<string>();
-            medicoList.Add("Selecionar Medico");
+            var medicoList = new List<string>
+            {
+                "Selecionar Medico"
+            };
+
             foreach (var m in medicos)
             {
                 medicoList.Add(m.Nome);
@@ -256,7 +259,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             SelectList Medicos = new SelectList(medicoList);
             ViewData["Medicos"] = Medicos;
 
-            AgrupamentoDeExamesMedico(lancamentos, medico);
+            AgrupamentoDeExamesMedico(lancamentos, medico, idClinica);
 
             ViewBag.DataAtual = dtCabecalho.ToString("dd/MM/yyyy");
 
@@ -283,18 +286,21 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var lancamentos = relatorioDAL.ObterExamePorPsicologoDiario(model, psico).Distinct();
             var psicos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
+            var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
 
-                var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
             }
 
-            var psicoList = new List<string>();
-            psicoList.Add("Selecionar Psicologo");
+            var psicoList = new List<string>
+            {
+                "Selecionar Psicologo"
+            };
+
             foreach (var p in psicos)
             {
                 psicoList.Add(p.Nome);
@@ -303,7 +309,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             SelectList Psicologos = new SelectList(psicoList);
             ViewData["Psicologos"] = Psicologos;
 
-            AgrupamentoDeExamesPsico(lancamentos, psico);
+            AgrupamentoDeExamesPsico(lancamentos, psico, idClinica);
 
             ViewBag.DataAtual = dtCabecalho.ToString("dd/MM/yyyy");
 
@@ -319,18 +325,21 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var lancamentos = relatorioDAL.ObterExamePorPsicologoSemanal(model, psico);
             var psicos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
+            var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
 
             if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
             {
                 var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
                 var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
 
-                var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
                 lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
             }
 
-            var psicoList = new List<string>();
-            psicoList.Add("Selecionar Psicologo");
+            var psicoList = new List<string>
+            {
+                "Selecionar Psicologo"
+            };
+
             foreach (var p in psicos)
             {
                 psicoList.Add(p.Nome);
@@ -341,7 +350,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var datasValidas = ValidarDatas(model.DataInicio, model.DataFim);
 
-            AgrupamentoSemanalDeExamesPsico(lancamentos, psico);
+            AgrupamentoSemanalDeExamesPsico(lancamentos, psico, idClinica);
 
             ViewBag.Cabecalho = "Exames Realizados";
 
@@ -359,10 +368,11 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             return false;
         }
 
-        private void AgrupamentoSemanalDeExamesPsico(IQueryable<SemanalPsicologoViewModel> lancamentos, string psico)
+        private void AgrupamentoSemanalDeExamesPsico(IQueryable<SemanalPsicologoViewModel> lancamentos, string psico, long? clinicaId)
         {
             //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+            //var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+            var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
             {
@@ -412,10 +422,11 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             //}
         }
 
-        private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico)
+        private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico, long? clinicaId)
         {
             //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+            //var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+            var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
             {
@@ -463,10 +474,11 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             }
         }
 
-        private void AgrupamentoDeExamesMedico(IQueryable<DiarioMedicoViewModel> lancamentos, string medico)
+        private void AgrupamentoDeExamesMedico(IQueryable<DiarioMedicoViewModel> lancamentos, string medico, long? clinicaId)
         {
             //var valorExameMed = produtoDAL.ObterValorProdutoPorId(1).Result.Valor;
-            var valorRepasse = repasseDAL.ObterRepassePorId(1).Result.Valor;
+            //var valorRepasse = repasseDAL.ObterRepassePorId(1).Result.Valor;
+            var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Medico").Result.Valor;
 
             if (medico != null && medico != "Selecionar Medico")
             {

@@ -47,6 +47,12 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Repasse> ObterRepassePorClinicaComProfissional(long? clinicaId, string profissional)
+        {
+            return await context.Repasses.OrderBy(r => r.Valor)
+                .FirstOrDefaultAsync(r => r.ClinicaId == clinicaId && r.Profissional == profissional);
+        }
+
         public async Task<Repasse> GravarRepasse(Repasse repasse)
         {
             if (repasse.Id == null)
