@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using PPTRANControlesWebApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using PPTRANControlesWebApp.Areas.Identity.Data;
+using PPTRANControlesWebApp.Models.Administracao;
 using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
@@ -18,6 +20,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
     public class RepasseController : Controller
     {
         private readonly RepasseDAL repasseDAL;
+        private readonly ClinicaDAL clinicaDAL;
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
@@ -28,6 +31,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             this.userManager = userManager;
             repasseDAL = new RepasseDAL(context);
             colaboradorDAL = new ColaboradorDAL(context);
+            clinicaDAL = new ClinicaDAL(context);
         }
 
         public async Task<IActionResult> Index()
@@ -97,7 +101,9 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             var repasses = await repasseDAL.ObterRepassesClassificadosPorClinica().ToListAsync();
 
             if (roleUser.FirstOrDefault() == RolesNomes.Administrador)
-            {               
+            {
+                CreateViewBags();
+
                 return View();
             }
 
@@ -106,13 +112,22 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Repasse repasse)
+        public async Task<IActionResult> Create(RepasseViewModel model)
         {
+            var userId = userManager.GetUserAsync(User).Result.Id;           
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    repasse.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    var repasse = new Repasse
+                    {
+                        Profissional = model.Profissional,
+                        Valor = model.Valor,
+                        IdUser = userId,
+                        ClinicaId = model.ClinicaId
+                    };
+
                     await repasseDAL.GravarRepasse(repasse);
                 }
 
@@ -141,6 +156,19 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             }
 
             return View(repasse);
+        }
+
+        private void CreateViewBags()
+        {                      
+            ViewBag.Clinicas = clinicaDAL.ObterClinicasClassificadasPorNome().ToList();
+
+            var lista = new List<string>
+                {
+                    EnumHelper.Funcao.Medico.ToString(),
+                    EnumHelper.Funcao.Psicologo.ToString()
+                };
+
+            ViewBag.Funcoes = lista;
         }
     }
 }

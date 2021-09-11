@@ -22,6 +22,11 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
             return context.Repasses.OrderBy(c => c.Profissional);
         }
 
+        public IQueryable<Repasse> ObterClinicasComRepasse()
+        {
+            return context.Repasses.OrderBy(c => c.ClinicaId).Distinct();
+        }
+
         public IQueryable<RepasseViewModel> ObterRepassesClassificadosPorClinica()
         {
             return from r in context.Repasses

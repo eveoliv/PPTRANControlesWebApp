@@ -36,13 +36,6 @@ namespace PPTRANControlesWebApp.Data
             modelBuilder.Entity<Cliente>().HasOne(c => c.Historico);
 
             modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
-        }
-
-        //Sobrescrita do metodo de acesso ao db
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder
-            //    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IESUtfpr;Trusted_Connection=True;MultipleActiveResultSets= true");
-        }
+        }        
     }
 }
