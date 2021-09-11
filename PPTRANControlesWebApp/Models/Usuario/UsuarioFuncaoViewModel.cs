@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PPTRANControlesWebApp.Models.Usuario
+﻿namespace PPTRANControlesWebApp.Models.Usuario
 {
     public class UsuarioFuncaoViewModel
     {

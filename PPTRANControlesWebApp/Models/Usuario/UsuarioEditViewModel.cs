@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Areas.Identity.Data;
 using PPTRANControlesWebApp.Areas.Identity.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using PPTRANControlesWebApp.Data;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {

@@ -1,7 +1,4 @@
-﻿using Models;
-using System.Linq;
-using PPTRANControlesWebApp.Areas.Identity.Data;
-using System.Collections.Generic;
+﻿using PPTRANControlesWebApp.Areas.Identity.Data;
 
 namespace PPTRANControlesWebApp.Models.Usuario
 {

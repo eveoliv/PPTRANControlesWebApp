@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace PPTRANControlesWebApp.Models
+namespace PPTRANControlesWebApp.Models.Administracao
 {
     public class ColaboradorViewModel
     {

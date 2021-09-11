@@ -1,6 +1,4 @@
-﻿using Models;
-
-namespace PPTRANControlesWebApp.Models.Administracao
+﻿namespace PPTRANControlesWebApp.Models.Administracao
 {
     public class RepasseViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace PPTRANControlesWebApp.Models
+namespace PPTRANControlesWebApp.Models.Operacao
 {
     public class ClienteViewModel
     {

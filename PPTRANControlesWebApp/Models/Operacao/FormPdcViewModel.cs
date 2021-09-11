@@ -1,5 +1,4 @@
-﻿
-namespace PPTRANControlesWebApp.Models.Operacao
+﻿namespace PPTRANControlesWebApp.Models.Operacao
 {
     public class FormPdcViewModel
     {
