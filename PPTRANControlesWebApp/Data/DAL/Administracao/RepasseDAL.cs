@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using PPTRANControlesWebApp.Models.Administracao;
 
 namespace PPTRANControlesWebApp.Data.DAL.Administracao
 {
@@ -19,6 +20,20 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
         public IQueryable<Repasse> ObterRepassesClassificadosPorNome()
         {
             return context.Repasses.OrderBy(c => c.Profissional);
+        }
+
+        public IQueryable<RepasseViewModel> ObterRepassesClassificadosPorClinica()
+        {
+            return from r in context.Repasses
+                   join c in context.Clinicas on r.ClinicaId equals c.Id
+                   select new RepasseViewModel
+                   {
+                       RepasseId = r.Id,
+                       ClinicaId = r.ClinicaId,
+                       ClinicaAlias = c.Alias,
+                       Profissional = r.Profissional,
+                       Valor = r.Valor
+                   };
         }
 
         public async Task<Repasse> ObterRepassePorId(long id)

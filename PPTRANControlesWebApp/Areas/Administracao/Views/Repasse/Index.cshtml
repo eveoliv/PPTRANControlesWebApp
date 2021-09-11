@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Models.Repasse>
+﻿@model IEnumerable<PPTRANControlesWebApp.Models.Administracao.RepasseViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,12 +15,14 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
-                    <h2> Valor exame Medico / Psicologo</h2>
+                    <h2> Valor exame Medico / Psicologo&emsp;&emsp;
+                        <a asp-action="Create" class="glyphicon glyphicon-plus-sign"></a>
+                    </h2>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Id)
+                                    @Html.DisplayNameFor(model => model.ClinicaAlias)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Profissional)
@@ -38,7 +40,7 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Id)
+                                        @Html.DisplayFor(modelItem => item.ClinicaAlias)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Profissional)
@@ -47,8 +49,8 @@
                                         @Html.DisplayFor(modelItem => item.Valor)
                                     </td>
                                     <td>
-                                        &emsp;
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="glyphicon glyphicon-edit"></a>
+                                        &emsp;&emsp;
+                                        <a asp-action="Edit" asp-route-id="@item.RepasseId" class="glyphicon glyphicon-edit"></a>
                                     </td>
                                 </tr>
                             }

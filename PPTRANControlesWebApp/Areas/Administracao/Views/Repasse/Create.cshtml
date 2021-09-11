@@ -16,6 +16,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="ClinicaId" class="control-label"></label>
+                <input asp-for="ClinicaId" class="form-control" />
+                <span asp-validation-for="ClinicaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Profissional" class="control-label"></label>
                 <input asp-for="Profissional" class="form-control" />
                 <span asp-validation-for="Profissional" class="text-danger"></span>
