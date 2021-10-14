@@ -24,6 +24,8 @@ namespace PPTRANControlesWebApp.Data
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new RepasseConfiguration());
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Colaborador>().HasKey(c => c.Id);
             modelBuilder.Entity<Colaborador>().HasOne(c => c.Clinica);
@@ -36,5 +38,5 @@ namespace PPTRANControlesWebApp.Data
 
             modelBuilder.Entity<Endereco>().HasKey(c => c.Id);
         }        
-    }
+    }    
 }

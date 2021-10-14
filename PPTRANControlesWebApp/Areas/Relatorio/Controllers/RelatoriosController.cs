@@ -323,7 +323,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var usuario = await userManager.FindByIdAsync(userId);
             var roleUser = await userManager.GetRolesAsync(usuario);
 
-            var lancamentos = relatorioDAL.ObterExamePorPsicologoSemanal(model, psico);
+            var lancamentos = relatorioDAL.ObterExamePorPsicologoSemanal(model, psico).Distinct();
             var psicos = colaboradorDAL.ObterPsicologosClassificadosPorNome().ToList();
             var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
 
@@ -369,9 +369,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
         }
 
         private void AgrupamentoSemanalDeExamesPsico(IQueryable<SemanalPsicologoViewModel> lancamentos, string psico, long? clinicaId)
-        {
-            //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            //var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+        {            
             var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
@@ -392,40 +390,11 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 ViewBag.Agrupar0 = grupo[0];
             }
 
-            return;
-            //else
-            //{
-
-            //    var psicos = (from l in lancamentos select new { l.Nome }).ToList();
-
-            //    var groupped =
-            //        psicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
-
-            //    string[] grupo = new string[10];
-            //    int i = 0;
-            //    foreach (var g in groupped)
-            //    {
-            //        grupo[i] = $"{g.Chave}     {g.Total}";
-            //        i++;
-            //    }
-
-            //    ViewBag.Agrupar0 = grupo[0];
-            //    ViewBag.Agrupar1 = grupo[1];
-            //    ViewBag.Agrupar2 = grupo[2];
-            //    ViewBag.Agrupar3 = grupo[3];
-            //    ViewBag.Agrupar4 = grupo[4];
-            //    ViewBag.Agrupar5 = grupo[5];
-            //    ViewBag.Agrupar6 = grupo[6];
-            //    ViewBag.Agrupar7 = grupo[7];
-            //    ViewBag.Agrupar8 = grupo[8];
-            //    ViewBag.Agrupar9 = grupo[9];
-            //}
+            return;           
         }
 
         private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico, long? clinicaId)
-        {
-            //var valorExamePsi = produtoDAL.ObterValorProdutoPorId(2).Result.Valor;
-            //var valorRepasse = repasseDAL.ObterRepassePorId(2).Result.Valor;
+        {           
             var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
