@@ -45,7 +45,6 @@
                                         <dt class="col-form-label col-md-3 col-sm-3 ">Novo</dt>
                                         <dd class="col-md-6 col-sm-6 ">
                                             @Html.DropDownList("Role", new SelectList(Model.Roles, "Text", "Text"), new { @class = "form-control" })
-                                            @*<select asp-for="Role" class="form-control" asp-items="@(new SelectList(Model.Roles, "Text", "Text"))"></select>*@
                                         </dd>
 
                                     </dl>
@@ -55,11 +54,24 @@
                                 <div class="item form-group">
                                     <div class="col-md-12 col-sm-12 offset-md-2">
                                         <button type="submit" class="btn btn-success">Alterar</button>
-                                        <a href="@Url.Action("Index", "Usuario")" class="btn btn-primary">Cancelar</a>                                          
+                                        <a href="@Url.Action("Index", "Usuario")" class="btn btn-primary">Cancelar</a>
                                     </div>
                                 </div>
                             </div>
                         </form>
+
+                        <form asp-action="Reset" method="post">
+                           
+                            <div class="item form-group">
+                                <div class="col-md-12 col-sm-12 offset-md-2">
+                                    @Html.HiddenFor(model => model.Id)
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <button type="submit" class="btn btn-warning">&emsp;&emsp;Reset Senha &emsp;</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

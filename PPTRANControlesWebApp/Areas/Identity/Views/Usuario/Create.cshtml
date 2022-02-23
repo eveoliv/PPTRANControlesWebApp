@@ -1,0 +1,87 @@
+﻿@model PPTRANControlesWebApp.Models.Usuario.UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Cadastrar Perfil de Usuário <span style="color: #f00;">@ViewBag.msg</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <form asp-action="create" class="form-label-left input_mask">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="Id" type="text" class="form-control has-feedback-left" id="id" placeholder="Id" required="required">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="Nome" type="text" class="form-control has-feedback-left" id="nome" placeholder="Nome" required="required">
+                                <span class="fa fa-newspaper-o form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="Nome" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="ClinicaId" type="text" class="form-control has-feedback-left" id="ClinicaId" placeholder="Clinica Id" required="required">
+                                <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="ClinicaId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="Email" type="text" class="form-control has-feedback-left" id="email" placeholder="Email" required="required">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="UserName" type="text" class="form-control has-feedback-left" id="username" placeholder="UserName" required="required">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12  form-group has-feedback">
+                                <input asp-for="Pwd" type="text" class="form-control has-feedback-left" id="senha" placeholder="Senha" required="required">
+                                <span class="fa fa-eye-slash form-control-feedback left" aria-hidden="true"></span>
+                                <span asp-validation-for="Pwd" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <button class="btn btn-success" type="submit">Gravar</button>
+                                <button class="btn btn-primary" type="reset">Limpar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

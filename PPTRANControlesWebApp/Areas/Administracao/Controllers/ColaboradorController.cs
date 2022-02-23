@@ -232,7 +232,8 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
                 ColaboradorId = (long)model.Colaborador.Id,
             };
 
-            string pwd = model.Colaborador.CPF.Replace(".", "").Replace("-", "");
+            //string pwd = model.Colaborador.CPF.Replace(".", "").Replace("-", "");          
+            string pwd = DateTime.Today.Year + model.Colaborador.Email;
 
             var createPowerUser = await userManager.CreateAsync(novoUsuario, pwd);
 

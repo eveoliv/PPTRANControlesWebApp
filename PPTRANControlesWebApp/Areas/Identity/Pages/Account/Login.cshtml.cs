@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using PPTRANControlesWebApp.Data;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using PPTRANControlesWebApp.Data.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Data.DAL;
-using PPTRANControlesWebApp.Data;
-using PPTRANControlesWebApp.Areas.Identity.Models;
 
 namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
 {
@@ -80,7 +79,12 @@ namespace PPTRANControlesWebApp.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                
+
+                if (Input.Password == (DateTime.Today.Year + Input.Email))
+                {
+                    return RedirectToPage("./ResetPassword");
+                }
+
                 if (result.Succeeded)
                 {                 
                     _logger.LogInformation("User logged in.");

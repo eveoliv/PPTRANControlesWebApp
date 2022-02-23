@@ -33,6 +33,12 @@ SqlParameter param = new SqlParameter("@idCliente", 1);
 
 https://stackoverflow.com/questions/45442567/asp-net-core-how-to-get-the-user-role-in-ef-core-and-identity
 
+MS SQL plan:MS SQL Plan "Novice"
+Database name (7-30 symbols):PptrIdentity
+Zone name:somee.com
+MS SQL login:- Generate new login -
+MS SQL Server version:MS SQL 2019 Express
+
 
 Campos obrigatorios:
 	Nome

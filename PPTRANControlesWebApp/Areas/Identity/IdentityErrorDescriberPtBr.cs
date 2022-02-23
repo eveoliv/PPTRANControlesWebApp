@@ -66,7 +66,12 @@ namespace PPTRANControlesWebApp.Areas.Identity
 
         public override IdentityError PasswordMismatch()
         {
-            return base.PasswordMismatch();
+            //return base.PasswordMismatch();
+            return new IdentityError
+            {
+                Code = nameof(PasswordMismatch),
+                Description = "A senha e a confirmação estão diferentes."
+            };
         }
 
         public override IdentityError PasswordRequiresDigit()

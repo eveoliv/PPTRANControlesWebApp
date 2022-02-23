@@ -7,7 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
 
-    <h2>Bem vindo, </h2>
+    <h2>Bem vindo (a), </h2>
 
     <h2>@UserManager.GetUserAsync(User).Result.Nome</h2>
 
