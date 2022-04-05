@@ -22,17 +22,6 @@ namespace PPTRANControlesWebApp.Data.DAL
                 //clinicas
                 new Endereco{ Id = 1, Cep="01019-020", Rua="Rua do Carmo", Bairro="Sé", Cidade="São Paulo", Estado="SP", Numero=44, Complto="1° ANDAR"},
                 new Endereco{ Id = 2, Cep="02034-030", Rua="Rua Darzan", Bairro="Santana", Cidade="São Paulo", Estado="SP", Numero=144, Complto=""},
-
-                ////cliente
-                //new Endereco{ Id = 3, Cep="01319-001",Rua="Maria Paula"},
-                ////atendente
-                //new Endereco{ Id = 4, Cep="01319-001",Rua="Maria Paula"},
-                ////psicologo
-                //new Endereco{ Id = 5, Cep="01319-001",Rua="Maria Paula"},
-                ////medico
-                //new Endereco{ Id = 6, Cep="01319-001",Rua="Maria Paula"},
-                ////operador
-                //new Endereco{ Id = 7, Cep="01319-001",Rua="Maria Paula"}
             };
 
             foreach (Endereco e in enderecos)
@@ -84,14 +73,14 @@ namespace PPTRANControlesWebApp.Data.DAL
 
             var historico = new Historico[]
             {
-                new Historico{ Nome = "Inscrição CNH", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Valor Fracionado Exame", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "Renovação Ex.", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "2ª Via CNH", Status = EnumHelper.Status.Ativo },
-                new Historico{ Nome = "Mudança/adição", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Inscrição CNH", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "Licença Estr.", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "Registro CNH", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "Baixa Condutor", Status = EnumHelper.Status.Ativo },
-                new Historico{ Nome = "Alteração de Dados", Status = EnumHelper.Status.Ativo },
+                new Historico{ Nome = "Alteração/Inclusão de Dados", Status = EnumHelper.Status.Ativo },
                 new Historico{ Nome = "Laudo Pessoa com Deficiência", Status = EnumHelper.Status.Ativo }
             };
 

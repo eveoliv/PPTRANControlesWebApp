@@ -102,7 +102,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
                     var idCli = caixa.ClienteId > 0 ? caixa.ClienteId : 0;
 
-                    var lancamentoNaoPago = 
+                    var lancamentoNaoPago =
                         caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
 
                     if (lancamentoNaoPago == 0 && idCli != 0)
@@ -134,7 +134,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                 return RedirectToAction("Edit", new { id });
 
             if (caixa.Valor != (v1 + v2))
-                return RedirectToAction("Edit", new { id });            
+                return RedirectToAction("Edit", new { id });
 
             if (id != caixa.Id)
                 return NotFound();
@@ -162,7 +162,7 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                         FormaPgto = (EnumHelper.FormaPgto)FormaPgto2
                     };
 
-                    await caixaDAL.GravarLancamento(fracao);                    
+                    await caixaDAL.GravarLancamento(fracao);
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -232,10 +232,10 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
                         }
 
                         if (model.Caixa.HistoricoId == 0)
-                        {                            
+                        {
                             return RedirectToAction("Create");
                         }
-                                                                           
+
                         model.Caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
                         await caixaDAL.GravarLancamento(model.Caixa);
                     }
@@ -442,14 +442,17 @@ namespace PPTRANControlesWebApp.Areas.Financeiro.Controllers
 
             var idCli = caixa.ClienteId;
 
-            var lancamentoNaoPago =
-                caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
-
-            if (lancamentoNaoPago == 0)
+            if (idCli != null)
             {
-                var cliente = context.Clientes.Find((long)idCli);
-                cliente.StatusPgto = EnumHelper.YesNo.Sim;
-                await clienteDAL.GravarCliente(cliente);
+                var lancamentoNaoPago =
+                    caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)idCli);
+
+                if (lancamentoNaoPago == 0)
+                {
+                    var cliente = context.Clientes.Find((long)idCli);
+                    cliente.StatusPgto = EnumHelper.YesNo.Sim;
+                    await clienteDAL.GravarCliente(cliente);
+                }
             }
         }
     }

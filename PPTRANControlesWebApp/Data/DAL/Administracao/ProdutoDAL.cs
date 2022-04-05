@@ -18,7 +18,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Administracao
         public IQueryable<Produto> ObterProdutosClassificadosPorNome()
         {
             //!6 e !7 valor fracionado e outros
-            return context.Produtos.Where(s => s.Status == EnumHelper.Status.Ativo && s.Id != 7 && s.Id != 6).OrderBy(c => c.Id);
+            return context.Produtos.Where(s => s.Status == EnumHelper.Status.Ativo && s.Id != 7 && s.Id != 6 && s.Id != 3).OrderBy(c => c.Id);
         }
 
         public IQueryable<Produto> ObterProdutosClassificadosPorId()

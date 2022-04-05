@@ -55,11 +55,11 @@
                                     @Html.DropDownList("FormaPagamento", ViewData["FormaPagamento"] as SelectList, new { @class = "form-control" })
                                 </div>
                             </div>
-                            
+                            <p> </p>
+                            <p><span style="color: #f00;">@ViewBag.Alerta</span></p>
 
                             @if (@ViewBag.Caixa > 0)
                             {
-                                <p> </p>
                                 <p><span style="color: #f00;">* O cliente ja possui exames não pagos cadastrados no caixa!</span></p>
                             }
 

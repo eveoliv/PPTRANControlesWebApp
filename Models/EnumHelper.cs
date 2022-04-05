@@ -15,7 +15,7 @@ namespace Models
 
         public enum FormaPgto
         {
-            Dinheiro, Cartao, Cheque, Transferencia, Selecionar
+            Dinheiro, Cartao, Cheque, Transferencia, Selecionar, Cortesia
         };
 
         public enum Categoria

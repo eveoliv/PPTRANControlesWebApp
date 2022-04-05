@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PPTRANControlesWebApp.Models.Operacao;
 using PPTRANControlesWebApp.Data.DAL.Operacao;
 using PPTRANControlesWebApp.Areas.Identity.Data;
-using PPTRANControlesWebApp.Areas.Identity.Models;
 using PPTRANControlesWebApp.Data.DAL.Administracao;
 
 namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
@@ -30,6 +29,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         private readonly ApplicationContext context;
         private readonly ColaboradorDAL colaboradorDAL;
         private readonly UserManager<AppIdentityUser> userManager;
+        private static bool alerta = false;
 
         public CarrinhoController(ApplicationContext context, UserManager<AppIdentityUser> userManager)
         {
@@ -45,8 +45,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         public IActionResult Create(int? id)
         {
-            CarregarViewBagsCreate(id);
-
+            CarregarViewBagsCreate(id);            
             return View();
         }
 
@@ -56,10 +55,25 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
         {
             var clienteId = model.Id;
             var cliente = await clienteDAL.ObterClientePorId((long)clienteId);
-            //var cliente = context.Clientes.Find((long)clienteId);
+            var temMedico = cliente.MedicoId != null ? 1 : 0;
+            var temPsico = cliente.PsicologoId != null ? 2 : 0;
+
+            var listaProds = new List<long?>
+            {
+                model.Carrinho.Produto1Id,
+                model.Carrinho.Produto2Id,
+                model.Carrinho.Produto3Id,
+                model.Carrinho.Produto4Id
+            };
+
+            if( !ValidaExameVsProfissional(listaProds, temMedico, temPsico))
+            {
+                alerta = true;
+                return RedirectToRoute(new { controller = "Carrinho", action = "Create", id = clienteId });
+            }
 
             try
-            {                
+            {
                 if (model.Carrinho.Produto1Id != null)
                 {
                     model.Carrinho.Id = null;
@@ -78,7 +92,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                     else
                     {
                         prodLista.Add(model.Carrinho.Produto1Id);
-                    }                                            
+                    }
 
                     if (model.Carrinho.Produto2Id != null && model.Carrinho.Produto2Id != 3)
                         prodLista.Add(model.Carrinho.Produto2Id);
@@ -95,7 +109,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                         }
                     }
                 }
-                
+
                 if (model.FormaPagamento != "Selecionar Forma Pagamento")
                 {
                     cliente.StatusPgto = EnumHelper.YesNo.Sim;
@@ -163,7 +177,7 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
             caixa.ClinicaId = cliente.ClinicaId;
 
-            if(cliente.HistoricoId == null)
+            if (cliente.HistoricoId == null)
             {
                 caixa.HistoricoId = 8;
             }
@@ -189,6 +203,9 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 case "Transferencia":
                     caixa.FormaPgto = EnumHelper.FormaPgto.Transferencia;
                     break;
+                case "Cortesia":
+                    caixa.FormaPgto = EnumHelper.FormaPgto.Cortesia;
+                    break;
             }
 
             caixa.IdUser = userManager.GetUserAsync(User).Result.Id;
@@ -197,6 +214,12 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
 
         private void CarregarViewBagsCreate(long? id)
         {
+            if (alerta)
+            {
+                alerta = false;
+                ViewBag.Alerta = "*O Cliente não possui o profissional correspondente ao exame solicitado.";
+            }
+
             ViewBag.Cliente = clienteDAL.ObterClientePorId((long)id).Result.Nome;
 
             ViewBag.Caixa = caixaDAL.ObterLancamentoNaoPagoPeloClienteIdNoCaixa((long)id);
@@ -212,11 +235,27 @@ namespace PPTRANControlesWebApp.Areas.Operacao.Controllers
                 { "Dinheiro" },
                 { "Cartao" },
                 { "Cheque" },
-                { "Transferencia" }
+                { "Transferencia" },
+                { "Cortesia" }
             };
 
             SelectList formaPagamento = new SelectList(pagamentos);
             ViewData["FormaPagamento"] = formaPagamento;
         }
+
+        private bool ValidaExameVsProfissional(List<long?> lista, long? temMedico, long? temPsico)
+        {
+            if ( lista.Contains(1) && temMedico == 1 || lista.Contains(2) && temPsico == 2 )
+                return true;
+
+            if ( lista.Contains(3) && temPsico == 2 && temMedico == 1 )
+                return true;
+
+            if (lista.Contains(4) || lista.Contains(5) && temMedico == 2)
+                return true;
+
+            return false;
+        }
+
     }
 }

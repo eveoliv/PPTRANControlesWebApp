@@ -1,8 +1,8 @@
 ﻿using Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace PPTRANControlesWebApp.Data.DAL
 {
@@ -24,34 +24,11 @@ namespace PPTRANControlesWebApp.Data.DAL
         }
 
         public IQueryable<Cliente> ObterClientesClassificadosPorNomeNoMes()
-        {
-            //return from a in context.Clientes
-            //       join b in context.Colaboradores on a.MedicoId equals b.Id 
-            //       join p in context.Colaboradores on a.PsicologoId equals p.Id
-            //       join c in context.Clinicas on a.ClinicaId equals c.Id
-            //       where a.Status == EnumHelper.Status.Ativo && a.DtCadastro == DateTime.Today
-            //       orderby a.Nome
-            //       select new Cliente
-            //       {
-            //           DtCadastro = a.DtCadastro,
-            //           Clinica = new Clinica
-            //           {
-            //               Alias = c.Alias
-            //           },
-            //           Nome = a.Nome,
-            //           CPF = a.CPF,
-            //           Telefone1 = a.Telefone1,
-            //           StatusPgto = a.StatusPgto,
-            //           Colaborador = new Colaborador
-            //           {
-            //                  Nome = b.Nome                             
-            //           }                               
-            //       };
-
+        {           
             return context.Clientes
                 .Include(c => c.Clinica)                
                 .Where(s => s.Status == EnumHelper.Status.Ativo && s.DtCadastro == DateTime.Today)
-                .OrderBy(c => c.Nome);
+                .OrderBy(c => c.Nome);  
         }
 
         public IQueryable<Cliente> ObterHistoricoDeClientes(string nome, string cpf, DateTime dtInicio, DateTime dtfim)

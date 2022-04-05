@@ -9,6 +9,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
     public class RelatorioDAL
     {
         private ApplicationContext context;
+        const string naoAtribuido = "NÃO ATRIBUIDO";
 
         public RelatorioDAL(ApplicationContext context)
         {
@@ -66,9 +67,10 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
 
         public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model, string medico)
         {
+            
             if (medico != null && medico != "Selecionar Medico")
             {
-                return from a in context.Caixas
+                var exame = from a in context.Caixas
                        join b in context.Clientes on a.ClienteId equals b.Id
                        join c in context.Colaboradores on b.MedicoId equals c.Id
                        where c.Nome == medico
@@ -84,10 +86,28 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                            Nome = c.Nome,
                            Data = a.Data,
                            Cliente = b.Nome
-                       };                
+                       };
+
+                var avulso = from a in context.Caixas                             
+                             join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                             where c.Nome == medico                             
+                             where a.Status == EnumHelper.Status.Ativo
+                             where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                             where a.Data == model.Data
+                             orderby c.Nome
+                             select new DiarioMedicoViewModel
+                             {
+                                 Id = c.Id,
+                                 ClinicaId = c.ClinicaId,
+                                 Nome = c.Nome,
+                                 Data = a.Data,
+                                 Cliente = naoAtribuido
+                             };
+
+                return exame.Concat(avulso);
             }
 
-            return from a in context.Caixas
+            var exames = from a in context.Caixas
                    join b in context.Clientes on a.ClienteId equals b.Id
                    join c in context.Colaboradores on b.MedicoId equals c.Id
                    where b.Status == EnumHelper.Status.Ativo
@@ -103,13 +123,30 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                        Data = a.Data,
                        Cliente = b.Nome
                    };
+
+            var avulsos = from a in context.Caixas                         
+                         join c in context.Colaboradores on a.ColaboradorId equals c.Id                         
+                         where a.Status == EnumHelper.Status.Ativo
+                         where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                         where a.Data == model.Data
+                         orderby c.Nome
+                         select new DiarioMedicoViewModel
+                         {
+                             Id = c.Id,
+                             ClinicaId = c.ClinicaId,
+                             Nome = c.Nome,
+                             Data = a.Data,
+                             Cliente = naoAtribuido
+                         };
+
+            return exames.Concat(avulsos);
         }
 
         public IQueryable<DiarioPsicologoViewModel> ObterExamePorPsicologoDiario(DiarioPsicologoViewModel model, string psico)
         {
             if (psico != null && psico != "Selecionar Psicologo")
             {
-                return from a in context.Caixas
+                var exame = from a in context.Caixas
                        join b in context.Clientes on a.ClienteId equals b.Id
                        join c in context.Colaboradores on b.PsicologoId equals c.Id
                        where c.Nome == psico
@@ -126,9 +163,27 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                            Data = a.Data,
                            Cliente = b.Nome
                        };
+
+                var avulso = from a in context.Caixas                            
+                             join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                             where c.Nome == psico                             
+                             where a.Status == EnumHelper.Status.Ativo
+                             where a.ProdutoId == 2 || a.ProdutoId == 3
+                             where a.Data == model.Data
+                             orderby c.Nome
+                             select new DiarioPsicologoViewModel
+                             {
+                                 Id = c.Id,
+                                 ClinicaId = c.ClinicaId,
+                                 Nome = c.Nome,
+                                 Data = a.Data,
+                                 Cliente = naoAtribuido
+                             };
+
+                return exame.Concat(avulso);
             }
 
-            return from a in context.Caixas
+            var exames = from a in context.Caixas
                    join b in context.Clientes on a.ClienteId equals b.Id
                    join c in context.Colaboradores on b.PsicologoId equals c.Id
                    where b.Status == EnumHelper.Status.Ativo
@@ -144,12 +199,28 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                        Data = a.Data,
                        Cliente = b.Nome
                    };
+
+            var avulsos = from a in context.Caixas                  
+                   join c in context.Colaboradores on a.ColaboradorId equals c.Id                   
+                   where a.Status == EnumHelper.Status.Ativo
+                   where a.ProdutoId == 2 || a.ProdutoId == 3
+                   where a.Data == model.Data
+                   orderby c.Nome
+                   select new DiarioPsicologoViewModel
+                   {
+                       Id = c.Id,
+                       ClinicaId = c.ClinicaId,
+                       Nome = c.Nome,
+                       Data = a.Data,
+                       Cliente = naoAtribuido
+                   };
+
+            return exames.Concat(avulsos);
         }
 
         public IQueryable<SemanalPsicologoViewModel> ObterExamePorPsicologoSemanal(SemanalPsicologoViewModel model, string psico)
         {           
-
-            return from a in context.Caixas
+            var exames = from a in context.Caixas
                    join b in context.Clientes on a.ClienteId equals b.Id
                    join c in context.Colaboradores on b.PsicologoId equals c.Id
                    where c.Nome == psico
@@ -165,7 +236,25 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                        Nome = c.Nome,
                        DataCx = a.Data,
                        Cliente = b.Nome
-                   };            
+                   };
+
+            var avulsos = from a in context.Caixas                  
+                   join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                   where c.Nome == psico
+                   where a.Data >= model.DataInicio && a.Data <= model.DataFim                   
+                   where a.Status == EnumHelper.Status.Ativo
+                   where a.ProdutoId == 2 || a.ProdutoId == 3
+                   orderby c.Nome
+                   select new SemanalPsicologoViewModel
+                   {
+                       Id = c.Id,
+                       ClinicaId = c.ClinicaId,
+                       Nome = c.Nome,
+                       DataCx = a.Data,
+                       Cliente = naoAtribuido
+                   };
+
+            return exames.Concat(avulsos);
         }
     }
 }

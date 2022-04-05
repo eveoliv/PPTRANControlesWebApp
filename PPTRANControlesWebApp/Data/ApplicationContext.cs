@@ -19,12 +19,12 @@ namespace PPTRANControlesWebApp.Data
         public DbSet<Endereco> Enderecos { get; set; }     
         public DbSet<Carrinho> Carrinhos { get; set; }
         public DbSet<Historico> Historicos { get; set; }
-        public DbSet<Colaborador> Colaboradores { get; set; }
+        public DbSet<Colaborador> Colaboradores { get; set; }        
 
         //Sobrescrita do nome das tabelas, caso seja necessario
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new RepasseConfiguration());
+            //modelBuilder.ApplyConfiguration(new RepasseConfiguration());
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Colaborador>().HasKey(c => c.Id);

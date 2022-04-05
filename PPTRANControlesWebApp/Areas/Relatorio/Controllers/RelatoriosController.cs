@@ -98,6 +98,11 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var transf = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Transferencia).Sum(c => c.Valor);
             ViewBag.Transf = transf.ToString("N2");
 
+            //Alteração para incluir cortesia
+            var cortesia = lancamentos.Where(c => c.FormaPgto == EnumHelper.FormaPgto.Cortesia).Sum(c => c.Valor);
+            ViewBag.Cortesia = cortesia.ToString("N2");
+            ////////////////////////fim
+
             /////////////////////////ini
             //Alteração para exibir apenas dinheiro no total recebido 
             var credito = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
@@ -114,15 +119,15 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var retirada = lancamentos.Where(c => c.HistoricoId == 36).Sum(c => c.Valor);
             ViewBag.Retirada = retirada.ToString("N2");
-            ////////////////////////
-
+            ////////////////////////fim
+            
             var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
             ViewBag.Finalizados = finalizados.ToString("N2");
 
             var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
             ViewBag.Abertos = abertos.ToString("N2");
 
-            var total = dinheiro - debito - retirada;
+            var total = dinheiro - debito - retirada - cortesia;
             ViewBag.Total = total.ToString("N2");
 
             //-------------------------------------------//
@@ -149,6 +154,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var totalLaudoRecebido = totalLaudoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
             ViewBag.TotalLaudoRecebido = totalLaudoRecebido.Count();
 
+            //-----------------------------------------//
 
             return View(lancamentos);
         }

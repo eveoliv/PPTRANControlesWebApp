@@ -108,13 +108,35 @@
                                                 @Html.DisplayFor(modelItem => item.Historico.Nome)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                                                @{ string cortesia = "NÃO ATRIBUIDO"; }
+                                                @if (item.ClienteId != null)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => cortesia);
+                                                }
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Cliente.MedicoId)
+                                                @if (item.ColaboradorId != null && item.ProdutoId == 1)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.ColaboradorId)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Cliente.MedicoId)
+                                                }
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Cliente.PsicologoId)
+                                                @if (item.ColaboradorId != null && item.ProdutoId == 2)
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.ColaboradorId)
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Cliente.PsicologoId);
+                                                }
                                             </td>
 
                                         </tr>
@@ -138,6 +160,8 @@
                                 <p>Total Despesas ....(-):&emsp;R$ @ViewBag.Debito</p>
                                 <br />
                                 <p>Retirada Caixa ....(-):&emsp;R$ @ViewBag.Retirada</p>
+                                <br />
+                                <p>Cortesia ..............(-):&emsp;R$ @ViewBag.Cortesia</p>
                                 <br />
                                 <p>Saldo do Dia .......(=):&emsp;R$ @ViewBag.Total</p>
                             </div>
