@@ -127,31 +127,33 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var abertos = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Não).Sum(c => c.Valor);
             ViewBag.Abertos = abertos.ToString("N2");
 
-            var total = dinheiro - debito - retirada - cortesia;
+            var total = dinheiro - debito - retirada;
             ViewBag.Total = total.ToString("N2");
 
             //-------------------------------------------//
 
-            var totalExameMedicoRealizado = lancamentos.Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5).Where(c => c.HistoricoId != 1);
+            var totalExameMedicoRealizado = lancamentos
+                    .Where(c => c.ProdutoId == 1 || c.ProdutoId == 3 || c.ProdutoId == 5).Where(c => c.HistoricoId != 1 && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalExameMedicoRealizado = totalExameMedicoRealizado.Count();
 
-            var totalExameMedicoRecebido = totalExameMedicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            var totalExameMedicoRecebido = totalExameMedicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalExameMedicoRecebido = totalExameMedicoRecebido.Count();
 
             //-------------------------------------------//
 
-            var totalExamePsicoRealizado = lancamentos.Where(c => c.ProdutoId == 2 || c.ProdutoId == 3).Where(c => c.HistoricoId != 1);
+            var totalExamePsicoRealizado = lancamentos
+                    .Where(c => c.ProdutoId == 2 || c.ProdutoId == 3).Where(c => c.HistoricoId != 1 && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalExamePsicoRealizado = totalExamePsicoRealizado.Count();
 
-            var totalExamePsicoRecebido = totalExamePsicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            var totalExamePsicoRecebido = totalExamePsicoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalExamePsicoRecebido = totalExamePsicoRecebido.Count();
 
             //-------------------------------------------//
 
-            var totalLaudoRealizado = lancamentos.Where(c => c.ProdutoId == 4);
+            var totalLaudoRealizado = lancamentos.Where(c => c.ProdutoId == 4 && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalLaudoRealizado = totalLaudoRealizado.Count();
 
-            var totalLaudoRecebido = totalLaudoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim);
+            var totalLaudoRecebido = totalLaudoRealizado.Where(c => c.StatusPgto == EnumHelper.YesNo.Sim && c.Tipo != EnumHelper.Tipo.Debito);
             ViewBag.TotalLaudoRecebido = totalLaudoRecebido.Count();
 
             //-----------------------------------------//
@@ -366,6 +368,50 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             return View(lancamentos);
         }
 
+        public async Task<IActionResult> SemanalMedico(SemanalMedicoViewModel model, string medico)
+        {
+            var userColId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
+            var lancamentos = relatorioDAL.ObterExamePorMedicoSemanal(model, medico).Distinct();
+            var medicos = colaboradorDAL.ObterMedicosClassificadosPorNome().ToList();
+            var idClinica = colaboradorDAL.ObterColaboradorPorId(userColId).Result.ClinicaId;
+
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+
+                lancamentos = lancamentos.Where(l => l.ClinicaId == userClinicaId);
+            }
+
+            var medicoList = new List<string>
+            {
+                "Selecionar Medico"
+            };
+
+            foreach (var p in medicos)
+            {
+                medicoList.Add(p.Nome);
+            }
+
+            SelectList Medicos = new SelectList(medicoList);
+            ViewData["Medicos"] = Medicos;
+
+            var datasValidas = ValidarDatas(model.DataInicio, model.DataFim);
+
+            AgrupamentoSemanalDeExamesMedico(lancamentos, medico, idClinica);
+
+            ViewBag.Cabecalho = "Exames Realizados";
+
+            if (medico != null && medico != "Selecionar Psicologo" && datasValidas)
+                ViewBag.Cabecalho = $"Exames Realizados de {model.DataInicio.ToString("dd/MM/yy")} até {model.DataFim.ToString("dd/MM/yy")}";
+
+            return View(lancamentos);
+        }
+
         private bool ValidarDatas(DateTime inicio, DateTime fim)
         {
             if (inicio.Year > 1 && fim.Year > 1)
@@ -397,6 +443,31 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             }
 
             return;           
+        }
+
+        private void AgrupamentoSemanalDeExamesMedico(IQueryable<SemanalMedicoViewModel> lancamentos, string medico, long? clinicaId)
+        {
+            var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Medico").Result.Valor;
+
+            if (medico != null && medico != "Selecionar Psicologo")
+            {
+                var medicos = (from l in lancamentos select new { l.Nome }).ToList();
+
+                var groupped =
+                    medicos.GroupBy(x => x.Nome).Select(g => new { Chave = g.Key, Itens = g.ToList(), Total = g.Count() });
+
+                string[] grupo = new string[1];
+                int i = 0;
+                foreach (var g in groupped)
+                {
+                    grupo[i] = $"{g.Chave} - Total Exames: {g.Total} / Valor Total: R$ {(g.Total * valorRepasse).ToString("N2")}";
+                    i++;
+                }
+
+                ViewBag.Agrupar0 = grupo[0];
+            }
+
+            return;
         }
 
         private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico, long? clinicaId)

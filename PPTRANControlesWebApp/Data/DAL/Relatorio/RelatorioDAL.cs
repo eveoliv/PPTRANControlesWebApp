@@ -62,36 +62,38 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                        Referencia = a.Ref,
                        Tipo = a.Tipo,
                        Valor = a.Valor
-                   };            
-        }        
+                   };
+        }
 
         public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model, string medico)
         {
-            
+
             if (medico != null && medico != "Selecionar Medico")
             {
                 var exame = from a in context.Caixas
-                       join b in context.Clientes on a.ClienteId equals b.Id
-                       join c in context.Colaboradores on b.MedicoId equals c.Id
-                       where c.Nome == medico
-                       where b.Status == EnumHelper.Status.Ativo
-                       where a.Status == EnumHelper.Status.Ativo
-                       where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
-                       where a.Data == model.Data
-                       orderby c.Nome
-                       select new DiarioMedicoViewModel
-                       {
-                           Id = c.Id,
-                           ClinicaId = c.ClinicaId,
-                           Nome = c.Nome,
-                           Data = a.Data,
-                           Cliente = b.Nome
-                       };
+                            join b in context.Clientes on a.ClienteId equals b.Id
+                            join c in context.Colaboradores on b.MedicoId equals c.Id
+                            where c.Nome == medico
+                            where b.Status == EnumHelper.Status.Ativo
+                            where a.Status == EnumHelper.Status.Ativo
+                            where a.Tipo != EnumHelper.Tipo.Debito
+                            where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                            where a.Data == model.Data
+                            orderby c.Nome
+                            select new DiarioMedicoViewModel
+                            {
+                                Id = c.Id,
+                                ClinicaId = c.ClinicaId,
+                                Nome = c.Nome,
+                                Data = a.Data,
+                                Cliente = b.Nome
+                            };
 
-                var avulso = from a in context.Caixas                             
+                var avulso = from a in context.Caixas
                              join c in context.Colaboradores on a.ColaboradorId equals c.Id
-                             where c.Nome == medico                             
+                             where c.Nome == medico
                              where a.Status == EnumHelper.Status.Ativo
+                             where a.Tipo != EnumHelper.Tipo.Debito
                              where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
                              where a.Data == model.Data
                              orderby c.Nome
@@ -108,25 +110,11 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
             }
 
             var exames = from a in context.Caixas
-                   join b in context.Clientes on a.ClienteId equals b.Id
-                   join c in context.Colaboradores on b.MedicoId equals c.Id
-                   where b.Status == EnumHelper.Status.Ativo
-                   where a.Status == EnumHelper.Status.Ativo
-                   where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
-                   where a.Data == model.Data
-                   orderby c.Nome
-                   select new DiarioMedicoViewModel
-                   {
-                       Id = c.Id,
-                       ClinicaId = c.ClinicaId,
-                       Nome = c.Nome,
-                       Data = a.Data,
-                       Cliente = b.Nome
-                   };
-
-            var avulsos = from a in context.Caixas                         
-                         join c in context.Colaboradores on a.ColaboradorId equals c.Id                         
+                         join b in context.Clientes on a.ClienteId equals b.Id
+                         join c in context.Colaboradores on b.MedicoId equals c.Id
+                         where b.Status == EnumHelper.Status.Ativo
                          where a.Status == EnumHelper.Status.Ativo
+                         where a.Tipo != EnumHelper.Tipo.Debito
                          where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
                          where a.Data == model.Data
                          orderby c.Nome
@@ -136,8 +124,24 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                              ClinicaId = c.ClinicaId,
                              Nome = c.Nome,
                              Data = a.Data,
-                             Cliente = naoAtribuido
+                             Cliente = b.Nome
                          };
+
+            var avulsos = from a in context.Caixas
+                          join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                          where a.Status == EnumHelper.Status.Ativo
+                          where a.Tipo != EnumHelper.Tipo.Debito
+                          where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                          where a.Data == model.Data
+                          orderby c.Nome
+                          select new DiarioMedicoViewModel
+                          {
+                              Id = c.Id,
+                              ClinicaId = c.ClinicaId,
+                              Nome = c.Nome,
+                              Data = a.Data,
+                              Cliente = naoAtribuido
+                          };
 
             return exames.Concat(avulsos);
         }
@@ -147,27 +151,29 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
             if (psico != null && psico != "Selecionar Psicologo")
             {
                 var exame = from a in context.Caixas
-                       join b in context.Clientes on a.ClienteId equals b.Id
-                       join c in context.Colaboradores on b.PsicologoId equals c.Id
-                       where c.Nome == psico
-                       where b.Status == EnumHelper.Status.Ativo
-                       where a.Status == EnumHelper.Status.Ativo
-                       where a.ProdutoId == 2 || a.ProdutoId == 3
-                       where a.Data == model.Data
-                       orderby c.Nome
-                       select new DiarioPsicologoViewModel
-                       {
-                           Id = c.Id,
-                           ClinicaId = c.ClinicaId,
-                           Nome = c.Nome,
-                           Data = a.Data,
-                           Cliente = b.Nome
-                       };
+                            join b in context.Clientes on a.ClienteId equals b.Id
+                            join c in context.Colaboradores on b.PsicologoId equals c.Id
+                            where c.Nome == psico
+                            where b.Status == EnumHelper.Status.Ativo
+                            where a.Status == EnumHelper.Status.Ativo
+                            where a.Tipo != EnumHelper.Tipo.Debito
+                            where a.ProdutoId == 2 || a.ProdutoId == 3
+                            where a.Data == model.Data
+                            orderby c.Nome
+                            select new DiarioPsicologoViewModel
+                            {
+                                Id = c.Id,
+                                ClinicaId = c.ClinicaId,
+                                Nome = c.Nome,
+                                Data = a.Data,
+                                Cliente = b.Nome
+                            };
 
-                var avulso = from a in context.Caixas                            
+                var avulso = from a in context.Caixas
                              join c in context.Colaboradores on a.ColaboradorId equals c.Id
-                             where c.Nome == psico                             
+                             where c.Nome == psico
                              where a.Status == EnumHelper.Status.Ativo
+                             where a.Tipo != EnumHelper.Tipo.Debito
                              where a.ProdutoId == 2 || a.ProdutoId == 3
                              where a.Data == model.Data
                              orderby c.Nome
@@ -184,77 +190,122 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
             }
 
             var exames = from a in context.Caixas
-                   join b in context.Clientes on a.ClienteId equals b.Id
-                   join c in context.Colaboradores on b.PsicologoId equals c.Id
-                   where b.Status == EnumHelper.Status.Ativo
-                   where a.Status == EnumHelper.Status.Ativo
-                   where a.ProdutoId == 2 || a.ProdutoId == 3
-                   where a.Data == model.Data
-                   orderby c.Nome
-                   select new DiarioPsicologoViewModel
-                   {
-                       Id = c.Id,
-                       ClinicaId = c.ClinicaId,
-                       Nome = c.Nome,
-                       Data = a.Data,
-                       Cliente = b.Nome
-                   };
+                         join b in context.Clientes on a.ClienteId equals b.Id
+                         join c in context.Colaboradores on b.PsicologoId equals c.Id
+                         where a.Tipo != EnumHelper.Tipo.Debito
+                         where b.Status == EnumHelper.Status.Ativo
+                         where a.Status == EnumHelper.Status.Ativo
+                         where a.ProdutoId == 2 || a.ProdutoId == 3
+                         where a.Data == model.Data
+                         orderby c.Nome
+                         select new DiarioPsicologoViewModel
+                         {
+                             Id = c.Id,
+                             ClinicaId = c.ClinicaId,
+                             Nome = c.Nome,
+                             Data = a.Data,
+                             Cliente = b.Nome
+                         };
 
-            var avulsos = from a in context.Caixas                  
-                   join c in context.Colaboradores on a.ColaboradorId equals c.Id                   
-                   where a.Status == EnumHelper.Status.Ativo
-                   where a.ProdutoId == 2 || a.ProdutoId == 3
-                   where a.Data == model.Data
-                   orderby c.Nome
-                   select new DiarioPsicologoViewModel
-                   {
-                       Id = c.Id,
-                       ClinicaId = c.ClinicaId,
-                       Nome = c.Nome,
-                       Data = a.Data,
-                       Cliente = naoAtribuido
-                   };
+            var avulsos = from a in context.Caixas
+                          join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                          where a.Tipo != EnumHelper.Tipo.Debito
+                          where a.Status == EnumHelper.Status.Ativo
+                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                          where a.Data == model.Data
+                          orderby c.Nome
+                          select new DiarioPsicologoViewModel
+                          {
+                              Id = c.Id,
+                              ClinicaId = c.ClinicaId,
+                              Nome = c.Nome,
+                              Data = a.Data,
+                              Cliente = naoAtribuido
+                          };
 
             return exames.Concat(avulsos);
         }
 
         public IQueryable<SemanalPsicologoViewModel> ObterExamePorPsicologoSemanal(SemanalPsicologoViewModel model, string psico)
-        {           
+        {
             var exames = from a in context.Caixas
-                   join b in context.Clientes on a.ClienteId equals b.Id
-                   join c in context.Colaboradores on b.PsicologoId equals c.Id
-                   where c.Nome == psico
-                   where a.Data >= model.DataInicio && a.Data <= model.DataFim
-                   where b.Status == EnumHelper.Status.Ativo
-                   where a.Status == EnumHelper.Status.Ativo
-                   where a.ProdutoId == 2 || a.ProdutoId == 3
-                   orderby c.Nome
-                   select new SemanalPsicologoViewModel
-                   {
-                       Id = c.Id,
-                       ClinicaId = c.ClinicaId,
-                       Nome = c.Nome,
-                       DataCx = a.Data,
-                       Cliente = b.Nome
-                   };
+                         join b in context.Clientes on a.ClienteId equals b.Id
+                         join c in context.Colaboradores on b.PsicologoId equals c.Id
+                         where c.Nome == psico
+                         where a.Data >= model.DataInicio && a.Data <= model.DataFim
+                         where a.Tipo != EnumHelper.Tipo.Debito
+                         where b.Status == EnumHelper.Status.Ativo
+                         where a.Status == EnumHelper.Status.Ativo
+                         where a.ProdutoId == 2 || a.ProdutoId == 3
+                         orderby c.Nome
+                         select new SemanalPsicologoViewModel
+                         {
+                             Id = c.Id,
+                             ClinicaId = c.ClinicaId,
+                             Nome = c.Nome,
+                             DataCx = a.Data,
+                             Cliente = b.Nome
+                         };
 
-            var avulsos = from a in context.Caixas                  
-                   join c in context.Colaboradores on a.ColaboradorId equals c.Id
-                   where c.Nome == psico
-                   where a.Data >= model.DataInicio && a.Data <= model.DataFim                   
-                   where a.Status == EnumHelper.Status.Ativo
-                   where a.ProdutoId == 2 || a.ProdutoId == 3
-                   orderby c.Nome
-                   select new SemanalPsicologoViewModel
-                   {
-                       Id = c.Id,
-                       ClinicaId = c.ClinicaId,
-                       Nome = c.Nome,
-                       DataCx = a.Data,
-                       Cliente = naoAtribuido
-                   };
+            var avulsos = from a in context.Caixas
+                          join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                          where c.Nome == psico
+                          where a.Data >= model.DataInicio && a.Data <= model.DataFim
+                          where a.Tipo != EnumHelper.Tipo.Debito
+                          where a.Status == EnumHelper.Status.Ativo
+                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                          orderby c.Nome
+                          select new SemanalPsicologoViewModel
+                          {
+                              Id = c.Id,
+                              ClinicaId = c.ClinicaId,
+                              Nome = c.Nome,
+                              DataCx = a.Data,
+                              Cliente = naoAtribuido
+                          };
+
+            return exames.Concat(avulsos);
+        }
+
+        public IQueryable<SemanalMedicoViewModel> ObterExamePorMedicoSemanal(SemanalMedicoViewModel model, string medico)
+        {
+            var exames = from a in context.Caixas
+                         join b in context.Clientes on a.ClienteId equals b.Id
+                         join c in context.Colaboradores on b.MedicoId equals c.Id
+                         where c.Nome == medico
+                         where a.Data >= model.DataInicio && a.Data <= model.DataFim
+                         where a.Tipo != EnumHelper.Tipo.Debito
+                         where b.Status == EnumHelper.Status.Ativo
+                         where a.Status == EnumHelper.Status.Ativo
+                         where a.ProdutoId == 2 || a.ProdutoId == 3
+                         orderby c.Nome
+                         select new SemanalMedicoViewModel
+                         {
+                             Id = c.Id,
+                             ClinicaId = c.ClinicaId,
+                             Nome = c.Nome,
+                             DataCx = a.Data,
+                             Cliente = b.Nome
+                         };
+
+            var avulsos = from a in context.Caixas
+                          join c in context.Colaboradores on a.ColaboradorId equals c.Id
+                          where c.Nome == medico
+                          where a.Data >= model.DataInicio && a.Data <= model.DataFim
+                          where a.Tipo != EnumHelper.Tipo.Debito
+                          where a.Status == EnumHelper.Status.Ativo
+                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                          orderby c.Nome
+                          select new SemanalMedicoViewModel
+                          {
+                              Id = c.Id,
+                              ClinicaId = c.ClinicaId,
+                              Nome = c.Nome,
+                              DataCx = a.Data,
+                              Cliente = naoAtribuido
+                          };
 
             return exames.Concat(avulsos);
         }
     }
-}
+}    

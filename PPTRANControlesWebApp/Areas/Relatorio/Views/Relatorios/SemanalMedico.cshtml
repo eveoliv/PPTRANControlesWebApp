@@ -1,0 +1,99 @@
+﻿@model IEnumerable<PPTRANControlesWebApp.Models.Relatorio.SemanalMedicoViewModel>
+
+@{
+    ViewData["Title"] = "Semanal Medico";
+}
+
+<div class="row" style="display: block;">
+    <div class="col-md-12 col-sm-12  ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@ViewBag.Cabecalho</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a asp-action="" onClick="window.print()" class="glyphicon glyphicon-print"></a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                @using (Html.BeginForm("SemanalMedico", "Relatorio", FormMethod.Post))
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @Html.DropDownList("medico", ViewData["Medicos"] as SelectList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-5">
+                                Inicio: &nbsp;<input name="dataInicio" type="date" value="" style="border:2px solid #DCDCDC">
+                            </div>
+                            <div class="col-sm-5">
+                                Fim: &nbsp;<input name="dataFim" type="date" value="" style="border:2px solid #DCDCDC">
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="submit" value="Buscar" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                }
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Contagem
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cliente)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DataCx)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var i = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => i)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cliente)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataCx)
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+
+                <div class="alert alert-success alert-dismissible ">
+                    @ViewBag.Agrupar0
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
