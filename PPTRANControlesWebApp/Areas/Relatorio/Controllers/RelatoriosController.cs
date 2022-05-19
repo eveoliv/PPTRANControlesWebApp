@@ -120,7 +120,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             var retirada = lancamentos.Where(c => c.HistoricoId == 36).Sum(c => c.Valor);
             ViewBag.Retirada = retirada.ToString("N2");
             ////////////////////////fim
-            
+
             var finalizados = lancamentos.Where(c => c.Tipo == EnumHelper.Tipo.Credito && c.StatusPgto == EnumHelper.YesNo.Sim).Sum(c => c.Valor);
             ViewBag.Finalizados = finalizados.ToString("N2");
 
@@ -206,7 +206,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                     Clinica = n.Key.Clinica,
                     ProdutoId = n.Key.ProdutoId,
                     Produto = n.Key.Produto,
-                   
+
                     Referencia = n.Key.Referencia,
                     Tipo = n.Key.Tipo,
                     Valor = n.Sum(l => l.Valor)
@@ -221,7 +221,37 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
             ViewBag.Debito = novaLitsta.Where(t => t.Tipo == EnumHelper.Tipo.Debito).Sum(v => v.Valor).ToString("N2");
 
             return View(novaLitsta.OrderBy(c => c.ClinicaId));
-        }       
+        }
+
+        public async Task<IActionResult> Lancamento(LancamentoViewModel model)
+        {
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
+            if (model.DataInicio.Year == 1 && model.DataFim.Year == 1)
+            {
+                model.DataInicio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                model.DataFim = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+            }
+
+            ViewBag.Mes = $" de {model.DataInicio.ToString("dd/MM/yy")} até {model.DataFim.ToString("dd/MM/yy")}";
+
+            var lancamentos
+                = await relatorioDAL.ObterLancamentosPorFormaPgto(model.DataInicio, model.DataFim, model.FormaPgto).ToListAsync();
+
+            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            {
+                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+                lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
+            }
+
+            ViewBag.Credito = lancamentos.Where(t => t.Tipo == EnumHelper.Tipo.Credito).Sum(v => v.Valor).ToString("N2");
+            ViewBag.Debito = lancamentos.Where(t => t.Tipo == EnumHelper.Tipo.Debito).Sum(v => v.Valor).ToString("N2");
+
+            return View(lancamentos);
+        }
 
         public async Task<IActionResult> DiarioMedico(DiarioMedicoViewModel model, DateTime dateTime, string medico)
         {
@@ -421,7 +451,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
         }
 
         private void AgrupamentoSemanalDeExamesPsico(IQueryable<SemanalPsicologoViewModel> lancamentos, string psico, long? clinicaId)
-        {            
+        {
             var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")
@@ -442,7 +472,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
                 ViewBag.Agrupar0 = grupo[0];
             }
 
-            return;           
+            return;
         }
 
         private void AgrupamentoSemanalDeExamesMedico(IQueryable<SemanalMedicoViewModel> lancamentos, string medico, long? clinicaId)
@@ -471,7 +501,7 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
         }
 
         private void AgrupamentoDeExamesPsico(IQueryable<DiarioPsicologoViewModel> lancamentos, string psico, long? clinicaId)
-        {           
+        {
             var valorRepasse = repasseDAL.ObterRepassePorClinicaComProfissional(clinicaId, "Psicologo").Result.Valor;
 
             if (psico != null && psico != "Selecionar Psicologo")

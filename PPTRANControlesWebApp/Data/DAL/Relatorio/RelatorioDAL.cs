@@ -65,6 +65,32 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                    };
         }
 
+        public IQueryable<LancamentoViewModel> ObterLancamentosPorFormaPgto(DateTime dtInicio, DateTime dtFim, EnumHelper.FormaPgto pgto)
+        {
+            return from a in context.Caixas
+                   join b in context.Clinicas on a.ClinicaId equals b.Id
+                   join c in context.Produtos on a.ProdutoId equals c.Id
+                   join d in context.Historicos on a.HistoricoId equals d.Id
+                   where a.Status == EnumHelper.Status.Ativo // 0
+                   where a.StatusPgto == EnumHelper.YesNo.Sim // 1
+                   where a.FormaPgto == pgto
+                   where a.Data >= dtInicio && a.Data <= dtFim
+                   orderby b.Nome
+                   select new LancamentoViewModel
+                   {
+                       ClinicaId = b.Id,
+                       Clinica = b.Nome,
+                       HistoricoId = d.Id,
+                       Historico = d.Nome,
+                       ProdutoId = c.Id,
+                       Produto = c.Nome,
+                       Referencia = a.Ref,
+                       Tipo = a.Tipo,
+                       FormaPgto = a.FormaPgto,
+                       Valor = a.Valor
+                   };
+        }
+
         public IQueryable<DiarioMedicoViewModel> ObterExamePorMedicoDiario(DiarioMedicoViewModel model, string medico)
         {
 
@@ -276,8 +302,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                          where a.Data >= model.DataInicio && a.Data <= model.DataFim
                          where a.Tipo != EnumHelper.Tipo.Debito
                          where b.Status == EnumHelper.Status.Ativo
-                         where a.Status == EnumHelper.Status.Ativo
-                         where a.ProdutoId == 2 || a.ProdutoId == 3
+                         where a.Status == EnumHelper.Status.Ativo                         
+                         where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
                          orderby c.Nome
                          select new SemanalMedicoViewModel
                          {
@@ -293,8 +319,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                           where c.Nome == medico
                           where a.Data >= model.DataInicio && a.Data <= model.DataFim
                           where a.Tipo != EnumHelper.Tipo.Debito
-                          where a.Status == EnumHelper.Status.Ativo
-                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                          where a.Status == EnumHelper.Status.Ativo                          
+                          where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
                           orderby c.Nome
                           select new SemanalMedicoViewModel
                           {
