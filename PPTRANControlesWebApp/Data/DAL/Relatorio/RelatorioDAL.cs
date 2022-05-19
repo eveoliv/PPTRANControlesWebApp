@@ -70,7 +70,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
             return from a in context.Caixas
                    join b in context.Clinicas on a.ClinicaId equals b.Id
                    join c in context.Produtos on a.ProdutoId equals c.Id
-                   join d in context.Historicos on a.HistoricoId equals d.Id
+                   join d in context.Clientes on a.ClienteId equals d.Id
                    where a.Status == EnumHelper.Status.Ativo // 0
                    where a.StatusPgto == EnumHelper.YesNo.Sim // 1
                    where a.FormaPgto == pgto
@@ -80,8 +80,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                    {
                        ClinicaId = b.Id,
                        Clinica = b.Nome,
-                       HistoricoId = d.Id,
-                       Historico = d.Nome,
+                       ClienteId = d.Id,
+                       ClienteNome = d.Nome,
                        ProdutoId = c.Id,
                        Produto = c.Nome,
                        Referencia = a.Ref,

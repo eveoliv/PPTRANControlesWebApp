@@ -14,6 +14,9 @@ namespace PPTRANControlesWebApp.Models.Relatorio
         public long? ProdutoId { get; set; }
         public string Produto { get; set; }
 
+        public long? ClienteId { get; set; }
+        public string ClienteNome { get; set; }
+
         public string Referencia { get; set; }
         public EnumHelper.Tipo Tipo { get; set; }
         public EnumHelper.FormaPgto FormaPgto { get; set; }
