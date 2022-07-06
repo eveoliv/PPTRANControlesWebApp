@@ -104,6 +104,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                             where a.Status == EnumHelper.Status.Ativo
                             where a.Tipo != EnumHelper.Tipo.Debito
                             where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                            where a.HistoricoId != 1
                             where a.Data == model.Data
                             orderby c.Nome
                             select new DiarioMedicoViewModel
@@ -121,6 +122,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                              where a.Status == EnumHelper.Status.Ativo
                              where a.Tipo != EnumHelper.Tipo.Debito
                              where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                             where a.HistoricoId != 1
                              where a.Data == model.Data
                              orderby c.Nome
                              select new DiarioMedicoViewModel
@@ -142,6 +144,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                          where a.Status == EnumHelper.Status.Ativo
                          where a.Tipo != EnumHelper.Tipo.Debito
                          where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                         where a.HistoricoId != 1
                          where a.Data == model.Data
                          orderby c.Nome
                          select new DiarioMedicoViewModel
@@ -158,6 +161,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                           where a.Status == EnumHelper.Status.Ativo
                           where a.Tipo != EnumHelper.Tipo.Debito
                           where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                          where a.HistoricoId != 1
                           where a.Data == model.Data
                           orderby c.Nome
                           select new DiarioMedicoViewModel
@@ -183,7 +187,8 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                             where b.Status == EnumHelper.Status.Ativo
                             where a.Status == EnumHelper.Status.Ativo
                             where a.Tipo != EnumHelper.Tipo.Debito
-                            where a.ProdutoId == 2 || a.ProdutoId == 3
+                            where a.ProdutoId == 2 || a.ProdutoId == 3                            
+                            where a.HistoricoId != 1
                             where a.Data == model.Data
                             orderby c.Nome
                             select new DiarioPsicologoViewModel
@@ -201,6 +206,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                              where a.Status == EnumHelper.Status.Ativo
                              where a.Tipo != EnumHelper.Tipo.Debito
                              where a.ProdutoId == 2 || a.ProdutoId == 3
+                             where a.HistoricoId != 1
                              where a.Data == model.Data
                              orderby c.Nome
                              select new DiarioPsicologoViewModel
@@ -222,6 +228,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                          where b.Status == EnumHelper.Status.Ativo
                          where a.Status == EnumHelper.Status.Ativo
                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                         where a.HistoricoId != 1
                          where a.Data == model.Data
                          orderby c.Nome
                          select new DiarioPsicologoViewModel
@@ -238,6 +245,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                           where a.Tipo != EnumHelper.Tipo.Debito
                           where a.Status == EnumHelper.Status.Ativo
                           where a.ProdutoId == 2 || a.ProdutoId == 3
+                          where a.HistoricoId != 1
                           where a.Data == model.Data
                           orderby c.Nome
                           select new DiarioPsicologoViewModel
@@ -263,6 +271,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                          where b.Status == EnumHelper.Status.Ativo
                          where a.Status == EnumHelper.Status.Ativo
                          where a.ProdutoId == 2 || a.ProdutoId == 3
+                         where a.HistoricoId != 1
                          orderby c.Nome
                          select new SemanalPsicologoViewModel
                          {
@@ -280,6 +289,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                           where a.Tipo != EnumHelper.Tipo.Debito
                           where a.Status == EnumHelper.Status.Ativo
                           where a.ProdutoId == 2 || a.ProdutoId == 3
+                          where a.HistoricoId != 1
                           orderby c.Nome
                           select new SemanalPsicologoViewModel
                           {
@@ -304,6 +314,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                          where b.Status == EnumHelper.Status.Ativo
                          where a.Status == EnumHelper.Status.Ativo                         
                          where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                         where a.HistoricoId != 1
                          orderby c.Nome
                          select new SemanalMedicoViewModel
                          {
@@ -321,6 +332,7 @@ namespace PPTRANControlesWebApp.Data.DAL.Relatorio
                           where a.Tipo != EnumHelper.Tipo.Debito
                           where a.Status == EnumHelper.Status.Ativo                          
                           where a.ProdutoId == 1 || a.ProdutoId == 3 || a.ProdutoId == 5
+                          where a.HistoricoId != 1
                           orderby c.Nome
                           select new SemanalMedicoViewModel
                           {

@@ -68,10 +68,52 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             return View(lista);
         }
 
+        [Authorize(Roles = RolesNomes.Administrador)]
+        public async Task<IActionResult> Alterar()
+        {
+            var userId = userManager.GetUserAsync(User).Result.Id;
+            var usuario = await userManager.FindByIdAsync(userId);
+            var roleUser = await userManager.GetRolesAsync(usuario);
+
+            return await ObterVisaoColaboradorPorId(usuario.ColaboradorId);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Alterar(long? id, Colaborador colaborador)
+        {
+            if (id != colaborador.Id)
+            {
+                return NotFound();
+            }
+
+            if (id != null)
+            {
+                try
+                {
+                    colaborador.IdUser = userManager.GetUserAsync(User).Result.Id;
+                    await colaboradorDAL.GravarColaborador(colaborador);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return RedirectToAction("Resposta", "Colaborador");
+            }
+            return View();
+        }
+
+        public IActionResult Resposta()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Details(long? id)
         {
             return await ObterVisaoColaboradorPorId(id);
         }
+
 
         [Authorize(Roles = RolesNomes.Administrador + "," + RolesNomes.Gestor)]
         public async Task<IActionResult> Edit(long id)
@@ -268,7 +310,7 @@ namespace PPTRANControlesWebApp.Areas.Administracao.Controllers
             catch (Exception)
             {
                 return false;
-            }            
+            }
         }
     }
 }

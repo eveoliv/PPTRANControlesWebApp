@@ -77,12 +77,10 @@ namespace PPTRANControlesWebApp.Areas.Relatorio.Controllers
 
             var lancamentos = await relatorioDAL.ObterLancamentosClassificadosPorClinicaDiario(dateTime).ToListAsync();
 
-            if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
-            {
-                var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
-                var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
-                lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
-            }
+            //if (roleUser.FirstOrDefault() != RolesNomes.Administrador)
+            var colId = userManager.GetUserAsync(User).Result.ColaboradorId;
+            var userClinicaId = colaboradorDAL.ObterColaboradorPorId(colId).Result.ClinicaId;
+            lancamentos = lancamentos.Where(c => c.ClinicaId == userClinicaId).ToList();
 
             ViewBag.DataAtual = dateTime.ToString("dd/MM/yyyy");
 

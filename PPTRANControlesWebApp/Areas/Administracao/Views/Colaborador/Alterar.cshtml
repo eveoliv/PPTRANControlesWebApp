@@ -1,0 +1,79 @@
+﻿@model Models.Colaborador
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section styles {
+    <link href="~/Content/vendors/dataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<div class="page-title">
+    <div class="clearfix"></div>
+    <div class="col-md-12 ">
+        <div class="row">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Alterar perfil de acesso a Clinica &ensp;&ensp;&ensp;<span style="color: #f00;"></span></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a asp-action="Index" class="glyphicon glyphicon-minus-sign"></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <form asp-action="Alterar">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <div class="tab-content" id="myTabContent">
+
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <hr />
+                                    <dl class="row">
+                                        @Html.HiddenFor(model => model.Id)
+                                        @Html.HiddenFor(model => model.DtCadastro)
+                                        @Html.HiddenFor(model => model.Nome)
+                                        @Html.HiddenFor(model => model.Telefone1)
+                                        @Html.HiddenFor(model => model.Telefone2)
+                                        @Html.HiddenFor(model => model.Email)
+                                        @Html.HiddenFor(model => model.Funcao)
+                                        @Html.HiddenFor(model => model.RG)
+                                        @Html.HiddenFor(model => model.CPF)
+                                        @Html.HiddenFor(model => model.CRM)
+                                        @Html.HiddenFor(model => model.CRP)
+                                        @Html.HiddenFor(model => model.Endereco.Cep)
+                                        @Html.HiddenFor(model => model.Endereco.Id)
+                                        @Html.HiddenFor(model => model.Endereco.Rua)
+                                        @Html.HiddenFor(model => model.Endereco.Bairro)
+                                        @Html.HiddenFor(model => model.Endereco.Cidade)
+                                        @Html.HiddenFor(model => model.Endereco.Estado)
+                                        @Html.HiddenFor(model => model.Endereco.Numero)
+                                        @Html.HiddenFor(model => model.Endereco.Complto)
+
+                                        <dt class="col-form-label col-md-3 col-sm-3 ">@Html.DisplayNameFor(model => model.Clinica.Alias)</dt>
+                                        <dd class="col-md-9 col-sm-9 ">
+                                            <select asp-for="ClinicaId" class="form-control" asp-items=@ViewBag.Clinicas></select>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <input type="submit" value="Salvar" class="btn btn-success" />
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
