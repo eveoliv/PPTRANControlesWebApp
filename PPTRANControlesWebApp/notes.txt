@@ -1,4 +1,4 @@
-﻿Criar projeto .net core 2.0 com autenticação no app
+   Criar projeto .net core 2.0 com autenticação no app
 
 Criar pasta Areas e depois add as areas
 
@@ -20,7 +20,7 @@ Get-Help EntityFramework (Comandos disponiveis do Entity)e Database para criar a
 
 dotnet publish -c Release
 Quando ha duas classes de contexto:
-Add-Migration "Identity" -Context AppIdentityContext
+ 
 update-database -Context AppIdentityContext
 Add-Migration "AppContext" -Context ApplicationContext
 update-database -Context ApplicationContext
