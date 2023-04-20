@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33328.57
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PPTRANControlesWebApp", "PPTRANControlesWebApp\PPTRANControlesWebApp.csproj", "{8F1DEF69-528F-4D4B-BE75-F7291CDB5E9C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{9BA9F284-23EC-4872-AD8B-6884F5081788}"
-<<<<<<< HEAD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47B86910-657F-4CB3-BB95-0D6E757F02F2}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
-=======
->>>>>>> 32a6ededa1825a27cb1af14977ddea19c5c5e40f
+	ProjectSection(FolderGlobals) = preProject
+		C_5_4Users_4evert_4source_4csharp_3workspace_4PPTRAN_4global_1json__JsonSchema = 
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
